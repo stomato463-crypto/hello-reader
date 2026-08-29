@@ -106,29 +106,37 @@ finally {
         $process.Kill()
     }
     
-    # ログファイルの保存（プログレスバー付き）
+    # ログファイルの保存（ディスク保護メモリバッファ ＋ プログレスバー両立）
     if ($logLines.Count -gt 0) {
-        Write-Host "`nSaving logs to disk... Total lines: $($logLines.Count)" -ForegroundColor Yellow
-            
         $totalLines = $logLines.Count
-        $batchSize = [Math]::Max([int]($totalLines / 20), 1)
-        $currentWritten = 0
+        Write-Host "`nSaving logs to disk (Buffered Drive-Safe Mode)... Total lines: $totalLines" -ForegroundColor Yellow
             
-        Set-Content -Path $fileName -Value "" -Encoding utf8
-            
-        for ($i = 0; $i -lt $totalLines; $i += $batchSize) {
-            $endIdx = [Math]::Min($i + $batchSize - 1, $totalLines - 1)
-            $chunk = $logLines[$i..$endIdx]
-            $chunk | Add-Content -Path $fileName -Encoding utf8
+        $fullPath = [System.IO.Path]::GetFullPath($fileName)
+        
+        # 64KBの大きなメモリバッファを持つStreamWriterを作成（ディスクへの摩耗・負荷を最小限に抑える）
+        $stream = [System.IO.File]::Create($fullPath)
+        $writer = New-Object System.IO.StreamWriter($stream, [System.Text.Encoding]::UTF8, 65536)
+        
+        try {
+            $batchSize = [Math]::Max([int]($totalLines / 10), 1)
+            for ($i = 0; $i -lt $totalLines; $i++) {
+                $writer.WriteLine($logLines[$i])
                 
-            $currentWritten += $chunk.Count
-            $percent = [int](($currentWritten / $totalLines) * 100)
-                
-            Write-Host "Saving progress: $percent% ($currentWritten / $totalLines lines)" -ForegroundColor Cyan
+                # 10%ごとのスムーズなプログレス進捗表示
+                if ($i > 0 -and ($i % $batchSize -eq 0 -or $i -eq $totalLines -1)) {
+                    $percent = [int]((($i + 1) / $totalLines) * 100)
+                    Write-Host "Saving progress: $percent% ($($i + 1) / $totalLines lines)" -ForegroundColor Cyan
+                }
+            }
+        }
+        finally {
+            $writer.Flush()
+            $writer.Close()
+            $stream.Close()
         }
 
         Write-Host "Log cat session stopped." -ForegroundColor Yellow
-        Write-Host "Logs successfully saved: [ $fileName ]" -ForegroundColor Green
+        Write-Host "Logs successfully saved: [ $fileName ] (Total lines: $totalLines)" -ForegroundColor Green
     }
     else {
         Write-Host "`nLog cat session stopped. No logs were captured." -ForegroundColor Yellow
