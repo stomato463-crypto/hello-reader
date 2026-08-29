@@ -1,1 +1,6 @@
-/.jj
+local.properties
+/.gradle
+/.idea
+/.kotlin
+/app/build
+/build
