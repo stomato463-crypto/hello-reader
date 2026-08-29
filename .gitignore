@@ -4,6 +4,7 @@ local.properties
 *.jks
 .runner
 .gitea/.runner
+*.lock
 
 # ビルド成果物・一時ファイル
 *.apk
@@ -22,6 +23,5 @@ build/
 /.gradle
 /.idea
 /.kotlin
-/.jj
 *.iml
 .DS_Store
