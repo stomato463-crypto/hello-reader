@@ -12,60 +12,57 @@ $devices = @(adb devices | Select-String -Pattern "device$" | ForEach-Object {
     })
 
 if ($devices.Count -eq 0) {
-    Write-Host "No connected devices found. Please connect a device via USB or WiFi." -ForegroundColor Red
+    Write-Host "接続中の端末が見つからないにょろ！USBまたはWi-Fi接続を確認してね！" -ForegroundColor Red
     Exit
 }
 
 $selectedDevice = $null
 if ($devices.Count -eq 1) {
     $selectedDevice = $devices[0].Id
-    Write-Host "Automatically selected only connected device: $selectedDevice ($($devices[0].Type))" -ForegroundColor Green
+    Write-Host "接続されているデバイスを自動選択したにょろ: $selectedDevice ($($devices[0].Type))" -ForegroundColor Green
 }
 else {
-    Write-Host "Multiple devices detected. Please select one:" -ForegroundColor Yellow
+    Write-Host "複数デバイスを検知したにょろ。選択してね:" -ForegroundColor Yellow
     for ($i = 0; $i -lt $devices.Count; $i++) {
         Write-Host "[$($i + 1)] ID: $($devices[$i].Id) ($($devices[$i].Type))"
     }
     $choice = ""
     while ($choice -lt 1 -or $choice -gt $devices.Count) {
-        $choice = Read-Host "Select device (1-$($devices.Count))"
+        $choice = Read-Host "デバイスを選択 (1-$($devices.Count))"
         if ($choice -match '^\d+$') { $choice = [int]$choice } else { $choice = 0 }
     }
     $selectedDevice = $devices[$choice - 1].Id
 }
 
 # 2. ログ取得モードの選択
-Write-Host "`n--- Select Log Mode ---" -ForegroundColor Cyan
-Write-Host "[1] Default Mode (HelloReader & Accessibility logs)"
-Write-Host "[2] Error Mode (Error & Fatal logs only)"
-Write-Host "[3] Full Mode (All logs from device)"
+Write-Host "`n--- ログモードを選択してね ---" -ForegroundColor Cyan
+Write-Host "[1] Default Mode (HelloReader & アクセシビリティ専用スリム表示)"
+Write-Host "[2] Error Mode (エラーログのみ)"
+Write-Host "[3] Full Mode (全ログ取得)"
 
 $modeChoice = ""
 while ($modeChoice -ne "1" -and $modeChoice -ne "2" -and $modeChoice -ne "3") {
-    $modeChoice = Read-Host "Select mode (1-3)"
+    $modeChoice = Read-Host "モードを選択 (1-3)"
 }
 
 $modeName = ""
-$filterPattern = ""
 $logFilterArgs = ""
 
 if ($modeChoice -eq "1") {
     $modeName = "DefaultMode"
-    # HelloReader関連のログをV(Verbose)以上で取得
-    $logFilterArgs = "-s HelloReaderService:V HelloReader:V *:S"
+    # HelloReaderServiceとアクセシビリティ関連のみをピンポイント取得（他は消音して超スリム化!）
+    $logFilterArgs = "HelloReaderService:V AccessibilityManager:V *:S"
 }
 elseif ($modeChoice -eq "2") {
     $modeName = "ErrorMode"
-    # すべてのエラーログを取得
     $logFilterArgs = "*:E"
 }
 else {
     $modeName = "FullMode"
-    # 端末の全ログをフィルターなしで取得
     $logFilterArgs = ""
 }
 
-# 3. ログのリアルタイム表示とバッファリング実行
+# 3. ログの非同期リアルタイムキャッチ（Ctrl+C即時反応保証）
 $logLines = [System.Collections.Generic.List[string]]::new()
 $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
 $fileName = "${modeName}_${timestamp}.log"
@@ -81,23 +78,27 @@ $processInfo.CreateNoWindow = $true
 $process = New-Object System.Diagnostics.Process
 $process.StartInfo = $processInfo
 
-Write-Host "`n--- Starting ADB Logcat in [$modeName] ---" -ForegroundColor Cyan
-Write-Host "Press [Ctrl+C] to stop and automatically save logs to a file." -ForegroundColor Yellow
+Write-Host "`n--- [$modeName] でスリムログ収集を開始するにょろ ---" -ForegroundColor Cyan
+Write-Host "[Ctrl+C] を押すと『トン・ツー♪』と鳴って即座に保存されるにょろ！" -ForegroundColor Yellow
 Write-Host "--------------------------------------------------------"
+
+# 非同期イベント駆動でログを受信
+$action = {
+    if ($Event.SourceEventArgs.Data) {
+        $line = $Event.SourceEventArgs.Data
+        Write-Host $line
+        $Event.MessageData.Add($line)
+    }
+}
+
+$eventSubscriber = Register-ObjectEvent -InputObject $process -EventName OutputDataReceived -Action $action -MessageData $logLines
 
 try {
     $process.Start() | Out-Null
+    $process.BeginOutputReadLine()
+    
     while (-not $process.HasExited) {
-        $line = $process.StandardOutput.ReadLine()
-        if ($null -ne $line) {
-            if ([string]::IsNullOrEmpty($filterPattern) -or $line -imatch $filterPattern) {
-                Write-Host $line
-                $logLines.Add($line)
-            }
-        }
-        else {
-            Start-Sleep -Milliseconds 10
-        }
+        Start-Sleep -Milliseconds 100
     }
 }
 finally {
@@ -107,19 +108,25 @@ finally {
         [Console]::Beep(600, 180) # ツゥー (中音600Hz)
     } catch { }
 
-    # Ctrl+Cで中断された際も、確実にここに突入してプロセスをクリーンアップ＆一回だけで確実に保存します
+    Unregister-Event -SubscriptionId $eventSubscriber.Id -ErrorAction SilentlyContinue
+
     if ($process -and -not $process.HasExited) {
         $process.Kill()
     }
     
-    # ログファイルの保存（ディスク保護メモリバッファ ＋ プログレスバー両立）
+    # ログファイルの保存（サーバー＆ディスク保護！直近最大1000行に自動スリム制限）
     if ($logLines.Count -gt 0) {
+        # 1000行を超えていたら直近の1000行だけに自動スリムカット！
+        if ($logLines.Count -gt 1000) {
+            $logLines = $logLines.GetRange($logLines.Count - 1000, 1000)
+            Write-Host "`n※ サーバー保護のため、直近最新1000行に自動スリムカットしたにょろ！" -ForegroundColor Yellow
+        }
+
         $totalLines = $logLines.Count
-        Write-Host "`nSaving logs to disk (Buffered Drive-Safe Mode)... Total lines: $totalLines" -ForegroundColor Yellow
+        Write-Host "ディスクにログを保存中にょろ... 合計行数: $totalLines" -ForegroundColor Yellow
             
         $fullPath = [System.IO.Path]::GetFullPath($fileName)
         
-        # 64KBの大きなメモリバッファを持つStreamWriterを作成（ディスクへの摩耗・負荷を最小限に抑える）
         $stream = [System.IO.File]::Create($fullPath)
         $writer = New-Object System.IO.StreamWriter($stream, [System.Text.Encoding]::UTF8, 65536)
         
@@ -128,10 +135,9 @@ finally {
             for ($i = 0; $i -lt $totalLines; $i++) {
                 $writer.WriteLine($logLines[$i])
                 
-                # 10%ごとのスムーズなプログレス進捗表示
                 if ($i -gt 0 -and ((($i % $batchSize) -eq 0) -or ($i -eq ($totalLines - 1)))) {
                     $percent = [int]((($i + 1) / $totalLines) * 100)
-                    Write-Host "Saving progress: $percent% ($($i + 1) / $totalLines lines)" -ForegroundColor Cyan
+                    Write-Host "保存進捗: $percent% ($($i + 1) / $totalLines 行)" -ForegroundColor Cyan
                 }
             }
         }
@@ -146,10 +152,10 @@ finally {
             [Console]::Beep(800, 150)
         } catch { }
 
-        Write-Host "Log cat session stopped." -ForegroundColor Yellow
-        Write-Host "Logs successfully saved: [ $fileName ] (Total lines: $totalLines)" -ForegroundColor Green
+        Write-Host "ログキャッチ終了だにょろ！" -ForegroundColor Yellow
+        Write-Host "ログ保存完了にょろ: [ $fileName ] (合計行数: $totalLines)" -ForegroundColor Green
     }
     else {
-        Write-Host "`nLog cat session stopped. No logs were captured." -ForegroundColor Yellow
+        Write-Host "`nログキャッチ終了。取得されたログはゼロ件だったにょろ。" -ForegroundColor Yellow
     }
 }
