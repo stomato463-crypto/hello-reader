@@ -123,7 +123,7 @@ finally {
                 $writer.WriteLine($logLines[$i])
                 
                 # 10%ごとのスムーズなプログレス進捗表示
-                if ($i > 0 -and ($i % $batchSize -eq 0 -or $i -eq $totalLines -1)) {
+                if ($i -gt 0 -and ((($i % $batchSize) -eq 0) -or ($i -eq ($totalLines - 1)))) {
                     $percent = [int]((($i + 1) / $totalLines) * 100)
                     Write-Host "Saving progress: $percent% ($($i + 1) / $totalLines lines)" -ForegroundColor Cyan
                 }
