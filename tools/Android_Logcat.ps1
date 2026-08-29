@@ -36,9 +36,9 @@ else {
 
 # 2. ログ取得モードの選択
 Write-Host "`n--- Select Log Mode ---" -ForegroundColor Cyan
-Write-Host "[1] Default Mode (Service & Gesture logs only)"
+Write-Host "[1] Default Mode (HelloReader & Accessibility logs)"
 Write-Host "[2] Error Mode (Error & Fatal logs only)"
-Write-Host "[3] Full Mode (All logs from screen reader)"
+Write-Host "[3] Full Mode (All logs from device)"
 
 $modeChoice = ""
 while ($modeChoice -ne "1" -and $modeChoice -ne "2" -and $modeChoice -ne "3") {
@@ -47,21 +47,22 @@ while ($modeChoice -ne "1" -and $modeChoice -ne "2" -and $modeChoice -ne "3") {
 
 $modeName = ""
 $filterPattern = ""
-$logFilterArgs = @()
+$logFilterArgs = ""
 
 if ($modeChoice -eq "1") {
     $modeName = "DefaultMode"
-    $logFilterArgs = @("HelloReaderService:D", "HelloReader:D", "*:S")
+    # HelloReader関連のログをV(Verbose)以上で取得
+    $logFilterArgs = "-s HelloReaderService:V HelloReader:V *:S"
 }
 elseif ($modeChoice -eq "2") {
     $modeName = "ErrorMode"
-    $logFilterArgs = @("*:E")
-    $filterPattern = "HelloReader|helloreader"
+    # すべてのエラーログを取得
+    $logFilterArgs = "*:E"
 }
 else {
     $modeName = "FullMode"
-    $logFilterArgs = @()
-    $filterPattern = "HelloReader|helloreader"
+    # 端末の全ログをフィルターなしで取得
+    $logFilterArgs = ""
 }
 
 # 3. ログのリアルタイム表示とバッファリング実行
