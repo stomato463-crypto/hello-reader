@@ -101,6 +101,12 @@ try {
     }
 }
 finally {
+    # 🔔 Ctrl+Cキーが受け付けられたことを伝えるモールスディープ音（トン・ツー♪）
+    try {
+        [Console]::Beep(400, 100) # トン (低音400Hz)
+        [Console]::Beep(600, 180) # ツゥー (中音600Hz)
+    } catch { }
+
     # Ctrl+Cで中断された際も、確実にここに突入してプロセスをクリーンアップ＆一回だけで確実に保存します
     if ($process -and -not $process.HasExited) {
         $process.Kill()
@@ -134,6 +140,11 @@ finally {
             $writer.Close()
             $stream.Close()
         }
+
+        # 🎵 保存完了を知らせるハッピーな完了ディープ音♪
+        try {
+            [Console]::Beep(800, 150)
+        } catch { }
 
         Write-Host "Log cat session stopped." -ForegroundColor Yellow
         Write-Host "Logs successfully saved: [ $fileName ] (Total lines: $totalLines)" -ForegroundColor Green
