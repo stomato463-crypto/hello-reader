@@ -93,7 +93,8 @@ try {
                 Write-Host $line
                 $logLines.Add($line)
             }
-        } else {
+        }
+        else {
             Start-Sleep -Milliseconds 10
         }
     }
@@ -104,18 +105,30 @@ finally {
         $process.Kill()
     }
     
-    # ログファイルの保存（同期的書き込みの保証）
+    # ログファイルの保存（プログレスバー付き）
     if ($logLines.Count -gt 0) {
-        Write-Host "`nSaving logs to disk... Please wait." -ForegroundColor Yellow
-        $logLines | Out-File -FilePath $fileName -Encoding utf8
-        while (-not (Test-Path $fileName)) {
-            Start-Sleep -Milliseconds 50
+        Write-Host "`nSaving logs to disk... Total lines: $($logLines.Count)" -ForegroundColor Yellow
+            
+        $totalLines = $logLines.Count
+        $batchSize = [Math]::Max([int]($totalLines / 20), 1)
+        $currentWritten = 0
+            
+        Set-Content -Path $fileName -Value "" -Encoding utf8
+            
+        for ($i = 0; $i -lt $totalLines; $i += $batchSize) {
+            $chunk = $logLines[$i..(Math::Min($i + $batchSize - 1, $totalLines - 1))]
+            $chunk | Add-Content -Path $fileName -Encoding utf8
+                
+            $currentWritten += $chunk.Count
+            $percent = [int](($currentWritten / $totalLines) * 100)
+                
+            Write-Host "Saving progress: $percent% ($currentWritten / $totalLines lines)" -ForegroundColor Cyan
         }
+
         Write-Host "Log cat session stopped." -ForegroundColor Yellow
-        Write-Host "Logs successfully saved: [ $fileName ] (Total lines: $($logLines.Count))" -ForegroundColor Green
+        Write-Host "Logs successfully saved: [ $fileName ]" -ForegroundColor Green
     }
     else {
         Write-Host "`nLog cat session stopped. No logs were captured." -ForegroundColor Yellow
     }
 }
-
