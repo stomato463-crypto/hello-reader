@@ -13,9 +13,18 @@ on:
 jobs:
   build:
     runs-on: host
+    env:
+      ANDROID_HOME: C:\Users\owner\AppData\Local\Android\Sdk
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+
+      - name: Ensure local.properties exists
+        run: |
+          if (-not (Test-Path "local.properties")) {
+              "sdk.dir=C:\\Users\\owner\\AppData\\Local\\Android\\Sdk" | Out-File -FilePath "local.properties" -Encoding utf8
+          }
+        shell: powershell
 
       - name: Build Debug APK (Windows Host)
         run: .\gradlew.bat assembleDebug
