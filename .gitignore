@@ -25,3 +25,4 @@ build/
 /.kotlin
 *.iml
 .DS_Store
+/talkback
