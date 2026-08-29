@@ -1,4 +1,4 @@
-name: Hello Reader CI Build
+name: Hello Reader CI Build & Release
 
 on:
   push:
@@ -29,3 +29,20 @@ jobs:
       - name: Build Debug APK (Windows Host)
         run: .\gradlew.bat assembleDebug
         shell: powershell
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Auto Publish to Gitea Releases (No Tag Required)
+        uses: https://gitea.com/actions/gitea-release-action@v1
+        with:
+          files: app/build/outputs/apk/debug/app-debug.apk
+          name: Hello Reader Latest Alpha Build
+          tag_name: latest-alpha
+          draft: false
+          prerelease: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
