@@ -100,7 +100,7 @@ try {
     }
 }
 finally {
-    # Ctrl+Cで中断された際も、確実にここに突入してプロセスをクリーンアップします
+    # Ctrl+Cで中断された際も、確実にここに突入してプロセスをクリーンアップ＆一回だけで確実に保存します
     if ($process -and -not $process.HasExited) {
         $process.Kill()
     }
@@ -116,7 +116,8 @@ finally {
         Set-Content -Path $fileName -Value "" -Encoding utf8
             
         for ($i = 0; $i -lt $totalLines; $i += $batchSize) {
-            $chunk = $logLines[$i..(Math::Min($i + $batchSize - 1, $totalLines - 1))]
+            $endIdx = [Math]::Min($i + $batchSize - 1, $totalLines - 1)
+            $chunk = $logLines[$i..$endIdx]
             $chunk | Add-Content -Path $fileName -Encoding utf8
                 
             $currentWritten += $chunk.Count

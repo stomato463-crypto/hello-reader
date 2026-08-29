@@ -2,6 +2,7 @@ package com.stomato.helloreader
 
 import android.accessibilityservice.AccessibilityGestureEvent
 import android.accessibilityservice.AccessibilityService
+import android.accessibilityservice.AccessibilityServiceInfo
 import android.speech.tts.TextToSpeech
 import android.view.accessibility.AccessibilityEvent
 import android.util.Log
@@ -23,6 +24,22 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     override fun onServiceConnected() {
         super.onServiceConnected()
         Log.d(TAG, "Hello Reader Accessibility Service Connected!")
+
+        // 動的なAccessibilityServiceInfoの設定（正しく存在するフラグのみ指定）
+        val info = serviceInfo ?: AccessibilityServiceInfo()
+        info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK
+        info.feedbackType = AccessibilityServiceInfo.FEEDBACK_SPOKEN or
+                AccessibilityServiceInfo.FEEDBACK_HAPTIC or
+                AccessibilityServiceInfo.FEEDBACK_AUDIBLE
+        info.flags = info.flags or
+                AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS or
+                AccessibilityServiceInfo.FLAG_INCLUDE_NOT_IMPORTANT_VIEWS or
+                AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS or
+                AccessibilityServiceInfo.FLAG_REQUEST_TOUCH_EXPLORATION_MODE or
+                AccessibilityServiceInfo.FLAG_REQUEST_MULTI_FINGER_GESTURES
+        info.notificationTimeout = 100
+        this.serviceInfo = info
+
         // 声帯 (TTS: 音声合成) の初期化
         tts = TextToSpeech(applicationContext, this)
     }
@@ -80,15 +97,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (event == null || !isTtsReady) return
 
-        when (event.eventType) {
-            AccessibilityEvent.TYPE_VIEW_FOCUSED,
-            AccessibilityEvent.TYPE_VIEW_CLICKED,
-            AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> {
-                val text = getEventText(event)
-                if (!text.isNullOrBlank()) {
-                    speak(text)
-                }
-            }
+        val eventType = event.eventType
+        Log.d(TAG, "onAccessibilityEvent received: $eventType")
+
+        val text = getEventText(event)
+        if (!text.isNullOrBlank()) {
+            speak(text)
         }
     }
 
