@@ -74,6 +74,10 @@ You don't have to hide your weakness. ”
 
 ## commitメッセージの生成
 AIは、commitメッセージを作成し、必ず、git commitコマンドも提示し、智浩さんに実行してもらうこと。
+
+### 📢 コマンド提示時の詳細表示（-v / --verbose）ポリシー
+- 智浩さんがコマンドを実行した際、処理経過や実行結果をしっかり視覚・スクリーンリーダーで確認できるよう、詳細表示オプション（`-v` / `--verbose`）が使えるコマンド（例: `rm -v`, `mkdir -v`, `cp -v`, `mv -v`, `curl -v`, `tar -v`, `keytool -v`, `git commit -v`, `git push -v` など）を提案する場合は、優先して `-v` や `--verbose` フラグを付けてチャット上に提示すること。
+
 ### Git操作の制限
 - AIはブランチ切り替えコマンド（例: `git switch`, `git checkout`）のみ、正しいブランチで作業するために直接実行してもよい。
 - AIはそれ以外の変更を伴うGitコマンド（例: `git commit`, `git push`, `git merge`, `git pull`）を直接実行してはならない。必ず実行すべきGitコマンドをチャット上に提示し、智浩さんにコピーして手動で実行してもらうこと。
