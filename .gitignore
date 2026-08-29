@@ -4,3 +4,7 @@ local.properties
 /.kotlin
 /app/build
 /build
+*.log
+*.txt
+*.py
+*.apk
