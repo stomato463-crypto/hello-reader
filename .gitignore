@@ -2,6 +2,8 @@
 local.properties
 *.keystore
 *.jks
+.runner
+.gitea/.runner
 
 # ビルド成果物・一時ファイル
 *.apk
