@@ -1,10 +1,25 @@
+# 環境固有・秘密情報
 local.properties
-/.gradle
-/.idea
-/.kotlin
+*.keystore
+*.jks
+
+# ビルド成果物・一時ファイル
+*.apk
+*.aar
+build/
+**/build/
 /app/build
 /build
+
+# ログ・一時ファイル
 *.log
 *.txt
 *.py
-*.apk
+
+# IDE・ツール用の設定・キャッシュ
+/.gradle
+/.idea
+/.kotlin
+/.jj
+*.iml
+.DS_Store
