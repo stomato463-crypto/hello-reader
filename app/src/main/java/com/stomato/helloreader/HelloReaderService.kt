@@ -211,13 +211,13 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         if (status == TextToSpeech.SUCCESS) {
             val result = tts?.setLanguage(Locale.JAPANESE)
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                Log.e(TAG, "日本語のTTSデータが見つからないか対応していないにょろ")
+                Log.e(TAG, "日本語のTTSデータが見つからないか対応していません")
             } else {
                 isTtsReady = true
-                speak("Hello Readerが起動したにょろ")
+                speak("Hello Readerが起動しました")
             }
         } else {
-            Log.e(TAG, "TTSの初期化に失敗したにょろ")
+            Log.e(TAG, "TTSの初期化に失敗しました")
         }
     }
 
@@ -542,13 +542,19 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             if (!nodeText.isNullOrBlank()) {
                 speak(nodeText)
             } else {
-                speak("$directionName の要素に移動したにょろ")
+                speak("$directionName の要素へ移動")
             }
         } else {
-            // TalkBack Auto-Scroll 準拠: 画面端到達時に自動スクロールを試行！
-            val autoScrolled = performScrollAction(direction == View.FOCUS_FORWARD)
-            if (!autoScrolled) {
-                speak("これ以上 $directionName に要素はないにょろ")
+            // TalkBack Auto-Scroll 準拠: 画面端到達時に自動スクロールを実行し、新ノードへフォーカスを移す！
+            val isForward = (direction == View.FOCUS_FORWARD)
+            val autoScrolled = performScrollAction(forward = isForward, silent = true)
+            if (autoScrolled) {
+                mainHandler.postDelayed({
+                    navigateFocus(direction, directionName)
+                }, 200)
+            } else {
+                playSound(soundDeactivateId)
+                speak("これ以上 $directionName に進めません")
             }
         }
     }
@@ -576,7 +582,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         if (!compat.isVisibleToUser) return
 
         val desc = parseNodeDescription(node)
-        if (!desc.isNullOrBlank() && (compat.isFocusable || compat.isClickable || node.childCount == 0)) {
+        if (!desc.isNullOrBlank() && (compat.isFocusable || compat.isClickable || compat.isScreenReaderFocusable)) {
             list.add(node)
         }
 
@@ -588,7 +594,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     /**
      * TalkBack 準拠 スクロールアクション実行 (2本指スワイプ / 端到達時自動スクロール)
      */
-    private fun performScrollAction(forward: Boolean): Boolean {
+    private fun performScrollAction(forward: Boolean, silent: Boolean = false): Boolean {
         val root = getActiveRootNode() ?: return false
         val scrollableNode = findScrollableNode(root)
         if (scrollableNode != null) {
@@ -596,11 +602,15 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             val success = scrollableNode.performAction(action)
             if (success) {
                 playSound(soundScrollId)
-                speak(if (forward) "次へスクロールしたにょろ" else "前へスクロールしたにょろ")
+                if (!silent) {
+                    speak(if (forward) "次へスクロール" else "前へスクロール")
+                }
                 return true
             }
         }
-        playSound(soundDeactivateId)
+        if (!silent) {
+            playSound(soundDeactivateId)
+        }
         return false
     }
 
@@ -631,7 +641,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     try {
                         telecomManager.acceptRingingCall()
                         playSound(soundActivateId)
-                        speak("電話に応答したにょろ")
+                        speak("電話に応答しました")
                         return true
                     } catch (e: SecurityException) {
                         Log.w(TAG, "acceptRingingCall SecurityException fallback to HEADSETHOOK", e)
@@ -639,7 +649,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 }
                 performGlobalAction(GLOBAL_ACTION_KEYCODE_HEADSETHOOK)
                 playSound(soundActivateId)
-                speak("電話に応答したにょろ")
+                speak("電話に応答しました")
                 return true
             } else if (isCallActive) {
                 if (telecomManager != null) {
@@ -690,7 +700,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 val success = nodeToClick.performAction(AccessibilityNodeInfoCompat.ACTION_CLICK)
                 if (success) {
                     playSound(soundActivateId)
-                    speak("実行したにょろ")
+                    speak("実行しました")
                     return
                 }
             }
@@ -699,15 +709,15 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             val directSuccess = currentFocus.performAction(AccessibilityNodeInfo.ACTION_CLICK)
             if (directSuccess) {
                 playSound(soundActivateId)
-                speak("実行したにょろ")
+                speak("実行しました")
                 return
             }
 
             playSound(soundDeactivateId)
-            speak("クリック実行に失敗したにょろ")
+            speak("実行できません")
         } else {
             playSound(soundDeactivateId)
-            speak("フォーカスされている要素がないにょろ")
+            speak("フォーカスされている要素はありません")
         }
     }
 
@@ -750,7 +760,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private fun playSound(soundId: Int) {
         if (soundId != 0 && soundPool != null) {
             val now = System.currentTimeMillis()
-            if (soundId == lastPlaySoundId && (now - lastPlaySoundTime) < 50) {
+            if (soundId == lastPlaySoundId && (now - lastPlaySoundTime) < 150) {
                 return
             }
             lastPlaySoundId = soundId
@@ -885,10 +895,10 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             }
             AccessibilityEvent.TYPE_VIEW_SCROLLED -> {
                 // TalkBack準拠: リスト等のスクロール音再生 ＋ 位置案内！
-                playSound(soundScrollId)
                 val now = System.currentTimeMillis()
-                if (now - lastScrollSpeakTime > 600) {
+                if (now - lastScrollSpeakTime > 300) {
                     lastScrollSpeakTime = now
+                    playSound(soundScrollId)
                     val itemCount = event.itemCount
                     val fromIndex = event.fromIndex
                     if (itemCount > 0 && fromIndex >= 0) {
