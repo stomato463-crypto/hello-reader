@@ -35,7 +35,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private var tts: TextToSpeech? = null
     private var isTtsReady = false
 
-    // サウンドフィードバック (Audacity自作音 ＋ Google公式TalkBack音 ハイブリッド仕様)
+    // サウンドフィードバック (100% Google AOSP TalkBack OSS音源仕様)
     private var soundPool: SoundPool? = null
     private var soundActivateId: Int = 0
     private var soundDeactivateId: Int = 0
@@ -418,12 +418,15 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             return
         }
 
-        val currentFocus = root.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
-        var currentIndex = -1
+        var currentFocus = root.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
+        if (currentFocus == null) {
+            currentFocus = lastFocusedNode
+        }
 
+        var currentIndex = -1
         if (currentFocus != null) {
             for (i in allNodes.indices) {
-                if (allNodes[i] == currentFocus) {
+                if (isSameNode(allNodes[i], currentFocus)) {
                     currentIndex = i
                     break
                 }
@@ -441,6 +444,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
             currentFocus?.performAction(AccessibilityNodeInfoCompat.ACTION_CLEAR_ACCESSIBILITY_FOCUS)
             val success = targetNode.performAction(AccessibilityNodeInfoCompat.ACTION_ACCESSIBILITY_FOCUS)
+            lastFocusedNode = targetNode
             val nodeText = parseNodeDescription(targetNode)
 
             // フォーカス移動成功音！ (Google公式 focus.ogg)
@@ -456,6 +460,19 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             playSound(soundDeactivateId)
             speak("これ以上 $directionName に要素はないにょろ")
         }
+    }
+
+    /**
+     * 2つの AccessibilityNodeInfo が同じ画面領域・要素を指しているかチェックする
+     */
+    private fun isSameNode(node1: AccessibilityNodeInfo?, node2: AccessibilityNodeInfo?): Boolean {
+        if (node1 == null || node2 == null) return false
+        if (node1 == node2 || node1.equals(node2)) return true
+        val r1 = Rect()
+        val r2 = Rect()
+        node1.getBoundsInScreen(r1)
+        node2.getBoundsInScreen(r2)
+        return !r1.isEmpty && r1 == r2 && node1.className == node2.className
     }
 
     /**
@@ -594,7 +611,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             soundDeactivateId = soundPool?.load(applicationContext, R.raw.deactivate, 1) ?: 0
             soundFocusId = soundPool?.load(applicationContext, R.raw.focus, 1) ?: 0
             soundViewEnteredId = soundPool?.load(applicationContext, R.raw.view_entered, 1) ?: 0
-            Log.d(TAG, "SoundPool Initialized. Activate: $soundActivateId, Deactivate: $soundDeactivateId, Focus: $soundFocusId, ViewEntered: $soundViewEnteredId")
+            Log.d(TAG, "SoundPool Initialized (Hybrid Custom & AOSP Sounds). Activate: $soundActivateId, Deactivate: $soundDeactivateId, Focus: $soundFocusId, ViewEntered: $soundViewEnteredId")
         } catch (e: Exception) {
             Log.e(TAG, "SoundPool初期化エラー", e)
         }
