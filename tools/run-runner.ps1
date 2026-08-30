@@ -1,0 +1,1 @@
+..\gitea-runner.exe daemon
