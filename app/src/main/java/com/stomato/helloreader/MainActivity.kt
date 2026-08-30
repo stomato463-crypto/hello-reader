@@ -99,8 +99,8 @@ class MainActivity : ComponentActivity(), TextToSpeech.OnInitListener {
             if (result != TextToSpeech.LANG_MISSING_DATA && result != TextToSpeech.LANG_NOT_SUPPORTED) {
                 isTtsReady = true
                 Log.d("MainActivity", "自前TTS初期化成功！")
-                // TalkBackがOFFでも初期設定案内を自発的に音読！
-                speak("Hello Reader設定画面へようこそ。1のボタンで権限を許可し、2のボタンでアクセシビリティを有効にしてください。")
+                // 智浩さんの自作メッセージをベースにしたTalkBack無効時対応の極上ガイダンス！
+                speak("Hello Readerへようこそ！初期設定のご案内です。この画面には二つの大きなボタンがあります。1のボタンで権限を許可し、2のボタンでアクセシビリティを有効にしてください。操作が難しい場合は、音量ボタンの上下を3秒間同時に長押しして TalkBack をオンにするか、お近くの方にボタンを押してもらってください。")
             }
         }
     }
