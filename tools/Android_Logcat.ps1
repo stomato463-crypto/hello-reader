@@ -51,7 +51,7 @@ $logFilterArgs = ""
 if ($modeChoice -eq "1") {
     $modeName = "DefaultMode"
     # HelloReaderServiceとアクセシビリティ関連のみをピンポイント取得（他は消音して超スリム化!）
-    $logFilterArgs = "HelloReaderService:V AccessibilityManager:V *:S"
+    $logFilterArgs = "HelloReaderService:V HelloReader:V AccessibilityManager:V AccessibilityService:V *:S"
 }
 elseif ($modeChoice -eq "2") {
     $modeName = "ErrorMode"
@@ -62,10 +62,14 @@ else {
     $logFilterArgs = ""
 }
 
-# 3. ログの非同期リアルタイムキャッチ（Ctrl+C即時反応保証）
-$logLines = [System.Collections.Generic.List[string]]::new()
+# 3. カレントパス（作業中ディレクトリ）の動的取得 (クロスプラットフォーム対応)
+$currentDir = (Get-Location).Path
 $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
 $fileName = "${modeName}_${timestamp}.log"
+$saveFullPath = Join-Path $currentDir $fileName
+
+# スレッドセーフな同期リストを使用
+$logList = [System.Collections.ArrayList]::Synchronized([System.Collections.ArrayList]::new())
 
 $processInfo = New-Object System.Diagnostics.ProcessStartInfo
 $processInfo.FileName = "adb"
@@ -80,6 +84,7 @@ $process.StartInfo = $processInfo
 
 Write-Host "`n--- [$modeName] でスリムログ収集を開始するにょろ ---" -ForegroundColor Cyan
 Write-Host "[Ctrl+C] を押すと『トン・ツー♪』と鳴って即座に保存されるにょろ！" -ForegroundColor Yellow
+Write-Host "保存予定場所 (カレントパス): $saveFullPath" -ForegroundColor Yellow
 Write-Host "--------------------------------------------------------"
 
 # 非同期イベント駆動でログを受信
@@ -87,11 +92,11 @@ $action = {
     if ($Event.SourceEventArgs.Data) {
         $line = $Event.SourceEventArgs.Data
         Write-Host $line
-        $Event.MessageData.Add($line)
+        [void]$Event.MessageData.Add($line)
     }
 }
 
-$eventSubscriber = Register-ObjectEvent -InputObject $process -EventName OutputDataReceived -Action $action -MessageData $logLines
+$eventSubscriber = Register-ObjectEvent -InputObject $process -EventName OutputDataReceived -Action $action -MessageData $logList
 
 try {
     $process.Start() | Out-Null
@@ -114,26 +119,27 @@ finally {
         $process.Kill()
     }
     
-    # ログファイルの保存（サーバー＆ディスク保護！直近最大1000行に自動スリム制限）
-    if ($logLines.Count -gt 0) {
+    $linesToSave = @($logList)
+
+    # ログファイルの保存（カレントパスへ確実に保存！）
+    if ($linesToSave.Count -gt 0) {
         # 1000行を超えていたら直近の1000行だけに自動スリムカット！
-        if ($logLines.Count -gt 1000) {
-            $logLines = $logLines.GetRange($logLines.Count - 1000, 1000)
+        if ($linesToSave.Count -gt 1000) {
+            $linesToSave = $linesToSave[($linesToSave.Count - 1000)..($linesToSave.Count - 1)]
             Write-Host "`n※ サーバー保護のため、直近最新1000行に自動スリムカットしたにょろ！" -ForegroundColor Yellow
         }
 
-        $totalLines = $logLines.Count
-        Write-Host "ディスクにログを保存中にょろ... 合計行数: $totalLines" -ForegroundColor Yellow
+        $totalLines = $linesToSave.Count
+        Write-Host "`nディスクにログを保存中にょろ... 合計行数: $totalLines" -ForegroundColor Yellow
+        Write-Host "保存先フルパス: $saveFullPath" -ForegroundColor Cyan
             
-        $fullPath = [System.IO.Path]::GetFullPath($fileName)
-        
-        $stream = [System.IO.File]::Create($fullPath)
+        $stream = [System.IO.File]::Create($saveFullPath)
         $writer = New-Object System.IO.StreamWriter($stream, [System.Text.Encoding]::UTF8, 65536)
         
         try {
             $batchSize = [Math]::Max([int]($totalLines / 10), 1)
             for ($i = 0; $i -lt $totalLines; $i++) {
-                $writer.WriteLine($logLines[$i])
+                $writer.WriteLine($linesToSave[$i])
                 
                 if ($i -gt 0 -and ((($i % $batchSize) -eq 0) -or ($i -eq ($totalLines - 1)))) {
                     $percent = [int]((($i + 1) / $totalLines) * 100)
@@ -153,9 +159,10 @@ finally {
         } catch { }
 
         Write-Host "ログキャッチ終了だにょろ！" -ForegroundColor Yellow
-        Write-Host "ログ保存完了にょろ: [ $fileName ] (合計行数: $totalLines)" -ForegroundColor Green
+        Write-Host "ログ保存完了にょろ: [ $saveFullPath ] (合計行数: $totalLines)" -ForegroundColor Green
     }
     else {
-        Write-Host "`nログキャッチ終了。取得されたログはゼロ件だったにょろ。" -ForegroundColor Yellow
+        Write-Host "`nログキャッチ終了。取得されたログはゼロ件だったにょろ。" -ForegroundColor Red
+        Write-Host "保存予定だったパス: $saveFullPath" -ForegroundColor Yellow
     }
 }

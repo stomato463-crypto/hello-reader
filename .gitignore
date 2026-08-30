@@ -26,3 +26,6 @@ build/
 *.iml
 .DS_Store
 /talkback
+tools/build_talkback.ps1
+tools/TalkBack_Logcat.ps1
+
