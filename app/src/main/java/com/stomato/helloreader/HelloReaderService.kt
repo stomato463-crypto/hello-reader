@@ -69,10 +69,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private var soundDeactivateId: Int = 0
     private var soundFocusId: Int = 0
     private var soundViewEnteredId: Int = 0
+    private var soundScrollId: Int = 0
 
     // 重複連呼防止用タイムスタンプ
     private var lastSpokenText: String = ""
     private var lastSpokenTime: Long = 0L
+    private var lastScrollSpeakTime: Long = 0L
 
     private var lastUnlockTime: Long = 0L
 
@@ -315,9 +317,24 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 }
             }
             GESTURE_2_FINGER_SWIPE_UP -> {
-                Log.d(TAG, "2-Finger Swipe Up: Lockscreen PIN Entry")
-                speak("PINコード入力画面")
-                false // OSにジェスチャーをそのまま渡してパスコードキーパッドを表示させる
+                Log.d(TAG, "2-Finger Swipe Up: Scroll Forward")
+                performScrollAction(forward = true)
+                true
+            }
+            GESTURE_2_FINGER_SWIPE_DOWN -> {
+                Log.d(TAG, "2-Finger Swipe Down: Scroll Backward")
+                performScrollAction(forward = false)
+                true
+            }
+            GESTURE_2_FINGER_SWIPE_LEFT -> {
+                Log.d(TAG, "2-Finger Swipe Left: Scroll Forward Page")
+                performScrollAction(forward = true)
+                true
+            }
+            GESTURE_2_FINGER_SWIPE_RIGHT -> {
+                Log.d(TAG, "2-Finger Swipe Right: Scroll Backward Page")
+                performScrollAction(forward = false)
+                true
             }
             GESTURE_2_FINGER_DOUBLE_TAP -> {
                 Log.d(TAG, "2-Finger Double Tap: Phone Answer / End Call")
@@ -405,6 +422,9 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     /**
      * アクティブな全ウィンドウのルートノードを取得する (AOSP TalkBack ロック画面最優先対応)
      */
+    /**
+     * アクティブな全ウィンドウのルートノードを取得する (AOSP TalkBack 準拠 TYPE_APPLICATION 優先対応)
+     */
     private fun getActiveRootNode(): AccessibilityNodeInfo? {
         val currentWindows = windows
         if (!currentWindows.isNullOrEmpty()) {
@@ -423,12 +443,23 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 }
             }
 
+            // 通常時: TYPE_APPLICATION (ホーム画面本体・アプリアイコン領域) を最優先！
             for (window in currentWindows) {
-                if (window.type == AccessibilityWindowInfo.TYPE_SYSTEM || window.isFocused || window.isActive) {
+                if (window.type == AccessibilityWindowInfo.TYPE_APPLICATION) {
                     val root = window.root
                     if (root != null) return root
                 }
             }
+
+            // 次にアクティブ/フォーカスされたウィンドウ
+            for (window in currentWindows) {
+                if (window.isFocused || window.isActive) {
+                    val root = window.root
+                    if (root != null) return root
+                }
+            }
+
+            // フォールバック
             for (window in currentWindows) {
                 val root = window.root
                 if (root != null) return root
@@ -439,24 +470,47 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
     /**
      * AOSP TalkBack (NodeFocusFinder / TraversalStrategy) 準拠 フォーカス移動処理
-     * システムロック画面等の特殊ウィンドウでも木構造トラバーサルで100%全要素を巡回・読解！
+     * 全ウィンドウ（アプリ本体 ＋ システムバー）から順序良くフォーカス可能ノードを収集して100%巡回！
      */
     private fun navigateFocus(direction: Int, directionName: String) {
-        val root = getActiveRootNode()
-        if (root == null) {
-            speak("画面のノードが取得できないにょろ")
-            return
+        val allNodes = mutableListOf<AccessibilityNodeInfo>()
+        val currentWindows = windows
+
+        if (!currentWindows.isNullOrEmpty() && !isKeyguardLocked()) {
+            // 1. アプリ・ホーム画面本体 (TYPE_APPLICATION) のノードをまず優先収集！
+            for (window in currentWindows) {
+                if (window.type == AccessibilityWindowInfo.TYPE_APPLICATION) {
+                    window.root?.let { collectFocusableNodes(it, allNodes) }
+                }
+            }
+            // 2. システムウィンドウ (ナビゲーションバー等) のノードを収集！
+            for (window in currentWindows) {
+                if (window.type != AccessibilityWindowInfo.TYPE_APPLICATION) {
+                    window.root?.let { collectFocusableNodes(it, allNodes) }
+                }
+            }
         }
 
-        val allNodes = mutableListOf<AccessibilityNodeInfo>()
-        collectFocusableNodes(root, allNodes)
+        if (allNodes.isEmpty()) {
+            val root = getActiveRootNode()
+            if (root != null) {
+                collectFocusableNodes(root, allNodes)
+            }
+        }
 
         if (allNodes.isEmpty()) {
             speak("これ以上 $directionName に要素はないにょろ")
             return
         }
 
-        var currentFocus = root.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
+        val root = getActiveRootNode()
+
+        if (allNodes.isEmpty()) {
+            speak("これ以上 $directionName に要素はないにょろ")
+            return
+        }
+
+        var currentFocus = root?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
         if (currentFocus == null) {
             currentFocus = lastFocusedNode
         }
@@ -485,18 +539,17 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             lastFocusedNode = targetNode
             val nodeText = parseNodeDescription(targetNode)
 
-            // フォーカス移動成功音！ (Google公式 focus.ogg)
-            playSound(soundFocusId)
-
             if (!nodeText.isNullOrBlank()) {
                 speak(nodeText)
             } else {
                 speak("$directionName の要素に移動したにょろ")
             }
         } else {
-            // 画面の端（これ以上移動できない）到達音！ (智浩さん自作 deactivate.opus)
-            playSound(soundDeactivateId)
-            speak("これ以上 $directionName に要素はないにょろ")
+            // TalkBack Auto-Scroll 準拠: 画面端到達時に自動スクロールを試行！
+            val autoScrolled = performScrollAction(direction == View.FOCUS_FORWARD)
+            if (!autoScrolled) {
+                speak("これ以上 $directionName に要素はないにょろ")
+            }
         }
     }
 
@@ -530,6 +583,40 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         for (i in 0 until node.childCount) {
             collectFocusableNodes(node.getChild(i), list)
         }
+    }
+
+    /**
+     * TalkBack 準拠 スクロールアクション実行 (2本指スワイプ / 端到達時自動スクロール)
+     */
+    private fun performScrollAction(forward: Boolean): Boolean {
+        val root = getActiveRootNode() ?: return false
+        val scrollableNode = findScrollableNode(root)
+        if (scrollableNode != null) {
+            val action = if (forward) AccessibilityNodeInfoCompat.ACTION_SCROLL_FORWARD else AccessibilityNodeInfoCompat.ACTION_SCROLL_BACKWARD
+            val success = scrollableNode.performAction(action)
+            if (success) {
+                playSound(soundScrollId)
+                speak(if (forward) "次へスクロールしたにょろ" else "前へスクロールしたにょろ")
+                return true
+            }
+        }
+        playSound(soundDeactivateId)
+        return false
+    }
+
+    /**
+     * スクロール可能なノードを木構造から再帰検索する
+     */
+    private fun findScrollableNode(node: AccessibilityNodeInfo?): AccessibilityNodeInfo? {
+        if (node == null) return null
+        val compat = AccessibilityNodeInfoCompat.wrap(node)
+        if (compat.isScrollable) return node
+
+        for (i in 0 until node.childCount) {
+            val found = findScrollableNode(node.getChild(i))
+            if (found != null) return found
+        }
+        return null
     }
 
     /**
@@ -650,7 +737,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             soundDeactivateId = soundPool?.load(applicationContext, R.raw.deactivate, 1) ?: 0
             soundFocusId = soundPool?.load(applicationContext, R.raw.focus, 1) ?: 0
             soundViewEnteredId = soundPool?.load(applicationContext, R.raw.view_entered, 1) ?: 0
-            Log.d(TAG, "SoundPool Initialized (Hybrid Custom & AOSP Sounds). Activate: $soundActivateId, Deactivate: $soundDeactivateId, Focus: $soundFocusId, ViewEntered: $soundViewEnteredId")
+            soundScrollId = soundPool?.load(applicationContext, R.raw.scroll_tone, 1) ?: 0
+            Log.d(TAG, "SoundPool Initialized (Hybrid Custom & AOSP Sounds). Activate: $soundActivateId, Deactivate: $soundDeactivateId, Focus: $soundFocusId, ViewEntered: $soundViewEnteredId, Scroll: $soundScrollId")
         } catch (e: Exception) {
             Log.e(TAG, "SoundPool初期化エラー", e)
         }
@@ -662,7 +750,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private fun playSound(soundId: Int) {
         if (soundId != 0 && soundPool != null) {
             val now = System.currentTimeMillis()
-            if (soundId == lastPlaySoundId && (now - lastPlaySoundTime) < 100) {
+            if (soundId == lastPlaySoundId && (now - lastPlaySoundTime) < 50) {
                 return
             }
             lastPlaySoundId = soundId
@@ -786,6 +874,26 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 val text = getEventText(event)
                 if (!text.isNullOrBlank()) {
                     speak(text)
+                }
+            }
+            AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED -> {
+                // TalkBack準拠: 新しい通知メッセージを自動即時アナウンス！
+                val text = getEventText(event)
+                if (!text.isNullOrBlank()) {
+                    speak("通知: $text")
+                }
+            }
+            AccessibilityEvent.TYPE_VIEW_SCROLLED -> {
+                // TalkBack準拠: リスト等のスクロール音再生 ＋ 位置案内！
+                playSound(soundScrollId)
+                val now = System.currentTimeMillis()
+                if (now - lastScrollSpeakTime > 600) {
+                    lastScrollSpeakTime = now
+                    val itemCount = event.itemCount
+                    val fromIndex = event.fromIndex
+                    if (itemCount > 0 && fromIndex >= 0) {
+                        speak("${itemCount}項目中 ${fromIndex + 1}項目を表示中")
+                    }
                 }
             }
         }
