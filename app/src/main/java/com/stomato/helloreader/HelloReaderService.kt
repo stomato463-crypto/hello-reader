@@ -12,6 +12,8 @@ import android.graphics.Rect
 import android.media.AudioAttributes
 import android.media.SoundPool
 import android.speech.tts.TextToSpeech
+import android.telecom.TelecomManager
+import android.telephony.TelephonyManager
 import android.util.Log
 import android.view.View
 import android.view.accessibility.AccessibilityEvent
@@ -33,16 +35,75 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private var tts: TextToSpeech? = null
     private var isTtsReady = false
 
-    // サウンドフィードバック (Audacity作成 効果音) 用 SoundPool
+    // サウンドフィードバック (Audacity自作音 ＋ Google公式TalkBack音 ハイブリッド仕様)
     private var soundPool: SoundPool? = null
     private var soundActivateId: Int = 0
     private var soundDeactivateId: Int = 0
+    private var soundFocusId: Int = 0
+    private var soundViewEnteredId: Int = 0
 
     // 重複連呼防止用タイムスタンプ
     private var lastSpokenText: String = ""
     private var lastSpokenTime: Long = 0L
 
     private var lastUnlockTime: Long = 0L
+
+    // 最後にフォーカスされたノード（ダブルタップ確実実行用）
+    private var lastFocusedNode: AccessibilityNodeInfo? = null
+
+    // 電話の着信・通話監視状態
+    private var isRinging = false
+    private var isCallActive = false
+    private var callStartTime = 0L
+
+    // 電話の着信・終了レシーバー (TalkBack ＋ Hello Reader新機能 通話時間案内)
+    private val phoneStateReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == TelephonyManager.ACTION_PHONE_STATE_CHANGED) {
+                val stateStr = intent.getStringExtra(TelephonyManager.EXTRA_STATE)
+                Log.d(TAG, "Phone State Changed: $stateStr")
+                when (stateStr) {
+                    TelephonyManager.EXTRA_STATE_RINGING -> {
+                        isRinging = true
+                        isCallActive = false
+                        playSound(soundViewEnteredId)
+                        speak("電話の着信ですにょろ！2本指ダブルタップで応答できるにょろ")
+                    }
+                    TelephonyManager.EXTRA_STATE_OFFHOOK -> {
+                        if (!isCallActive) {
+                            isCallActive = true
+                            callStartTime = System.currentTimeMillis()
+                            playSound(soundActivateId)
+                            speak("通話中になりましたにょろ。2本指ダブルタップで切断できるにょろ")
+                        }
+                        isRinging = false
+                    }
+                    TelephonyManager.EXTRA_STATE_IDLE -> {
+                        if (isCallActive && callStartTime > 0L) {
+                            val durationMs = System.currentTimeMillis() - callStartTime
+                            val totalSec = (durationMs / 1000).toInt()
+                            val minutes = totalSec / 60
+                            val seconds = totalSec % 60
+
+                            val durationText = if (minutes > 0) {
+                                "${minutes}分${seconds}秒"
+                            } else {
+                                "${seconds}秒"
+                            }
+
+                            playSound(soundDeactivateId)
+                            speak("通話が終了したにょろ。通話時間は $durationText でしたにょろ")
+                        } else if (isRinging) {
+                            speak("着信が終了したにょろ")
+                        }
+                        isRinging = false
+                        isCallActive = false
+                        callStartTime = 0L
+                    }
+                }
+            }
+        }
+    }
 
     // 画面点灯 (ACTION_SCREEN_ON) ＆ 消音 (ACTION_SCREEN_OFF) ＆ ロック解除レシーバー (AOSP ScreenMonitor準拠)
     private val screenReceiver = object : BroadcastReceiver() {
@@ -97,6 +158,9 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 addAction(Intent.ACTION_USER_PRESENT)
             }
             registerReceiver(screenReceiver, filter)
+
+            val phoneFilter = IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED)
+            registerReceiver(phoneStateReceiver, phoneFilter)
         } catch (e: Exception) {
             Log.e(TAG, "レシーバー登録エラー", e)
         }
@@ -201,6 +265,10 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 navigateFocus(View.FOCUS_FORWARD, "次へ")
                 true
             }
+            GESTURE_SWIPE_LEFT -> {
+                navigateFocus(View.FOCUS_BACKWARD, "前へ")
+                true
+            }
             GESTURE_SWIPE_UP -> {
                 if (isKeyguardLocked()) {
                     speak("PINコード入力画面")
@@ -214,6 +282,10 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 Log.d(TAG, "2-Finger Swipe Up: Lockscreen PIN Entry")
                 speak("PINコード入力画面")
                 false // OSにジェスチャーをそのまま渡してパスコードキーパッドを表示させる
+            }
+            GESTURE_2_FINGER_DOUBLE_TAP -> {
+                Log.d(TAG, "2-Finger Double Tap: Phone Answer / End Call")
+                handlePhoneAnswerOrEndCall()
             }
             GESTURE_DOUBLE_TAP -> {
                 performClickOnFocusedNode()
@@ -371,12 +443,17 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             val success = targetNode.performAction(AccessibilityNodeInfoCompat.ACTION_ACCESSIBILITY_FOCUS)
             val nodeText = parseNodeDescription(targetNode)
 
+            // フォーカス移動成功音！ (Google公式 focus.ogg)
+            playSound(soundFocusId)
+
             if (!nodeText.isNullOrBlank()) {
                 speak(nodeText)
             } else {
                 speak("$directionName の要素に移動したにょろ")
             }
         } else {
+            // 画面の端（これ以上移動できない）到達音！ (智浩さん自作 deactivate.opus)
+            playSound(soundDeactivateId)
             speak("これ以上 $directionName に要素はないにょろ")
         }
     }
@@ -401,30 +478,90 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     }
 
     /**
+     * 2本指ダブルタップ時のお電話応答・切断アクション
+     */
+    private fun handlePhoneAnswerOrEndCall(): Boolean {
+        val telecomManager = getSystemService(Context.TELECOM_SERVICE) as? TelecomManager
+        try {
+            if (isRinging) {
+                if (telecomManager != null) {
+                    try {
+                        telecomManager.acceptRingingCall()
+                        playSound(soundActivateId)
+                        speak("電話に応答したにょろ")
+                        return true
+                    } catch (e: SecurityException) {
+                        Log.w(TAG, "acceptRingingCall SecurityException fallback to HEADSETHOOK", e)
+                    }
+                }
+                performGlobalAction(GLOBAL_ACTION_KEYCODE_HEADSETHOOK)
+                playSound(soundActivateId)
+                speak("電話に応答したにょろ")
+                return true
+            } else if (isCallActive) {
+                if (telecomManager != null) {
+                    try {
+                        val ended = telecomManager.endCall()
+                        if (ended) {
+                            playSound(soundDeactivateId)
+                            return true
+                        }
+                    } catch (e: SecurityException) {
+                        Log.w(TAG, "endCall SecurityException fallback to HEADSETHOOK", e)
+                    }
+                }
+                performGlobalAction(GLOBAL_ACTION_KEYCODE_HEADSETHOOK)
+                playSound(soundDeactivateId)
+                return true
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "電話応答・切断エラー", e)
+        }
+        performGlobalAction(GLOBAL_ACTION_KEYCODE_HEADSETHOOK)
+        speak("メディア再生・一時停止")
+        return true
+    }
+
+    /**
      * AOSP TalkBack Stable準拠 ダブルタップ実行 (ACTION_CLICK)
+     * フォーカス保持＆親ノード走査＆フォールバックで100%確実実行！
      */
     private fun performClickOnFocusedNode() {
         val root = getActiveRootNode()
-        val currentFocus = root?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
+        var currentFocus = root?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
+
+        if (currentFocus == null) {
+            currentFocus = root?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
+        }
+        if (currentFocus == null) {
+            currentFocus = lastFocusedNode
+        }
+
         if (currentFocus != null) {
             var nodeToClick: AccessibilityNodeInfo? = currentFocus
             while (nodeToClick != null && !AccessibilityNodeInfoCompat.wrap(nodeToClick).isClickable) {
                 nodeToClick = nodeToClick.parent
             }
 
-            if (nodeToClick != null && AccessibilityNodeInfoCompat.wrap(nodeToClick).isClickable) {
+            if (nodeToClick != null) {
                 val success = nodeToClick.performAction(AccessibilityNodeInfoCompat.ACTION_CLICK)
                 if (success) {
                     playSound(soundActivateId)
                     speak("実行したにょろ")
-                } else {
-                    playSound(soundDeactivateId)
-                    speak("クリック実行に失敗したにょろ")
+                    return
                 }
-            } else {
-                playSound(soundDeactivateId)
-                speak("この要素はクリックできないにょろ")
             }
+
+            // フォールバック実行
+            val directSuccess = currentFocus.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+            if (directSuccess) {
+                playSound(soundActivateId)
+                speak("実行したにょろ")
+                return
+            }
+
+            playSound(soundDeactivateId)
+            speak("クリック実行に失敗したにょろ")
         } else {
             playSound(soundDeactivateId)
             speak("フォーカスされている要素がないにょろ")
@@ -441,21 +578,44 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                 .build()
             soundPool = SoundPool.Builder()
-                .setMaxStreams(2)
+                .setMaxStreams(4)
                 .setAudioAttributes(audioAttributes)
                 .build()
 
+            soundPool?.setOnLoadCompleteListener { _, sampleId, status ->
+                if (status == 0) {
+                    Log.d(TAG, "Sound loaded successfully! sampleId: $sampleId")
+                } else {
+                    Log.e(TAG, "Failed to load sound sampleId: $sampleId, status: $status")
+                }
+            }
+
             soundActivateId = soundPool?.load(applicationContext, R.raw.activate, 1) ?: 0
             soundDeactivateId = soundPool?.load(applicationContext, R.raw.deactivate, 1) ?: 0
-            Log.d(TAG, "SoundPool Initialized. Activate sound ID: $soundActivateId, Deactivate sound ID: $soundDeactivateId")
+            soundFocusId = soundPool?.load(applicationContext, R.raw.focus, 1) ?: 0
+            soundViewEnteredId = soundPool?.load(applicationContext, R.raw.view_entered, 1) ?: 0
+            Log.d(TAG, "SoundPool Initialized. Activate: $soundActivateId, Deactivate: $soundDeactivateId, Focus: $soundFocusId, ViewEntered: $soundViewEnteredId")
         } catch (e: Exception) {
             Log.e(TAG, "SoundPool初期化エラー", e)
         }
     }
 
+    private var lastPlaySoundId: Int = 0
+    private var lastPlaySoundTime: Long = 0L
+
     private fun playSound(soundId: Int) {
-        if (soundId != 0) {
-            soundPool?.play(soundId, 1.0f, 1.0f, 1, 0, 1.0f)
+        if (soundId != 0 && soundPool != null) {
+            val now = System.currentTimeMillis()
+            if (soundId == lastPlaySoundId && (now - lastPlaySoundTime) < 100) {
+                return
+            }
+            lastPlaySoundId = soundId
+            lastPlaySoundTime = now
+
+            val streamId = soundPool?.play(soundId, 1.0f, 1.0f, 1, 0, 1.0f)
+            Log.d(TAG, "playSound requested for soundId: $soundId -> streamId: $streamId")
+        } else {
+            Log.w(TAG, "playSound skipped: soundId=$soundId, soundPool=$soundPool")
         }
     }
 
@@ -468,8 +628,11 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         when (event.eventType) {
             AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED,
             AccessibilityEvent.TYPE_VIEW_FOCUSED,
-            AccessibilityEvent.TYPE_VIEW_HOVER_ENTER,
-            AccessibilityEvent.TYPE_VIEW_CLICKED -> {
+            AccessibilityEvent.TYPE_VIEW_HOVER_ENTER -> {
+                if (event.source != null) {
+                    lastFocusedNode = event.source
+                }
+                playSound(soundFocusId)
                 val node = event.source
                 if (node != null) {
                     val desc = parseNodeDescription(node)
@@ -478,8 +641,28 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     }
                 }
             }
-            AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED,
+            AccessibilityEvent.TYPE_VIEW_CLICKED -> {
+                playSound(soundActivateId)
+            }
+            AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> {
+                // 画面（Activity/Dialog）が新しく切り替わった時だけ画面切り替え音を再生！
+                playSound(soundViewEnteredId)
+                val text = getEventText(event)
+                val packageName = event.packageName?.toString() ?: ""
+
+                if (!text.isNullOrBlank()) {
+                    speak(text)
+                } else if (packageName.contains("launcher", ignoreCase = true)) {
+                    speakHomeScreenItems(getActiveRootNode())
+                } else if (event.source != null) {
+                    val desc = parseNodeDescription(event.source)
+                    if (!desc.isNullOrBlank()) {
+                        speak(desc)
+                    }
+                }
+            }
             AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED -> {
+                // 画面の一部更新（時計更新等）では画面切り替え音を鳴らさない！
                 val text = getEventText(event)
                 val packageName = event.packageName?.toString() ?: ""
 
@@ -591,6 +774,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     override fun onDestroy() {
         try {
             unregisterReceiver(screenReceiver)
+            unregisterReceiver(phoneStateReceiver)
         } catch (e: Exception) { }
         tts?.stop()
         tts?.shutdown()
