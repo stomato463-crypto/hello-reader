@@ -30,3 +30,6 @@ tools/build_talkback.ps1
 tools/TalkBack_Logcat.ps1
 
 /hello-reader-sound
+run-gitea-log.ps1
+app/src/main/res/raw/typo.ogg
+app/src/main/res/raw/complete.ogg

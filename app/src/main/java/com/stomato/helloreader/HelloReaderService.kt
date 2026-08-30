@@ -11,6 +11,9 @@ import android.content.IntentFilter
 import android.graphics.Rect
 import android.media.AudioAttributes
 import android.media.SoundPool
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.speech.tts.TextToSpeech
 import android.telecom.TelecomManager
 import android.telephony.TelephonyManager
@@ -30,6 +33,31 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
     companion object {
         private const val TAG = "HelloReaderService"
+
+        // NATO フォネティックコード辞書 (英数字限定)
+        private val PHONETIC_MAP = mapOf(
+            'A' to "アルファ", 'B' to "ブラボー", 'C' to "チャーリー", 'D' to "デルタ",
+            'E' to "エコー", 'F' to "フォックストロット", 'G' to "ゴルフ", 'H' to "ホテル",
+            'I' to "インディア", 'J' to "ジュリエット", 'K' to "キロ", 'L' to "リマ",
+            'M' to "マイク", 'N' to "ノーベンバー", 'O' to "オスカー", 'P' to "パパ",
+            'Q' to "ケベック", 'R' to "ロメオ", 'S' to "シエラ", 'T' to "タンゴ",
+            'U' to "ユニフォーム", 'V' to "ビクター", 'W' to "ウイスキー", 'X' to "エックスレイ",
+            'Y' to "ヤンキー", 'Z' to "ズールー",
+            '0' to "ゼロ", '1' to "ワン", '2' to "ツー", '3' to "スリー", '4' to "フォー",
+            '5' to "ファイブ", '6' to "シックス", '7' to "セブン", '8' to "エイト", '9' to "ナイン"
+        )
+
+        // モールス符号辞書 ( . : 短点 50ms, - : 長点 150ms )
+        private val MORSE_MAP = mapOf(
+            'A' to ".-", 'B' to "-...", 'C' to "-.-.", 'D' to "-..", 'E' to ".",
+            'F' to "..-.", 'G' to "--.", 'H' to "....", 'I' to "..", 'J' to ".---",
+            'K' to "-.-", 'L' to ".-..", 'M' to "--", 'N' to "-.", 'O' to "---",
+            'P' to ".--.", 'Q' to "--.-", 'R' to ".-.", 'S' to "...", 'T' to "-",
+            'U' to "..-", 'V' to "...-", 'W' to ".--", 'X' to "-..-", 'Y' to "-.--",
+            'Z' to "--..",
+            '0' to "-----", '1' to ".----", '2' to "..---", '3' to "...--", '4' to "....-",
+            '5' to ".....", '6' to "-....", '7' to "--...", '8' to "---..", '9' to "----."
+        )
     }
 
     private var tts: TextToSpeech? = null
@@ -47,6 +75,9 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private var lastSpokenTime: Long = 0L
 
     private var lastUnlockTime: Long = 0L
+
+    // AOSP TalkBack 準拠のメインスレッド Handler (ウィンドウ遷移遅延用)
+    private val mainHandler = android.os.Handler(android.os.Looper.getMainLooper())
 
     // 最後にフォーカスされたノード（ダブルタップ確実実行用）
     private var lastFocusedNode: AccessibilityNodeInfo? = null
@@ -123,6 +154,11 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     Log.d(TAG, "User Present (Unlocked)")
                     lastUnlockTime = System.currentTimeMillis()
                     speak("ロック解除")
+                    // AOSP TalkBack準拠: ロック解除後、ウィンドウが完全にアクティブ化するのを待ってホーム画面の初動フォーカスをセット！
+                    mainHandler.removeCallbacksAndMessages(null)
+                    mainHandler.postDelayed({
+                        speakHomeScreenItems(getActiveRootNode())
+                    }, 300)
                 }
             }
         }
@@ -209,7 +245,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         val text = (compat.text?.toString() ?: "") +
                 (compat.contentDescription?.toString() ?: "") +
-                (compat.viewIdResourceName?.toString() ?: "")
+                (compat.viewIdResourceName ?: "")
 
         if (text.contains("fingerprint", ignoreCase = true) ||
             text.contains("指紋", ignoreCase = true) ||
@@ -325,13 +361,15 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
      * ホーム画面のアイテム（アプリアイコンやウィジェット）に自動フォーカスを当ててメニューを朗読する
      */
     private fun speakHomeScreenItems(root: AccessibilityNodeInfo?) {
-        if (root == null) {
+        val activeRoot = root ?: getActiveRootNode()
+        if (activeRoot == null) {
             speak("ホーム画面")
             return
         }
 
-        val firstAppNode = findAppIconNode(root)
+        val firstAppNode = findAppIconNode(activeRoot)
         if (firstAppNode != null) {
+            lastFocusedNode = firstAppNode
             firstAppNode.performAction(AccessibilityNodeInfoCompat.ACTION_ACCESSIBILITY_FOCUS)
             val appName = parseNodeDescription(firstAppNode)
             if (!appName.isNullOrBlank()) {
@@ -497,6 +535,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     /**
      * 2本指ダブルタップ時のお電話応答・切断アクション
      */
+    @Suppress("DEPRECATION")
     private fun handlePhoneAnswerOrEndCall(): Boolean {
         val telecomManager = getSystemService(Context.TELECOM_SERVICE) as? TelecomManager
         try {
@@ -637,8 +676,55 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     }
 
     /**
+     * 単一の半角英数字に対してモールス信号のバイブレーション（ディープ触覚フィードバック）を打ち出す
+     */
+    private fun playMorseVibration(ch: Char) {
+        val uppercaseCh = ch.uppercaseChar()
+        val morseCode = MORSE_MAP[uppercaseCh] ?: return
+
+        try {
+            @Suppress("DEPRECATION")
+            val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+            if (vibrator == null || !vibrator.hasVibrator()) return
+
+            val timingsList = mutableListOf<Long>()
+            val amplitudesList = mutableListOf<Int>()
+
+            timingsList.add(0L)
+            amplitudesList.add(0)
+
+            for (symbol in morseCode) {
+                if (symbol == '.') {
+                    timingsList.add(50L) // 50ms 振動
+                    amplitudesList.add(255)
+                } else if (symbol == '-') {
+                    timingsList.add(150L) // 150ms 振動
+                    amplitudesList.add(255)
+                }
+                timingsList.add(40L) // 符号間 40ms 休止
+                amplitudesList.add(0)
+            }
+
+            val timings = timingsList.toLongArray()
+            val amplitudes = amplitudesList.toIntArray()
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val effect = VibrationEffect.createWaveform(timings, amplitudes, -1)
+                vibrator.vibrate(effect)
+            } else {
+                @Suppress("DEPRECATION")
+                vibrator.vibrate(timings, -1)
+            }
+            Log.d(TAG, "Played Morse Vibration for '$uppercaseCh': $morseCode")
+        } catch (e: Exception) {
+            Log.e(TAG, "モールス振動エラー", e)
+        }
+    }
+
+    /**
      * 全アクセシビリティイベント受信用分岐
      */
+    @Suppress("DEPRECATION")
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (event == null || !isTtsReady) return
 
@@ -662,15 +748,17 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 playSound(soundActivateId)
             }
             AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> {
-                // 画面（Activity/Dialog）が新しく切り替わった時だけ画面切り替え音を再生！
+                // 画面（Activity/Dialog/Launcher）が新しく切り替わった時だけ画面切り替え音を再生！
                 playSound(soundViewEnteredId)
                 val text = getEventText(event)
                 val packageName = event.packageName?.toString() ?: ""
 
-                if (!text.isNullOrBlank()) {
+                if (packageName.contains("launcher", ignoreCase = true) || packageName.contains("home", ignoreCase = true)) {
+                    mainHandler.postDelayed({
+                        speakHomeScreenItems(getActiveRootNode())
+                    }, 200)
+                } else if (!text.isNullOrBlank()) {
                     speak(text)
-                } else if (packageName.contains("launcher", ignoreCase = true)) {
-                    speakHomeScreenItems(getActiveRootNode())
                 } else if (event.source != null) {
                     val desc = parseNodeDescription(event.source)
                     if (!desc.isNullOrBlank()) {
@@ -706,6 +794,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     /**
      * AOSP TalkBack Stable準拠 ノード解読解析
      */
+    @Suppress("DEPRECATION")
     private fun parseNodeDescription(node: AccessibilityNodeInfo?): String? {
         if (node == null) return null
         val compat = AccessibilityNodeInfoCompat.wrap(node)
@@ -719,7 +808,20 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
 
         if (!mainText.isNullOrBlank()) {
-            sb.append(mainText).append(" ")
+            val mainTextStr = mainText.toString().trim()
+            if (mainTextStr.length == 1) {
+                val ch = mainTextStr[0]
+                val uppercaseCh = ch.uppercaseChar()
+                if (PHONETIC_MAP.containsKey(uppercaseCh)) {
+                    val phoneticName = PHONETIC_MAP[uppercaseCh]
+                    sb.append(ch).append("。").append(phoneticName).append(" ")
+                    playMorseVibration(ch)
+                } else {
+                    sb.append(mainText).append(" ")
+                }
+            } else {
+                sb.append(mainText).append(" ")
+            }
         }
 
         val className = compat.className
