@@ -23,6 +23,7 @@ import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import android.view.accessibility.AccessibilityWindowInfo
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
+import android.provider.ContactsContract
 import java.util.Locale
 
 /**
@@ -75,6 +76,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private var lastSpokenText: String = ""
     private var lastSpokenTime: Long = 0L
     private var lastScrollSpeakTime: Long = 0L
+    private var lastScrollSoundTime: Long = 0L
 
     private var lastUnlockTime: Long = 0L
 
@@ -89,6 +91,31 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private var isCallActive = false
     private var callStartTime = 0L
 
+    /**
+     * 電話番号から電話帳（連絡先）の名前を取得する (TalkBack / Android標準 準拠)
+     */
+    private fun getContactNameFromNumber(phoneNumber: String?): String? {
+        if (phoneNumber.isNullOrBlank()) return null
+        try {
+            val uri = android.net.Uri.withAppendedPath(
+                ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+                android.net.Uri.encode(phoneNumber)
+            )
+            val projection = arrayOf(ContactsContract.PhoneLookup.DISPLAY_NAME)
+            applicationContext.contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
+                if (cursor.moveToFirst()) {
+                    val nameIndex = cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME)
+                    if (nameIndex >= 0) {
+                        return cursor.getString(nameIndex)
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "電話帳検索エラー", e)
+        }
+        return null
+    }
+
     // 電話の着信・終了レシーバー (TalkBack ＋ Hello Reader新機能 通話時間案内)
     private val phoneStateReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -99,15 +126,24 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     TelephonyManager.EXTRA_STATE_RINGING -> {
                         isRinging = true
                         isCallActive = false
-                        playSound(soundViewEnteredId)
-                        speak("電話の着信ですにょろ！2本指ダブルタップで応答できるにょろ")
+                        val incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER)
+                        val contactName = this@HelloReaderService.getContactNameFromNumber(incomingNumber)
+
+                        val callerText = when {
+                            !contactName.isNullOrBlank() -> "${contactName}さんからの着信です。"
+                            !incomingNumber.isNullOrBlank() -> "電話番号 $incomingNumber からの着信です。"
+                            else -> "着信です。"
+                        }
+
+                        this@HelloReaderService.playSound(soundViewEnteredId)
+                        this@HelloReaderService.speak("$callerText 2本指ダブルタップで応答できます。")
                     }
                     TelephonyManager.EXTRA_STATE_OFFHOOK -> {
                         if (!isCallActive) {
                             isCallActive = true
                             callStartTime = System.currentTimeMillis()
-                            playSound(soundActivateId)
-                            speak("通話中になりましたにょろ。2本指ダブルタップで切断できるにょろ")
+                            this@HelloReaderService.playSound(soundActivateId)
+                            this@HelloReaderService.speak("通話中になりました。2本指ダブルタップで切断できます")
                         }
                         isRinging = false
                     }
@@ -124,10 +160,10 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                                 "${seconds}秒"
                             }
 
-                            playSound(soundDeactivateId)
-                            speak("通話が終了したにょろ。通話時間は $durationText でしたにょろ")
+                            this@HelloReaderService.playSound(soundDeactivateId)
+                            this@HelloReaderService.speak("通話が終了しました。通話時間は $durationText でした")
                         } else if (isRinging) {
-                            speak("着信が終了したにょろ")
+                            this@HelloReaderService.speak("着信が終了しました")
                         }
                         isRinging = false
                         isCallActive = false
@@ -387,7 +423,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val firstAppNode = findAppIconNode(activeRoot)
         if (firstAppNode != null) {
             lastFocusedNode = firstAppNode
-            firstAppNode.performAction(AccessibilityNodeInfoCompat.ACTION_ACCESSIBILITY_FOCUS)
+            firstAppNode.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
             val appName = parseNodeDescription(firstAppNode)
             if (!appName.isNullOrBlank()) {
                 speak("ホーム画面。$appName")
@@ -419,9 +455,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         return null
     }
 
-    /**
-     * アクティブな全ウィンドウのルートノードを取得する (AOSP TalkBack ロック画面最優先対応)
-     */
     /**
      * アクティブな全ウィンドウのルートノードを取得する (AOSP TalkBack 準拠 TYPE_APPLICATION 優先対応)
      */
@@ -472,7 +505,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
      * AOSP TalkBack (NodeFocusFinder / TraversalStrategy) 準拠 フォーカス移動処理
      * 全ウィンドウ（アプリ本体 ＋ システムバー）から順序良くフォーカス可能ノードを収集して100%巡回！
      */
-    private fun navigateFocus(direction: Int, directionName: String) {
+    private fun navigateFocus(direction: Int, directionName: String, isAutoRetry: Boolean = false) {
         val allNodes = mutableListOf<AccessibilityNodeInfo>()
         val currentWindows = windows
 
@@ -499,16 +532,11 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
 
         if (allNodes.isEmpty()) {
-            speak("これ以上 $directionName に要素はないにょろ")
+            speak("これ以上 $directionName に進めません")
             return
         }
 
         val root = getActiveRootNode()
-
-        if (allNodes.isEmpty()) {
-            speak("これ以上 $directionName に要素はないにょろ")
-            return
-        }
 
         var currentFocus = root?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
         if (currentFocus == null) {
@@ -534,8 +562,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         if (targetIndex in allNodes.indices) {
             val targetNode = allNodes[targetIndex]
 
-            currentFocus?.performAction(AccessibilityNodeInfoCompat.ACTION_CLEAR_ACCESSIBILITY_FOCUS)
-            val success = targetNode.performAction(AccessibilityNodeInfoCompat.ACTION_ACCESSIBILITY_FOCUS)
+            currentFocus?.performAction(AccessibilityNodeInfo.ACTION_CLEAR_ACCESSIBILITY_FOCUS)
+            val success = targetNode.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
             lastFocusedNode = targetNode
             val nodeText = parseNodeDescription(targetNode)
 
@@ -582,7 +610,10 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         if (!compat.isVisibleToUser) return
 
         val desc = parseNodeDescription(node)
-        if (!desc.isNullOrBlank() && (compat.isFocusable || compat.isClickable || compat.isScreenReaderFocusable)) {
+        val hasDesc = !desc.isNullOrBlank()
+        val hasContentDesc = !compat.contentDescription.isNullOrBlank()
+
+        if (hasDesc && (compat.isFocusable || compat.isClickable || compat.isScreenReaderFocusable || hasContentDesc)) {
             list.add(node)
         }
 
@@ -601,8 +632,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             val action = if (forward) AccessibilityNodeInfoCompat.ACTION_SCROLL_FORWARD else AccessibilityNodeInfoCompat.ACTION_SCROLL_BACKWARD
             val success = scrollableNode.performAction(action)
             if (success) {
-                playSound(soundScrollId)
                 if (!silent) {
+                    playSound(soundScrollId)
                     speak(if (forward) "次へスクロール" else "前へスクロール")
                 }
                 return true
@@ -896,9 +927,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             AccessibilityEvent.TYPE_VIEW_SCROLLED -> {
                 // TalkBack準拠: リスト等のスクロール音再生 ＋ 位置案内！
                 val now = System.currentTimeMillis()
-                if (now - lastScrollSpeakTime > 300) {
-                    lastScrollSpeakTime = now
+                if (now - lastScrollSoundTime > 600) {
+                    lastScrollSoundTime = now
                     playSound(soundScrollId)
+                }
+                if (now - lastScrollSpeakTime > 1200) {
+                    lastScrollSpeakTime = now
                     val itemCount = event.itemCount
                     val fromIndex = event.fromIndex
                     if (itemCount > 0 && fromIndex >= 0) {

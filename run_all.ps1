@@ -1,7 +1,7 @@
 # run_all.ps1 - 全自動ビルド・デプロイ・起動・ログ収集統合スクリプト
 param (
     [alias("c")][switch]$Clean,
-    [alias("l")][switch]$Log,
+    [alias("l")][string]$Log = $null,
     [alias("w")][switch]$Wait
 )
 
@@ -29,10 +29,17 @@ Write-Host "`n[Step 2/3] デプロイ＆サービス有効化中..." -Foreground
 Write-Host "`n[Step 3/3] アプリ起動中..." -ForegroundColor Cyan
 & (Join-Path $toolsDir "launch.ps1")
 
-# 5. Log オプション指定時は ログキャッチツールを起動
-if ($Log) {
-    Write-Host "`n[Log Step] リアルタイムログキャッチをスタートするにょろ (-l)..." -ForegroundColor Magenta
-    $logcatScript = Join-Path $toolsDir "TalkBack_Logcat.ps1"
+# 5. Log オプション指定時は ログキャッチツールを起動 (-l 1: Android/HelloReader, -l 2: TalkBack)
+if ($PSBoundParameters.ContainsKey('Log')) {
+    $targetLogScript = "Android_Logcat.ps1"
+    if ($Log -eq "2" -or $Log -like "*talkback*") {
+        $targetLogScript = "TalkBack_Logcat.ps1"
+        Write-Host "`n[Log Step] TalkBack 専用ログ収集ツールを起動するにょろ (-l 2)..." -ForegroundColor Magenta
+    } else {
+        Write-Host "`n[Log Step] Hello Reader (Android) 専用ログ収集ツールを起動するにょろ (-l 1)..." -ForegroundColor Magenta
+    }
+
+    $logcatScript = Join-Path $toolsDir $targetLogScript
     if (Test-Path $logcatScript) {
         & $logcatScript
     } else {
