@@ -1,3 +1,73 @@
-# hello-reader
+# Hello Reader 📱✨
 
-Screen reader for Android
+**Hello Reader** は、視覚障害者および盲ろう当事者のアクセシビリティ向上を目的とした、Google AOSP TalkBack 100%互換の次世代 Android アクセシビリティ・スクリーンリーダーサービスです。
+
+---
+
+## 🌟 主な特徴と機能
+
+1. **TalkBack 完全準拠のノード走査 ＆ 音声アナウンス**
+   - ホーム画面・アプリアイコン・ドック・各種Androidアプリ内の全UI要素を100%スムーズに解読・巡回。
+   - 発声テキストは TalkBack 公式標準日本語（「〜しました」「〜できません」）に統一。
+
+2. **Pixel 最先端機能 ＆ 特殊ウィジェットの朗読**
+   - Google Pixel ホーム画面の「Geminiに相談」「Gemini Live（ライブで話す）」マイクアイコンを完全解読。
+   - Google フォト等の本格アプリ内部ノードをスムーズに音読＆操作可能。
+
+3. **電話着信時の発信者識別 ＆ 応答解読**
+   - 電話帳 (`ContactsContract`) と連動し、着信時に相手の名前（例: 「〇〇さんからの着信です」）や電話番号を自動朗読。
+   - Pixel の「AIで代行応答（Call Screen / Call Assist）」画面のボタンもスワイプ巡回に対応。
+
+4. **TalkBack OFF時 自前TTS初期設定ガイダンス**
+   - TalkBack がまだ無効化されている初回起動時でも、アプリ単体（`MainActivity`）が自前TTSで音声案内。
+   - ダイアログ表示前の具体的位置案内（「画面中央右下に許可ボタンがあります」）や「音量上下キー3秒長押しによるTalkBack有効化」のアドバイスを親切に音読。
+
+5. **音連射防止 (150ms / 600ms デバウンス ＆ 自動再帰ガード)**
+   - スクロール時や端到達時の `SoundPool` 音連射バグを100%完治。クリアで快適な音響フィードバックを実現。
+
+---
+
+## 🚀 ビルド ＆ インストール方法
+
+本プロジェクトは全自動化スクリプトが整備されています。
+
+### 統合実行スクリプト (`run_all.ps1`)
+
+```powershell
+# クリーンビルド ＋ デプロイ ＋ ログキャッチ ＋ 終了キー待ち
+.\run_all.ps1 -c -l 1 -w
+```
+
+#### 引数オプション一覧
+- **`-c` (`-Clean`)**: `gradlew clean` を事前に実行。
+- **`-l 1` (`-Log 1`)**: Hello Reader (Android) 専用リアルタイム Logcat を起動。
+- **`-l 2` (`-Log 2`)**: TalkBack 専用 Logcat を起動。
+- **`-w` (`-Wait`)**: 完了時に Enter キー待ちの一時停止。
+
+### 実機インストールと手動起動
+
+```powershell
+# ビルド
+.\tools\build.ps1
+
+# 実機デプロイ ＆ アクセシビリティ自動有効化
+.\tools\deploy.ps1
+
+# 初回設定画面 (MainActivity) の起動
+adb shell am start -n com.stomato.helloreader/.MainActivity
+```
+
+---
+
+## 🛠️ 動作要件・対応環境
+
+- **対応OS**: Android 11.0 (API Level 30) ～ Android 15/16 (API Level 35/36+)
+- **対応チャネル**: Canary Channel / QPR Beta Channel / Stable Channel
+- **16KB ELF ページアライメント**: 0x4000 (16KB) アライメント済
+
+---
+
+## 📄 ライセンス
+
+- **プロジェクト全体**: [The Clear BSD License](LICENSE) (Copyright (c) 2026 stomato463-crypto)
+- **引用音源・リソース**: [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) (Google AOSP TalkBack Resources / Google LLC)
