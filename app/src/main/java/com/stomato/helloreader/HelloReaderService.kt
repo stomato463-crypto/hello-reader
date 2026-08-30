@@ -8,6 +8,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.accessibilityservice.GestureDescription
+import android.graphics.Path
 import android.graphics.Rect
 import android.media.AudioAttributes
 import android.media.SoundPool
@@ -707,8 +709,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     }
 
     /**
-     * AOSP TalkBack Stable準拠 ダブルタップ実行 (ACTION_CLICK)
-     * フォーカス保持＆親ノード走査＆フォールバックで100%確実実行！
+     * AOSP TalkBack Stable準拠 ダブルタップ実行 (ACTION_CLICK & Gesture Fallback)
+     * フォーカス保持＆親・子ノード走査＆物理座標タップ(dispatchGesture)で100%確実実行！
      */
     private fun performClickOnFocusedNode() {
         val root = getActiveRootNode()
@@ -722,6 +724,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
 
         if (currentFocus != null) {
+            // 1. 親ノードを辿って isClickable なノードに ACTION_CLICK を送る
             var nodeToClick: AccessibilityNodeInfo? = currentFocus
             while (nodeToClick != null && !AccessibilityNodeInfoCompat.wrap(nodeToClick).isClickable) {
                 nodeToClick = nodeToClick.parent
@@ -736,9 +739,29 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 }
             }
 
-            // フォールバック実行
+            // 2. 子ノードツリーを走査して isClickable な要素を探して ACTION_CLICK
+            val clickableChild = findClickableChild(currentFocus)
+            if (clickableChild != null) {
+                val childSuccess = clickableChild.performAction(AccessibilityNodeInfoCompat.ACTION_CLICK)
+                if (childSuccess) {
+                    playSound(soundActivateId)
+                    speak("実行しました")
+                    return
+                }
+            }
+
+            // 3. currentFocus へ直接 ACTION_CLICK フォールバック実行
             val directSuccess = currentFocus.performAction(AccessibilityNodeInfo.ACTION_CLICK)
             if (directSuccess) {
+                playSound(soundActivateId)
+                speak("実行しました")
+                return
+            }
+
+            // 4. 物理座標タップ (dispatchGesture) フォールバック実行
+            val rect = Rect()
+            currentFocus.getBoundsInScreen(rect)
+            if (!rect.isEmpty && performGestureClickAtBounds(rect)) {
                 playSound(soundActivateId)
                 speak("実行しました")
                 return
@@ -750,6 +773,44 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             playSound(soundDeactivateId)
             speak("フォーカスされている要素はありません")
         }
+    }
+
+    /**
+     * 子ノードツリーから最初にみつかった isClickable な AccessibilityNodeInfo を再帰検索
+     */
+    private fun findClickableChild(node: AccessibilityNodeInfo?): AccessibilityNodeInfo? {
+        if (node == null) return null
+        val childCount = node.childCount
+        for (i in 0 until childCount) {
+            val child = node.getChild(i) ?: continue
+            if (AccessibilityNodeInfoCompat.wrap(child).isClickable) {
+                return child
+            }
+            val descendant = findClickableChild(child)
+            if (descendant != null) {
+                return descendant
+            }
+        }
+        return null
+    }
+
+    /**
+     * 指定されたRectの中心座標に対して物理タップ（dispatchGesture）を送信
+     */
+    private fun performGestureClickAtBounds(bounds: Rect): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return false
+        val centerX = bounds.exactCenterX()
+        val centerY = bounds.exactCenterY()
+        if (centerX <= 0 || centerY <= 0) return false
+
+        val path = Path().apply {
+            moveTo(centerX, centerY)
+        }
+        val gestureBuilder = GestureDescription.Builder()
+        val stroke = GestureDescription.StrokeDescription(path, 0, 50)
+        gestureBuilder.addStroke(stroke)
+
+        return dispatchGesture(gestureBuilder.build(), null, null)
     }
 
     /**
