@@ -29,3 +29,4 @@ build/
 tools/build_talkback.ps1
 tools/TalkBack_Logcat.ps1
 
+/hello-reader-sound
