@@ -103,10 +103,18 @@ try {
     $process.BeginOutputReadLine()
     
     while (-not $process.HasExited) {
-        Start-Sleep -Milliseconds 100
+        Start-Sleep -Milliseconds 200
     }
 }
 finally {
+    # 1. adb プロセスを即座に強制終了（暴走防止）
+    if ($process -and -not $process.HasExited) {
+        try {
+            Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
+            $process.Kill()
+        } catch { }
+    }
+    
     # 🔔 Ctrl+Cキーが受け付けられたことを伝えるモールスディープ音（トン・ツー♪）
     try {
         [Console]::Beep(400, 100) # トン (低音400Hz)
@@ -114,10 +122,6 @@ finally {
     } catch { }
 
     Unregister-Event -SubscriptionId $eventSubscriber.Id -ErrorAction SilentlyContinue
-
-    if ($process -and -not $process.HasExited) {
-        $process.Kill()
-    }
     
     $linesToSave = @($logList)
 
