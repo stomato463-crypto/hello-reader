@@ -140,10 +140,18 @@ finally {
         $stream = [System.IO.File]::Create($saveFullPath)
         $writer = New-Object System.IO.StreamWriter($stream, [System.Text.Encoding]::UTF8, 65536)
         
+        function Sanitize-LogLine([string]$l) {
+            if (-not $l) { return "" }
+            $l = $l -replace '(\d{2,4}-\d{2,4}-\d{4}|\d{10,11})', '[電話番号マスク済]'
+            $l = $l -replace '(Speaking:\s*(通知:\s*)?)(.+?)(さん|氏|様)', '$1[個人名マスク済]$4'
+            return $l
+        }
+
         try {
             $batchSize = [Math]::Max([int]($totalLines / 10), 1)
             for ($i = 0; $i -lt $totalLines; $i++) {
-                $writer.WriteLine($linesToSave[$i])
+                $sanitizedLine = Sanitize-LogLine $linesToSave[$i]
+                $writer.WriteLine($sanitizedLine)
                 
                 if ($i -gt 0 -and ((($i % $batchSize) -eq 0) -or ($i -eq ($totalLines - 1)))) {
                     $percent = [int]((($i + 1) / $totalLines) * 100)

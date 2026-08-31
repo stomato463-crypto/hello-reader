@@ -1028,7 +1028,10 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 }
             }
             AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED -> {
-                // 画面の一部更新（時計更新等）では画面切り替え音を鳴らさない！
+                // 通話中や画面の一部更新（タイマーカウントアップ等）での無駄な自動連呼をブロック！
+                if (isCallActive) {
+                    return
+                }
                 val text = getEventText(event)
                 val packageName = event.packageName?.toString() ?: ""
 
@@ -1207,22 +1210,34 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         return if (sb.isNotEmpty()) sb.toString().trim() else null
     }
 
+    private val recentSpokenTexts = LinkedHashMap<String, Long>()
+
     /**
-     * 音声読み上げ (TTS) (連呼重複防止デバウンス1.5秒)
+     * 音声読み上げ (TTS) (連呼重複防止スマートデバウンス2.0秒)
      */
     private fun speak(text: String) {
         if (!isTtsReady || text.isBlank()) return
 
         val currentTime = System.currentTimeMillis()
-        if (text == lastSpokenText && (currentTime - lastSpokenTime) < 1500) {
+        val lastTime = recentSpokenTexts[text]
+        if (lastTime != null && (currentTime - lastTime) < 2000) {
             return
         }
 
-        lastSpokenText = text
-        lastSpokenTime = currentTime
+        recentSpokenTexts[text] = currentTime
+        if (recentSpokenTexts.size > 20) {
+            recentSpokenTexts.remove(recentSpokenTexts.keys.first())
+        }
 
-        Log.d(TAG, "Speaking: $text")
+        Log.d(TAG, "Speaking: ${sanitizeForLog(text)}")
         tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, "HelloReaderTTS")
+    }
+
+    /**
+     * ログ出力時のプライバシー保護（電話番号等のログ伏せ字化）
+     */
+    private fun sanitizeForLog(text: String): String {
+        return text.replace(Regex("(\\d{2,4}-\\d{2,4}-\\d{4}|\\d{10,11})"), "[電話番号匿名化]")
     }
 
     override fun onInterrupt() {
