@@ -604,25 +604,55 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     }
 
     /**
-     * 木構造を深さ優先で走査し、読解・フォーカス可能なノード一覧を収集する (TalkBack TraversalStrategy準拠)
+     * 木構造を深さ優先で走査し、読解・フォーカス可能なノード一覧を収集する (hello-reader 独自最適化)
      */
-    private fun collectFocusableNodes(node: AccessibilityNodeInfo?, list: MutableList<AccessibilityNodeInfo>) {
+    private fun collectFocusableNodes(
+        node: AccessibilityNodeInfo?,
+        list: MutableList<AccessibilityNodeInfo>,
+        parent: AccessibilityNodeInfo? = null
+    ) {
         if (node == null) return
         val compat = AccessibilityNodeInfoCompat.wrap(node)
 
         if (!compat.isVisibleToUser) return
 
+        // 親ボタン枠等ですでに登録されている場合、重複する子要素の二重登録をスキップする
+        if (parent != null && isRedundantChildNode(parent, node)) {
+            return
+        }
+
         val desc = parseNodeDescription(node)
         val hasDesc = !desc.isNullOrBlank()
         val hasContentDesc = !compat.contentDescription.isNullOrBlank()
 
-        if (hasDesc && (compat.isFocusable || compat.isClickable || compat.isScreenReaderFocusable || hasContentDesc)) {
+        val isAdded = if (hasDesc && (compat.isFocusable || compat.isClickable || compat.isScreenReaderFocusable || hasContentDesc)) {
             list.add(node)
+            true
+        } else {
+            false
         }
 
         for (i in 0 until node.childCount) {
-            collectFocusableNodes(node.getChild(i), list)
+            collectFocusableNodes(node.getChild(i), list, if (isAdded) node else parent)
         }
+    }
+
+    /**
+     * hello-reader 独自ノード解析: 親コンテナと包含関係にある子ノードの二重登録を検知
+     */
+    private fun isRedundantChildNode(parent: AccessibilityNodeInfo?, child: AccessibilityNodeInfo?): Boolean {
+        if (parent == null || child == null) return false
+        val parentCompat = AccessibilityNodeInfoCompat.wrap(parent)
+        if (parentCompat.isClickable || parentCompat.isFocusable) {
+            val pRect = Rect()
+            val cRect = Rect()
+            parent.getBoundsInScreen(pRect)
+            child.getBoundsInScreen(cRect)
+            if (!pRect.isEmpty && pRect.contains(cRect)) {
+                return true
+            }
+        }
+        return false
     }
 
     /**
