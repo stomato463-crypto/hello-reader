@@ -93,6 +93,31 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private var isCallActive = false
     private var callStartTime = 0L
 
+    private var vibrator: Vibrator? = null
+
+    /**
+     * 指先への触覚フィードバック (Haptic Feedback) の実行
+     */
+    private fun performHapticFeedback() {
+        try {
+            if (vibrator == null) {
+                vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+            }
+            if (vibrator?.hasVibrator() == true) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    vibrator?.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    vibrator?.vibrate(VibrationEffect.createOneShot(15, VibrationEffect.DEFAULT_AMPLITUDE))
+                } else {
+                    @Suppress("DEPRECATION")
+                    vibrator?.vibrate(15)
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to perform haptic feedback", e)
+        }
+    }
+
     /**
      * 電話番号から電話帳（連絡先）の名前を取得する (TalkBack / Android標準 準拠)
      */
@@ -951,12 +976,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         when (event.eventType) {
             AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED,
-            AccessibilityEvent.TYPE_VIEW_FOCUSED,
-            AccessibilityEvent.TYPE_VIEW_HOVER_ENTER -> {
+            AccessibilityEvent.TYPE_VIEW_FOCUSED -> {
                 if (event.source != null) {
                     lastFocusedNode = event.source
                 }
                 playSound(soundFocusId)
+                performHapticFeedback()
                 val node = event.source
                 if (node != null) {
                     val desc = parseNodeDescription(node)
@@ -965,8 +990,23 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     }
                 }
             }
+            AccessibilityEvent.TYPE_VIEW_HOVER_ENTER -> {
+                // タッチガイド (Explore by Touch): 指の下にある要素に明示的にフォーカスを設定して音・音声・触覚振動で案内！
+                val node = event.source
+                if (node != null) {
+                    node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
+                    lastFocusedNode = node
+                    playSound(soundFocusId)
+                    performHapticFeedback()
+                    val desc = parseNodeDescription(node)
+                    if (!desc.isNullOrBlank()) {
+                        speak(desc)
+                    }
+                }
+            }
             AccessibilityEvent.TYPE_VIEW_CLICKED -> {
                 playSound(soundActivateId)
+                performHapticFeedback()
             }
             AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> {
                 // 画面（Activity/Dialog/Launcher）が新しく切り替わった時だけ画面切り替え音を再生！
@@ -1047,6 +1087,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         var mainText = when {
             !compat.text.isNullOrBlank() -> compat.text
             !compat.contentDescription.isNullOrBlank() -> compat.contentDescription
+            !compat.hintText.isNullOrBlank() -> compat.hintText
+            !compat.error.isNullOrBlank() -> compat.error
             !compat.roleDescription.isNullOrBlank() -> compat.roleDescription
             else -> null
         }
