@@ -1013,22 +1013,45 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val compat = AccessibilityNodeInfoCompat.wrap(node)
         val sb = StringBuilder()
 
-        val mainText = when {
+        var mainText = when {
             !compat.text.isNullOrBlank() -> compat.text
             !compat.contentDescription.isNullOrBlank() -> compat.contentDescription
             !compat.roleDescription.isNullOrBlank() -> compat.roleDescription
             else -> null
         }
 
+        if (mainText.isNullOrBlank()) {
+            mainText = findTextInChildNodes(node)
+        }
+
         if (!mainText.isNullOrBlank()) {
             val mainTextStr = mainText.toString().trim()
             if (mainTextStr.length == 1) {
+                val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
+                val isPhoneticMorseEnabled = prefs.getBoolean("pref_phonetic_morse_enabled", false)
+                val timing = prefs.getString("pref_phonetic_morse_timing", "AFTER_TTS") ?: "AFTER_TTS"
+
                 val ch = mainTextStr[0]
                 val uppercaseCh = ch.uppercaseChar()
-                if (PHONETIC_MAP.containsKey(uppercaseCh)) {
+
+                if (isPhoneticMorseEnabled && PHONETIC_MAP.containsKey(uppercaseCh)) {
                     val phoneticName = PHONETIC_MAP[uppercaseCh]
-                    sb.append(ch).append("。").append(phoneticName).append(" ")
-                    playMorseVibration(ch)
+                    when (timing) {
+                        "BEFORE_TTS" -> {
+                            playMorseVibration(ch)
+                            sb.append(ch).append("。").append(phoneticName).append(" ")
+                        }
+                        "AFTER_TTS" -> {
+                            sb.append(ch).append("。").append(phoneticName).append(" ")
+                            android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+                                playMorseVibration(ch)
+                            }, 1200)
+                        }
+                        else -> { // "CONCURRENT"
+                            sb.append(ch).append("。").append(phoneticName).append(" ")
+                            playMorseVibration(ch)
+                        }
+                    }
                 } else {
                     sb.append(mainText).append(" ")
                 }
@@ -1038,13 +1061,18 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
 
         val className = compat.className
-        if (className != null) {
+        val viewId = compat.viewIdResourceName
+        if (className != null || viewId != null) {
+            val classStr = className?.toString() ?: ""
+            val idStr = viewId?.toString() ?: ""
             when {
-                className.contains("Button") -> sb.append("ボタン ")
-                className.contains("CheckBox") -> sb.append("チェックボックス ")
-                className.contains("EditText") -> sb.append("編集テキスト ")
-                className.contains("Folder") -> sb.append("フォルダ ")
-                className.contains("ImageView") && mainText.isNullOrBlank() -> sb.append("画像 ")
+                classStr.contains("FloatingActionButton") || classStr.contains("Floating") || idStr.contains("fab") || idStr.contains("floating") -> sb.append("フローティングボタン ")
+                classStr.contains("Shortcut") || idStr.contains("shortcut") -> sb.append("ショートカットボタン ")
+                classStr.contains("Button") -> sb.append("ボタン ")
+                classStr.contains("CheckBox") -> sb.append("チェックボックス ")
+                classStr.contains("EditText") -> sb.append("編集テキスト ")
+                classStr.contains("Folder") -> sb.append("フォルダ ")
+                classStr.contains("ImageView") && mainText.isNullOrBlank() -> sb.append("画像 ")
             }
         }
 
@@ -1061,6 +1089,31 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
 
         return if (sb.isNotEmpty()) sb.toString().trim() else null
+    }
+
+    /**
+     * ノード直下の子ノードツリーから最初にみつかったテキスト/contentDescriptionを取得
+     */
+    private fun findTextInChildNodes(node: AccessibilityNodeInfo?): CharSequence? {
+        if (node == null) return null
+        val childCount = node.childCount
+        for (i in 0 until childCount) {
+            val child = node.getChild(i) ?: continue
+            val compat = AccessibilityNodeInfoCompat.wrap(child)
+            val childText = when {
+                !compat.text.isNullOrBlank() -> compat.text
+                !compat.contentDescription.isNullOrBlank() -> compat.contentDescription
+                else -> null
+            }
+            if (!childText.isNullOrBlank()) {
+                return childText
+            }
+            val descendantText = findTextInChildNodes(child)
+            if (!descendantText.isNullOrBlank()) {
+                return descendantText
+            }
+        }
+        return null
     }
 
     private fun getEventText(event: AccessibilityEvent): String? {
