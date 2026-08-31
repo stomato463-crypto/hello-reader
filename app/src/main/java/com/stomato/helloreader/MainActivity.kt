@@ -197,7 +197,7 @@ fun PermissionSetupScreen(
             Text("2. アクセシビリティを有効化", fontSize = 18.sp)
         }
 
-        Divider(modifier = Modifier.padding(vertical = 16.dp))
+        HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
 
         // フォネティック＆モールス設定エリア (デフォルト OFF)
         Row(

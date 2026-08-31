@@ -128,6 +128,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     TelephonyManager.EXTRA_STATE_RINGING -> {
                         isRinging = true
                         isCallActive = false
+                        @Suppress("DEPRECATION")
                         val incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER)
                         val contactName = this@HelloReaderService.getContactNameFromNumber(incomingNumber)
 
@@ -1063,8 +1064,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val className = compat.className
         val viewId = compat.viewIdResourceName
         if (className != null || viewId != null) {
-            val classStr = className?.toString() ?: ""
-            val idStr = viewId?.toString() ?: ""
+            val classStr = className ?: ""
+            val idStr = viewId ?: ""
             when {
                 classStr.contains("FloatingActionButton") || classStr.contains("Floating") || idStr.contains("fab") || idStr.contains("floating") -> sb.append("フローティングボタン ")
                 classStr.contains("Shortcut") || idStr.contains("shortcut") -> sb.append("ショートカットボタン ")
