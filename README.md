@@ -35,13 +35,13 @@
 
 ```powershell
 # クリーンビルド ＋ デプロイ ＋ ログキャッチ ＋ 終了キー待ち
-.\run_all.ps1 -c -l 1 -w
+.\run_all.ps1 -c -l -w
 ```
 
 #### 引数オプション一覧
+
 - **`-c` (`-Clean`)**: `gradlew clean` を事前に実行。
-- **`-l 1` (`-Log 1`)**: Hello Reader (Android) 専用リアルタイム Logcat を起動。
-- **`-l 2` (`-Log 2`)**: TalkBack 専用 Logcat を起動。
+- **`-l` (`-Log`)**: Hello Reader (Android) 専用リアルタイム Logcat を起動。
 - **`-w` (`-Wait`)**: 完了時に Enter キー待ちの一時停止。
 
 ### 実機インストールと手動起動
