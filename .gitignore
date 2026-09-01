@@ -3,7 +3,7 @@ local.properties
 *.keystore
 *.jks
 .runner
-.gitea/.runner
+.gitea
 *.lock
 
 # ビルド成果物・一時ファイル
@@ -28,8 +28,8 @@ build/
 /talkback
 tools/build_talkback.ps1
 tools/TalkBack_Logcat.ps1
+run-gitea-log.ps1
 
 /hello-reader-sound
-run-gitea-log.ps1
 app/src/main/res/raw/typo.ogg
 app/src/main/res/raw/complete.ogg
