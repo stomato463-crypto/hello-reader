@@ -66,6 +66,13 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private var tts: TextToSpeech? = null
     private var isTtsReady = false
 
+    // 二重音声（サブボイス）ガイド機能用フィールド
+    private var isSubVoiceEnabled: Boolean = true
+    private var mainVoicePitch: Float = 1.0f
+    private var subVoicePitch: Float = 0.82f
+    private var mainVoice: android.speech.tts.Voice? = null
+    private var subVoice: android.speech.tts.Voice? = null
+
     // サウンドフィードバック (100% Google AOSP TalkBack OSS音源仕様)
     private var soundPool: SoundPool? = null
     private var soundActivateId: Int = 0
@@ -278,10 +285,34 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 Log.e(TAG, "日本語のTTSデータが見つからないか対応していません")
             } else {
                 isTtsReady = true
-                speak("Hello Readerが起動しました")
+                setupSubVoice()
+                speakWithSubVoice("Hello Readerが起動しました", "サブボイス案内が有効です")
             }
         } else {
             Log.e(TAG, "TTSの初期化に失敗しました")
+        }
+    }
+
+    /**
+     * サブボイス用TTS設定（代替ボイスの取得・セットアップ）
+     */
+    private fun setupSubVoice() {
+        val currentTts = tts ?: return
+        try {
+            val availableVoices = currentTts.voices
+            if (!availableVoices.isNullOrEmpty()) {
+                val japaneseVoices = availableVoices.filter { it.locale == Locale.JAPANESE || it.locale.language == "ja" }
+                if (japaneseVoices.size >= 2) {
+                    mainVoice = japaneseVoices[0]
+                    subVoice = japaneseVoices[1]
+                    Log.d(TAG, "Sub-Voice: 2つの独立した日本語Voiceを発見しました (Main: ${mainVoice?.name}, Sub: ${subVoice?.name})")
+                } else if (japaneseVoices.isNotEmpty()) {
+                    mainVoice = japaneseVoices[0]
+                    Log.d(TAG, "Sub-Voice: 日本語Voiceは1つですが、ピッチ変調サブボイスを適用します (Main: ${mainVoice?.name})")
+                }
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "Sub-Voice: Voice一覧の取得中にエラーが発生しました: ${e.message}")
         }
     }
 
@@ -1216,21 +1247,59 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
      * 音声読み上げ (TTS) (連呼重複防止スマートデバウンス2.0秒)
      */
     private fun speak(text: String) {
-        if (!isTtsReady || text.isBlank()) return
+        if (text.isBlank()) return
+        
+        // テキストからヒント要素（「ボタン」「チェックボックス」等）を自動分離してサブボイスで試みる
+        val hintRegex = Regex(" (ボタン|フローティングボタン|ショートカットボタン|チェックボックス|編集テキスト|フォルダ|画像|チェックあり|チェックなし|無効)$")
+        val match = hintRegex.find(text)
+        if (match != null) {
+            val mainText = text.substring(0, match.range.first).trim()
+            val hintText = match.value.trim()
+            speakWithSubVoice(mainText, hintText)
+        } else {
+            speakWithSubVoice(text, null)
+        }
+    }
 
+    /**
+     * メイン表示名と操作ヒントを異なるトーン/Voice（二重音声サブボイス）で連続音読
+     */
+    private fun speakWithSubVoice(mainText: String, hintText: String? = null) {
+        if (!isTtsReady || mainText.isBlank()) return
+
+        val fullTextKey = if (!hintText.isNullOrBlank()) "$mainText|$hintText" else mainText
         val currentTime = System.currentTimeMillis()
-        val lastTime = recentSpokenTexts[text]
+        val lastTime = recentSpokenTexts[fullTextKey]
         if (lastTime != null && (currentTime - lastTime) < 2000) {
             return
         }
 
-        recentSpokenTexts[text] = currentTime
+        recentSpokenTexts[fullTextKey] = currentTime
         if (recentSpokenTexts.size > 20) {
             recentSpokenTexts.remove(recentSpokenTexts.keys.first())
         }
 
-        Log.d(TAG, "Speaking: ${sanitizeForLog(text)}")
-        tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, "HelloReaderTTS")
+        Log.d(TAG, "Speaking Main: ${sanitizeForLog(mainText)}${if (hintText != null) " [SubVoice Hint: $hintText]" else ""}")
+
+        val currentTts = tts ?: return
+        
+        // 1. メインボイスの出力 (QUEUE_FLUSH)
+        if (mainVoice != null) {
+            currentTts.voice = mainVoice
+        }
+        currentTts.setPitch(mainVoicePitch)
+        currentTts.speak(mainText, TextToSpeech.QUEUE_FLUSH, null, "HelloReaderMainTTS")
+
+        // 2. サブボイスのヒント出力 (QUEUE_ADD)
+        if (isSubVoiceEnabled && !hintText.isNullOrBlank()) {
+            mainHandler.postDelayed({
+                if (subVoice != null) {
+                    currentTts.voice = subVoice
+                }
+                currentTts.setPitch(subVoicePitch)
+                currentTts.speak(hintText, TextToSpeech.QUEUE_ADD, null, "HelloReaderSubTTS")
+            }, 50)
+        }
     }
 
     /**
