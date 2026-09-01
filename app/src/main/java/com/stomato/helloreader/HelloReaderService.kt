@@ -71,8 +71,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private var isSubVoiceEnabled: Boolean = true
     private var mainVoicePitch: Float = 1.0f
     private var subVoicePitch: Float = 0.82f
-    private var mainVoice: android.speech.tts.Voice? = null
-    private var subVoice: android.speech.tts.Voice? = null
     @Volatile
     private var pendingSubVoiceHint: String? = null
 
@@ -288,7 +286,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 Log.e(TAG, "日本語のTTSデータが見つからないか対応していません")
             } else {
                 isTtsReady = true
-                setupSubVoice()
+                Log.d(TAG, "Sub-Voice: 安定動作ピッチ変調モード (MainPitch: $mainVoicePitch, SubPitch: $subVoicePitch) を有効化しました")
                 
                 tts?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
                     override fun onStart(utteranceId: String?) {}
@@ -298,9 +296,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                             pendingSubVoiceHint = null
                             mainHandler.post {
                                 val currentTts = tts ?: return@post
-                                if (subVoice != null) {
-                                    try { currentTts.voice = subVoice } catch (e: Exception) {}
-                                }
                                 currentTts.setPitch(subVoicePitch)
                                 currentTts.speak(hint, TextToSpeech.QUEUE_ADD, null, "HelloReaderSubTTS")
                             }
@@ -314,29 +309,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             }
         } else {
             Log.e(TAG, "TTSの初期化に失敗しました")
-        }
-    }
-
-    /**
-     * サブボイス用TTS設定（代替ボイスの取得・セットアップ）
-     */
-    private fun setupSubVoice() {
-        val currentTts = tts ?: return
-        try {
-            val availableVoices = currentTts.voices
-            if (!availableVoices.isNullOrEmpty()) {
-                val japaneseVoices = availableVoices.filter { it.locale == Locale.JAPANESE || it.locale.language == "ja" }
-                if (japaneseVoices.size >= 2) {
-                    mainVoice = japaneseVoices[0]
-                    subVoice = japaneseVoices[1]
-                    Log.d(TAG, "Sub-Voice: 2つの独立した日本語Voiceを発見しました (Main: ${mainVoice?.name}, Sub: ${subVoice?.name})")
-                } else if (japaneseVoices.isNotEmpty()) {
-                    mainVoice = japaneseVoices[0]
-                    Log.d(TAG, "Sub-Voice: 日本語Voiceは1つですが、ピッチ変調サブボイスを適用します (Main: ${mainVoice?.name})")
-                }
-            }
-        } catch (e: Exception) {
-            Log.w(TAG, "Sub-Voice: Voice一覧の取得中にエラーが発生しました: ${e.message}")
         }
     }
 
@@ -1310,10 +1282,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         // 1. サブヒントをペンディング変数にセット（onDone発声完了時に安全に発声させる）
         pendingSubVoiceHint = if (isSubVoiceEnabled && !hintText.isNullOrBlank()) hintText else null
 
-        // 2. メインボイスのセット ＆ 再生 (QUEUE_FLUSH)
-        if (mainVoice != null) {
-            try { currentTts.voice = mainVoice } catch (e: Exception) {}
-        }
+        // 2. メインボイスの再生 (QUEUE_FLUSH)
         currentTts.setPitch(mainVoicePitch)
         currentTts.speak(mainText, TextToSpeech.QUEUE_FLUSH, null, "HelloReaderMainTTS")
     }
