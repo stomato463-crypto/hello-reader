@@ -1260,24 +1260,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private val recentSpokenTexts = LinkedHashMap<String, Long>()
 
     /**
-     * 音声読み上げ (TTS) (連呼重複防止スマートデバウンス2.0秒)
-     */
-    private fun speak(text: String) {
-        if (text.isBlank()) return
-        
-        // テキストからヒント要素（「ボタン」「チェックボックス」等）を自動分離してサブボイスで試みる
-        val hintRegex = Regex(" (ボタン|フローティングボタン|ショートカットボタン|チェックボックス|編集テキスト|フォルダ|画像|チェックあり|チェックなし|無効)$")
-        val match = hintRegex.find(text)
-        if (match != null) {
-            val mainText = text.substring(0, match.range.first).trim()
-            val hintText = match.value.trim()
-            speakWithSubVoice(mainText, hintText)
-        } else {
-            speakWithSubVoice(text, null)
-        }
-    }
-
-    /**
      * 音声読み上げ (TTS)
      */
     private fun speak(text: String) {
