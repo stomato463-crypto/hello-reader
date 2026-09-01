@@ -1279,6 +1279,23 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     }
 
     /**
+     * 音声読み上げ (TTS)
+     */
+    private fun speak(text: String) {
+        if (text.isBlank()) return
+        
+        val hintRegex = Regex(" (ボタン|フローティングボタン|ショートカットボタン|チェックボックス|編集テキスト|フォルダ|画像|チェックあり|チェックなし|無効|ダブルタップで実行できます)$")
+        val match = hintRegex.find(text)
+        if (match != null) {
+            val mainText = text.substring(0, match.range.first).trim()
+            val hintText = match.value.trim()
+            speakWithSubVoice(mainText, hintText)
+        } else {
+            speakWithSubVoice(text, null)
+        }
+    }
+
+    /**
      * メイン表示名と操作ヒントを異なるトーン/Voice（二重音声サブボイス）で連続音読
      */
     private fun speakWithSubVoice(mainText: String, hintText: String? = null) {
