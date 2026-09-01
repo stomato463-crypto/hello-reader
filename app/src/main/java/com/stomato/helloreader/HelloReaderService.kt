@@ -17,6 +17,7 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
 import android.telecom.TelecomManager
 import android.telephony.TelephonyManager
 import android.util.Log
@@ -72,6 +73,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private var subVoicePitch: Float = 0.82f
     private var mainVoice: android.speech.tts.Voice? = null
     private var subVoice: android.speech.tts.Voice? = null
+    @Volatile
+    private var pendingSubVoiceHint: String? = null
 
     // サウンドフィードバック (100% Google AOSP TalkBack OSS音源仕様)
     private var soundPool: SoundPool? = null
@@ -286,6 +289,27 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             } else {
                 isTtsReady = true
                 setupSubVoice()
+                
+                tts?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+                    override fun onStart(utteranceId: String?) {}
+                    override fun onDone(utteranceId: String?) {
+                        if (utteranceId == "HelloReaderMainTTS" && !pendingSubVoiceHint.isNullOrBlank()) {
+                            val hint = pendingSubVoiceHint
+                            pendingSubVoiceHint = null
+                            mainHandler.post {
+                                val currentTts = tts ?: return@post
+                                if (subVoice != null) {
+                                    try { currentTts.voice = subVoice } catch (e: Exception) {}
+                                }
+                                currentTts.setPitch(subVoicePitch)
+                                currentTts.speak(hint, TextToSpeech.QUEUE_ADD, null, "HelloReaderSubTTS")
+                            }
+                        }
+                    }
+                    @Deprecated("Deprecated in Java")
+                    override fun onError(utteranceId: String?) {}
+                })
+
                 speakWithSubVoice("Hello Readerが起動しました", "サブボイス案内が有効です")
             }
         } else {
@@ -1283,23 +1307,15 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         val currentTts = tts ?: return
         
-        // 1. メインボイスの出力 (QUEUE_FLUSH)
+        // 1. サブヒントをペンディング変数にセット（onDone発声完了時に安全に発声させる）
+        pendingSubVoiceHint = if (isSubVoiceEnabled && !hintText.isNullOrBlank()) hintText else null
+
+        // 2. メインボイスのセット ＆ 再生 (QUEUE_FLUSH)
         if (mainVoice != null) {
-            currentTts.voice = mainVoice
+            try { currentTts.voice = mainVoice } catch (e: Exception) {}
         }
         currentTts.setPitch(mainVoicePitch)
         currentTts.speak(mainText, TextToSpeech.QUEUE_FLUSH, null, "HelloReaderMainTTS")
-
-        // 2. サブボイスのヒント出力 (QUEUE_ADD)
-        if (isSubVoiceEnabled && !hintText.isNullOrBlank()) {
-            mainHandler.postDelayed({
-                if (subVoice != null) {
-                    currentTts.voice = subVoice
-                }
-                currentTts.setPitch(subVoicePitch)
-                currentTts.speak(hintText, TextToSpeech.QUEUE_ADD, null, "HelloReaderSubTTS")
-            }, 50)
-        }
     }
 
     /**
