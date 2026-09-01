@@ -1213,7 +1213,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val pair = parseNodeDescriptionPair(node) ?: return null
         return if (pair.hintText != null) "${pair.mainText} ${pair.hintText}" else pair.mainText
     }
-    }
 
     /**
      * ノード直下の子ノードツリーから最初にみつかったテキスト/contentDescriptionを取得
