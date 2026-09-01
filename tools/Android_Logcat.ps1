@@ -1,7 +1,7 @@
-# Android Logcat を実行し、デバイス選択・モード選択・自動保存を行うツールですにょろ。
+# Android Logcat tool with device selection, mode selection, and auto-save capabilities.
 Write-Host "--- Android Logcat Tool ---" -ForegroundColor Cyan
 
-# 1. 接続されているデバイス一覧を取得
+# 1. Get list of connected devices
 $devices = @(adb devices | Select-String -Pattern "device$" | ForEach-Object {
         $parts = $_.Line -split "\t"
         $devType = "USB"
@@ -12,37 +12,37 @@ $devices = @(adb devices | Select-String -Pattern "device$" | ForEach-Object {
     })
 
 if ($devices.Count -eq 0) {
-    Write-Host "接続中の端末が見つからないにょろ！USBまたはWi-Fi接続を確認してね！" -ForegroundColor Red
+    Write-Host "No connected devices found! Please check USB or Wi-Fi connection." -ForegroundColor Red
     Exit
 }
 
 $selectedDevice = $null
 if ($devices.Count -eq 1) {
     $selectedDevice = $devices[0].Id
-    Write-Host "接続されているデバイスを自動選択したにょろ: $selectedDevice ($($devices[0].Type))" -ForegroundColor Green
+    Write-Host "Auto-selected connected device: $selectedDevice ($($devices[0].Type))" -ForegroundColor Green
 }
 else {
-    Write-Host "複数デバイスを検知したにょろ。選択してね:" -ForegroundColor Yellow
+    Write-Host "Multiple devices detected. Please select one:" -ForegroundColor Yellow
     for ($i = 0; $i -lt $devices.Count; $i++) {
         Write-Host "[$($i + 1)] ID: $($devices[$i].Id) ($($devices[$i].Type))"
     }
     $choice = ""
     while ($choice -lt 1 -or $choice -gt $devices.Count) {
-        $choice = Read-Host "デバイスを選択 (1-$($devices.Count))"
+        $choice = Read-Host "Select device (1-$($devices.Count))"
         if ($choice -match '^\d+$') { $choice = [int]$choice } else { $choice = 0 }
     }
     $selectedDevice = $devices[$choice - 1].Id
 }
 
-# 2. ログ取得モードの選択
-Write-Host "`n--- ログモードを選択してね ---" -ForegroundColor Cyan
-Write-Host "[1] Default Mode (HelloReader & アクセシビリティ専用スリム表示)"
-Write-Host "[2] Error Mode (エラーログのみ)"
-Write-Host "[3] Full Mode (全ログ取得)"
+# 2. Select log collection mode
+Write-Host "`n--- Select Log Mode ---" -ForegroundColor Cyan
+Write-Host "[1] Default Mode (Slim view for HelloReader & Accessibility)"
+Write-Host "[2] Error Mode (HelloReader & Accessibility error logs only)"
+Write-Host "[3] Full Mode (All HelloReader debug & trace logs)"
 
 $modeChoice = ""
 while ($modeChoice -ne "1" -and $modeChoice -ne "2" -and $modeChoice -ne "3") {
-    $modeChoice = Read-Host "モードを選択 (1-3)"
+    $modeChoice = Read-Host "Select mode (1-3)"
 }
 
 $modeName = ""
@@ -50,25 +50,27 @@ $logFilterArgs = ""
 
 if ($modeChoice -eq "1") {
     $modeName = "DefaultMode"
-    # HelloReaderServiceとアクセシビリティ関連のみをピンポイント取得（他は消音して超スリム化!）
+    # Pinpoint capture for HelloReaderService and Accessibility (filters out others for slim output)
     $logFilterArgs = "HelloReaderService:V HelloReader:V AccessibilityManager:V AccessibilityService:V *:S"
 }
 elseif ($modeChoice -eq "2") {
     $modeName = "ErrorMode"
-    $logFilterArgs = "*:E"
+    # HelloReader and Accessibility error logs only
+    $logFilterArgs = "HelloReaderService:E HelloReader:E AccessibilityManager:E AccessibilityService:E *:S"
 }
 else {
     $modeName = "FullMode"
-    $logFilterArgs = ""
+    # All levels of HelloReader logs
+    $logFilterArgs = "HelloReaderService:V HelloReader:V *:S"
 }
 
-# 3. カレントパス（作業中ディレクトリ）の動的取得 (クロスプラットフォーム対応)
+# 3. Dynamic current path resolution (Cross-platform support)
 $currentDir = (Get-Location).Path
 $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
 $fileName = "${modeName}_${timestamp}.log"
 $saveFullPath = Join-Path $currentDir $fileName
 
-# スレッドセーフな同期リストを使用
+# Thread-safe synchronized list for logs
 $logList = [System.Collections.ArrayList]::Synchronized([System.Collections.ArrayList]::new())
 
 $processInfo = New-Object System.Diagnostics.ProcessStartInfo
@@ -82,12 +84,12 @@ $processInfo.CreateNoWindow = $true
 $process = New-Object System.Diagnostics.Process
 $process.StartInfo = $processInfo
 
-Write-Host "`n--- [$modeName] でスリムログ収集を開始するにょろ ---" -ForegroundColor Cyan
-Write-Host "[Ctrl+C] を押すと『トン・ツー♪』と鳴って即座に保存されるにょろ！" -ForegroundColor Yellow
-Write-Host "保存予定場所 (カレントパス): $saveFullPath" -ForegroundColor Yellow
+Write-Host "`n--- Starting log collection in [$modeName] ---" -ForegroundColor Cyan
+Write-Host "Press [Ctrl+C] to stop and save logs immediately!" -ForegroundColor Yellow
+Write-Host "Target save path: $saveFullPath" -ForegroundColor Yellow
 Write-Host "--------------------------------------------------------"
 
-# 非同期イベント駆動でログを受信
+# Asynchronous event handler for log data
 $action = {
     if ($Event.SourceEventArgs.Data) {
         $line = $Event.SourceEventArgs.Data
@@ -107,7 +109,7 @@ try {
     }
 }
 finally {
-    # 1. adb プロセスを即座に強制終了（暴走防止）
+    # 1. Force stop adb process
     if ($process -and -not $process.HasExited) {
         try {
             Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
@@ -115,35 +117,35 @@ finally {
         } catch { }
     }
     
-    # 🔔 Ctrl+Cキーが受け付けられたことを伝えるモールスディープ音（トン・ツー♪）
+    # Beep feedback on Ctrl+C stop
     try {
-        [Console]::Beep(400, 100) # トン (低音400Hz)
-        [Console]::Beep(600, 180) # ツゥー (中音600Hz)
+        [Console]::Beep(400, 100)
+        [Console]::Beep(600, 180)
     } catch { }
 
     Unregister-Event -SubscriptionId $eventSubscriber.Id -ErrorAction SilentlyContinue
     
     $linesToSave = @($logList)
 
-    # ログファイルの保存（カレントパスへ確実に保存！）
+    # Save log file
     if ($linesToSave.Count -gt 0) {
-        # 1000行を超えていたら直近の1000行だけに自動スリムカット！
+        # Auto-trim to latest 1000 lines if exceeding 1000
         if ($linesToSave.Count -gt 1000) {
             $linesToSave = $linesToSave[($linesToSave.Count - 1000)..($linesToSave.Count - 1)]
-            Write-Host "`n※ サーバー保護のため、直近最新1000行に自動スリムカットしたにょろ！" -ForegroundColor Yellow
+            Write-Host "`n* Automatically trimmed to the latest 1000 lines for log management." -ForegroundColor Yellow
         }
 
         $totalLines = $linesToSave.Count
-        Write-Host "`nディスクにログを保存中にょろ... 合計行数: $totalLines" -ForegroundColor Yellow
-        Write-Host "保存先フルパス: $saveFullPath" -ForegroundColor Cyan
+        Write-Host "`nSaving log file to disk... Total lines: $totalLines" -ForegroundColor Yellow
+        Write-Host "Full save path: $saveFullPath" -ForegroundColor Cyan
             
         $stream = [System.IO.File]::Create($saveFullPath)
         $writer = New-Object System.IO.StreamWriter($stream, [System.Text.Encoding]::UTF8, 65536)
         
         function Sanitize-LogLine([string]$l) {
             if (-not $l) { return "" }
-            $l = $l -replace '(\d{2,4}-\d{2,4}-\d{4}|\d{10,11})', '[電話番号マスク済]'
-            $l = $l -replace '(Speaking:\s*(通知:\s*)?)(.+?)(さん|氏|様)', '$1[個人名マスク済]$4'
+            $l = $l -replace '(\d{2,4}-\d{2,4}-\d{4}|\d{10,11})', '[PHONE NUMBER MASKED]'
+            $l = $l -replace '(Speaking:\s*(通知:\s*)?)(.+?)(さん|氏|様)', '$1[NAME MASKED]$4'
             return $l
         }
 
@@ -155,7 +157,7 @@ finally {
                 
                 if ($i -gt 0 -and ((($i % $batchSize) -eq 0) -or ($i -eq ($totalLines - 1)))) {
                     $percent = [int]((($i + 1) / $totalLines) * 100)
-                    Write-Host "保存進捗: $percent% ($($i + 1) / $totalLines 行)" -ForegroundColor Cyan
+                    Write-Host "Saving progress: $percent% ($($i + 1) / $totalLines lines)" -ForegroundColor Cyan
                 }
             }
         }
@@ -165,16 +167,16 @@ finally {
             $stream.Close()
         }
 
-        # 🎵 保存完了を知らせるハッピーな完了ディープ音♪
+        # Happy beep on completion
         try {
             [Console]::Beep(800, 150)
         } catch { }
 
-        Write-Host "ログキャッチ終了だにょろ！" -ForegroundColor Yellow
-        Write-Host "ログ保存完了にょろ: [ $saveFullPath ] (合計行数: $totalLines)" -ForegroundColor Green
+        Write-Host "Log collection finished!" -ForegroundColor Yellow
+        Write-Host "Log file saved successfully: [ $saveFullPath ] (Total lines: $totalLines)" -ForegroundColor Green
     }
     else {
-        Write-Host "`nログキャッチ終了。取得されたログはゼロ件だったにょろ。" -ForegroundColor Red
-        Write-Host "保存予定だったパス: $saveFullPath" -ForegroundColor Yellow
+        Write-Host "`nLog collection finished. 0 log entries were captured." -ForegroundColor Red
+        Write-Host "Target save path was: $saveFullPath" -ForegroundColor Yellow
     }
 }
