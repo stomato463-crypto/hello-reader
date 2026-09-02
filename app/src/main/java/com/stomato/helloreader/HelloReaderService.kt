@@ -1055,13 +1055,15 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 }
             }
             AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED -> {
-                // 通話中や画面の一部更新（タイマーカウントアップ等）での無駄な自動連呼をブロック！
-                if (isCallActive) {
+                // 通話中、またはシステムUI（Wi-Fiステータス更新等）の背景チラつき自動連呼・割り込みをブロック！
+                if (isCallActive) return
+                val packageName = event.packageName?.toString() ?: ""
+                if (packageName == "com.android.systemui") {
+                    // Wi-Fiやバッテリーなどのステータスバー変化による割り込み音読を防止
                     return
                 }
-                val text = getEventText(event)
-                val packageName = event.packageName?.toString() ?: ""
 
+                val text = getEventText(event)
                 if (!text.isNullOrBlank()) {
                     speak(text)
                 } else if (packageName.contains("launcher", ignoreCase = true)) {
