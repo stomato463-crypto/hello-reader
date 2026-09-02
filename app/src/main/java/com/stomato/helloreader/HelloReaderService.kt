@@ -17,6 +17,7 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
 import android.telecom.TelecomManager
 import android.telephony.TelephonyManager
 import android.util.Log
@@ -65,6 +66,13 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
     private var tts: TextToSpeech? = null
     private var isTtsReady = false
+
+    // 二重音声（サブボイス）ガイド機能用フィールド
+    private var isSubVoiceEnabled: Boolean = true
+    private var mainVoicePitch: Float = 1.0f
+    private var subVoicePitch: Float = 0.82f
+    @Volatile
+    private var pendingSubVoiceHint: String? = null
 
     // サウンドフィードバック (100% Google AOSP TalkBack OSS音源仕様)
     private var soundPool: SoundPool? = null
@@ -278,7 +286,26 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 Log.e(TAG, "日本語のTTSデータが見つからないか対応していません")
             } else {
                 isTtsReady = true
-                speak("Hello Readerが起動しました")
+                Log.d(TAG, "Sub-Voice: 安定動作ピッチ変調モード (MainPitch: $mainVoicePitch, SubPitch: $subVoicePitch) を有効化しました")
+                
+                tts?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+                    override fun onStart(utteranceId: String?) {}
+                    override fun onDone(utteranceId: String?) {
+                        if (utteranceId == "HelloReaderMainTTS" && !pendingSubVoiceHint.isNullOrBlank()) {
+                            val hint = pendingSubVoiceHint
+                            pendingSubVoiceHint = null
+                            mainHandler.post {
+                                val currentTts = tts ?: return@post
+                                currentTts.setPitch(subVoicePitch)
+                                currentTts.speak(hint, TextToSpeech.QUEUE_ADD, null, "HelloReaderSubTTS")
+                            }
+                        }
+                    }
+                    @Deprecated("Deprecated in Java")
+                    override fun onError(utteranceId: String?) {}
+                })
+
+                speakWithSubVoice("Hello Readerが起動しました", "サブボイス案内が有効です")
             }
         } else {
             Log.e(TAG, "TTSの初期化に失敗しました")
@@ -593,10 +620,10 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             currentFocus?.performAction(AccessibilityNodeInfo.ACTION_CLEAR_ACCESSIBILITY_FOCUS)
             val success = targetNode.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
             lastFocusedNode = targetNode
-            val nodeText = parseNodeDescription(targetNode)
-
-            if (!nodeText.isNullOrBlank()) {
-                speak(nodeText)
+            
+            val pair = parseNodeDescriptionPair(targetNode)
+            if (pair != null) {
+                speakWithSubVoice(pair.mainText, pair.hintText)
             } else {
                 speak("$directionName の要素へ移動")
             }
@@ -1021,28 +1048,30 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 } else if (!text.isNullOrBlank()) {
                     speak(text)
                 } else if (event.source != null) {
-                    val desc = parseNodeDescription(event.source)
-                    if (!desc.isNullOrBlank()) {
-                        speak(desc)
+                    val pair = parseNodeDescriptionPair(event.source)
+                    if (pair != null) {
+                        speakWithSubVoice(pair.mainText, pair.hintText)
                     }
                 }
             }
             AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED -> {
-                // 通話中や画面の一部更新（タイマーカウントアップ等）での無駄な自動連呼をブロック！
-                if (isCallActive) {
+                // 通話中、またはシステムUI（Wi-Fiステータス更新等）の背景チラつき自動連呼・割り込みをブロック！
+                if (isCallActive) return
+                val packageName = event.packageName?.toString() ?: ""
+                if (packageName == "com.android.systemui") {
+                    // Wi-Fiやバッテリーなどのステータスバー変化による割り込み音読を防止
                     return
                 }
-                val text = getEventText(event)
-                val packageName = event.packageName?.toString() ?: ""
 
+                val text = getEventText(event)
                 if (!text.isNullOrBlank()) {
                     speak(text)
                 } else if (packageName.contains("launcher", ignoreCase = true)) {
                     speakHomeScreenItems(getActiveRootNode())
                 } else if (event.source != null) {
-                    val desc = parseNodeDescription(event.source)
-                    if (!desc.isNullOrBlank()) {
-                        speak(desc)
+                    val pair = parseNodeDescriptionPair(event.source)
+                    if (pair != null) {
+                        speakWithSubVoice(pair.mainText, pair.hintText)
                     }
                 }
             }
@@ -1078,16 +1107,21 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
     }
 
+    data class NodeTextPair(
+        val mainText: String,
+        val hintText: String? = null
+    )
+
     /**
-     * AOSP TalkBack Stable準拠 ノード解読解析
+     * AOSP TalkBack Stable準拠 ノード解読解析 (メインテキストとサブVoiceヒントを分離取得)
      */
     @Suppress("DEPRECATION")
-    private fun parseNodeDescription(node: AccessibilityNodeInfo?): String? {
+    private fun parseNodeDescriptionPair(node: AccessibilityNodeInfo?): NodeTextPair? {
         if (node == null) return null
         val compat = AccessibilityNodeInfoCompat.wrap(node)
-        val sb = StringBuilder()
+        val mainSb = StringBuilder()
 
-        var mainText = when {
+        var rawMainText = when {
             !compat.text.isNullOrBlank() -> compat.text
             !compat.contentDescription.isNullOrBlank() -> compat.contentDescription
             !compat.hintText.isNullOrBlank() -> compat.hintText
@@ -1096,12 +1130,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             else -> null
         }
 
-        if (mainText.isNullOrBlank()) {
-            mainText = findTextInChildNodes(node)
+        if (rawMainText.isNullOrBlank()) {
+            rawMainText = findTextInChildNodes(node)
         }
 
-        if (!mainText.isNullOrBlank()) {
-            val mainTextStr = mainText.toString().trim()
+        if (!rawMainText.isNullOrBlank()) {
+            val mainTextStr = rawMainText.toString().trim()
             if (mainTextStr.length == 1) {
                 val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
                 val isPhoneticMorseEnabled = prefs.getBoolean("pref_phonetic_morse_enabled", false)
@@ -1115,56 +1149,78 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     when (timing) {
                         "BEFORE_TTS" -> {
                             playMorseVibration(ch)
-                            sb.append(ch).append("。").append(phoneticName).append(" ")
+                            mainSb.append(ch).append("。").append(phoneticName)
                         }
                         "AFTER_TTS" -> {
-                            sb.append(ch).append("。").append(phoneticName).append(" ")
+                            mainSb.append(ch).append("。").append(phoneticName)
                             android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
                                 playMorseVibration(ch)
                             }, 1200)
                         }
-                        else -> { // "CONCURRENT"
-                            sb.append(ch).append("。").append(phoneticName).append(" ")
+                        else -> {
+                            mainSb.append(ch).append("。").append(phoneticName)
                             playMorseVibration(ch)
                         }
                     }
                 } else {
-                    sb.append(mainText).append(" ")
+                    mainSb.append(rawMainText)
                 }
             } else {
-                sb.append(mainText).append(" ")
+                mainSb.append(rawMainText)
             }
+        } else {
+            return null
         }
 
+        val hintSb = StringBuilder()
         val className = compat.className
         val viewId = compat.viewIdResourceName
         if (className != null || viewId != null) {
-            val classStr = className ?: ""
+            val classStr = className?.toString() ?: ""
             val idStr = viewId ?: ""
             when {
-                classStr.contains("FloatingActionButton") || classStr.contains("Floating") || idStr.contains("fab") || idStr.contains("floating") -> sb.append("フローティングボタン ")
-                classStr.contains("Shortcut") || idStr.contains("shortcut") -> sb.append("ショートカットボタン ")
-                classStr.contains("Button") -> sb.append("ボタン ")
-                classStr.contains("CheckBox") -> sb.append("チェックボックス ")
-                classStr.contains("EditText") -> sb.append("編集テキスト ")
-                classStr.contains("Folder") -> sb.append("フォルダ ")
-                classStr.contains("ImageView") && mainText.isNullOrBlank() -> sb.append("画像 ")
+                classStr.contains("FloatingActionButton") || classStr.contains("Floating") || idStr.contains("fab") || idStr.contains("floating") -> hintSb.append("フローティングボタン ")
+                classStr.contains("Shortcut") || idStr.contains("shortcut") -> hintSb.append("ショートカットボタン ")
+                classStr.endsWith(".Switch") || classStr.contains("SwitchCompat") || classStr.contains("SwitchMaterial") || classStr.contains("Toggle") -> hintSb.append("スイッチ ")
+                classStr.contains("CheckBox") -> hintSb.append("チェックボックス ")
+                classStr.contains("RadioButton") -> hintSb.append("ラジオボタン ")
+                classStr.contains("EditText") -> hintSb.append("編集テキスト ")
+                classStr.contains("SeekBar") -> hintSb.append("スライダー ")
+                classStr.contains("Folder") -> hintSb.append("フォルダ ")
+                classStr.endsWith(".Button") || classStr.endsWith("ImageButton") -> hintSb.append("ボタン ")
+                classStr.contains("ImageView") && mainSb.isBlank() -> hintSb.append("画像 ")
             }
         }
 
+        if (compat.isClickable && hintSb.isEmpty()) {
+            hintSb.append("ダブルタップで実行できます ")
+        }
+
         if (compat.isCheckable) {
+            val isSwitchOrToggle = className?.toString()?.let {
+                it.contains("Switch") || it.contains("Toggle")
+            } ?: false
+
             if (compat.isChecked) {
-                sb.append("チェックあり ")
+                if (isSwitchOrToggle) hintSb.append("オン ") else hintSb.append("チェックあり ")
             } else {
-                sb.append("チェックなし ")
+                if (isSwitchOrToggle) hintSb.append("オフ ") else hintSb.append("チェックなし ")
             }
         }
 
         if (!compat.isEnabled) {
-            sb.append("無効 ")
+            hintSb.append("無効 ")
         }
 
-        return if (sb.isNotEmpty()) sb.toString().trim() else null
+        val finalMain = mainSb.toString().trim()
+        val finalHint = if (hintSb.isNotEmpty()) hintSb.toString().trim() else null
+
+        return NodeTextPair(finalMain, finalHint)
+    }
+
+    private fun parseNodeDescription(node: AccessibilityNodeInfo?): String? {
+        val pair = parseNodeDescriptionPair(node) ?: return null
+        return if (pair.hintText != null) "${pair.mainText} ${pair.hintText}" else pair.mainText
     }
 
     /**
@@ -1213,24 +1269,50 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private val recentSpokenTexts = LinkedHashMap<String, Long>()
 
     /**
-     * 音声読み上げ (TTS) (連呼重複防止スマートデバウンス2.0秒)
+     * 音声読み上げ (TTS)
      */
     private fun speak(text: String) {
-        if (!isTtsReady || text.isBlank()) return
+        if (text.isBlank()) return
+        
+        val hintRegex = Regex(" (ボタン|フローティングボタン|ショートカットボタン|チェックボックス|編集テキスト|フォルダ|画像|チェックあり|チェックなし|無効|ダブルタップで実行できます)$")
+        val match = hintRegex.find(text)
+        if (match != null) {
+            val mainText = text.substring(0, match.range.first).trim()
+            val hintText = match.value.trim()
+            speakWithSubVoice(mainText, hintText)
+        } else {
+            speakWithSubVoice(text, null)
+        }
+    }
 
+    /**
+     * メイン表示名と操作ヒントを異なるトーン/Voice（二重音声サブボイス）で連続音読
+     */
+    private fun speakWithSubVoice(mainText: String, hintText: String? = null) {
+        if (!isTtsReady || mainText.isBlank()) return
+
+        val fullTextKey = if (!hintText.isNullOrBlank()) "$mainText|$hintText" else mainText
         val currentTime = System.currentTimeMillis()
-        val lastTime = recentSpokenTexts[text]
+        val lastTime = recentSpokenTexts[fullTextKey]
         if (lastTime != null && (currentTime - lastTime) < 2000) {
             return
         }
 
-        recentSpokenTexts[text] = currentTime
+        recentSpokenTexts[fullTextKey] = currentTime
         if (recentSpokenTexts.size > 20) {
             recentSpokenTexts.remove(recentSpokenTexts.keys.first())
         }
 
-        Log.d(TAG, "Speaking: ${sanitizeForLog(text)}")
-        tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, "HelloReaderTTS")
+        Log.d(TAG, "Speaking Main: ${sanitizeForLog(mainText)}${if (hintText != null) " [SubVoice Hint: $hintText]" else ""}")
+
+        val currentTts = tts ?: return
+        
+        // 1. サブヒントをペンディング変数にセット（onDone発声完了時に安全に発声させる）
+        pendingSubVoiceHint = if (isSubVoiceEnabled && !hintText.isNullOrBlank()) hintText else null
+
+        // 2. メインボイスの再生 (QUEUE_FLUSH)
+        currentTts.setPitch(mainVoicePitch)
+        currentTts.speak(mainText, TextToSpeech.QUEUE_FLUSH, null, "HelloReaderMainTTS")
     }
 
     /**
