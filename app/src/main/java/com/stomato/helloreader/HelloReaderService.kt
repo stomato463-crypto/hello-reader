@@ -1191,7 +1191,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
 
         if (compat.isClickable && hintSb.isEmpty()) {
-            hintSb.append("ボタン、ダブルタップで実行できます ")
+            hintSb.append("ダブルタップで実行できます ")
         }
 
         if (compat.isCheckable) {
