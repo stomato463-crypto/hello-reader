@@ -103,22 +103,32 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
     private var vibrator: Vibrator? = null
 
+    private fun getVibratorService(): Vibrator? {
+        if (vibrator != null) return vibrator
+        vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val vibratorManager = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as? android.os.VibratorManager
+            vibratorManager?.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+        }
+        return vibrator
+    }
+
     /**
      * 指先への触覚フィードバック (Haptic Feedback) の実行
      */
     private fun performHapticFeedback() {
         try {
-            if (vibrator == null) {
-                vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
-            }
-            if (vibrator?.hasVibrator() == true) {
+            val vib = getVibratorService()
+            if (vib?.hasVibrator() == true) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    vibrator?.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
+                    vib.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
                 } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vibrator?.vibrate(VibrationEffect.createOneShot(15, VibrationEffect.DEFAULT_AMPLITUDE))
+                    vib.vibrate(VibrationEffect.createOneShot(15, VibrationEffect.DEFAULT_AMPLITUDE))
                 } else {
                     @Suppress("DEPRECATION")
-                    vibrator?.vibrate(15)
+                    vib.vibrate(15)
                 }
             }
         } catch (e: Exception) {
@@ -463,6 +473,34 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 false
             }
         }
+    }
+
+    /**
+     * パッケージ名がホーム画面（ランチャーアプリ）かどうか判定する
+     */
+    private fun isHomeScreenPackage(packageName: String): Boolean {
+        if (packageName.isBlank()) return false
+        if (packageName.contains("launcher", ignoreCase = true) ||
+            packageName.contains("home", ignoreCase = true) ||
+            packageName.contains("nexuslauncher", ignoreCase = true) ||
+            packageName.contains("trebuchet", ignoreCase = true) ||
+            packageName.contains("quickstep", ignoreCase = true)
+        ) {
+            return true
+        }
+        try {
+            val intent = Intent(Intent.ACTION_MAIN).apply {
+                addCategory(Intent.CATEGORY_HOME)
+            }
+            val resolveInfo = packageManager.resolveActivity(intent, 0)
+            val currentHomePackage = resolveInfo?.activityInfo?.packageName
+            if (currentHomePackage != null && packageName == currentHomePackage) {
+                return true
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Home package resolution error", e)
+        }
+        return false
     }
 
     /**
@@ -956,9 +994,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val morseCode = MORSE_MAP[uppercaseCh] ?: return
 
         try {
-            @Suppress("DEPRECATION")
-            val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
-            if (vibrator == null || !vibrator.hasVibrator()) return
+            val vib = getVibratorService()
+            if (vib == null || !vib.hasVibrator()) return
 
             val timingsList = mutableListOf<Long>()
             val amplitudesList = mutableListOf<Int>()
@@ -983,10 +1020,10 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val effect = VibrationEffect.createWaveform(timings, amplitudes, -1)
-                vibrator.vibrate(effect)
+                vib.vibrate(effect)
             } else {
                 @Suppress("DEPRECATION")
-                vibrator.vibrate(timings, -1)
+                vib.vibrate(timings, -1)
             }
             Log.d(TAG, "Played Morse Vibration for '$uppercaseCh': $morseCode")
         } catch (e: Exception) {
@@ -1041,7 +1078,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 val text = getEventText(event)
                 val packageName = event.packageName?.toString() ?: ""
 
-                if (packageName.contains("launcher", ignoreCase = true) || packageName.contains("home", ignoreCase = true)) {
+                if (isHomeScreenPackage(packageName)) {
                     mainHandler.postDelayed({
                         speakHomeScreenItems(getActiveRootNode())
                     }, 200)
@@ -1051,6 +1088,11 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     val pair = parseNodeDescriptionPair(event.source)
                     if (pair != null) {
                         speakWithSubVoice(pair.mainText, pair.hintText)
+                    } else {
+                        val nodeText = parseNodeDescription(event.source)
+                        if (!nodeText.isNullOrBlank()) {
+                            speak(nodeText)
+                        }
                     }
                 }
             }
@@ -1066,7 +1108,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 val text = getEventText(event)
                 if (!text.isNullOrBlank()) {
                     speak(text)
-                } else if (packageName.contains("launcher", ignoreCase = true)) {
+                } else if (isHomeScreenPackage(packageName)) {
                     speakHomeScreenItems(getActiveRootNode())
                 } else if (event.source != null) {
                     val pair = parseNodeDescriptionPair(event.source)
