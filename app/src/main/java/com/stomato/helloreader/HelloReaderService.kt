@@ -294,8 +294,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         initSoundPool()
 
         // 5. アプリサポート (AppProfile & CustomLabel) の初期化
-        appProfileManager = AppProfileManager(applicationContext)
-        customLabelManager = CustomLabelManager(applicationContext)
+        appProfileManager = AppProfileManager()
+        customLabelManager = CustomLabelManager()
     }
 
     override fun onInit(status: Int) {
