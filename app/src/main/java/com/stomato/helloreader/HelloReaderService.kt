@@ -27,6 +27,8 @@ import android.view.accessibility.AccessibilityNodeInfo
 import android.view.accessibility.AccessibilityWindowInfo
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import android.provider.ContactsContract
+import com.stomato.helloreader.appsupport.AppProfileManager
+import com.stomato.helloreader.appsupport.CustomLabelManager
 import java.util.Locale
 
 /**
@@ -102,6 +104,9 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private var callStartTime = 0L
 
     private var vibrator: Vibrator? = null
+
+    private lateinit var appProfileManager: AppProfileManager
+    private lateinit var customLabelManager: CustomLabelManager
 
     private fun getVibratorService(): Vibrator? {
         if (vibrator != null) return vibrator
@@ -287,6 +292,10 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         // 4. サウンドフィードバック (SoundPool) の初期化
         initSoundPool()
+
+        // 5. アプリサポート (AppProfile & CustomLabel) の初期化
+        appProfileManager = AppProfileManager(applicationContext)
+        customLabelManager = CustomLabelManager(applicationContext)
     }
 
     override fun onInit(status: Int) {
@@ -1163,17 +1172,32 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val compat = AccessibilityNodeInfoCompat.wrap(node)
         val mainSb = StringBuilder()
 
-        var rawMainText = when {
-            !compat.text.isNullOrBlank() -> compat.text
-            !compat.contentDescription.isNullOrBlank() -> compat.contentDescription
-            !compat.hintText.isNullOrBlank() -> compat.hintText
-            !compat.error.isNullOrBlank() -> compat.error
-            !compat.roleDescription.isNullOrBlank() -> compat.roleDescription
-            else -> null
+        val packageName = compat.packageName?.toString() ?: ""
+        val viewId = compat.viewIdResourceName
+
+        // App Support: 1. カスタムラベルのチェック (名無しボタン救済)
+        var rawMainText: String? = customLabelManager.getCustomLabel(packageName, viewId)
+
+        if (rawMainText.isNullOrBlank()) {
+            rawMainText = when {
+                !compat.text.isNullOrBlank() -> compat.text.toString()
+                !compat.contentDescription.isNullOrBlank() -> compat.contentDescription.toString()
+                !compat.hintText.isNullOrBlank() -> compat.hintText.toString()
+                !compat.error.isNullOrBlank() -> compat.error.toString()
+                !compat.roleDescription.isNullOrBlank() -> compat.roleDescription.toString()
+                else -> null
+            }
         }
 
         if (rawMainText.isNullOrBlank()) {
-            rawMainText = findTextInChildNodes(node)
+            rawMainText = findTextInChildNodes(node)?.toString()
+        }
+
+        // App Support: 2. アプリ特有プロファイルによる補正適用
+        val appProfile = appProfileManager.getProfileForPackage(packageName)
+        val customizedPair = appProfile.customizeNodeDescription(node, rawMainText, null)
+        if (customizedPair != null) {
+            return NodeTextPair(customizedPair.first, customizedPair.second)
         }
 
         if (!rawMainText.isNullOrBlank()) {
@@ -1216,7 +1240,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         val hintSb = StringBuilder()
         val className = compat.className
-        val viewId = compat.viewIdResourceName
         if (className != null || viewId != null) {
             val classStr = className?.toString() ?: ""
             val idStr = viewId ?: ""
