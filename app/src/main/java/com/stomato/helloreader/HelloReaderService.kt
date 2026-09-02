@@ -1174,15 +1174,18 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val className = compat.className
         val viewId = compat.viewIdResourceName
         if (className != null || viewId != null) {
-            val classStr = className ?: ""
+            val classStr = className?.toString() ?: ""
             val idStr = viewId ?: ""
             when {
                 classStr.contains("FloatingActionButton") || classStr.contains("Floating") || idStr.contains("fab") || idStr.contains("floating") -> hintSb.append("フローティングボタン ")
                 classStr.contains("Shortcut") || idStr.contains("shortcut") -> hintSb.append("ショートカットボタン ")
-                classStr.contains("Button") -> hintSb.append("ボタン ")
+                classStr.endsWith(".Switch") || classStr.contains("SwitchCompat") || classStr.contains("SwitchMaterial") || classStr.contains("Toggle") -> hintSb.append("スイッチ ")
                 classStr.contains("CheckBox") -> hintSb.append("チェックボックス ")
+                classStr.contains("RadioButton") -> hintSb.append("ラジオボタン ")
                 classStr.contains("EditText") -> hintSb.append("編集テキスト ")
+                classStr.contains("SeekBar") -> hintSb.append("スライダー ")
                 classStr.contains("Folder") -> hintSb.append("フォルダ ")
+                classStr.endsWith(".Button") || classStr.endsWith("ImageButton") -> hintSb.append("ボタン ")
                 classStr.contains("ImageView") && mainSb.isBlank() -> hintSb.append("画像 ")
             }
         }
@@ -1192,10 +1195,14 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
 
         if (compat.isCheckable) {
+            val isSwitchOrToggle = className?.toString()?.let {
+                it.contains("Switch") || it.contains("Toggle")
+            } ?: false
+
             if (compat.isChecked) {
-                hintSb.append("チェックあり ")
+                if (isSwitchOrToggle) hintSb.append("オン ") else hintSb.append("チェックあり ")
             } else {
-                hintSb.append("チェックなし ")
+                if (isSwitchOrToggle) hintSb.append("オフ ") else hintSb.append("チェックなし ")
             }
         }
 
