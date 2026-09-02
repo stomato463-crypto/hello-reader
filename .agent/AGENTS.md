@@ -81,7 +81,7 @@ You don't have to hide your weakness. ”
 
 ## commitメッセージの生成
 
-AIは、commitメッセージを作成し、必ず、git commitコマンドも提示し、智浩さんに実行してもらうこと。
+AIは、commitメッセージをわかりやすい英語で作成し、必ず、git commitコマンドも提示し、智浩さんに実行してもらうこと。
 
 ### 📢 コマンド提示時の詳細表示（-v / --verbose）ポリシー
 
