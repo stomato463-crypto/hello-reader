@@ -484,11 +484,15 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 true
             }
             GESTURE_SWIPE_UP_AND_RIGHT -> {
-                // 智浩さんのアイデア: 最近使ったアプリ一覧が開く準備ができた瞬間に指先に心地よい触覚フィードバック!
-                performHapticFeedback()
-                playSound(soundActivateId)
+                // OS に最近使ったアプリ一覧 (Recents) の呼び出しを要求
                 performGlobalAction(GLOBAL_ACTION_RECENTS)
-                speak("最近のアプリ")
+                
+                // 智浩さんの鋭い洞察: OSのスナップショットアニメーション完了タイミング (150ms) に触覚&発話を完璧同期!
+                mainHandler.postDelayed({
+                    performHapticFeedback()
+                    playSound(soundActivateId)
+                    speak("最近のアプリ")
+                }, 150)
                 true
             }
             GESTURE_SWIPE_DOWN_AND_RIGHT -> {
