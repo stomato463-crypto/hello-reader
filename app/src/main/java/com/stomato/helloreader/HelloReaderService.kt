@@ -254,6 +254,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
     }
 
+    private var isMutedByKey: Boolean = false
+
     override fun onServiceConnected() {
         super.onServiceConnected()
         Log.d(TAG, "Hello Reader Accessibility Service Connected!")
