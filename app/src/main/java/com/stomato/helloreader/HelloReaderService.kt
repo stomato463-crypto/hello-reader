@@ -683,6 +683,20 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             return
         }
 
+        // AOSP TalkBack (TraversalStrategy) 準拠: ノードの画面上位置 (Y座標・X座標) で視覚的な並び順に完全ソート！
+        allNodes.sortWith(Comparator { n1, n2 ->
+            val r1 = Rect()
+            val r2 = Rect()
+            n1.getBoundsInScreen(r1)
+            n2.getBoundsInScreen(r2)
+            val rowDiff = r1.top - r2.top
+            if (Math.abs(rowDiff) > 25) {
+                rowDiff
+            } else {
+                r1.left - r2.left
+            }
+        })
+
         val root = getActiveRootNode()
 
         var currentFocus = root?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
