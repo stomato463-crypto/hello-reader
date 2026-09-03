@@ -890,6 +890,18 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             // AOSP TalkBack 準拠: 最初に FOCUS_ACCESSIBILITY を再送信してフォーカスを確実にアクティブ化！
             currentFocus.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
 
+            // ロック画面中 (Keyguard / PIN入力画面) ハイブリッド確定入力:
+            // OSチャンネルの違いを完全克服するため ACTION_CLICK と dispatchGesture 物理タップをハイブリッド同時発火！
+            if (isKeyguardLocked()) {
+                currentFocus.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+                val validRect = findValidBoundsInScreen(currentFocus)
+                if (validRect != null) {
+                    performGestureClickAtBounds(validRect)
+                }
+                playSound(soundActivateId)
+                return
+            }
+
             // 1. currentFocus 自体への ACTION_CLICK 直撃実行 (TalkBack 最優先ルール)
             if (AccessibilityNodeInfoCompat.wrap(currentFocus).isClickable) {
                 val directClickSuccess = currentFocus.performAction(AccessibilityNodeInfo.ACTION_CLICK)
