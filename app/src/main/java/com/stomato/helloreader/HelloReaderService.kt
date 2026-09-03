@@ -768,8 +768,10 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val desc = parseNodeDescription(node)
         val hasDesc = !desc.isNullOrBlank()
         val hasContentDesc = !compat.contentDescription.isNullOrBlank()
+        val hasViewId = !compat.viewIdResourceName.isNullOrBlank()
+        val isKeyguard = isKeyguardLocked()
 
-        val isAdded = if (hasDesc && (compat.isFocusable || compat.isClickable || compat.isScreenReaderFocusable || hasContentDesc)) {
+        val isAdded = if ((hasDesc || isKeyguard || hasViewId) && (compat.isFocusable || compat.isClickable || compat.isScreenReaderFocusable || hasContentDesc || hasViewId)) {
             list.add(node)
             true
         } else {
