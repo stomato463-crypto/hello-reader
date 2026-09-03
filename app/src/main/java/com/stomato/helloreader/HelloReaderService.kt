@@ -887,6 +887,17 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
 
         if (currentFocus != null) {
+            // ロック画面中 (Keyguard / PIN入力画面) は OSのセキュリティ遮断を完全に回避するため、
+            // 画面上の物理座標へのタッチタップ (dispatchGesture) を最優先で確実に送信！
+            if (isKeyguardLocked()) {
+                val rect = Rect()
+                currentFocus.getBoundsInScreen(rect)
+                if (!rect.isEmpty && performGestureClickAtBounds(rect)) {
+                    playSound(soundActivateId)
+                    return
+                }
+            }
+
             // 1. 親ノードを辿って isClickable なノードに ACTION_CLICK を送る
             var nodeToClick: AccessibilityNodeInfo? = currentFocus
             while (nodeToClick != null && !AccessibilityNodeInfoCompat.wrap(nodeToClick).isClickable) {
