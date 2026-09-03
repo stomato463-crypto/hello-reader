@@ -888,11 +888,10 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         if (currentFocus != null) {
             // ロック画面中 (Keyguard / PIN入力画面) は OSのセキュリティ遮断を完全に回避するため、
-            // 画面上の物理座標へのタッチタップ (dispatchGesture) を最優先で確実に送信！
+            // 画面上の精確なボタン物理領域の中心座標へ物理タッチタップ (dispatchGesture) を最優先送信！
             if (isKeyguardLocked()) {
-                val rect = Rect()
-                currentFocus.getBoundsInScreen(rect)
-                if (!rect.isEmpty && performGestureClickAtBounds(rect)) {
+                val validRect = findValidBoundsInScreen(currentFocus)
+                if (validRect != null && performGestureClickAtBounds(validRect)) {
                     playSound(soundActivateId)
                     return
                 }
@@ -969,6 +968,28 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     }
 
     /**
+     * 有効なボタン物理領域 (Rect) をノードおよび子ノードから高精度に検索
+     */
+    private fun findValidBoundsInScreen(node: AccessibilityNodeInfo?): Rect? {
+        if (node == null) return null
+        val displayMetrics = resources.displayMetrics
+        val maxW = displayMetrics.widthPixels
+        val maxH = displayMetrics.heightPixels
+
+        val rect = Rect()
+        node.getBoundsInScreen(rect)
+        if (rect.width() > 10 && rect.height() > 10 && rect.width() < (maxW * 0.9) && rect.height() < (maxH * 0.4) && rect.top > 0 && rect.left >= 0) {
+            return rect
+        }
+        for (i in 0 until node.childCount) {
+            val child = node.getChild(i) ?: continue
+            val childRect = findValidBoundsInScreen(child)
+            if (childRect != null) return childRect
+        }
+        return if (!rect.isEmpty && rect.width() > 0 && rect.height() > 0) rect else null
+    }
+
+    /**
      * 指定されたRectの中心座標に対して物理タップ（dispatchGesture）を送信
      */
     private fun performGestureClickAtBounds(bounds: Rect): Boolean {
@@ -976,6 +997,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val centerX = bounds.exactCenterX()
         val centerY = bounds.exactCenterY()
         if (centerX <= 0 || centerY <= 0) return false
+
+        Log.d(TAG, "Keyguard dispatchGesture physical click at ($centerX, $centerY), bounds=$bounds")
 
         val path = Path().apply {
             moveTo(centerX, centerY)
