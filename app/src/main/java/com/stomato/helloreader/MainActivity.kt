@@ -1,6 +1,7 @@
 package com.stomato.helloreader
 
 import android.Manifest
+import android.app.KeyguardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -132,9 +133,9 @@ class MainActivity : ComponentActivity(), TextToSpeech.OnInitListener {
         startActivity(intent)
     }
 
-    override fun onNewIntent(intent: Intent?) {
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        if (intent?.getBooleanExtra("EXTRA_REQUEST_PIN_UNLOCK", false) == true) {
+        if (intent.getBooleanExtra("EXTRA_REQUEST_PIN_UNLOCK", false)) {
             requestPinUnlockScreen()
         }
     }
