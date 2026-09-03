@@ -1158,15 +1158,15 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val height = displayMetrics.heightPixels
 
         val startX = (width / 2).toFloat()
-        val startY = (height * 0.85f).toFloat()
-        val endY = (height * 0.15f).toFloat()
+        val startY = (height * 0.90f).toFloat()
+        val endY = (height * 0.10f).toFloat()
 
         val path = Path().apply {
             moveTo(startX, startY)
             lineTo(startX, endY)
         }
         val gestureBuilder = GestureDescription.Builder()
-        val stroke = GestureDescription.StrokeDescription(path, 0, 200)
+        val stroke = GestureDescription.StrokeDescription(path, 0, 450)
         gestureBuilder.addStroke(stroke)
 
         return dispatchGesture(gestureBuilder.build(), null, null)
