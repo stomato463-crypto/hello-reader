@@ -977,29 +977,15 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private fun showPinEntryScreen() {
         try {
             speak("PINコード入力画面")
-            val km = getSystemService(Context.KEYGUARD_SERVICE) as? KeyguardManager
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && km != null) {
-                mainHandler.post {
-                    val activity = this as? android.app.Activity
-                    if (activity != null) {
-                        try {
-                            km.requestDismissKeyguard(activity, object : KeyguardManager.KeyguardDismissCallback() {
-                                override fun onDismissError() {
-                                    Log.e(TAG, "Keyguard dismiss error, falling back to gesture swipe")
-                                    performKeyguardUnlockSwipe()
-                                }
-                            })
-                        } catch (e: Exception) {
-                            Log.w(TAG, "requestDismissKeyguard call failed, fallback to swipe", e)
-                            performKeyguardUnlockSwipe()
-                        }
-                    } else {
-                        performKeyguardUnlockSwipe()
-                    }
-                }
-            } else {
-                performKeyguardUnlockSwipe()
+            // 1. 物理ドラッグスワイプを発火
+            performKeyguardUnlockSwipe()
+
+            // 2. MainActivity (Activityコンテキスト) 経由の KeyguardManager.requestDismissKeyguard 公式発火
+            val intent = Intent(this, MainActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                putExtra("EXTRA_REQUEST_PIN_UNLOCK", true)
             }
+            startActivity(intent)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to show PIN entry screen", e)
             performKeyguardUnlockSwipe()

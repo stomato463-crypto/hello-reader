@@ -65,6 +65,10 @@ class MainActivity : ComponentActivity(), TextToSpeech.OnInitListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (intent?.getBooleanExtra("EXTRA_REQUEST_PIN_UNLOCK", false) == true) {
+            requestPinUnlockScreen()
+        }
+
         // 自前TTSの初期化 (TalkBackがOFFでもアプリ単体で自発的に音声案内！)
         tts = TextToSpeech(applicationContext, this)
 
@@ -126,6 +130,27 @@ class MainActivity : ComponentActivity(), TextToSpeech.OnInitListener {
     private fun openAccessibilitySettings() {
         val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
         startActivity(intent)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        if (intent?.getBooleanExtra("EXTRA_REQUEST_PIN_UNLOCK", false) == true) {
+            requestPinUnlockScreen()
+        }
+    }
+
+    fun requestPinUnlockScreen() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val km = getSystemService(Context.KEYGUARD_SERVICE) as? KeyguardManager
+            km?.requestDismissKeyguard(this, object : KeyguardManager.KeyguardDismissCallback() {
+                override fun onDismissError() {
+                    Log.e("MainActivity", "Keyguard dismiss error")
+                }
+                override fun onDismissSucceeded() {
+                    Log.d("MainActivity", "Keyguard dismiss succeeded")
+                }
+            })
+        }
     }
 
     override fun onDestroy() {
