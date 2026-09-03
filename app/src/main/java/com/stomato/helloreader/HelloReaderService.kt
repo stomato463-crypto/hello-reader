@@ -420,6 +420,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             GESTURE_SWIPE_UP -> {
                 if (isKeyguardLocked()) {
                     speak("PINコード入力画面")
+                    performKeyguardUnlockSwipe()
                     false // OSにスワイプをパススルーしてPIN画面を開く
                 } else {
                     navigateFocus(View.FOCUS_BACKWARD, "前へ")
@@ -427,9 +428,15 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 }
             }
             GESTURE_2_FINGER_SWIPE_UP -> {
-                Log.d(TAG, "2-Finger Swipe Up: Scroll Forward")
-                performScrollAction(forward = true)
-                true
+                Log.d(TAG, "2-Finger Swipe Up")
+                if (isKeyguardLocked()) {
+                    speak("PINコード入力画面")
+                    performKeyguardUnlockSwipe()
+                    false
+                } else {
+                    performScrollAction(forward = true)
+                    true
+                }
             }
             GESTURE_2_FINGER_SWIPE_DOWN -> {
                 Log.d(TAG, "2-Finger Swipe Down: Scroll Backward")
@@ -963,6 +970,30 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
         val gestureBuilder = GestureDescription.Builder()
         val stroke = GestureDescription.StrokeDescription(path, 0, 50)
+        gestureBuilder.addStroke(stroke)
+
+        return dispatchGesture(gestureBuilder.build(), null, null)
+    }
+
+    /**
+     * ロック画面の解除（PINコード入力画面呼び出し）のための画面下部からの上方向スワイプジェスチャーを物理送信
+     */
+    private fun performKeyguardUnlockSwipe(): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return false
+        val displayMetrics = resources.displayMetrics
+        val width = displayMetrics.widthPixels
+        val height = displayMetrics.heightPixels
+
+        val startX = (width / 2).toFloat()
+        val startY = (height * 0.85f).toFloat()
+        val endY = (height * 0.15f).toFloat()
+
+        val path = Path().apply {
+            moveTo(startX, startY)
+            lineTo(startX, endY)
+        }
+        val gestureBuilder = GestureDescription.Builder()
+        val stroke = GestureDescription.StrokeDescription(path, 0, 200)
         gestureBuilder.addStroke(stroke)
 
         return dispatchGesture(gestureBuilder.build(), null, null)
