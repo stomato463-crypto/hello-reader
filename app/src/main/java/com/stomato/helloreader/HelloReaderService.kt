@@ -644,6 +644,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private fun navigateFocus(direction: Int, directionName: String, isAutoRetry: Boolean = false) {
         val allNodes = mutableListOf<AccessibilityNodeInfo>()
         val currentWindows = windows
+        Log.d(TAG, "navigateFocus called: directionName=$directionName, isKeyguardLocked=${isKeyguardLocked()}")
 
         if (!currentWindows.isNullOrEmpty()) {
             if (isKeyguardLocked()) {
@@ -724,10 +725,17 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             val targetNode = allNodes[targetIndex]
 
             currentFocus?.performAction(AccessibilityNodeInfo.ACTION_CLEAR_ACCESSIBILITY_FOCUS)
-            val success = targetNode.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
+            var success = targetNode.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
+            if (!success) {
+                val child = findClickableChild(targetNode)
+                if (child != null) {
+                    success = child.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
+                }
+            }
             lastFocusedNode = targetNode
             
             val pair = parseNodeDescriptionPair(targetNode)
+            Log.d(TAG, "navigateFocus index=$targetIndex/${allNodes.size}, success=$success, text=${pair?.mainText}")
             if (pair != null) {
                 speakWithSubVoice(pair.mainText, pair.hintText)
             } else {
