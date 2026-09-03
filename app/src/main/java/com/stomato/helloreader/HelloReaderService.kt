@@ -419,8 +419,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             }
             GESTURE_SWIPE_UP -> {
                 if (isKeyguardLocked()) {
-                    speak("PINコード入力画面")
-                    performKeyguardUnlockSwipe()
+                    showPinEntryScreen()
                     false // OSにスワイプをパススルーしてPIN画面を開く
                 } else {
                     navigateFocus(View.FOCUS_BACKWARD, "前へ")
@@ -430,8 +429,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             GESTURE_2_FINGER_SWIPE_UP -> {
                 Log.d(TAG, "2-Finger Swipe Up")
                 if (isKeyguardLocked()) {
-                    speak("PINコード入力画面")
-                    performKeyguardUnlockSwipe()
+                    showPinEntryScreen()
                     false
                 } else {
                     performScrollAction(forward = true)
@@ -973,6 +971,36 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         gestureBuilder.addStroke(stroke)
 
         return dispatchGesture(gestureBuilder.build(), null, null)
+    }
+
+    /**
+     * ロック解除（PINコード入力画面）をダイレクトにOSに要求する (KeyguardManager公式API + ジェスチャーフォールバック)
+     */
+    private fun showPinEntryScreen() {
+        try {
+            speak("PINコード入力画面")
+            val km = getSystemService(Context.KEYGUARD_SERVICE) as? KeyguardManager
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && km != null) {
+                mainHandler.post {
+                    try {
+                        km.requestDismissKeyguard(this as? android.app.Activity ?: return@post performKeyguardUnlockSwipe(), object : KeyguardManager.KeyguardDismissCallback() {
+                            override fun onDismissError() {
+                                Log.e(TAG, "Keyguard dismiss error, falling back to gesture swipe")
+                                performKeyguardUnlockSwipe()
+                            }
+                        })
+                    } catch (e: Exception) {
+                        Log.w(TAG, "requestDismissKeyguard call failed, fallback to swipe", e)
+                        performKeyguardUnlockSwipe()
+                    }
+                }
+            } else {
+                performKeyguardUnlockSwipe()
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to show PIN entry screen", e)
+            performKeyguardUnlockSwipe()
+        }
     }
 
     /**
