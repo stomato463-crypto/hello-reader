@@ -398,6 +398,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
      */
     override fun onGesture(gestureEvent: AccessibilityGestureEvent): Boolean {
         val gestureId = gestureEvent.gestureId
+        Log.d(TAG, "onGesture API 30+ received: gestureId=$gestureId, displayId=${gestureEvent.displayId}")
         return handleGestureAction(gestureId)
     }
 
@@ -406,6 +407,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
      */
     @Deprecated("Deprecated in API 30")
     override fun onGesture(gestureId: Int): Boolean {
+        Log.d(TAG, "onGesture Legacy received: gestureId=$gestureId")
         return handleGestureAction(gestureId)
     }
 
@@ -413,13 +415,15 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
      * Google公式TalkBackユーザーガイド 100%完全合致 ジェスチャー処理
      */
     private fun handleGestureAction(gestureId: Int): Boolean {
-        Log.d(TAG, "handleGestureAction: $gestureId")
+        Log.d(TAG, "handleGestureAction executing for gestureId: $gestureId")
         return when (gestureId) {
-            GESTURE_SWIPE_RIGHT -> {
+            GESTURE_SWIPE_RIGHT, 1 -> {
+                Log.d(TAG, "Swipe Right Matched -> navigateFocus FORWARD")
                 navigateFocus(View.FOCUS_FORWARD, "次へ")
                 true
             }
-            GESTURE_SWIPE_LEFT -> {
+            GESTURE_SWIPE_LEFT, 2 -> {
+                Log.d(TAG, "Swipe Left Matched -> navigateFocus BACKWARD")
                 navigateFocus(View.FOCUS_BACKWARD, "前へ")
                 true
             }
