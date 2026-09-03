@@ -1111,7 +1111,16 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     /**
      * ロック解除（PINコード入力画面）をダイレクトにOSに要求する (KeyguardManager公式API + ジェスチャーフォールバック)
      */
+    private var lastShowPinEntryTime: Long = 0
+
     private fun showPinEntryScreen() {
+        val now = System.currentTimeMillis()
+        if (now - lastShowPinEntryTime < 3000) {
+            Log.d(TAG, "showPinEntryScreen skipped due to 3s cooldown")
+            return
+        }
+        lastShowPinEntryTime = now
+
         try {
             speak("PINコード入力画面")
 
@@ -1323,11 +1332,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     if (!fallbackText.isNullOrBlank()) {
                         speak(fallbackText)
                     }
-                }
-            }
-            AccessibilityEvent.TYPE_TOUCH_INTERACTION_START -> {
-                if (isKeyguardLocked()) {
-                    showPinEntryScreen()
                 }
             }
             AccessibilityEvent.TYPE_VIEW_CLICKED -> {
