@@ -1267,20 +1267,20 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             rawMainText = findTextInChildNodes(node)?.toString()
         }
 
-        // App Support: PIN画面・テンキー View ID からの数字/キー名レスキュー抽出
+        // App Support: PIN画面・テンキー View ID からの数字/キー名全自動レスキュー抽出
         if (rawMainText.isNullOrBlank() && !viewId.isNullOrBlank()) {
             val idLower = viewId.lowercase(java.util.Locale.ROOT)
             rawMainText = when {
-                idLower.contains("digit_0") || idLower.contains("key_0") || idLower.contains("zero") -> "0"
-                idLower.contains("digit_1") || idLower.contains("key_1") || idLower.contains("one") -> "1"
-                idLower.contains("digit_2") || idLower.contains("key_2") || idLower.contains("two") -> "2"
-                idLower.contains("digit_3") || idLower.contains("key_3") || idLower.contains("three") -> "3"
-                idLower.contains("digit_4") || idLower.contains("key_4") || idLower.contains("four") -> "4"
-                idLower.contains("digit_5") || idLower.contains("key_5") || idLower.contains("five") -> "5"
-                idLower.contains("digit_6") || idLower.contains("key_6") || idLower.contains("six") -> "6"
-                idLower.contains("digit_7") || idLower.contains("key_7") || idLower.contains("seven") -> "7"
-                idLower.contains("digit_8") || idLower.contains("key_8") || idLower.contains("eight") -> "8"
-                idLower.contains("digit_9") || idLower.contains("key_9") || idLower.contains("nine") -> "9"
+                idLower.contains("0") || idLower.contains("zero") -> "0"
+                idLower.contains("1") || idLower.contains("one") -> "1"
+                idLower.contains("2") || idLower.contains("two") -> "2"
+                idLower.contains("3") || idLower.contains("three") -> "3"
+                idLower.contains("4") || idLower.contains("four") -> "4"
+                idLower.contains("5") || idLower.contains("five") -> "5"
+                idLower.contains("6") || idLower.contains("six") -> "6"
+                idLower.contains("7") || idLower.contains("seven") -> "7"
+                idLower.contains("8") || idLower.contains("eight") -> "8"
+                idLower.contains("9") || idLower.contains("nine") -> "9"
                 idLower.contains("delete") || idLower.contains("backspace") || idLower.contains("cancel") -> "削除"
                 idLower.contains("enter") || idLower.contains("ok") || idLower.contains("confirm") -> "完了"
                 else -> null
@@ -1401,7 +1401,23 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             val childText = when {
                 !compat.text.isNullOrBlank() -> compat.text
                 !compat.contentDescription.isNullOrBlank() -> compat.contentDescription
-                else -> null
+                else -> {
+                    val childId = compat.viewIdResourceName?.lowercase(java.util.Locale.ROOT) ?: ""
+                    when {
+                        childId.contains("0") || childId.contains("zero") -> "0"
+                        childId.contains("1") || childId.contains("one") -> "1"
+                        childId.contains("2") || childId.contains("two") -> "2"
+                        childId.contains("3") || childId.contains("three") -> "3"
+                        childId.contains("4") || childId.contains("four") -> "4"
+                        childId.contains("5") || childId.contains("five") -> "5"
+                        childId.contains("6") || childId.contains("six") -> "6"
+                        childId.contains("7") || childId.contains("seven") -> "7"
+                        childId.contains("8") || childId.contains("eight") -> "8"
+                        childId.contains("9") || childId.contains("nine") -> "9"
+                        childId.contains("delete") || childId.contains("backspace") -> "削除"
+                        else -> null
+                    }
+                }
             }
             if (!childText.isNullOrBlank()) {
                 return childText
