@@ -887,40 +887,46 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
 
         if (currentFocus != null) {
-            // ロック画面中 (Keyguard / PIN入力画面) は OSのセキュリティ遮断を完全に回避するため、
-            // 画面上の精確なボタン物理領域の中心座標へ物理タッチタップ (dispatchGesture) を最優先送信！
-            if (isKeyguardLocked()) {
-                val validRect = findValidBoundsInScreen(currentFocus)
-                if (validRect != null && performGestureClickAtBounds(validRect)) {
+            // AOSP TalkBack 準拠: 最初に FOCUS_ACCESSIBILITY を再送信してフォーカスを確実にアクティブ化！
+            currentFocus.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
+
+            // 1. currentFocus 自体への ACTION_CLICK 直撃実行 (TalkBack 最優先ルール)
+            if (AccessibilityNodeInfoCompat.wrap(currentFocus).isClickable) {
+                val directClickSuccess = currentFocus.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+                if (directClickSuccess) {
                     playSound(soundActivateId)
                     return
                 }
             }
 
-            // 1. 親ノードを辿って isClickable なノードに ACTION_CLICK を送る
-            var nodeToClick: AccessibilityNodeInfo? = currentFocus
-            while (nodeToClick != null && !AccessibilityNodeInfoCompat.wrap(nodeToClick).isClickable) {
+            // 2. 親ノードを遡って isClickable なノードに ACTION_CLICK を送る
+            var nodeToClick: AccessibilityNodeInfo? = currentFocus.parent
+            while (nodeToClick != null) {
+                if (AccessibilityNodeInfoCompat.wrap(nodeToClick).isClickable) {
+                    val parentSuccess = nodeToClick.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+                    if (parentSuccess) {
+                        playSound(soundActivateId)
+                        return
+                    }
+                }
                 nodeToClick = nodeToClick.parent
             }
 
-            if (nodeToClick != null) {
-                val success = nodeToClick.performAction(AccessibilityNodeInfoCompat.ACTION_CLICK)
-                if (success) {
+            // 3. 子ノードツリーを走査して isClickable な要素を探して ACTION_CLICK
+            val clickableChild = findClickableChild(currentFocus)
+            if (clickableChild != null) {
+                val childSuccess = clickableChild.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+                if (childSuccess) {
                     playSound(soundActivateId)
-                    speak("実行しました")
                     return
                 }
             }
 
-            // 2. 子ノードツリーを走査して isClickable な要素を探して ACTION_CLICK
-            val clickableChild = findClickableChild(currentFocus)
-            if (clickableChild != null) {
-                val childSuccess = clickableChild.performAction(AccessibilityNodeInfoCompat.ACTION_CLICK)
-                if (childSuccess) {
-                    playSound(soundActivateId)
-                    speak("実行しました")
-                    return
-                }
+            // 4. 物理座標タップ (dispatchGesture) 高精度フォールバック実行
+            val validRect = findValidBoundsInScreen(currentFocus)
+            if (validRect != null && performGestureClickAtBounds(validRect)) {
+                playSound(soundActivateId)
+                return
             }
 
             // 3. currentFocus へ直接 ACTION_CLICK フォールバック実行
