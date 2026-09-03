@@ -786,6 +786,9 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
      */
     private fun isRedundantChildNode(parent: AccessibilityNodeInfo?, child: AccessibilityNodeInfo?): Boolean {
         if (parent == null || child == null) return false
+        // ロック画面中 (Keyguard / PIN入力画面) は親枠の中に数字キーが含まれるため、除外を行わず全ての数字キーをフォーカス収集！
+        if (isKeyguardLocked()) return false
+
         val parentCompat = AccessibilityNodeInfoCompat.wrap(parent)
         if (parentCompat.isClickable || parentCompat.isFocusable) {
             val pRect = Rect()
@@ -1283,6 +1286,21 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             AccessibilityEvent.TYPE_VIEW_CLICKED -> {
                 playSound(soundActivateId)
                 performHapticFeedback()
+            }
+            AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED -> {
+                // TalkBack 準拠: PIN入力欄・テキスト欄へ文字が着弾した瞬間の確定フィードバック！
+                playSound(soundActivateId)
+                performHapticFeedback()
+                val text = getEventText(event)
+                if (!text.isNullOrBlank()) {
+                    if (isKeyguardLocked()) {
+                        speak("ピンコード ${text.length}桁目入力済み")
+                    } else {
+                        speak(text)
+                    }
+                } else if (isKeyguardLocked()) {
+                    speak("文字が入力されました")
+                }
             }
             AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> {
                 // 画面（Activity/Dialog/Launcher）が新しく切り替わった時だけ画面切り替え音を再生＆遅延累積タスクを消去してフリーズ防止！
