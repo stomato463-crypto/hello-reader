@@ -517,6 +517,27 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     }
 
     /**
+     * 物理キーイベント検知 (音量ボタン・電源ボタンでの即時発話ストップ / AOSP TalkBack 準拠)
+     */
+    override fun onKeyEvent(event: KeyEvent?): Boolean {
+        if (event != null && event.action == KeyEvent.ACTION_DOWN) {
+            when (event.keyCode) {
+                KeyEvent.KEYCODE_VOLUME_UP,
+                KeyEvent.KEYCODE_VOLUME_DOWN,
+                KeyEvent.KEYCODE_POWER,
+                KeyEvent.KEYCODE_HEADSETHOOK -> {
+                    // 音量ボタン・電源ボタンが押された瞬間に初期案内や TTS 読み上げを0ミリ秒で即座にピタッとストップ！
+                    mainHandler.removeCallbacksAndMessages(null)
+                    pendingSubVoiceHint = null
+                    tts?.stop()
+                    Log.d(TAG, "Key event pressed (${event.keyCode}): TTS reading immediately stopped")
+                }
+            }
+        }
+        return super.onKeyEvent(event)
+    }
+
+    /**
      * パッケージ名がホーム画面（ランチャーアプリ）かどうか判定する
      */
     private fun isHomeScreenPackage(packageName: String): Boolean {
