@@ -982,15 +982,20 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             val km = getSystemService(Context.KEYGUARD_SERVICE) as? KeyguardManager
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && km != null) {
                 mainHandler.post {
-                    try {
-                        km.requestDismissKeyguard(this as? android.app.Activity ?: return@post performKeyguardUnlockSwipe(), object : KeyguardManager.KeyguardDismissCallback() {
-                            override fun onDismissError() {
-                                Log.e(TAG, "Keyguard dismiss error, falling back to gesture swipe")
-                                performKeyguardUnlockSwipe()
-                            }
-                        })
-                    } catch (e: Exception) {
-                        Log.w(TAG, "requestDismissKeyguard call failed, fallback to swipe", e)
+                    val activity = this as? android.app.Activity
+                    if (activity != null) {
+                        try {
+                            km.requestDismissKeyguard(activity, object : KeyguardManager.KeyguardDismissCallback() {
+                                override fun onDismissError() {
+                                    Log.e(TAG, "Keyguard dismiss error, falling back to gesture swipe")
+                                    performKeyguardUnlockSwipe()
+                                }
+                            })
+                        } catch (e: Exception) {
+                            Log.w(TAG, "requestDismissKeyguard call failed, fallback to swipe", e)
+                            performKeyguardUnlockSwipe()
+                        }
+                    } else {
                         performKeyguardUnlockSwipe()
                     }
                 }
