@@ -268,7 +268,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 AccessibilityServiceInfo.FLAG_INCLUDE_NOT_IMPORTANT_VIEWS or
                 AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS or
                 AccessibilityServiceInfo.FLAG_REQUEST_TOUCH_EXPLORATION_MODE or
-                AccessibilityServiceInfo.FLAG_REQUEST_MULTI_FINGER_GESTURES
+                AccessibilityServiceInfo.FLAG_REQUEST_MULTI_FINGER_GESTURES or
+                AccessibilityServiceInfo.FLAG_REQUEST_FILTER_KEY_EVENTS
         info.notificationTimeout = 50
         this.serviceInfo = info
 
