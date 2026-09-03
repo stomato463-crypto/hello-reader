@@ -1115,7 +1115,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         try {
             speak("PINコード入力画面")
 
-            // 1. Android公式グローバルアクションで通知・ロック画面シェードを解除してBouncerを引っ張り出す！
+            // 1. Android公式グローバルアクションでロック画面シェードを直接破断してBouncerを引っ張り出す！
+            performGlobalAction(GLOBAL_ACTION_BACK)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 performGlobalAction(GLOBAL_ACTION_DISMISS_NOTIFICATION_SHADE)
             } else {
@@ -1322,6 +1323,11 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     if (!fallbackText.isNullOrBlank()) {
                         speak(fallbackText)
                     }
+                }
+            }
+            AccessibilityEvent.TYPE_TOUCH_INTERACTION_START -> {
+                if (isKeyguardLocked()) {
+                    showPinEntryScreen()
                 }
             }
             AccessibilityEvent.TYPE_VIEW_CLICKED -> {
