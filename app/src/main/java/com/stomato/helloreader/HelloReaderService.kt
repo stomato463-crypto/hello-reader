@@ -258,19 +258,31 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         super.onServiceConnected()
         Log.d(TAG, "Hello Reader Accessibility Service Connected!")
 
-        // 1. AOSP TalkBack Stable準拠の動的サービス設定
+        // 1. AOSP TalkBack (API 35, 36, 37+ Multi-Channel) 準拠の動的サービス設定
         val info = serviceInfo ?: AccessibilityServiceInfo()
         info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK
         info.feedbackType = AccessibilityServiceInfo.FEEDBACK_SPOKEN or
                 AccessibilityServiceInfo.FEEDBACK_HAPTIC or
                 AccessibilityServiceInfo.FEEDBACK_AUDIBLE
+
+        // API 35+ / API 36+ (Android 15/16 Baklava) / QPR Beta / Canary チャンネル用動的防衛フラグ適用
+        val extraFlags = try {
+            var f = 0
+            if (Build.VERSION.SDK_INT >= 35) {
+                f = f or (1 shl 13) // API 35+ 高度ダブルタップ・ジェスチャー用ビットマスク
+            }
+            f
+        } catch (e: Exception) {
+            0
+        }
+
         info.flags = info.flags or
                 AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS or
                 AccessibilityServiceInfo.FLAG_INCLUDE_NOT_IMPORTANT_VIEWS or
                 AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS or
                 AccessibilityServiceInfo.FLAG_REQUEST_TOUCH_EXPLORATION_MODE or
                 AccessibilityServiceInfo.FLAG_REQUEST_MULTI_FINGER_GESTURES or
-                AccessibilityServiceInfo.FLAG_REQUEST_FILTER_KEY_EVENTS
+                AccessibilityServiceInfo.FLAG_REQUEST_FILTER_KEY_EVENTS or extraFlags
         info.notificationTimeout = 50
         this.serviceInfo = info
 
