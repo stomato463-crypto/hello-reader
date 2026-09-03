@@ -704,9 +704,10 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         val root = getActiveRootNode()
 
-        var currentFocus = root?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
-        if (currentFocus == null) {
-            currentFocus = lastFocusedNode
+        var currentFocus = if (isKeyguardLocked() && lastFocusedNode != null) {
+            lastFocusedNode
+        } else {
+            root?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY) ?: lastFocusedNode
         }
 
         var currentIndex = -1
@@ -766,11 +767,14 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private fun isSameNode(node1: AccessibilityNodeInfo?, node2: AccessibilityNodeInfo?): Boolean {
         if (node1 == null || node2 == null) return false
         if (node1 == node2 || node1.equals(node2)) return true
+        val id1 = node1.viewIdResourceName
+        val id2 = node2.viewIdResourceName
+        if (!id1.isNullOrBlank() && id1 == id2) return true
         val r1 = Rect()
         val r2 = Rect()
         node1.getBoundsInScreen(r1)
         node2.getBoundsInScreen(r2)
-        return !r1.isEmpty && r1 == r2 && node1.className == node2.className
+        return !r1.isEmpty && r1 == r2
     }
 
     /**
