@@ -1115,17 +1115,17 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
     private fun showPinEntryScreen() {
         val now = System.currentTimeMillis()
-        if (now - lastShowPinEntryTime < 3000) {
-            Log.d(TAG, "showPinEntryScreen skipped due to 3s cooldown")
+        if (now - lastShowPinEntryTime < 1500) {
+            Log.d(TAG, "showPinEntryScreen skipped due to cooldown")
             return
         }
         lastShowPinEntryTime = now
 
         try {
             speak("PINコード入力画面")
+            Log.d(TAG, "Executing showPinEntryScreen via Accessibility Service official actions")
 
-            // 1. Android公式グローバルアクションでロック画面シェードを直接破断してBouncerを引っ張り出す！
-            performGlobalAction(GLOBAL_ACTION_BACK)
+            // 1. Android公式グローバルアクションでロック画面シェードを解除してBouncerを引っ張り出す！
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 performGlobalAction(GLOBAL_ACTION_DISMISS_NOTIFICATION_SHADE)
             } else {
@@ -1133,18 +1133,10 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS)
             }
 
-            // 2. 物理ドラッグスワイプを発火
+            // 2. 物理ドラッグスワイプ (450ms) を発火
             performKeyguardUnlockSwipe()
-
-            // 3. MainActivity (Activityコンテキスト) 経由の KeyguardManager.requestDismissKeyguard 公式発火
-            val intent = Intent(this, MainActivity::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                putExtra("EXTRA_REQUEST_PIN_UNLOCK", true)
-            }
-            startActivity(intent)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to show PIN entry screen", e)
-            performKeyguardUnlockSwipe()
         }
     }
 
