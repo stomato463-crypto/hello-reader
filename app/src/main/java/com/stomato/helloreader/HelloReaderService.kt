@@ -801,7 +801,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val hasViewId = !compat.viewIdResourceName.isNullOrBlank()
         val isKeyguard = isKeyguardLocked()
 
-        val isAdded = if ((hasDesc || isKeyguard || hasViewId) && (compat.isFocusable || compat.isClickable || compat.isScreenReaderFocusable || hasContentDesc || hasViewId)) {
+        val isAdded = if (isKeyguard || ((hasDesc || hasViewId) && (compat.isFocusable || compat.isClickable || compat.isScreenReaderFocusable || hasContentDesc || hasViewId))) {
             list.add(node)
             true
         } else {
@@ -809,7 +809,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
 
         for (i in 0 until node.childCount) {
-            collectFocusableNodes(node.getChild(i), list, if (isAdded) node else parent)
+            collectFocusableNodes(node.getChild(i), list, if (isKeyguard) null else (if (isAdded) node else parent))
         }
     }
 
