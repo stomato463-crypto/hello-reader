@@ -417,22 +417,20 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 navigateFocus(View.FOCUS_BACKWARD, "前へ")
                 true
             }
-            GESTURE_SWIPE_UP -> {
-                if (isKeyguardLocked()) {
-                    showPinEntryScreen()
-                    false // OSにスワイプをパススルーしてPIN画面を開く
-                } else {
-                    navigateFocus(View.FOCUS_BACKWARD, "前へ")
-                    true
-                }
-            }
-            GESTURE_2_FINGER_SWIPE_UP -> {
-                Log.d(TAG, "2-Finger Swipe Up")
+            GESTURE_SWIPE_UP,
+            GESTURE_2_FINGER_SWIPE_UP,
+            GESTURE_3_FINGER_SWIPE_UP,
+            GESTURE_4_FINGER_SWIPE_UP -> {
+                Log.d(TAG, "Swipe Up Gesture Detected: $gestureId (KeyguardLocked=${isKeyguardLocked()})")
                 if (isKeyguardLocked()) {
                     showPinEntryScreen()
                     false
                 } else {
-                    performScrollAction(forward = true)
+                    if (gestureId == GESTURE_SWIPE_UP) {
+                        navigateFocus(View.FOCUS_BACKWARD, "前へ")
+                    } else {
+                        performScrollAction(forward = true)
+                    }
                     true
                 }
             }
