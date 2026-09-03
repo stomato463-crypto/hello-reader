@@ -646,15 +646,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         if (!currentWindows.isNullOrEmpty()) {
             if (isKeyguardLocked()) {
-                // ロック画面中 (Keyguard / PIN入力画面) は Keyguard/SystemUI ウィンドウのノードを最優先収集！
+                // ロック画面中 (Keyguard / PIN入力画面) は存在する全ウィンドウ (Keyguard/SystemUI/InputMethod/App) のノードを漏れなく全収集！
                 for (window in currentWindows) {
-                    val titleStr = window.title?.toString() ?: ""
-                    if (window.type == AccessibilityWindowInfo.TYPE_SYSTEM ||
-                        titleStr.contains("Keyguard", ignoreCase = true) ||
-                        titleStr.contains("Lock", ignoreCase = true) ||
-                        titleStr.contains("SystemUI", ignoreCase = true)
-                    ) {
+                    try {
                         window.root?.let { collectFocusableNodes(it, allNodes) }
+                    } catch (e: Exception) {
+                        Log.w(TAG, "Window node collection error during keyguard", e)
                     }
                 }
             } else {
