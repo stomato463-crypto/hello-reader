@@ -324,10 +324,15 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 tts?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
                     override fun onStart(utteranceId: String?) {}
                     override fun onDone(utteranceId: String?) {
+                        if (isMutedByKey) {
+                            pendingSubVoiceHint = null
+                            return
+                        }
                         if (utteranceId == "HelloReaderMainTTS" && !pendingSubVoiceHint.isNullOrBlank()) {
                             val hint = pendingSubVoiceHint
                             pendingSubVoiceHint = null
                             mainHandler.post {
+                                if (isMutedByKey) return@post
                                 val currentTts = tts ?: return@post
                                 currentTts.setPitch(subVoicePitch)
                                 currentTts.speak(hint, TextToSpeech.QUEUE_ADD, null, "HelloReaderSubTTS")
@@ -528,6 +533,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 keyCode == KeyEvent.KEYCODE_HEADSETHOOK
             ) {
                 // 音量ボタン・電源ボタンが押された瞬間に初期案内や TTS 読み上げを0ミリ秒で即座にピタッとストップ！
+                isMutedByKey = true
                 mainHandler.removeCallbacksAndMessages(null)
                 pendingSubVoiceHint = null
                 try {
@@ -535,7 +541,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 } catch (e: Exception) {
                     Log.e(TAG, "tts.stop error on key press", e)
                 }
-                Log.d(TAG, "Key event intercepted ($keyCode): TTS reading immediately stopped")
+                Log.d(TAG, "Key event intercepted ($keyCode): TTS reading immediately stopped with isMutedByKey=true")
                 return true
             }
         }
@@ -1726,6 +1732,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
      */
     private fun speakWithSubVoice(mainText: String, hintText: String? = null) {
         if (!isTtsReady || mainText.isBlank()) return
+        isMutedByKey = false
 
         val fullTextKey = if (!hintText.isNullOrBlank()) "$mainText|$hintText" else mainText
         val currentTime = System.currentTimeMillis()
