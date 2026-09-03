@@ -644,17 +644,31 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val allNodes = mutableListOf<AccessibilityNodeInfo>()
         val currentWindows = windows
 
-        if (!currentWindows.isNullOrEmpty() && !isKeyguardLocked()) {
-            // 1. アプリ・ホーム画面本体 (TYPE_APPLICATION) のノードをまず優先収集！
-            for (window in currentWindows) {
-                if (window.type == AccessibilityWindowInfo.TYPE_APPLICATION) {
-                    window.root?.let { collectFocusableNodes(it, allNodes) }
+        if (!currentWindows.isNullOrEmpty()) {
+            if (isKeyguardLocked()) {
+                // ロック画面中 (Keyguard / PIN入力画面) は Keyguard/SystemUI ウィンドウのノードを最優先収集！
+                for (window in currentWindows) {
+                    val titleStr = window.title?.toString() ?: ""
+                    if (window.type == AccessibilityWindowInfo.TYPE_SYSTEM ||
+                        titleStr.contains("Keyguard", ignoreCase = true) ||
+                        titleStr.contains("Lock", ignoreCase = true) ||
+                        titleStr.contains("SystemUI", ignoreCase = true)
+                    ) {
+                        window.root?.let { collectFocusableNodes(it, allNodes) }
+                    }
                 }
-            }
-            // 2. システムウィンドウ (ナビゲーションバー等) のノードを収集！
-            for (window in currentWindows) {
-                if (window.type != AccessibilityWindowInfo.TYPE_APPLICATION) {
-                    window.root?.let { collectFocusableNodes(it, allNodes) }
+            } else {
+                // 1. アプリ・ホーム画面本体 (TYPE_APPLICATION) のノードをまず優先収集！
+                for (window in currentWindows) {
+                    if (window.type == AccessibilityWindowInfo.TYPE_APPLICATION) {
+                        window.root?.let { collectFocusableNodes(it, allNodes) }
+                    }
+                }
+                // 2. システムウィンドウ (ナビゲーションバー等) のノードを収集！
+                for (window in currentWindows) {
+                    if (window.type != AccessibilityWindowInfo.TYPE_APPLICATION) {
+                        window.root?.let { collectFocusableNodes(it, allNodes) }
+                    }
                 }
             }
         }
