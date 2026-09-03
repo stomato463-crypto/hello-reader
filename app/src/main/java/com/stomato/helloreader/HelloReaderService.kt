@@ -383,8 +383,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
      * ロック画面（Keyguard）が実際にアクティブかチェックする
      */
     private fun isKeyguardLocked(): Boolean {
-        val km = getSystemService(Context.KEYGUARD_SERVICE) as? KeyguardManager
-        return km?.isKeyguardLocked == true
+        return try {
+            val km = getSystemService(Context.KEYGUARD_SERVICE) as? KeyguardManager
+            km?.isKeyguardLocked == true
+        } catch (e: Exception) {
+            false
+        }
     }
 
     /**
@@ -1123,30 +1127,58 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         when (event.eventType) {
             AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED,
             AccessibilityEvent.TYPE_VIEW_FOCUSED -> {
-                if (event.source != null) {
-                    lastFocusedNode = event.source
-                }
-                playSound(soundFocusId)
-                performHapticFeedback()
-                val node = event.source
-                if (node != null) {
-                    val desc = parseNodeDescription(node)
+                try {
+                    if (event.source != null) {
+                        lastFocusedNode = event.source
+                    }
+                    playSound(soundFocusId)
+                    performHapticFeedback()
+                    var desc: String? = null
+                    val node = event.source
+                    if (node != null) {
+                        desc = parseNodeDescription(node)
+                    }
+                    if (desc.isNullOrBlank()) {
+                        desc = getEventText(event)
+                    }
                     if (!desc.isNullOrBlank()) {
                         speak(desc)
+                    }
+                } catch (e: Exception) {
+                    Log.e(TAG, "TYPE_VIEW_FOCUSED handling error", e)
+                    val fallbackText = getEventText(event)
+                    if (!fallbackText.isNullOrBlank()) {
+                        speak(fallbackText)
                     }
                 }
             }
             AccessibilityEvent.TYPE_VIEW_HOVER_ENTER -> {
-                // タッチガイド (Explore by Touch): 指の下にある要素に明示的にフォーカスを設定して音・音声・触覚振動で案内！
-                val node = event.source
-                if (node != null) {
-                    node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
-                    lastFocusedNode = node
-                    playSound(soundFocusId)
-                    performHapticFeedback()
-                    val desc = parseNodeDescription(node)
-                    if (!desc.isNullOrBlank()) {
-                        speak(desc)
+                try {
+                    // タッチガイド (Explore by Touch): 指の下にある要素に明示的にフォーカスを設定して音・音声・触覚振動で案内！
+                    val node = event.source
+                    if (node != null) {
+                        node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
+                        lastFocusedNode = node
+                        playSound(soundFocusId)
+                        performHapticFeedback()
+                        var desc = parseNodeDescription(node)
+                        if (desc.isNullOrBlank()) {
+                            desc = getEventText(event)
+                        }
+                        if (!desc.isNullOrBlank()) {
+                            speak(desc)
+                        }
+                    } else {
+                        val fallbackText = getEventText(event)
+                        if (!fallbackText.isNullOrBlank()) {
+                            speak(fallbackText)
+                        }
+                    }
+                } catch (e: Exception) {
+                    Log.e(TAG, "TYPE_VIEW_HOVER_ENTER handling error", e)
+                    val fallbackText = getEventText(event)
+                    if (!fallbackText.isNullOrBlank()) {
+                        speak(fallbackText)
                     }
                 }
             }
