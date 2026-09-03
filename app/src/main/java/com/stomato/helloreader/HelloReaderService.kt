@@ -448,7 +448,13 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     showPinEntryScreen()
                     true
                 } else {
-                    if (gestureId == GESTURE_SWIPE_UP) {
+                    if (gestureId == GESTURE_2_FINGER_SWIPE_UP) {
+                        performGlobalAction(GLOBAL_ACTION_HOME)
+                        speak("ホーム画面")
+                        mainHandler.postDelayed({
+                            speakHomeScreenItems(getActiveRootNode())
+                        }, 300)
+                    } else if (gestureId == GESTURE_SWIPE_UP) {
                         navigateFocus(View.FOCUS_BACKWARD, "前へ")
                     } else {
                         performScrollAction(forward = true)
