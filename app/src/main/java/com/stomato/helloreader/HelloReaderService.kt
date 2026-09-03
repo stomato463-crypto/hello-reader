@@ -417,12 +417,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private fun handleGestureAction(gestureId: Int): Boolean {
         Log.d(TAG, "handleGestureAction executing for gestureId: $gestureId")
         return when (gestureId) {
-            GESTURE_SWIPE_RIGHT, 1 -> {
+            GESTURE_SWIPE_RIGHT, GESTURE_2_FINGER_SWIPE_RIGHT, 1 -> {
                 Log.d(TAG, "Swipe Right Matched -> navigateFocus FORWARD")
                 navigateFocus(View.FOCUS_FORWARD, "次へ")
                 true
             }
-            GESTURE_SWIPE_LEFT, 2 -> {
+            GESTURE_SWIPE_LEFT, GESTURE_2_FINGER_SWIPE_LEFT, 2 -> {
                 Log.d(TAG, "Swipe Left Matched -> navigateFocus BACKWARD")
                 navigateFocus(View.FOCUS_BACKWARD, "前へ")
                 true
@@ -434,7 +434,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 Log.d(TAG, "Swipe Up Gesture Detected: $gestureId (KeyguardLocked=${isKeyguardLocked()})")
                 if (isKeyguardLocked()) {
                     showPinEntryScreen()
-                    false
+                    true
                 } else {
                     if (gestureId == GESTURE_SWIPE_UP) {
                         navigateFocus(View.FOCUS_BACKWARD, "前へ")
@@ -1114,10 +1114,19 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private fun showPinEntryScreen() {
         try {
             speak("PINコード入力画面")
-            // 1. 物理ドラッグスワイプを発火
+
+            // 1. Android公式グローバルアクションで通知・ロック画面シェードを解除してBouncerを引っ張り出す！
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                performGlobalAction(GLOBAL_ACTION_DISMISS_NOTIFICATION_SHADE)
+            } else {
+                @Suppress("DEPRECATION")
+                performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS)
+            }
+
+            // 2. 物理ドラッグスワイプを発火
             performKeyguardUnlockSwipe()
 
-            // 2. MainActivity (Activityコンテキスト) 経由の KeyguardManager.requestDismissKeyguard 公式発火
+            // 3. MainActivity (Activityコンテキスト) 経由の KeyguardManager.requestDismissKeyguard 公式発火
             val intent = Intent(this, MainActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
                 putExtra("EXTRA_REQUEST_PIN_UNLOCK", true)
