@@ -457,18 +457,9 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 }
             }
             GESTURE_2_FINGER_SWIPE_DOWN -> {
-                Log.d(TAG, "2-Finger Swipe Down: Scroll Backward")
-                performScrollAction(forward = false)
-                true
-            }
-            GESTURE_2_FINGER_SWIPE_LEFT -> {
-                Log.d(TAG, "2-Finger Swipe Left: Scroll Forward Page")
-                performScrollAction(forward = true)
-                true
-            }
-            GESTURE_2_FINGER_SWIPE_RIGHT -> {
-                Log.d(TAG, "2-Finger Swipe Right: Scroll Backward Page")
-                performScrollAction(forward = false)
+                Log.d(TAG, "2-Finger Swipe Down: Quick Settings")
+                performGlobalAction(GLOBAL_ACTION_QUICK_SETTINGS)
+                speak("クイック設定")
                 true
             }
             GESTURE_2_FINGER_DOUBLE_TAP -> {
@@ -481,7 +472,10 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             }
             GESTURE_SWIPE_UP_AND_LEFT -> {
                 performGlobalAction(GLOBAL_ACTION_HOME)
-                speakHomeScreenItems(getActiveRootNode())
+                speak("ホーム画面")
+                mainHandler.postDelayed({
+                    speakHomeScreenItems(getActiveRootNode())
+                }, 300)
                 true
             }
             GESTURE_SWIPE_DOWN_AND_LEFT -> {
@@ -489,18 +483,21 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 speak("戻る")
                 true
             }
-            GESTURE_SWIPE_LEFT_AND_UP -> {
+            GESTURE_SWIPE_UP_AND_RIGHT -> {
+                // 智浩さんのアイデア: 最近使ったアプリ一覧が開く準備ができた瞬間に指先に心地よい触覚フィードバック!
+                performHapticFeedback()
+                playSound(soundActivateId)
                 performGlobalAction(GLOBAL_ACTION_RECENTS)
                 speak("最近のアプリ")
                 true
             }
-            GESTURE_SWIPE_RIGHT_AND_DOWN -> {
+            GESTURE_SWIPE_DOWN_AND_RIGHT -> {
                 performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS)
                 speak("通知")
                 true
             }
-            GESTURE_SWIPE_DOWN_AND_RIGHT, GESTURE_SWIPE_UP_AND_RIGHT -> {
-                speak("TalkBack メニュー")
+            GESTURE_SWIPE_LEFT_AND_UP, GESTURE_SWIPE_RIGHT_AND_DOWN -> {
+                speak("グローバルメニュー")
                 true
             }
             else -> {
