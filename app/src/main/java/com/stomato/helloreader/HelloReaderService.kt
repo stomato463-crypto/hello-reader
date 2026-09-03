@@ -21,6 +21,7 @@ import android.speech.tts.UtteranceProgressListener
 import android.telecom.TelecomManager
 import android.telephony.TelephonyManager
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
@@ -901,9 +902,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             // AOSP TalkBack 準拠: 最初に FOCUS_ACCESSIBILITY を再送信してフォーカスを確実にアクティブ化！
             currentFocus.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
 
-            // ロック画面中 (Keyguard / PIN入力画面) ハイブリッド確定入力:
-            // OSチャンネルの違いを完全克服するため ACTION_CLICK と dispatchGesture 物理タップをハイブリッド同時発火！
+            // ロック画面中 (Keyguard / PIN入力画面) トリプル入力補完:
+            // 1. ACTION_CLICK 2. 物理タップ dispatchGesture 3. 数字キーイベント直撃
             if (isKeyguardLocked()) {
+                val nodeText = parseNodeDescription(currentFocus)
+                sendDigitKeyEvent(nodeText)
+
                 currentFocus.performAction(AccessibilityNodeInfo.ACTION_CLICK)
                 val validRect = findValidBoundsInScreen(currentFocus)
                 if (validRect != null) {
@@ -994,6 +998,36 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             }
         }
         return null
+    }
+
+    /**
+     * ロック画面の数字キーを押した際、システムに直で KeyCode (KEYCODE_0 ~ KEYCODE_9, KEYCODE_DEL, KEYCODE_ENTER) を送信して入力エリアに届かせる！
+     */
+    private fun sendDigitKeyEvent(nodeText: String?): Boolean {
+        if (nodeText.isNullOrBlank()) return false
+        val keyCode = when {
+            nodeText.contains("0") -> KeyEvent.KEYCODE_0
+            nodeText.contains("1") -> KeyEvent.KEYCODE_1
+            nodeText.contains("2") -> KeyEvent.KEYCODE_2
+            nodeText.contains("3") -> KeyEvent.KEYCODE_3
+            nodeText.contains("4") -> KeyEvent.KEYCODE_4
+            nodeText.contains("5") -> KeyEvent.KEYCODE_5
+            nodeText.contains("6") -> KeyEvent.KEYCODE_6
+            nodeText.contains("7") -> KeyEvent.KEYCODE_7
+            nodeText.contains("8") -> KeyEvent.KEYCODE_8
+            nodeText.contains("9") -> KeyEvent.KEYCODE_9
+            nodeText.contains("削除") -> KeyEvent.KEYCODE_DEL
+            nodeText.contains("完了") || nodeText.contains("確定") -> KeyEvent.KEYCODE_ENTER
+            else -> return false
+        }
+
+        return try {
+            Log.d(TAG, "Sent direct digit KeyEvent for '$nodeText': KeyCode=$keyCode")
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "KeyEvent send error", e)
+            false
+        }
     }
 
     /**
