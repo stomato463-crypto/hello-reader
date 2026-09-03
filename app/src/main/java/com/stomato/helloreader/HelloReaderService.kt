@@ -561,46 +561,71 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
      * アクティブな全ウィンドウのルートノードを取得する (AOSP TalkBack 準拠 TYPE_APPLICATION 優先対応)
      */
     private fun getActiveRootNode(): AccessibilityNodeInfo? {
-        val currentWindows = windows
-        if (!currentWindows.isNullOrEmpty()) {
-            // ロック画面中 (Keyguard) は TYPE_SYSTEM や Keyguard/Lock タイトルを持つウィンドウを最優先！
-            if (isKeyguardLocked()) {
+        try {
+            val currentWindows = windows
+            if (!currentWindows.isNullOrEmpty()) {
+                // ロック画面中 (Keyguard) は TYPE_SYSTEM や Keyguard/Lock タイトルを持つウィンドウを最優先！
+                if (isKeyguardLocked()) {
+                    for (window in currentWindows) {
+                        try {
+                            val titleStr = window.title?.toString() ?: ""
+                            if (window.type == AccessibilityWindowInfo.TYPE_SYSTEM ||
+                                titleStr.contains("Keyguard", ignoreCase = true) ||
+                                titleStr.contains("Lock", ignoreCase = true) ||
+                                titleStr.contains("SystemUI", ignoreCase = true)
+                            ) {
+                                val root = window.root
+                                if (root != null) return root
+                            }
+                        } catch (e: Exception) {
+                            Log.w(TAG, "Keyguard window root fetch error", e)
+                        }
+                    }
+                }
+
+                // 通常時: TYPE_APPLICATION (ホーム画面本体・アプリアイコン領域) を最優先！
                 for (window in currentWindows) {
-                    val titleStr = window.title?.toString() ?: ""
-                    if (window.type == AccessibilityWindowInfo.TYPE_SYSTEM ||
-                        titleStr.contains("Keyguard", ignoreCase = true) ||
-                        titleStr.contains("Lock", ignoreCase = true) ||
-                        titleStr.contains("SystemUI", ignoreCase = true)
-                    ) {
+                    try {
+                        if (window.type == AccessibilityWindowInfo.TYPE_APPLICATION) {
+                            val root = window.root
+                            if (root != null) return root
+                        }
+                    } catch (e: Exception) {
+                        Log.w(TAG, "Application window root fetch error", e)
+                    }
+                }
+
+                // 次にアクティブ/フォーカスされたウィンドウ
+                for (window in currentWindows) {
+                    try {
+                        if (window.isFocused || window.isActive) {
+                            val root = window.root
+                            if (root != null) return root
+                        }
+                    } catch (e: Exception) {
+                        Log.w(TAG, "Focused window root fetch error", e)
+                    }
+                }
+
+                // フォールバック
+                for (window in currentWindows) {
+                    try {
                         val root = window.root
                         if (root != null) return root
+                    } catch (e: Exception) {
+                        Log.w(TAG, "Fallback window root fetch error", e)
                     }
                 }
             }
-
-            // 通常時: TYPE_APPLICATION (ホーム画面本体・アプリアイコン領域) を最優先！
-            for (window in currentWindows) {
-                if (window.type == AccessibilityWindowInfo.TYPE_APPLICATION) {
-                    val root = window.root
-                    if (root != null) return root
-                }
-            }
-
-            // 次にアクティブ/フォーカスされたウィンドウ
-            for (window in currentWindows) {
-                if (window.isFocused || window.isActive) {
-                    val root = window.root
-                    if (root != null) return root
-                }
-            }
-
-            // フォールバック
-            for (window in currentWindows) {
-                val root = window.root
-                if (root != null) return root
-            }
+        } catch (e: Exception) {
+            Log.e(TAG, "getActiveRootNode general error", e)
         }
-        return rootInActiveWindow
+        return try {
+            rootInActiveWindow
+        } catch (e: Exception) {
+            Log.e(TAG, "rootInActiveWindow fetch error", e)
+            null
+        }
     }
 
     /**
@@ -1082,7 +1107,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 performHapticFeedback()
             }
             AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> {
-                // 画面（Activity/Dialog/Launcher）が新しく切り替わった時だけ画面切り替え音を再生！
+                // 画面（Activity/Dialog/Launcher）が新しく切り替わった時だけ画面切り替え音を再生＆遅延累積タスクを消去してフリーズ防止！
+                mainHandler.removeCallbacksAndMessages(null)
                 playSound(soundViewEnteredId)
                 val text = getEventText(event)
                 val packageName = event.packageName?.toString() ?: ""
@@ -1202,6 +1228,13 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         if (!rawMainText.isNullOrBlank()) {
             val mainTextStr = rawMainText.toString().trim()
+
+            // ロック画面中 (Keyguard / PIN入力画面) はタイマー遅延を挟まず爆速・安全に即時音読してフリーズを防止！
+            if (isKeyguardLocked()) {
+                val hint = if (compat.isClickable && !mainTextStr.contains("ボタン")) "ボタン" else null
+                return NodeTextPair(mainTextStr, hint)
+            }
+
             if (mainTextStr.length == 1) {
                 val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
                 val isPhoneticMorseEnabled = prefs.getBoolean("pref_phonetic_morse_enabled", false)
