@@ -1467,6 +1467,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             }
         }
 
+        if (rawMainText.isNullOrBlank() && isKeyguardLocked()) {
+            rawMainText = "キー"
+        } else if (rawMainText.isNullOrBlank() && (compat.isClickable || compat.isFocusable)) {
+            rawMainText = "ボタン"
+        }
+
         // App Support: 2. アプリ特有プロファイルによる補正適用
         val appProfile = appProfileManager.getProfileForPackage(packageName)
         val customizedPair = appProfile.customizeNodeDescription(node, rawMainText, null)
