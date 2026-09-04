@@ -13,6 +13,7 @@ import android.graphics.Path
 import android.graphics.Rect
 import android.media.AudioAttributes
 import android.media.SoundPool
+import android.os.BatteryManager
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
@@ -30,6 +31,9 @@ import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import android.provider.ContactsContract
 import com.stomato.helloreader.appsupport.AppProfileManager
 import com.stomato.helloreader.appsupport.CustomLabelManager
+import com.stomato.helloreader.braille.BrailleConstants
+import com.stomato.helloreader.braille.BrailleManager
+import com.stomato.helloreader.haptics.HapticFeedbackManager
 import java.util.Locale
 
 /**
@@ -104,42 +108,83 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private var isCallActive = false
     private var callStartTime = 0L
 
-    private var vibrator: Vibrator? = null
-
     private lateinit var appProfileManager: AppProfileManager
     private lateinit var customLabelManager: CustomLabelManager
+    private lateinit var brailleManager: BrailleManager
+    private lateinit var hapticFeedbackManager: HapticFeedbackManager
+    private lateinit var timeSignalManager: TimeSignalManager
 
-    private fun getVibratorService(): Vibrator? {
-        if (vibrator != null) return vibrator
-        vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val vibratorManager = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as? android.os.VibratorManager
-            vibratorManager?.defaultVibrator
-        } else {
-            @Suppress("DEPRECATION")
-            getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
-        }
-        return vibrator
+    // 読み上げコントロール（ローター）設定
+    enum class ReadingGranularity(val label: String) {
+        DEFAULT("デフォルト"),
+        CHARACTERS("文字"),
+        WORDS("単語"),
+        HEADINGS("見出し"),
+        CONTROLS("コントロール"),
+        SPEECH_RATE("読み上げ速度")
     }
+
+    private val granularities = ReadingGranularity.values()
+    private var currentGranularityIndex = 0
+    private var currentSpeechRate: Float = 1.0f
+    private var charNavigationIndex: Int = -1
 
     /**
      * 指先への触覚フィードバック (Haptic Feedback) の実行
      */
     private fun performHapticFeedback() {
         try {
-            val vib = getVibratorService()
-            if (vib?.hasVibrator() == true) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    vib.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
-                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vib.vibrate(VibrationEffect.createOneShot(15, VibrationEffect.DEFAULT_AMPLITUDE))
-                } else {
-                    @Suppress("DEPRECATION")
-                    vib.vibrate(15)
-                }
+            if (::hapticFeedbackManager.isInitialized) {
+                hapticFeedbackManager.performFocus()
             }
         } catch (e: Exception) {
             Log.e(TAG, "Failed to perform haptic feedback", e)
         }
+    }
+
+    /**
+     * 現在時刻と日付のアナウンス
+     */
+    private fun speakCurrentTimeAndDate() {
+        val cal = java.util.Calendar.getInstance()
+        val format = java.text.SimpleDateFormat("M月d日 E曜日 H時mm分", Locale.JAPANESE)
+        val text = format.format(cal.time)
+        playSound(soundActivateId)
+        speakWithSubVoice(text, "現在時刻")
+    }
+
+    /**
+     * バッテリー残量・充電状態・Wi-Fi状態のアナウンス
+     */
+    private fun speakBatteryStatus() {
+        val ifilter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
+        val batteryStatus = registerReceiver(null, ifilter)
+        val level = batteryStatus?.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) ?: -1
+        val scale = batteryStatus?.getIntExtra(BatteryManager.EXTRA_SCALE, -1) ?: -1
+        val pct = if (level >= 0 && scale > 0) (level * 100 / scale.toFloat()).toInt() else 100
+        val status = batteryStatus?.getIntExtra(BatteryManager.EXTRA_STATUS, -1) ?: -1
+        val isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING || status == BatteryManager.BATTERY_STATUS_FULL
+        val chargeText = if (isCharging) "充電中" else "放電中"
+
+        val text = "バッテリー残量${pct}パーセント、$chargeText"
+        playSound(soundActivateId)
+        speakWithSubVoice(text, "端末ステータス")
+    }
+
+    /**
+     * 画面上部から全テキストを連続読み上げ
+     */
+    private fun readAllTextFromTop() {
+        val root = getActiveRootNode()
+        if (root != null) {
+            val allTexts = collectAllChildTexts(root)
+            if (!allTexts.isNullOrBlank()) {
+                playSound(soundActivateId)
+                speak("画面全体の読み上げを開始します。$allTexts")
+                return
+            }
+        }
+        speak("読み上げ可能なテキストがありません")
     }
 
     /**
@@ -254,8 +299,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
     }
 
-    private var isMutedByKey: Boolean = false
-
     override fun onServiceConnected() {
         super.onServiceConnected()
         Log.d(TAG, "Hello Reader Accessibility Service Connected!")
@@ -311,7 +354,81 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         // 5. アプリサポート (AppProfile & CustomLabel) の初期化
         appProfileManager = AppProfileManager()
-        customLabelManager = CustomLabelManager()
+        customLabelManager = CustomLabelManager(this)
+
+        // 6. スマート時報 ＆ バッテリー残量マネージャーの初期化・起動
+        timeSignalManager = TimeSignalManager(this) { timeText, batteryText, isSilent ->
+            mainHandler.post {
+                if (!isSilent) {
+                    playSound(soundActivateId)
+                    speakWithSubVoice(timeText, batteryText)
+                }
+                if (::brailleManager.isInitialized) {
+                    brailleManager.displayText("🕒 $timeText 🔋 $batteryText")
+                }
+            }
+        }.apply {
+            start()
+        }
+
+        // 7. 点字 (Braille) ＆ 触覚 (Haptics) サブシステムの初期化
+        hapticFeedbackManager = HapticFeedbackManager(this)
+        brailleManager = BrailleManager(this).apply {
+            onBrailleActionListener = { key ->
+                mainHandler.post {
+                    when (key) {
+                        BrailleConstants.BrailleKey.NAVIGATE_NEXT -> {
+                            handleGestureAction(AccessibilityService.GESTURE_SWIPE_RIGHT)
+                        }
+                        BrailleConstants.BrailleKey.NAVIGATE_PREVIOUS -> {
+                            handleGestureAction(AccessibilityService.GESTURE_SWIPE_LEFT)
+                        }
+                        BrailleConstants.BrailleKey.ACTIVATE -> {
+                            hapticFeedbackManager.performClick()
+                            performClickOnFocusedNode()
+                        }
+                        BrailleConstants.BrailleKey.GLOBAL_BACK -> {
+                            hapticFeedbackManager.performClick()
+                            performGlobalAction(GLOBAL_ACTION_BACK)
+                        }
+                        BrailleConstants.BrailleKey.GLOBAL_HOME -> {
+                            hapticFeedbackManager.performClick()
+                            performGlobalAction(GLOBAL_ACTION_HOME)
+                        }
+                        BrailleConstants.BrailleKey.GLOBAL_RECENTS -> {
+                            hapticFeedbackManager.performClick()
+                            performGlobalAction(GLOBAL_ACTION_RECENTS)
+                        }
+                        BrailleConstants.BrailleKey.GLOBAL_NOTIFICATIONS -> {
+                            hapticFeedbackManager.performClick()
+                            performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS)
+                        }
+                        BrailleConstants.BrailleKey.GLOBAL_QUICK_SETTINGS -> {
+                            hapticFeedbackManager.performClick()
+                            performGlobalAction(GLOBAL_ACTION_QUICK_SETTINGS)
+                        }
+                        BrailleConstants.BrailleKey.SCROLL_UP -> {
+                            handleGestureAction(AccessibilityService.GESTURE_SWIPE_UP)
+                        }
+                        BrailleConstants.BrailleKey.SCROLL_DOWN -> {
+                            handleGestureAction(AccessibilityService.GESTURE_SWIPE_DOWN)
+                        }
+                        BrailleConstants.BrailleKey.READ_TIME -> {
+                            speakCurrentTimeAndDate()
+                        }
+                        BrailleConstants.BrailleKey.READ_BATTERY -> {
+                            speakBatteryStatus()
+                        }
+                        BrailleConstants.BrailleKey.READ_FROM_TOP -> {
+                            readAllTextFromTop()
+                        }
+                        BrailleConstants.BrailleKey.TOGGLE_SPEECH -> {
+                            interruptSpeaking()
+                        }
+                    }
+                }
+            }
+        }
     }
 
     override fun onInit(status: Int) {
@@ -326,15 +443,10 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 tts?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
                     override fun onStart(utteranceId: String?) {}
                     override fun onDone(utteranceId: String?) {
-                        if (isMutedByKey) {
-                            pendingSubVoiceHint = null
-                            return
-                        }
                         if (utteranceId == "HelloReaderMainTTS" && !pendingSubVoiceHint.isNullOrBlank()) {
                             val hint = pendingSubVoiceHint
                             pendingSubVoiceHint = null
                             mainHandler.post {
-                                if (isMutedByKey) return@post
                                 val currentTts = tts ?: return@post
                                 currentTts.setPitch(subVoicePitch)
                                 currentTts.speak(hint, TextToSpeech.QUEUE_ADD, null, "HelloReaderSubTTS")
@@ -345,7 +457,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     override fun onError(utteranceId: String?) {}
                 })
 
-                speakWithSubVoice("Hello Readerが起動しました", "サブボイス案内が有効です")
+                speakWithSubVoice("Hello Readerへようこそ！サービスが起動しました。", "音量キー長押しでいつでもTalkBackを起動できます")
             }
         } else {
             Log.e(TAG, "TTSの初期化に失敗しました")
@@ -435,7 +547,16 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
      */
     private fun handleGestureAction(gestureId: Int): Boolean {
         Log.d(TAG, "handleGestureAction executing for gestureId: $gestureId")
+        interruptSpeaking()
         return when (gestureId) {
+            // 2本指シングルタップ: 即時消音 (TalkBack標準)
+            43, GESTURE_2_FINGER_SINGLE_TAP -> {
+                Log.d(TAG, "2-Finger Single Tap: Silence Speech")
+                interruptSpeaking()
+                true
+            }
+
+            // 1本指左右スワイプ: 次へ / 前へ移動
             GESTURE_SWIPE_RIGHT, GESTURE_2_FINGER_SWIPE_RIGHT, 1 -> {
                 Log.d(TAG, "Swipe Right Matched -> navigateFocus FORWARD")
                 navigateFocus(View.FOCUS_FORWARD, "次へ")
@@ -446,37 +567,56 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 navigateFocus(View.FOCUS_BACKWARD, "前へ")
                 true
             }
-            GESTURE_SWIPE_UP,
-            GESTURE_2_FINGER_SWIPE_UP,
-            GESTURE_3_FINGER_SWIPE_UP,
-            GESTURE_4_FINGER_SWIPE_UP -> {
-                Log.d(TAG, "Swipe Up Gesture Detected: $gestureId (KeyguardLocked=${isKeyguardLocked()})")
+
+            // 読み上げコントロール（ローター）切り替え: 3本指左右スワイプ または 上下往復スワイプ
+            GESTURE_3_FINGER_SWIPE_RIGHT, GESTURE_SWIPE_UP_AND_DOWN -> {
+                cycleGranularity(forward = true)
+                true
+            }
+            GESTURE_3_FINGER_SWIPE_LEFT, GESTURE_SWIPE_DOWN_AND_UP -> {
+                cycleGranularity(forward = false)
+                true
+            }
+
+            // 1本指上/下スワイプ: 選択中の読み上げコントロール（文字/見出し/速度等）に従ってナビゲーション
+            GESTURE_SWIPE_UP -> {
                 if (isKeyguardLocked()) {
                     showPinEntryScreen()
-                    true
                 } else {
-                    if (gestureId == GESTURE_2_FINGER_SWIPE_UP) {
-                        performGlobalAction(GLOBAL_ACTION_HOME)
-                        speak("ホーム画面")
-                        mainHandler.postDelayed({
-                            speakHomeScreenItems(getActiveRootNode())
-                        }, 300)
-                    } else if (gestureId == GESTURE_SWIPE_UP) {
-                        navigateFocus(View.FOCUS_BACKWARD, "前へ")
-                    } else {
-                        performScrollAction(forward = true)
-                    }
-                    true
+                    navigateGranularity(forward = false)
                 }
+                true
+            }
+            GESTURE_SWIPE_DOWN -> {
+                if (isKeyguardLocked()) {
+                    showPinEntryScreen()
+                } else {
+                    navigateGranularity(forward = true)
+                }
+                true
+            }
+
+            GESTURE_2_FINGER_SWIPE_UP, GESTURE_3_FINGER_SWIPE_UP, GESTURE_4_FINGER_SWIPE_UP -> {
+                if (isKeyguardLocked()) {
+                    showPinEntryScreen()
+                } else {
+                    performScrollAction(forward = true)
+                }
+                true
             }
             GESTURE_2_FINGER_SWIPE_DOWN -> {
-                Log.d(TAG, "2-Finger Swipe Down: Quick Settings")
-                performGlobalAction(GLOBAL_ACTION_QUICK_SETTINGS)
-                speak("クイック設定")
+                performScrollAction(forward = false)
+                true
+            }
+            GESTURE_2_FINGER_SWIPE_LEFT -> {
+                performScrollAction(forward = true)
+                true
+            }
+            GESTURE_2_FINGER_SWIPE_RIGHT -> {
+                performScrollAction(forward = false)
                 true
             }
             GESTURE_2_FINGER_DOUBLE_TAP -> {
-                Log.d(TAG, "2-Finger Double Tap: Phone Answer / End Call")
                 handlePhoneAnswerOrEndCall()
             }
             GESTURE_DOUBLE_TAP -> {
@@ -485,10 +625,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             }
             GESTURE_SWIPE_UP_AND_LEFT -> {
                 performGlobalAction(GLOBAL_ACTION_HOME)
-                speak("ホーム画面")
-                mainHandler.postDelayed({
-                    speakHomeScreenItems(getActiveRootNode())
-                }, 300)
+                speakHomeScreenItems(getActiveRootNode())
                 true
             }
             GESTURE_SWIPE_DOWN_AND_LEFT -> {
@@ -496,25 +633,19 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 speak("戻る")
                 true
             }
-            GESTURE_SWIPE_UP_AND_RIGHT -> {
-                // OS に最近使ったアプリ一覧 (Recents) の呼び出しを要求
+            GESTURE_SWIPE_LEFT_AND_UP -> {
                 performGlobalAction(GLOBAL_ACTION_RECENTS)
-                
-                // 智浩さんの鋭い洞察: OSのスナップショットアニメーション完了タイミング (150ms) に触覚&発話を完璧同期!
-                mainHandler.postDelayed({
-                    performHapticFeedback()
-                    playSound(soundActivateId)
-                    speak("最近のアプリ")
-                }, 150)
+                speak("最近のアプリ")
                 true
             }
-            GESTURE_SWIPE_DOWN_AND_RIGHT -> {
+            GESTURE_SWIPE_RIGHT_AND_DOWN -> {
                 performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS)
                 speak("通知")
                 true
             }
-            GESTURE_SWIPE_LEFT_AND_UP, GESTURE_SWIPE_RIGHT_AND_DOWN -> {
-                speak("グローバルメニュー")
+            GESTURE_SWIPE_DOWN_AND_RIGHT, GESTURE_SWIPE_UP_AND_RIGHT -> {
+                speak("Hello Reader メニュー")
+                openHelloReaderMenu()
                 true
             }
             else -> {
@@ -524,30 +655,162 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     }
 
     /**
-     * 物理キーイベント検知 (音量ボタン・電源ボタンでの即時発話ストップ / AOSP TalkBack 準拠)
+     * 読み上げコントロール（ローター）の粒度を前後に切り替え
      */
-    override fun onKeyEvent(event: KeyEvent?): Boolean {
-        if (event != null) {
-            val keyCode = event.keyCode
-            if (keyCode == KeyEvent.KEYCODE_VOLUME_UP ||
-                keyCode == KeyEvent.KEYCODE_VOLUME_DOWN ||
-                keyCode == KeyEvent.KEYCODE_POWER ||
-                keyCode == KeyEvent.KEYCODE_HEADSETHOOK
-            ) {
-                // 音量ボタン・電源ボタンが押された瞬間に初期案内や TTS 読み上げを0ミリ秒で即座にピタッとストップ！
-                isMutedByKey = true
-                mainHandler.removeCallbacksAndMessages(null)
-                pendingSubVoiceHint = null
-                try {
-                    tts?.stop()
-                } catch (e: Exception) {
-                    Log.e(TAG, "tts.stop error on key press", e)
-                }
-                Log.d(TAG, "Key event intercepted ($keyCode): TTS reading immediately stopped with isMutedByKey=true")
-                return true
+    private fun cycleGranularity(forward: Boolean) {
+        currentGranularityIndex = if (forward) {
+            (currentGranularityIndex + 1) % granularities.size
+        } else {
+            if (currentGranularityIndex - 1 < 0) granularities.size - 1 else currentGranularityIndex - 1
+        }
+        val current = granularities[currentGranularityIndex]
+        charNavigationIndex = -1
+        playSound(soundFocusId)
+        speak(current.label)
+    }
+
+    /**
+     * 選択中の読み上げコントロール（ローター）に従って移動
+     */
+    private fun navigateGranularity(forward: Boolean) {
+        val current = granularities[currentGranularityIndex]
+        when (current) {
+            ReadingGranularity.DEFAULT -> {
+                navigateFocus(if (forward) View.FOCUS_FORWARD else View.FOCUS_BACKWARD, if (forward) "次へ" else "前へ")
+            }
+            ReadingGranularity.CHARACTERS -> {
+                navigateByCharacter(forward)
+            }
+            ReadingGranularity.WORDS -> {
+                navigateByCharacter(forward) // 日本語の単語分割フォールバック
+            }
+            ReadingGranularity.HEADINGS -> {
+                navigateByHeading(forward)
+            }
+            ReadingGranularity.CONTROLS -> {
+                navigateByControl(forward)
+            }
+            ReadingGranularity.SPEECH_RATE -> {
+                adjustSpeechRate(forward)
             }
         }
-        return super.onKeyEvent(event)
+    }
+
+    /**
+     * 文字単位での詳細読み（フォネティック＋モールス＋点字）
+     */
+    private fun navigateByCharacter(forward: Boolean) {
+        val node = lastFocusedNode ?: getActiveRootNode()
+        val text = node?.text?.toString() ?: node?.contentDescription?.toString() ?: ""
+        if (text.isEmpty()) {
+            navigateFocus(if (forward) View.FOCUS_FORWARD else View.FOCUS_BACKWARD, if (forward) "次へ" else "前へ")
+            return
+        }
+
+        if (forward) {
+            charNavigationIndex++
+            if (charNavigationIndex >= text.length) {
+                charNavigationIndex = -1
+                navigateFocus(View.FOCUS_FORWARD, "次へ")
+                return
+            }
+        } else {
+            charNavigationIndex--
+            if (charNavigationIndex < 0) {
+                charNavigationIndex = -1
+                navigateFocus(View.FOCUS_BACKWARD, "前へ")
+                return
+            }
+        }
+
+        val ch = text[charNavigationIndex]
+        val uppercaseCh = ch.uppercaseChar()
+        val phonetic = PHONETIC_MAP[uppercaseCh]
+        val spoken = if (phonetic != null) "$ch、$phonetic" else ch.toString()
+
+        playSound(soundFocusId)
+        performHapticFeedback()
+        playMorseVibration(ch)
+        speak(spoken)
+    }
+
+    /**
+     * 見出し（Heading / Title）単位でのジャンプ
+     */
+    private fun navigateByHeading(forward: Boolean) {
+        val allNodes = mutableListOf<AccessibilityNodeInfo>()
+        val root = rootInActiveWindow ?: getActiveRootNode() ?: return
+        collectFocusableNodes(root, allNodes)
+
+        val headings = allNodes.filter {
+            val compat = AccessibilityNodeInfoCompat.wrap(it)
+            compat.isHeading || it.viewIdResourceName?.contains("title", ignoreCase = true) == true || it.viewIdResourceName?.contains("header", ignoreCase = true) == true
+        }
+
+        if (headings.isEmpty()) {
+            speak("見出しが見つかりません")
+            return
+        }
+
+        // 次の見出しへ移動
+        val target = if (forward) headings.first() else headings.last()
+        lastFocusedNode = target
+        target.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
+        val pair = parseNodeDescriptionPair(target)
+        speakWithSubVoice("見出し。${pair?.mainText ?: ""}", pair?.hintText)
+    }
+
+    /**
+     * コントロール（ボタン・入力欄・スイッチ）単位でのジャンプ
+     */
+    private fun navigateByControl(forward: Boolean) {
+        val allNodes = mutableListOf<AccessibilityNodeInfo>()
+        val root = rootInActiveWindow ?: getActiveRootNode() ?: return
+        collectFocusableNodes(root, allNodes)
+
+        val controls = allNodes.filter {
+            val compat = AccessibilityNodeInfoCompat.wrap(it)
+            compat.isClickable || compat.isCheckable || compat.className?.contains("EditText") == true
+        }
+
+        if (controls.isEmpty()) {
+            speak("操作コントロールが見つかりません")
+            return
+        }
+
+        val target = if (forward) controls.first() else controls.last()
+        lastFocusedNode = target
+        target.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
+        val pair = parseNodeDescriptionPair(target)
+        speakWithSubVoice(pair?.mainText ?: "コントロール", pair?.hintText)
+    }
+
+    /**
+     * 読み上げ速度のリアルタイム加減速
+     */
+    private fun adjustSpeechRate(faster: Boolean) {
+        currentSpeechRate = if (faster) {
+            (currentSpeechRate + 0.15f).coerceAtMost(2.5f)
+        } else {
+            (currentSpeechRate - 0.15f).coerceAtLeast(0.5f)
+        }
+        tts?.setSpeechRate(currentSpeechRate)
+        val percent = (currentSpeechRate * 100).toInt()
+        speak("読み上げ速度 $percent パーセント")
+    }
+
+    /**
+     * Hello Reader メニュー（設定・コンテキストメニュー画面）を開く
+     */
+    private fun openHelloReaderMenu() {
+        try {
+            val intent = Intent(this, MainActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            }
+            startActivity(intent)
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to open Hello Reader menu", e)
+        }
     }
 
     /**
@@ -609,6 +872,26 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         for (i in 0 until node.childCount) {
             val child = node.getChild(i)
             val found = findAppIconNode(child)
+            if (found != null) return found
+        }
+        return null
+    }
+
+    /**
+     * 権限ダイアログ内の「許可」ボタンノードを探索する (AOSP PermissionController対応)
+     */
+    private fun findAllowButtonNode(root: AccessibilityNodeInfo?): AccessibilityNodeInfo? {
+        if (root == null) return null
+        val compat = AccessibilityNodeInfoCompat.wrap(root)
+        val text = (compat.text?.toString() ?: "") + (compat.contentDescription?.toString() ?: "")
+        val id = compat.viewIdResourceName ?: ""
+
+        if (compat.isClickable && (id.contains("permission_allow") || text.contains("許可") || text.contains("常に許可") || text.contains("アプリの使用中のみ"))) {
+            return root
+        }
+
+        for (i in 0 until root.childCount) {
+            val found = findAllowButtonNode(root.getChild(i))
             if (found != null) return found
         }
         return null
@@ -691,41 +974,27 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
      */
     private fun navigateFocus(direction: Int, directionName: String, isAutoRetry: Boolean = false) {
         val allNodes = mutableListOf<AccessibilityNodeInfo>()
-        val currentWindows = windows
         Log.d(TAG, "navigateFocus called: directionName=$directionName, isKeyguardLocked=${isKeyguardLocked()}")
 
+        // 1. アクティブウィンドウのルートノードから最優先で収集
+        val activeRoot = rootInActiveWindow ?: getActiveRootNode()
+        if (activeRoot != null) {
+            collectFocusableNodes(activeRoot, allNodes)
+        }
+
+        // 2. システムウィンドウ（ステータスバー・ナビゲーションバー等）からも補完収集
+        val currentWindows = windows
         if (!currentWindows.isNullOrEmpty()) {
-            if (isKeyguardLocked()) {
-                // ロック画面中 (Keyguard / PIN入力画面) は存在する全ウィンドウ (Keyguard/SystemUI/InputMethod/App) のノードを漏れなく全収集！
-                for (window in currentWindows) {
-                    try {
-                        window.root?.let { collectFocusableNodes(it, allNodes) }
-                    } catch (e: Exception) {
-                        Log.w(TAG, "Window node collection error during keyguard", e)
-                    }
-                }
-            } else {
-                // 1. アプリ・ホーム画面本体 (TYPE_APPLICATION) のノードをまず優先収集！
-                for (window in currentWindows) {
-                    if (window.type == AccessibilityWindowInfo.TYPE_APPLICATION) {
-                        window.root?.let { collectFocusableNodes(it, allNodes) }
-                    }
-                }
-                // 2. システムウィンドウ (ナビゲーションバー等) のノードを収集！
-                for (window in currentWindows) {
-                    if (window.type != AccessibilityWindowInfo.TYPE_APPLICATION) {
-                        window.root?.let { collectFocusableNodes(it, allNodes) }
-                    }
+            for (window in currentWindows) {
+                try {
+                    window.root?.let { collectFocusableNodes(it, allNodes) }
+                } catch (e: Exception) {
+                    Log.w(TAG, "Window node collection error", e)
                 }
             }
         }
 
-        if (allNodes.isEmpty()) {
-            val root = getActiveRootNode()
-            if (root != null) {
-                collectFocusableNodes(root, allNodes)
-            }
-        }
+        Log.d(TAG, "navigateFocus collected: ${allNodes.size} nodes")
 
         if (allNodes.isEmpty()) {
             speak("これ以上 $directionName に進めません")
@@ -822,60 +1091,56 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     }
 
     /**
-     * 木構造を深さ優先で走査し、読解・フォーカス可能なノード一覧を収集する (hello-reader 独自最適化)
+     * 木構造を深さ優先で走査し、読解・フォーカス可能なノード一覧を収集する (AOSP TalkBack準拠・子ノード脱落防止)
      */
     private fun collectFocusableNodes(
         node: AccessibilityNodeInfo?,
-        list: MutableList<AccessibilityNodeInfo>,
-        parent: AccessibilityNodeInfo? = null
+        list: MutableList<AccessibilityNodeInfo>
     ) {
         if (node == null) return
         val compat = AccessibilityNodeInfoCompat.wrap(node)
+        val bounds = Rect()
+        node.getBoundsInScreen(bounds)
+        val isVisible = compat.isVisibleToUser || (bounds.width() > 0 && bounds.height() > 0 && bounds.bottom > 0)
+        if (!isVisible) return
 
-        if (!compat.isVisibleToUser) return
+        val text = parseNodeDescription(node)
+        val hasText = !text.isNullOrBlank()
+        val isClickable = compat.isClickable
+        val isFocusable = compat.isFocusable
+        val isScreenReaderFocusable = compat.isScreenReaderFocusable
+        val isCheckable = compat.isCheckable
+        val childCount = node.childCount
 
-        // 親ボタン枠等ですでに登録されている場合、重複する子要素の二重登録をスキップする
-        if (parent != null && isRedundantChildNode(parent, node)) {
-            return
-        }
-
-        val desc = parseNodeDescription(node)
-        val hasDesc = !desc.isNullOrBlank()
-        val hasContentDesc = !compat.contentDescription.isNullOrBlank()
-        val hasViewId = !compat.viewIdResourceName.isNullOrBlank()
         val isKeyguard = isKeyguardLocked()
 
-        val isAdded = if (isKeyguard || ((hasDesc || hasViewId) && (compat.isFocusable || compat.isClickable || compat.isScreenReaderFocusable || hasContentDesc || hasViewId))) {
-            list.add(node)
-            true
-        } else {
-            false
+        // ロック画面中またはフォーカス対象として意味のあるノードを判定
+        val shouldFocusThisNode = when {
+            isKeyguard -> hasText || isClickable || isFocusable
+            childCount == 0 && hasText -> true
+            (isClickable || isFocusable || isScreenReaderFocusable || isCheckable) && hasText -> true
+            compat.className?.contains("EditText") == true -> true
+            else -> false
         }
 
-        for (i in 0 until node.childCount) {
-            collectFocusableNodes(node.getChild(i), list, if (isKeyguard) null else (if (isAdded) node else parent))
-        }
-    }
-
-    /**
-     * hello-reader 独自ノード解析: 親コンテナと包含関係にある子ノードの二重登録を検知
-     */
-    private fun isRedundantChildNode(parent: AccessibilityNodeInfo?, child: AccessibilityNodeInfo?): Boolean {
-        if (parent == null || child == null) return false
-        // ロック画面中 (Keyguard / PIN入力画面) は親枠の中に数字キーが含まれるため、除外を行わず全ての数字キーをフォーカス収集！
-        if (isKeyguardLocked()) return false
-
-        val parentCompat = AccessibilityNodeInfoCompat.wrap(parent)
-        if (parentCompat.isClickable || parentCompat.isFocusable) {
-            val pRect = Rect()
-            val cRect = Rect()
-            parent.getBoundsInScreen(pRect)
-            child.getBoundsInScreen(cRect)
-            if (!pRect.isEmpty && pRect.contains(cRect)) {
-                return true
+        if (shouldFocusThisNode) {
+            var isDuplicate = false
+            for (existing in list) {
+                if (isSameNode(existing, node)) {
+                    isDuplicate = true
+                    break
+                }
+            }
+            if (!isDuplicate) {
+                list.add(node)
             }
         }
-        return false
+
+        // 子要素も再帰的に走査
+        for (i in 0 until childCount) {
+            val child = node.getChild(i)
+            collectFocusableNodes(child, list)
+        }
     }
 
     /**
@@ -1167,9 +1432,9 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         try {
             speak("PINコード入力画面")
-            Log.d(TAG, "Executing showPinEntryScreen: official Keyguard API & swipe")
+            Log.d(TAG, "Executing showPinEntryScreen via Accessibility Service official actions")
 
-            // 1. Android公式グローバル解錠命令
+            // 1. Android公式グローバルアクションでロック画面シェードを解除してBouncerを引っ張り出す！
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 performGlobalAction(GLOBAL_ACTION_DISMISS_NOTIFICATION_SHADE)
             } else {
@@ -1179,20 +1444,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
             // 2. 物理ドラッグスワイプ (450ms) を発火
             performKeyguardUnlockSwipe()
-
-            // 3. KeyguardManager.requestDismissKeyguard (MainActivity 経由) 公式解除要求
-            try {
-                val intent = Intent(this, MainActivity::class.java).apply {
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                    putExtra("EXTRA_REQUEST_PIN_UNLOCK", true)
-                }
-                startActivity(intent)
-            } catch (e: Exception) {
-                Log.w(TAG, "Activity launch fallback skip: ${e.message}")
-            }
         } catch (e: Exception) {
             Log.e(TAG, "Failed to show PIN entry screen", e)
-            performKeyguardUnlockSwipe()
         }
     }
 
@@ -1280,7 +1533,13 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val morseCode = MORSE_MAP[uppercaseCh] ?: return
 
         try {
-            val vib = getVibratorService()
+            val vib = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val vm = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as? android.os.VibratorManager
+                vm?.defaultVibrator
+            } else {
+                @Suppress("DEPRECATION")
+                getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+            }
             if (vib == null || !vib.hasVibrator()) return
 
             val timingsList = mutableListOf<Long>()
@@ -1355,6 +1614,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             AccessibilityEvent.TYPE_VIEW_HOVER_ENTER -> {
                 try {
                     // タッチガイド (Explore by Touch): 指の下にある要素に明示的にフォーカスを設定して音・音声・触覚振動で案内！
+                    interruptSpeaking()
                     val node = event.source
                     if (node != null) {
                         node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
@@ -1408,7 +1668,21 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 val text = getEventText(event)
                 val packageName = event.packageName?.toString() ?: ""
 
-                if (isHomeScreenPackage(packageName)) {
+                if (packageName.contains("permissioncontroller") || packageName.contains("packageinstaller")) {
+                    mainHandler.postDelayed({
+                        val root = rootInActiveWindow ?: getActiveRootNode()
+                        val allowButton = findAllowButtonNode(root)
+                        if (allowButton != null) {
+                            lastFocusedNode = allowButton
+                            allowButton.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
+                            val pair = parseNodeDescriptionPair(allowButton)
+                            val dialogText = if (!text.isNullOrBlank()) "$text。" else "権限の確認。"
+                            speakWithSubVoice("$dialogText ${pair?.mainText ?: "許可ボタン"}", pair?.hintText ?: "ダブルタップで許可します")
+                        } else if (!text.isNullOrBlank()) {
+                            speak(text)
+                        }
+                    }, 250)
+                } else if (isHomeScreenPackage(packageName)) {
                     mainHandler.postDelayed({
                         speakHomeScreenItems(getActiveRootNode())
                     }, 200)
@@ -1495,16 +1769,19 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         val packageName = compat.packageName?.toString() ?: ""
         val viewId = compat.viewIdResourceName
+        val className = compat.className?.toString() ?: ""
 
         // App Support: 1. カスタムラベルのチェック (名無しボタン救済)
         var rawMainText: String? = customLabelManager.getCustomLabel(packageName, viewId)
 
-        // 複合容器ノード（子ノード数 1..8 個の小型ウィジェット）の場合のみ、直下子ノードの全詳細テキスト収集(collectAllChildTexts)を優先！
-        val childCount = node.childCount
-        val childTextCollected = if (childCount in 1..8) collectAllChildTexts(node) else null
-        if (!childTextCollected.isNullOrBlank()) {
-            rawMainText = childTextCollected
-        } else if (rawMainText.isNullOrBlank()) {
+        // App Support: 2. アプリ特有プロファイルによる最優先補正
+        val appProfile = appProfileManager.getProfileForPackage(packageName)
+        val customizedPair = appProfile.customizeNodeDescription(node, rawMainText, null)
+        if (customizedPair != null) {
+            return NodeTextPair(customizedPair.first, customizedPair.second)
+        }
+
+        if (rawMainText.isNullOrBlank()) {
             rawMainText = when {
                 !compat.text.isNullOrBlank() -> compat.text.toString()
                 !compat.contentDescription.isNullOrBlank() -> compat.contentDescription.toString()
@@ -1515,43 +1792,66 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             }
         }
 
-        // App Support: PIN画面・テンキー View ID からの数字/キー名全自動レスキュー抽出
+        if (rawMainText.isNullOrBlank()) {
+            rawMainText = collectAllChildTexts(node)
+        }
+
+        // App Support: View ID からの汎用アイコン・ボタン名全自動レスキュー
         if (rawMainText.isNullOrBlank() && !viewId.isNullOrBlank()) {
             val idLower = viewId.lowercase(java.util.Locale.ROOT)
+            val idName = idLower.substringAfterLast(":id/").substringAfterLast("/")
             rawMainText = when {
-                idLower.contains("0") || idLower.contains("zero") -> "0"
-                idLower.contains("1") || idLower.contains("one") -> "1"
-                idLower.contains("2") || idLower.contains("two") -> "2"
-                idLower.contains("3") || idLower.contains("three") -> "3"
-                idLower.contains("4") || idLower.contains("four") -> "4"
-                idLower.contains("5") || idLower.contains("five") -> "5"
-                idLower.contains("6") || idLower.contains("six") -> "6"
-                idLower.contains("7") || idLower.contains("seven") -> "7"
-                idLower.contains("8") || idLower.contains("eight") -> "8"
-                idLower.contains("9") || idLower.contains("nine") -> "9"
-                idLower.contains("delete") || idLower.contains("backspace") || idLower.contains("cancel") -> "削除"
-                idLower.contains("enter") || idLower.contains("ok") || idLower.contains("confirm") -> "完了"
+                idName.contains("0") || idName.contains("zero") -> "0"
+                idName.contains("1") || idName.contains("one") -> "1"
+                idName.contains("2") || idName.contains("two") -> "2"
+                idName.contains("3") || idName.contains("three") -> "3"
+                idName.contains("4") || idName.contains("four") -> "4"
+                idName.contains("5") || idName.contains("five") -> "5"
+                idName.contains("6") || idName.contains("six") -> "6"
+                idName.contains("7") || idName.contains("seven") -> "7"
+                idName.contains("8") || idName.contains("eight") -> "8"
+                idName.contains("9") || idName.contains("nine") -> "9"
+                idName.contains("delete") || idName.contains("backspace") -> "1文字削除"
+                idName.contains("clear") -> "クリア"
+                idName.contains("cancel") -> "キャンセル"
+                idName.contains("enter") || idName.contains("confirm") || idName.contains("done") -> "完了"
+                idName.contains("search") -> "検索"
+                idName.contains("menu") || idName.contains("overflow") || idName.contains("more") -> "その他のオプション"
+                idName.contains("back") || idName.contains("up") -> "戻る"
+                idName.contains("close") || idName.contains("dismiss") -> "閉じる"
+                idName.contains("share") -> "共有"
+                idName.contains("settings") -> "設定"
+                idName.contains("profile") || idName.contains("account") || idName.contains("avatar") -> "アカウント"
+                idName.contains("notification") || idName.contains("bell") -> "通知"
+                idName.contains("filter") -> "フィルタ"
+                idName.contains("edit") -> "編集"
+                idName.contains("favorite") || idName.contains("star") -> "お気に入り"
+                idName.contains("add") || idName.contains("create") || idName.contains("fab") -> "追加"
+                idName.contains("refresh") || idName.contains("sync") -> "更新"
+                idName.contains("voice") || idName.contains("mic") -> "音声検索"
+                idName.contains("dialpad") || idName.contains("keypad") -> "ダイヤルキーパッド"
+                idName.contains("call") || idName.contains("dial") -> "発信"
+                idName.contains("camera") -> "カメラ"
+                idName.contains("send") -> "送信"
+                idName.contains("help") || idName.contains("info") -> "ヘルプ"
                 else -> null
             }
         }
 
+        val isTab = className.contains("Tab") || className.contains("NavigationBarItem") ||
+                className.contains("BottomNavigation") || viewId?.contains("tab") == true ||
+                compat.roleDescription?.contains("タブ") == true
+
         if (rawMainText.isNullOrBlank() && isKeyguardLocked()) {
             rawMainText = "キー"
         } else if (rawMainText.isNullOrBlank() && (compat.isClickable || compat.isFocusable)) {
-            rawMainText = "ボタン"
-        }
-
-        // App Support: 2. アプリ特有プロファイルによる補正適用
-        val appProfile = appProfileManager.getProfileForPackage(packageName)
-        val customizedPair = appProfile.customizeNodeDescription(node, rawMainText, null)
-        if (customizedPair != null) {
-            return NodeTextPair(customizedPair.first, customizedPair.second)
+            rawMainText = if (isTab) "タブ" else "ボタン"
         }
 
         if (!rawMainText.isNullOrBlank()) {
             val mainTextStr = rawMainText.toString().trim()
 
-            // ロック画面中 (Keyguard / PIN入力画面) はタイマー遅延を挟まず爆速・安全に即時音読してフリーズを防止！
+            // ロック画面中 (Keyguard / PIN入力画面)
             if (isKeyguardLocked()) {
                 val hint = if (compat.isClickable && !mainTextStr.endsWith("キー") && !mainTextStr.endsWith("ボタン") && !mainTextStr.contains("画面")) "キー" else null
                 return NodeTextPair(mainTextStr, hint)
@@ -1593,33 +1893,63 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             return null
         }
 
+        val isEditText = compat.className?.contains("EditText") == true || compat.isEditable
+        val isPassword = compat.isPassword
+
+        if (isEditText) {
+            val editText = compat.text?.toString()
+            val hintText = compat.hintText?.toString()
+            val contentDesc = compat.contentDescription?.toString()
+
+            val mainDesc = when {
+                !editText.isNullOrBlank() -> if (isPassword) "${editText.length}文字入力済み" else editText
+                !hintText.isNullOrBlank() -> hintText
+                !contentDesc.isNullOrBlank() -> contentDesc
+                else -> ""
+            }
+
+            val roleDesc = if (isPassword) "パスワード編集ボックス" else "編集ボックス"
+            val stateDesc = if (editText.isNullOrBlank()) "、テキスト未入力" else ""
+            val fullMain = if (mainDesc.isNotBlank()) "$mainDesc$stateDesc" else "テキスト未入力"
+
+            return NodeTextPair(fullMain, "$roleDesc。ダブルタップで入力")
+        }
+
         val hintSb = StringBuilder()
-        val className = compat.className
-        if (className != null || viewId != null) {
-            val classStr = className?.toString() ?: ""
-            val idStr = viewId ?: ""
-            when {
-                classStr.contains("FloatingActionButton") || classStr.contains("Floating") || idStr.contains("fab") || idStr.contains("floating") -> hintSb.append("フローティングボタン ")
-                classStr.contains("Shortcut") || idStr.contains("shortcut") -> hintSb.append("ショートカットボタン ")
-                classStr.endsWith(".Switch") || classStr.contains("SwitchCompat") || classStr.contains("SwitchMaterial") || classStr.contains("Toggle") -> hintSb.append("スイッチ ")
-                classStr.contains("CheckBox") -> hintSb.append("チェックボックス ")
-                classStr.contains("RadioButton") -> hintSb.append("ラジオボタン ")
-                classStr.contains("EditText") -> hintSb.append("編集テキスト ")
-                classStr.contains("SeekBar") -> hintSb.append("スライダー ")
-                classStr.contains("Folder") -> hintSb.append("フォルダ ")
-                classStr.endsWith(".Button") || classStr.endsWith("ImageButton") -> hintSb.append("ボタン ")
-                classStr.contains("ImageView") && mainSb.isBlank() -> hintSb.append("画像 ")
+
+        // 1. タブの判定と選択状態
+        if (isTab) {
+            if (!mainSb.contains("タブ")) {
+                hintSb.append("タブ ")
+            }
+            if (compat.isSelected) {
+                hintSb.append("選択中 ")
+            } else {
+                hintSb.append("未選択 ")
+            }
+        } else {
+            if (className.isNotEmpty() || viewId != null) {
+                val classStr = className
+                val idStr = viewId ?: ""
+                when {
+                    classStr.contains("FloatingActionButton") || classStr.contains("Floating") || idStr.contains("fab") || idStr.contains("floating") -> hintSb.append("フローティングボタン ")
+                    classStr.contains("Shortcut") || idStr.contains("shortcut") -> hintSb.append("ショートカットボタン ")
+                    classStr.endsWith(".Switch") || classStr.contains("SwitchCompat") || classStr.contains("SwitchMaterial") || classStr.contains("Toggle") -> hintSb.append("スイッチ ")
+                    classStr.contains("CheckBox") -> hintSb.append("チェックボックス ")
+                    classStr.contains("RadioButton") -> hintSb.append("ラジオボタン ")
+                    classStr.contains("EditText") -> hintSb.append("編集テキスト ")
+                    classStr.contains("SeekBar") -> hintSb.append("スライダー ")
+                    classStr.contains("Folder") -> hintSb.append("フォルダ ")
+                    classStr.endsWith(".Button") || classStr.endsWith("ImageButton") -> if (!mainSb.contains("ボタン")) hintSb.append("ボタン ")
+                    classStr.contains("ImageView") && mainSb.isBlank() -> hintSb.append("画像 ")
+                }
             }
         }
 
-        if (compat.isClickable && hintSb.isEmpty()) {
-            hintSb.append("ダブルタップで実行できます ")
-        }
-
         if (compat.isCheckable) {
-            val isSwitchOrToggle = className?.toString()?.let {
+            val isSwitchOrToggle = className.let {
                 it.contains("Switch") || it.contains("Toggle")
-            } ?: false
+            }
 
             if (compat.isChecked) {
                 if (isSwitchOrToggle) hintSb.append("オン ") else hintSb.append("チェックあり ")
@@ -1628,8 +1958,16 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             }
         }
 
+        if (compat.isSelected && !isTab) {
+            hintSb.append("選択中 ")
+        }
+
         if (!compat.isEnabled) {
             hintSb.append("無効 ")
+        }
+
+        if (compat.isClickable && hintSb.isEmpty()) {
+            hintSb.append("ダブルタップで実行できます ")
         }
 
         val finalMain = mainSb.toString().trim()
@@ -1644,7 +1982,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     }
 
     /**
-     * ノード直下の子ノードツリーから全テキストを収集して結合する (Pixel Gemini Live・複合ウィジェット解読用)
+     * ノード直下の子ノードツリーから全テキストを収集して結合する
      */
     private fun collectAllChildTexts(node: AccessibilityNodeInfo?): String? {
         if (node == null) return null
@@ -1710,11 +2048,19 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     }
 
     /**
+     * 進行中のあらゆる発声を即座に停止・フラッシュする（操作最優先の割り込み）
+     */
+    private fun interruptSpeaking() {
+        pendingSubVoiceHint = null
+        mainHandler.removeCallbacksAndMessages(null)
+        tts?.stop()
+    }
+
+    /**
      * メイン表示名と操作ヒントを異なるトーン/Voice（二重音声サブボイス）で連続音読
      */
     private fun speakWithSubVoice(mainText: String, hintText: String? = null, force: Boolean = true) {
         if (!isTtsReady || mainText.isBlank()) return
-        isMutedByKey = false
 
         val fullTextKey = if (!hintText.isNullOrBlank()) "$mainText|$hintText" else mainText
         val currentTime = System.currentTimeMillis()
@@ -1734,10 +2080,16 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         val currentTts = tts ?: return
         
-        // 1. サブヒントをペンディング変数にセット（onDone発声完了時に安全に発声させる）
+        // 1. サブヒントをペンディング変数にセット
         pendingSubVoiceHint = if (isSubVoiceEnabled && !hintText.isNullOrBlank()) hintText else null
 
-        // 2. メインボイスの再生 (QUEUE_FLUSH)
+        // 2. 点字ディスプレイへの出力配信
+        if (::brailleManager.isInitialized) {
+            val brailleSpoken = if (!hintText.isNullOrBlank()) "$mainText $hintText" else mainText
+            brailleManager.displayText(brailleSpoken)
+        }
+
+        // 3. メインボイスの再生 (QUEUE_FLUSH: 前の発声を即座に割り込みフラッシュして再生！)
         currentTts.setPitch(mainVoicePitch)
         currentTts.speak(mainText, TextToSpeech.QUEUE_FLUSH, null, "HelloReaderMainTTS")
     }
@@ -1753,15 +2105,61 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         tts?.stop()
     }
 
-    override fun onDestroy() {
+    override fun onUnbind(intent: Intent?): Boolean {
+        Log.d(TAG, "HelloReaderService onUnbind called - performing graceful shutdown announcement")
+        try {
+            // 1. 終了サウンドと触覚フィードバック
+            playSound(soundDeactivateId)
+            if (::hapticFeedbackManager.isInitialized) {
+                hapticFeedbackManager.performBoundaryOrError()
+            }
+
+            // 2. 点字ディスプレイへの終了通知
+            if (::brailleManager.isInitialized) {
+                brailleManager.displayText("Hello Readerを終了しました")
+            }
+
+            // 3. 音声終了アナウンス
+            if (isTtsReady) {
+                tts?.speak("Hello Readerを終了しました", TextToSpeech.QUEUE_FLUSH, null, "HelloReaderShutdownTTS")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error during onUnbind shutdown announcement", e)
+        }
+
+        // 発声完了を待つため少し遅延させてからレシーバーとリソースを解放
+        mainHandler.postDelayed({
+            cleanupResources()
+        }, 800)
+
+        return super.onUnbind(intent)
+    }
+
+    private fun cleanupResources() {
         try {
             unregisterReceiver(screenReceiver)
             unregisterReceiver(phoneStateReceiver)
         } catch (e: Exception) { }
-        tts?.stop()
-        tts?.shutdown()
-        soundPool?.release()
-        soundPool = null
+        try {
+            tts?.stop()
+            tts?.shutdown()
+            tts = null
+            isTtsReady = false
+        } catch (e: Exception) { }
+        try {
+            soundPool?.release()
+            soundPool = null
+        } catch (e: Exception) { }
+        try {
+            if (::brailleManager.isInitialized) {
+                brailleManager.shutdown()
+            }
+        } catch (e: Exception) { }
+    }
+
+    override fun onDestroy() {
+        Log.d(TAG, "HelloReaderService onDestroy called")
+        cleanupResources()
         super.onDestroy()
     }
 }
