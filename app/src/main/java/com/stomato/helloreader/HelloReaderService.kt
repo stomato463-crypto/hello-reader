@@ -1781,8 +1781,11 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             return NodeTextPair(customizedPair.first, customizedPair.second)
         }
 
+        val childTextSum = if (node.childCount in 1..12) collectAllChildTexts(node) else null
+
         if (rawMainText.isNullOrBlank()) {
             rawMainText = when {
+                !childTextSum.isNullOrBlank() -> childTextSum
                 !compat.text.isNullOrBlank() -> compat.text.toString()
                 !compat.contentDescription.isNullOrBlank() -> compat.contentDescription.toString()
                 !compat.hintText.isNullOrBlank() -> compat.hintText.toString()
@@ -1790,10 +1793,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 !compat.roleDescription.isNullOrBlank() -> compat.roleDescription.toString()
                 else -> null
             }
-        }
-
-        if (rawMainText.isNullOrBlank()) {
-            rawMainText = collectAllChildTexts(node)
+        } else if (!childTextSum.isNullOrBlank() && childTextSum != rawMainText) {
+            if (childTextSum.contains(rawMainText)) {
+                rawMainText = childTextSum
+            } else {
+                rawMainText = "$rawMainText $childTextSum"
+            }
         }
 
         // App Support: View ID からの汎用アイコン・ボタン名全自動レスキュー
