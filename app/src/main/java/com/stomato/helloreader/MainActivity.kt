@@ -234,16 +234,8 @@ fun PermissionSetupScreen(
             fontSize = 26.sp,
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier
-                .padding(bottom = 8.dp)
+                .padding(bottom = 20.dp)
                 .semantics { contentDescription = "Hello Reader 設定ヘッダー" }
-        )
-
-        Text(
-            text = "完全ハンズフリー＆全アプリ解読対応スクリーンリーダー",
-            fontSize = 14.sp,
-            color = MaterialTheme.colorScheme.primary,
-            style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.padding(bottom = 20.dp)
         )
 
         // 1. 初期設定カード
