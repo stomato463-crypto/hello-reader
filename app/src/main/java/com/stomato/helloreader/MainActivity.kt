@@ -15,6 +15,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -407,33 +409,106 @@ fun AppProfilesScreen() {
 
 @Composable
 fun CustomLabelsScreen() {
+    val context = LocalContext.current
+    val customLabelManager = remember { com.stomato.helloreader.appsupport.CustomLabelManager(context) }
+    var pronunciations by remember { mutableStateOf(customLabelManager.getAllPronunciations()) }
+
+    var newOriginal by remember { mutableStateOf("") }
+    var newReading by remember { mutableStateOf("") }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(20.dp)
     ) {
         Text(
-            text = "🏷️ カスタムラベル辞書",
+            text = "🏷️ ユーザー読み辞書エディタ",
             fontSize = 24.sp,
             style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 12.dp)
+            modifier = Modifier.padding(bottom = 8.dp)
         )
         Text(
-            text = "名無しの画像ボタン等に設定したカスタム読み上げラベル一覧です",
-            fontSize = 14.sp,
+            text = "読み間違えやすい単語や人名、駅名の読み方を自由にカスタマイズできます",
+            fontSize = 13.sp,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
+        // 1. 新規単語登録カード
+        ElevatedCard(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(text = "➕ 新しい読み仮名を登録", fontSize = 16.sp, style = MaterialTheme.typography.titleMedium)
+                Spacer(modifier = Modifier.height(8.dp))
+
+                OutlinedTextField(
+                    value = newOriginal,
+                    onValueChange = { newOriginal = it },
+                    label = { Text("元の表記（例: 大垣）") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                OutlinedTextField(
+                    value = newReading,
+                    onValueChange = { newReading = it },
+                    label = { Text("読み上げ（例: おおがき）") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Button(
+                    onClick = {
+                        if (newOriginal.isNotBlank() && newReading.isNotBlank()) {
+                            customLabelManager.addPronunciation(newOriginal.trim(), newReading.trim())
+                            pronunciations = customLabelManager.getAllPronunciations()
+                            newOriginal = ""
+                            newReading = ""
+                            android.widget.Toast.makeText(context, "辞書に登録しました", android.widget.Toast.LENGTH_SHORT).show()
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("辞書に追加する")
+                }
+            }
+        }
+
+        // 2. 登録済み一覧カード
         ElevatedCard(
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text(text = "登録済みラベル (プリセット)", fontSize = 16.sp, style = MaterialTheme.typography.titleMedium)
+                Text(text = "📖 登録済み読み替え一覧 (${pronunciations.size}件)", fontSize = 16.sp, style = MaterialTheme.typography.titleMedium)
                 HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-                Text(text = "• com.android.systemui -> 戻るボタン", fontSize = 14.sp)
-                Text(text = "• com.android.systemui -> ホームボタン", fontSize = 14.sp)
-                Text(text = "• com.android.systemui -> 最近のアプリボタン", fontSize = 14.sp)
+
+                pronunciations.forEach { (orig, read) ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(text = orig, fontSize = 15.sp, style = MaterialTheme.typography.titleSmall)
+                            Text(text = "➔ $read", fontSize = 13.sp, color = MaterialTheme.colorScheme.primary)
+                        }
+                        IconButton(
+                            onClick = {
+                                customLabelManager.removePronunciation(orig)
+                                pronunciations = customLabelManager.getAllPronunciations()
+                                android.widget.Toast.makeText(context, "削除しました", android.widget.Toast.LENGTH_SHORT).show()
+                            }
+                        ) {
+                            Text("🗑️", fontSize = 16.sp)
+                        }
+                    }
+                }
             }
         }
     }
