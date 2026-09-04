@@ -578,26 +578,17 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         return false
     }
 
+    private var lastHomeScreenSpeakTime: Long = 0L
+
     /**
-     * ホーム画面のアイテム（アプリアイコンやウィジェット）に自動フォーカスを当ててメニューを朗読する
+     * ホーム画面の初回音読案内 (TalkBack標準: 「ホーム画面」とシンプルに一度だけアナウンス)
      */
     private fun speakHomeScreenItems(root: AccessibilityNodeInfo?) {
-        val activeRoot = root ?: getActiveRootNode()
-        if (activeRoot == null) {
-            speak("ホーム画面")
+        val now = System.currentTimeMillis()
+        if (now - lastHomeScreenSpeakTime < 2500) {
             return
         }
-
-        val firstAppNode = findAppIconNode(activeRoot)
-        if (firstAppNode != null) {
-            lastFocusedNode = firstAppNode
-            firstAppNode.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
-            val appName = parseNodeDescription(firstAppNode)
-            if (!appName.isNullOrBlank()) {
-                speak("ホーム画面。$appName")
-                return
-            }
-        }
+        lastHomeScreenSpeakTime = now
         speak("ホーム画面")
     }
 
