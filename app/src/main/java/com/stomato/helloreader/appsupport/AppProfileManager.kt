@@ -34,6 +34,9 @@ class AppProfileManager {
         registerProfile(AospCalculatorProfile("com.google.android.calculator"))
         registerProfile(AospCameraProfile("com.android.camera2"))
         registerProfile(AospCameraProfile("com.google.android.GoogleCamera"))
+        registerProfile(AospPermissionControllerProfile("com.android.permissioncontroller"))
+        registerProfile(AospPermissionControllerProfile("com.google.android.permissioncontroller"))
+        registerProfile(AospSystemUiProfile())
     }
 
     fun registerProfile(profile: AppProfile) {
