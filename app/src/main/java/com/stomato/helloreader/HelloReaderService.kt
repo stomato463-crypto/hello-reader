@@ -1508,7 +1508,11 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         // App Support: 1. カスタムラベルのチェック (名無しボタン救済)
         var rawMainText: String? = customLabelManager.getCustomLabel(packageName, viewId)
 
-        if (rawMainText.isNullOrBlank()) {
+        // 複合容器ノードの場合、親の大まかな単一説明よりも直下子ノードの全詳細テキスト収集(collectAllChildTexts)を優先！
+        val childTextCollected = collectAllChildTexts(node)
+        if (!childTextCollected.isNullOrBlank()) {
+            rawMainText = childTextCollected
+        } else if (rawMainText.isNullOrBlank()) {
             rawMainText = when {
                 !compat.text.isNullOrBlank() -> compat.text.toString()
                 !compat.contentDescription.isNullOrBlank() -> compat.contentDescription.toString()
@@ -1517,10 +1521,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 !compat.roleDescription.isNullOrBlank() -> compat.roleDescription.toString()
                 else -> null
             }
-        }
-
-        if (rawMainText.isNullOrBlank()) {
-            rawMainText = collectAllChildTexts(node)
         }
 
         // App Support: PIN画面・テンキー View ID からの数字/キー名全自動レスキュー抽出
