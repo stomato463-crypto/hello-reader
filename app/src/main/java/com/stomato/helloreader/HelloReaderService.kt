@@ -1499,8 +1499,9 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         // App Support: 1. カスタムラベルのチェック (名無しボタン救済)
         var rawMainText: String? = customLabelManager.getCustomLabel(packageName, viewId)
 
-        // 複合容器ノードの場合、親の大まかな単一説明よりも直下子ノードの全詳細テキスト収集(collectAllChildTexts)を優先！
-        val childTextCollected = collectAllChildTexts(node)
+        // 複合容器ノード（子ノード数 1..8 個の小型ウィジェット）の場合のみ、直下子ノードの全詳細テキスト収集(collectAllChildTexts)を優先！
+        val childCount = node.childCount
+        val childTextCollected = if (childCount in 1..8) collectAllChildTexts(node) else null
         if (!childTextCollected.isNullOrBlank()) {
             rawMainText = childTextCollected
         } else if (rawMainText.isNullOrBlank()) {
