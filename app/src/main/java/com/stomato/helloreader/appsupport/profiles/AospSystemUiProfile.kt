@@ -6,6 +6,7 @@ import com.stomato.helloreader.appsupport.AppProfile
 /**
  * Android AOSP / Pixel SystemUI (ステータスバー・クイック設定・通知・ロック画面) 専用プロファイル
  */
+@Suppress("DEPRECATION")
 class AospSystemUiProfile : AppProfile {
 
     override val targetPackageName: String = "com.android.systemui"

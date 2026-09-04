@@ -7,6 +7,7 @@ import com.stomato.helloreader.appsupport.AppProfile
 /**
  * AOSP / 標準「設定」アプリ (com.android.settings) 用プロファイル
  */
+@Suppress("DEPRECATION")
 class AospSettingsProfile : AppProfile {
     override val targetPackageName: String = "com.android.settings"
 

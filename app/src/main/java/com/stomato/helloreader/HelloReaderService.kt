@@ -465,35 +465,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     }
 
     /**
-     * 2本指タップ・2本指ダブルタップ等のアクセシビリティジェスチャー検出による2本指消音機能 (Silence Speech)
-     */
-    @Suppress("OVERRIDE_DEPRECATION")
-    override fun onGesture(gestureId: Int): Boolean {
-        Log.d(TAG, "onGesture received: $gestureId")
-        if (gestureId == GESTURE_2_FINGER_SINGLE_TAP || 
-            gestureId == GESTURE_2_FINGER_DOUBLE_TAP ||
-            gestureId == GESTURE_2_FINGER_TRIPLE_TAP
-        ) {
-            interruptSpeaking()
-            return true
-        }
-        return super.onGesture(gestureId)
-    }
-
-    override fun onGesture(gestureEvent: AccessibilityGestureEvent): Boolean {
-        val gestureId = gestureEvent.gestureId
-        Log.d(TAG, "onGesture (Event) received: $gestureId")
-        if (gestureId == GESTURE_2_FINGER_SINGLE_TAP || 
-            gestureId == GESTURE_2_FINGER_DOUBLE_TAP ||
-            gestureId == GESTURE_2_FINGER_TRIPLE_TAP
-        ) {
-            interruptSpeaking()
-            return true
-        }
-        return super.onGesture(gestureEvent)
-    }
-
-    /**
      * ロック画面の詳細情報（時刻・日付・指紋センサー位置）の音読案内 (AOSP TalkBack準拠)
      */
     private fun speakLockScreenDetails() {

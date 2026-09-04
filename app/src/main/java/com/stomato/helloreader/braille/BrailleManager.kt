@@ -43,6 +43,7 @@ class BrailleManager(private val context: Context) {
     /**
      * UIノードのフォーカス更新時に点字データを生成して送信
      */
+    @Suppress("DEPRECATION")
     fun displayNode(node: AccessibilityNodeInfo?, roleDescription: String? = null) {
         if (node == null) return
 
