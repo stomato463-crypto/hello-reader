@@ -2089,9 +2089,27 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             brailleManager.displayText(brailleSpoken)
         }
 
-        // 3. メインボイスの再生 (QUEUE_FLUSH: 前の発声を即座に割り込みフラッシュして再生！)
+        // 3. メインボイスの再生
         currentTts.setPitch(mainVoicePitch)
         currentTts.speak(mainText, TextToSpeech.QUEUE_FLUSH, null, "HelloReaderMainTTS")
+
+        // 4. 智浩さんの「なでしこ v3 風」仕様 (Morse code conditions.md 精密版) の実行！
+        // もし、エディットボックス (EditText / 入力欄) ならば、文字の読み上げのあとに、モールス信号フィードバックを実行！
+        // 違えば、読み上げだけ！
+        val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
+        val isMorseEnabled = prefs.getBoolean("pref_phonetic_morse_enabled", false)
+        val focusedNode = lastFocusedNode
+        val isEditBox = focusedNode?.className?.toString()?.contains("EditText", ignoreCase = true) == true ||
+                focusedNode?.isEditable == true
+
+        if (isMorseEnabled && isEditBox) {
+            val targetChar = mainText.firstOrNull { PHONETIC_MAP.containsKey(it.uppercaseChar()) }
+            if (targetChar != null) {
+                mainHandler.postDelayed({
+                    playMorseVibration(targetChar)
+                }, 300)
+            }
+        }
     }
 
     /**
