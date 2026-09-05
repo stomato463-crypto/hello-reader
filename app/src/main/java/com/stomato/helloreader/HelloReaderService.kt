@@ -596,12 +596,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             }
 
             // 1本指左右スワイプ: 次へ / 前へ移動
-            GESTURE_SWIPE_RIGHT, GESTURE_2_FINGER_SWIPE_RIGHT, 1 -> {
+            GESTURE_SWIPE_RIGHT -> {
                 Log.d(TAG, "Swipe Right Matched -> navigateFocus FORWARD")
                 navigateFocus(View.FOCUS_FORWARD, "次へ")
                 true
             }
-            GESTURE_SWIPE_LEFT, GESTURE_2_FINGER_SWIPE_LEFT, 2 -> {
+            GESTURE_SWIPE_LEFT -> {
                 Log.d(TAG, "Swipe Left Matched -> navigateFocus BACKWARD")
                 navigateFocus(View.FOCUS_BACKWARD, "前へ")
                 true
@@ -802,8 +802,27 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             return
         }
 
-        // 次の見出しへ移動
-        val target = if (forward) headings.first() else headings.last()
+        val currentFocus = root.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
+            ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
+            ?: lastFocusedNode
+
+        var currentIndex = -1
+        if (currentFocus != null) {
+            for (i in headings.indices) {
+                if (isSameNode(headings[i], currentFocus)) {
+                    currentIndex = i
+                    break
+                }
+            }
+        }
+
+        val targetIndex = if (forward) {
+            if (currentIndex == -1) 0 else (currentIndex + 1) % headings.size
+        } else {
+            if (currentIndex == -1) headings.size - 1 else if (currentIndex - 1 < 0) headings.size - 1 else currentIndex - 1
+        }
+
+        val target = headings[targetIndex]
         lastFocusedNode = target
         target.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
         val pair = parseNodeDescriptionPair(target)
@@ -828,7 +847,27 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             return
         }
 
-        val target = if (forward) controls.first() else controls.last()
+        val currentFocus = root.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
+            ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
+            ?: lastFocusedNode
+
+        var currentIndex = -1
+        if (currentFocus != null) {
+            for (i in controls.indices) {
+                if (isSameNode(controls[i], currentFocus)) {
+                    currentIndex = i
+                    break
+                }
+            }
+        }
+
+        val targetIndex = if (forward) {
+            if (currentIndex == -1) 0 else (currentIndex + 1) % controls.size
+        } else {
+            if (currentIndex == -1) controls.size - 1 else if (currentIndex - 1 < 0) controls.size - 1 else currentIndex - 1
+        }
+
+        val target = controls[targetIndex]
         lastFocusedNode = target
         target.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
         val pair = parseNodeDescriptionPair(target)
