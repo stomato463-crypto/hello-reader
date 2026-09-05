@@ -15,6 +15,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -107,16 +109,17 @@ class MainActivity : ComponentActivity(), TextToSpeech.OnInitListener {
             if (result != TextToSpeech.LANG_MISSING_DATA && result != TextToSpeech.LANG_NOT_SUPPORTED) {
                 isTtsReady = true
                 Log.d("MainActivity", "自前TTS初期化成功！")
-                // 智浩さんの自作メッセージをベースにしたTalkBack無効時対応の極上ガイダンス！
-                speak("Hello Readerへようこそ！初期設定のご案内です。この画面には二つの大きなボタンとフォネティック・モールス設定があります。1のボタンで権限を許可し、2のボタンでアクセシビリティを有効にしてください。操作が難しい場合は、音量ボタンの上下を3秒間同時に長押しして TalkBack をオンにするか、お近くの方にボタンを押してもらってください。")
+                val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
+                val isStartupGuidanceEnabled = prefs.getBoolean("pref_startup_guidance_enabled", false)
+                if (isStartupGuidanceEnabled) {
+                    speak("Hello Reader 初期設定画面")
+                }
             }
         }
     }
 
     private fun speak(text: String) {
-        if (isTtsReady) {
-            tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, "MainActivityTTS")
-        }
+        // MainActivity 自前の単独発声を廃止し、HelloReaderService の一括制御に統合！
     }
 
     private fun checkAndRequestPermissions() {
@@ -219,10 +222,20 @@ fun PermissionSetupScreen(
     var timingMode by remember {
         mutableStateOf(prefs.getString("pref_phonetic_morse_timing", "AFTER_TTS") ?: "AFTER_TTS")
     }
+    var isTimeSignalEnabled by remember {
+        mutableStateOf(prefs.getBoolean("pref_time_signal_enabled", true))
+    }
+    var isBrailleEnabled by remember {
+        mutableStateOf(prefs.getBoolean("pref_braille_display_enabled", true))
+    }
+    var isHapticEnabled by remember {
+        mutableStateOf(prefs.getBoolean("pref_haptic_feedback_enabled", true))
+    }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
@@ -234,19 +247,11 @@ fun PermissionSetupScreen(
             fontSize = 26.sp,
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier
-                .padding(bottom = 8.dp)
+                .padding(bottom = 20.dp)
                 .semantics { contentDescription = "Hello Reader 設定ヘッダー" }
         )
 
-        Text(
-            text = "完全ハンズフリー＆全アプリ解読対応スクリーンリーダー",
-            fontSize = 14.sp,
-            color = MaterialTheme.colorScheme.primary,
-            style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.padding(bottom = 20.dp)
-        )
-
-        // 1. 初期設定カード
+        // 1. 初期セットアップ手順カード
         ElevatedCard(
             modifier = Modifier
                 .fillMaxWidth()
@@ -286,7 +291,93 @@ fun PermissionSetupScreen(
             }
         }
 
-        // 2. 機能設定カード (フォネティック＆モールス設定)
+        // 2. モジュール機能設定カード (時報・点字・触覚フィードバック)
+        ElevatedCard(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = "⚙️ 支援モジュール設定",
+                    fontSize = 18.sp,
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.padding(bottom = 12.dp)
+                )
+
+                // 時報機能
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp)
+                        .semantics { contentDescription = "スマート時報・チャイム機能。現在は ${if (isTimeSignalEnabled) "オン" else "オフ"} です。" },
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(text = "⏰ 毎時0分の時報・チャイム", fontSize = 15.sp)
+                        Text(text = "毎時0分に優しく時刻をお知らせします", fontSize = 12.sp, color = MaterialTheme.colorScheme.secondary)
+                    }
+                    Switch(
+                        checked = isTimeSignalEnabled,
+                        onCheckedChange = { checked ->
+                            isTimeSignalEnabled = checked
+                            prefs.edit().putBoolean("pref_time_signal_enabled", checked).apply()
+                        }
+                    )
+                }
+
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+
+                // 点字ディスプレイ機能
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp)
+                        .semantics { contentDescription = "点字ディスプレイ連携。現在は ${if (isBrailleEnabled) "オン" else "オフ"} です。" },
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(text = "⠃⠗⠇ 点字ディスプレイ連携", fontSize = 15.sp)
+                        Text(text = "BrailleSense 6 Mini / 7 等の点字出力サポート", fontSize = 12.sp, color = MaterialTheme.colorScheme.secondary)
+                    }
+                    Switch(
+                        checked = isBrailleEnabled,
+                        onCheckedChange = { checked ->
+                            isBrailleEnabled = checked
+                            prefs.edit().putBoolean("pref_braille_display_enabled", checked).apply()
+                        }
+                    )
+                }
+
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+
+                // 触覚フィードバック機能
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp)
+                        .semantics { contentDescription = "触覚フィードバック。現在は ${if (isHapticEnabled) "オン" else "オフ"} です。" },
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(text = "📳 触覚フィードバック (振動)", fontSize = 15.sp)
+                        Text(text = "フォーカス移動やボタンタップ時の振動案内", fontSize = 12.sp, color = MaterialTheme.colorScheme.secondary)
+                    }
+                    Switch(
+                        checked = isHapticEnabled,
+                        onCheckedChange = { checked ->
+                            isHapticEnabled = checked
+                            prefs.edit().putBoolean("pref_haptic_feedback_enabled", checked).apply()
+                        }
+                    )
+                }
+            }
+        }
+
+        // 3. フォネティック＆モールス設定カード
         ElevatedCard(
             modifier = Modifier
                 .fillMaxWidth()
@@ -360,17 +451,18 @@ fun PermissionSetupScreen(
 fun AppProfilesScreen() {
     val aospApps = listOf(
         "⚙️ AOSP / Google 設定" to "com.android.settings",
-        "📞 AOSP / Google 電話" to "com.android.dialer",
-        "👥 AOSP / Google 連絡先" to "com.android.contacts",
-        "💬 AOSP / Google メッセージ" to "com.android.messaging",
-        "⏰ AOSP / Google 時計" to "com.android.deskclock",
-        "🧮 AOSP / Google 電卓" to "com.android.calculator2",
-        "📷 AOSP / Google カメラ" to "com.android.camera2"
+        "📞 AOSP / Google 電話" to "com.google.android.dialer",
+        "👥 AOSP / Google 連絡先" to "com.google.android.contacts",
+        "💬 AOSP / Google メッセージ" to "com.google.android.apps.messaging",
+        "⏰ AOSP / Google 時計" to "com.google.android.deskclock",
+        "🧮 AOSP / Google 電卓" to "com.google.android.calculator",
+        "📷 AOSP / Google カメラ" to "com.google.android.GoogleCamera"
     )
 
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(20.dp)
     ) {
         Text(
@@ -415,33 +507,106 @@ fun AppProfilesScreen() {
 
 @Composable
 fun CustomLabelsScreen() {
+    val context = LocalContext.current
+    val customLabelManager = remember { com.stomato.helloreader.appsupport.CustomLabelManager(context) }
+    var pronunciations by remember { mutableStateOf(customLabelManager.getAllPronunciations()) }
+
+    var newOriginal by remember { mutableStateOf("") }
+    var newReading by remember { mutableStateOf("") }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(20.dp)
     ) {
         Text(
-            text = "🏷️ カスタムラベル辞書",
+            text = "🏷️ ユーザー読み辞書エディタ",
             fontSize = 24.sp,
             style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 12.dp)
+            modifier = Modifier.padding(bottom = 8.dp)
         )
         Text(
-            text = "名無しの画像ボタン等に設定したカスタム読み上げラベル一覧です",
-            fontSize = 14.sp,
+            text = "読み間違えやすい単語や人名、駅名の読み方を自由にカスタマイズできます",
+            fontSize = 13.sp,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
+        // 1. 新規単語登録カード
+        ElevatedCard(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(text = "➕ 新しい読み仮名を登録", fontSize = 16.sp, style = MaterialTheme.typography.titleMedium)
+                Spacer(modifier = Modifier.height(8.dp))
+
+                OutlinedTextField(
+                    value = newOriginal,
+                    onValueChange = { newOriginal = it },
+                    label = { Text("元の表記（例: 大垣）") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                OutlinedTextField(
+                    value = newReading,
+                    onValueChange = { newReading = it },
+                    label = { Text("読み上げ（例: おおがき）") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Button(
+                    onClick = {
+                        if (newOriginal.isNotBlank() && newReading.isNotBlank()) {
+                            customLabelManager.addPronunciation(newOriginal.trim(), newReading.trim())
+                            pronunciations = customLabelManager.getAllPronunciations()
+                            newOriginal = ""
+                            newReading = ""
+                            android.widget.Toast.makeText(context, "辞書に登録しました", android.widget.Toast.LENGTH_SHORT).show()
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("辞書に追加する")
+                }
+            }
+        }
+
+        // 2. 登録済み一覧カード
         ElevatedCard(
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text(text = "登録済みラベル (プリセット)", fontSize = 16.sp, style = MaterialTheme.typography.titleMedium)
+                Text(text = "📖 登録済み読み替え一覧 (${pronunciations.size}件)", fontSize = 16.sp, style = MaterialTheme.typography.titleMedium)
                 HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-                Text(text = "• com.android.systemui -> 戻るボタン", fontSize = 14.sp)
-                Text(text = "• com.android.systemui -> ホームボタン", fontSize = 14.sp)
-                Text(text = "• com.android.systemui -> 最近のアプリボタン", fontSize = 14.sp)
+
+                pronunciations.forEach { (orig, read) ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(text = orig, fontSize = 15.sp, style = MaterialTheme.typography.titleSmall)
+                            Text(text = "➔ $read", fontSize = 13.sp, color = MaterialTheme.colorScheme.primary)
+                        }
+                        IconButton(
+                            onClick = {
+                                customLabelManager.removePronunciation(orig)
+                                pronunciations = customLabelManager.getAllPronunciations()
+                                android.widget.Toast.makeText(context, "削除しました", android.widget.Toast.LENGTH_SHORT).show()
+                            }
+                        ) {
+                            Text("🗑️", fontSize = 16.sp)
+                        }
+                    }
+                }
             }
         }
     }
