@@ -1031,10 +1031,35 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         var currentIndex = -1
         if (currentFocus != null) {
+            // 1. ノード同一性・テキスト・座標による精密一致検索
             for (i in allNodes.indices) {
                 if (isSameNode(allNodes[i], currentFocus)) {
                     currentIndex = i
                     break
+                }
+            }
+
+            // 2. もし精密一致で見つからなかった場合、直前のフォーカス位置 (画面座標) に最も近いノードのインデックスを空間検索！
+            if (currentIndex == -1) {
+                val focusBounds = Rect()
+                currentFocus.getBoundsInScreen(focusBounds)
+                if (focusBounds.width() > 0 && focusBounds.height() > 0) {
+                    var minDistance = Long.MAX_VALUE
+                    var closestIndex = -1
+                    val nodeBounds = Rect()
+                    for (i in allNodes.indices) {
+                        allNodes[i].getBoundsInScreen(nodeBounds)
+                        val dx = (nodeBounds.centerX() - focusBounds.centerX()).toLong()
+                        val dy = (nodeBounds.centerY() - focusBounds.centerY()).toLong()
+                        val dist = dx * dx + dy * dy
+                        if (dist < minDistance) {
+                            minDistance = dist
+                            closestIndex = i
+                        }
+                    }
+                    if (closestIndex != -1) {
+                        currentIndex = closestIndex
+                    }
                 }
             }
         }
@@ -1086,14 +1111,30 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private fun isSameNode(node1: AccessibilityNodeInfo?, node2: AccessibilityNodeInfo?): Boolean {
         if (node1 == null || node2 == null) return false
         if (node1 == node2 || node1.equals(node2)) return true
-        val id1 = node1.viewIdResourceName
-        val id2 = node2.viewIdResourceName
-        if (!id1.isNullOrBlank() && id1 == id2) return true
+
         val r1 = Rect()
         val r2 = Rect()
         node1.getBoundsInScreen(r1)
         node2.getBoundsInScreen(r2)
-        return !r1.isEmpty && r1 == r2
+
+        val text1 = parseNodeDescription(node1)
+        val text2 = parseNodeDescription(node2)
+
+        // 1. 画面座標とテキスト（説明文）が合致する場合
+        if (!r1.isEmpty && r1 == r2) {
+            if (text1.isNullOrBlank() || text2.isNullOrBlank() || text1 == text2) {
+                return true
+            }
+        }
+
+        // 2. リソースIDとテキストが共に一致する場合（共有IDによる誤判定を防ぐ）
+        val id1 = node1.viewIdResourceName
+        val id2 = node2.viewIdResourceName
+        if (!id1.isNullOrBlank() && id1 == id2 && !text1.isNullOrBlank() && text1 == text2) {
+            return true
+        }
+
+        return false
     }
 
     /**
