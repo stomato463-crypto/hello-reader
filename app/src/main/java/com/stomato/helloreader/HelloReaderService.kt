@@ -69,6 +69,50 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             '0' to "-----", '1' to ".----", '2' to "..---", '3' to "...--", '4' to "....-",
             '5' to ".....", '6' to "-....", '7' to "--...", '8' to "---..", '9' to "----."
         )
+
+        /**
+         * 端末情報・サービス動作状態・設定内容を含む診断レポート文面を生成します。
+         * 個人情報は一切含めず、b3sum 形式の暗号ハッシュ値によって匿名識別を可能にします。
+         */
+        fun generateDiagnosticReport(context: Context): String {
+            val prefs = context.getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
+            val isTimeSignal = prefs.getBoolean("pref_time_signal_enabled", true)
+            val isBraille = prefs.getBoolean("pref_braille_display_enabled", true)
+            val isHaptic = prefs.getBoolean("pref_haptic_feedback_enabled", true)
+            val isPhonetic = prefs.getBoolean("pref_phonetic_morse_enabled", false)
+
+            val anonymousHash = com.stomato.helloreader.appsupport.DiagnosticHasher.generateAnonymousHash(context)
+            val appVersion = try {
+                val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+                pInfo.versionName ?: "1.0.0-alpha"
+            } catch (e: Exception) {
+                "1.0.0-alpha"
+            }
+
+            return """
+                ========================================
+                【Hello Reader 診断レポート (SOS問い合わせ)】
+                ========================================
+                [アプリバージョン] Hello Reader $appVersion
+                [OSバージョン] Android ${Build.VERSION.RELEASE} (API level ${Build.VERSION.SDK_INT})
+                [端末メーカー] ${Build.MANUFACTURER}
+                [端末モデル] ${Build.MODEL} (${Build.BRAND})
+                [OSビルド番号] ${Build.DISPLAY}
+                [匿名識別ID] b3sum:$anonymousHash
+                ----------------------------------------
+                [モジュール設定状態]
+                ・時報チャイム: ${if (isTimeSignal) "ON" else "OFF"}
+                ・点字ディスプレイ連携: ${if (isBraille) "ON" else "OFF"}
+                ・触覚フィードバック: ${if (isHaptic) "ON" else "OFF"}
+                ・フォネティックモールス: ${if (isPhonetic) "ON" else "OFF"}
+                ========================================
+                ※個人情報や電話番号、氏名等は一切含まれておりません。
+                ※お問い合わせ内容は順次確認しております。
+
+                【ご報告内容・困っている症状をここにご自由にお書きください】
+
+            """.trimIndent()
+        }
     }
 
     private var tts: TextToSpeech? = null
