@@ -109,16 +109,17 @@ class MainActivity : ComponentActivity(), TextToSpeech.OnInitListener {
             if (result != TextToSpeech.LANG_MISSING_DATA && result != TextToSpeech.LANG_NOT_SUPPORTED) {
                 isTtsReady = true
                 Log.d("MainActivity", "自前TTS初期化成功！")
-                // 智浩さんの自作メッセージをベースにしたTalkBack無効時対応の極上ガイダンス！
-                speak("Hello Readerへようこそ！初期設定のご案内です。この画面には二つの大きなボタンとフォネティック・モールス設定があります。1のボタンで権限を許可し、2のボタンでアクセシビリティを有効にしてください。操作が難しい場合は、音量ボタンの上下を3秒間同時に長押しして TalkBack をオンにするか、お近くの方にボタンを押してもらってください。")
+                val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
+                val isStartupGuidanceEnabled = prefs.getBoolean("pref_startup_guidance_enabled", false)
+                if (isStartupGuidanceEnabled) {
+                    speak("Hello Reader 初期設定画面")
+                }
             }
         }
     }
 
     private fun speak(text: String) {
-        if (isTtsReady) {
-            tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, "MainActivityTTS")
-        }
+        // MainActivity 自前の単独発声を廃止し、HelloReaderService の一括制御に統合！
     }
 
     private fun checkAndRequestPermissions() {
@@ -221,10 +222,20 @@ fun PermissionSetupScreen(
     var timingMode by remember {
         mutableStateOf(prefs.getString("pref_phonetic_morse_timing", "AFTER_TTS") ?: "AFTER_TTS")
     }
+    var isTimeSignalEnabled by remember {
+        mutableStateOf(prefs.getBoolean("pref_time_signal_enabled", true))
+    }
+    var isBrailleEnabled by remember {
+        mutableStateOf(prefs.getBoolean("pref_braille_display_enabled", true))
+    }
+    var isHapticEnabled by remember {
+        mutableStateOf(prefs.getBoolean("pref_haptic_feedback_enabled", true))
+    }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
@@ -240,7 +251,7 @@ fun PermissionSetupScreen(
                 .semantics { contentDescription = "Hello Reader 設定ヘッダー" }
         )
 
-        // 1. 初期設定カード
+        // 1. 初期セットアップ手順カード
         ElevatedCard(
             modifier = Modifier
                 .fillMaxWidth()
@@ -280,7 +291,93 @@ fun PermissionSetupScreen(
             }
         }
 
-        // 2. 機能設定カード (フォネティック＆モールス設定)
+        // 2. モジュール機能設定カード (時報・点字・触覚フィードバック)
+        ElevatedCard(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = "⚙️ 支援モジュール設定",
+                    fontSize = 18.sp,
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.padding(bottom = 12.dp)
+                )
+
+                // 時報機能
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp)
+                        .semantics { contentDescription = "スマート時報・チャイム機能。現在は ${if (isTimeSignalEnabled) "オン" else "オフ"} です。" },
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(text = "⏰ 毎時0分の時報・チャイム", fontSize = 15.sp)
+                        Text(text = "毎時0分に優しく時刻をお知らせします", fontSize = 12.sp, color = MaterialTheme.colorScheme.secondary)
+                    }
+                    Switch(
+                        checked = isTimeSignalEnabled,
+                        onCheckedChange = { checked ->
+                            isTimeSignalEnabled = checked
+                            prefs.edit().putBoolean("pref_time_signal_enabled", checked).apply()
+                        }
+                    )
+                }
+
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+
+                // 点字ディスプレイ機能
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp)
+                        .semantics { contentDescription = "点字ディスプレイ連携。現在は ${if (isBrailleEnabled) "オン" else "オフ"} です。" },
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(text = "⠃⠗⠇ 点字ディスプレイ連携", fontSize = 15.sp)
+                        Text(text = "BrailleSense 6 Mini / 7 等の点字出力サポート", fontSize = 12.sp, color = MaterialTheme.colorScheme.secondary)
+                    }
+                    Switch(
+                        checked = isBrailleEnabled,
+                        onCheckedChange = { checked ->
+                            isBrailleEnabled = checked
+                            prefs.edit().putBoolean("pref_braille_display_enabled", checked).apply()
+                        }
+                    )
+                }
+
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+
+                // 触覚フィードバック機能
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp)
+                        .semantics { contentDescription = "触覚フィードバック。現在は ${if (isHapticEnabled) "オン" else "オフ"} です。" },
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(text = "📳 触覚フィードバック (振動)", fontSize = 15.sp)
+                        Text(text = "フォーカス移動やボタンタップ時の振動案内", fontSize = 12.sp, color = MaterialTheme.colorScheme.secondary)
+                    }
+                    Switch(
+                        checked = isHapticEnabled,
+                        onCheckedChange = { checked ->
+                            isHapticEnabled = checked
+                            prefs.edit().putBoolean("pref_haptic_feedback_enabled", checked).apply()
+                        }
+                    )
+                }
+            }
+        }
+
+        // 3. フォネティック＆モールス設定カード
         ElevatedCard(
             modifier = Modifier
                 .fillMaxWidth()
@@ -354,17 +451,18 @@ fun PermissionSetupScreen(
 fun AppProfilesScreen() {
     val aospApps = listOf(
         "⚙️ AOSP / Google 設定" to "com.android.settings",
-        "📞 AOSP / Google 電話" to "com.android.dialer",
-        "👥 AOSP / Google 連絡先" to "com.android.contacts",
-        "💬 AOSP / Google メッセージ" to "com.android.messaging",
-        "⏰ AOSP / Google 時計" to "com.android.deskclock",
-        "🧮 AOSP / Google 電卓" to "com.android.calculator2",
-        "📷 AOSP / Google カメラ" to "com.android.camera2"
+        "📞 AOSP / Google 電話" to "com.google.android.dialer",
+        "👥 AOSP / Google 連絡先" to "com.google.android.contacts",
+        "💬 AOSP / Google メッセージ" to "com.google.android.apps.messaging",
+        "⏰ AOSP / Google 時計" to "com.google.android.deskclock",
+        "🧮 AOSP / Google 電卓" to "com.google.android.calculator",
+        "📷 AOSP / Google カメラ" to "com.google.android.GoogleCamera"
     )
 
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(20.dp)
     ) {
         Text(

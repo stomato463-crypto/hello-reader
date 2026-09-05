@@ -457,7 +457,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     override fun onError(utteranceId: String?) {}
                 })
 
-                speakWithSubVoice("Hello Readerへようこそ！サービスが起動しました。", "音量キー長押しでいつでもTalkBackを起動できます")
+                speakWithSubVoice("Hello Readerが起動しました", "サブボイス案内が有効です")
             }
         } else {
             Log.e(TAG, "TTSの初期化に失敗しました")

@@ -7,6 +7,7 @@ import com.stomato.helloreader.appsupport.AppProfile
 /**
  * AOSP / 標準「時計」アプリ (com.android.deskclock / com.google.android.deskclock) 用プロファイル
  */
+@Suppress("DEPRECATION")
 class AospClockProfile(override val targetPackageName: String = "com.android.deskclock") : AppProfile {
 
     override fun customizeNodeDescription(
