@@ -975,13 +975,49 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     }
 
     /**
-     * AOSP TalkBack (TraversalStrategyUtils / focusSearch) 準拠 フォーカス移動処理
-     * OSネイティブの focusSearch を最優先試行し、隣接項目へ確実に項目移動！
+     * AOSP TalkBack (OrderedTraversalStrategy / Spatial Fallback) 準拠 フォーカス移動処理
+     * ウィジェット内部のサブボタンを含め、画面上の全要素を確実に順序良く1項目ずつ音読！
      */
     private fun navigateFocus(direction: Int, directionName: String, isAutoRetry: Boolean = false) {
         Log.d(TAG, "navigateFocus called: directionName=$directionName, isKeyguardLocked=${isKeyguardLocked()}")
 
+        val allNodes = mutableListOf<AccessibilityNodeInfo>()
         val root = getActiveRootNode()
+        val activeRoot = root ?: rootInActiveWindow
+        if (activeRoot != null) {
+            collectFocusableNodes(activeRoot, allNodes)
+        }
+
+        val currentWindows = windows
+        if (!currentWindows.isNullOrEmpty()) {
+            for (window in currentWindows) {
+                try {
+                    window.root?.let { collectFocusableNodes(it, allNodes) }
+                } catch (e: Exception) {
+                    Log.w(TAG, "Window node collection error", e)
+                }
+            }
+        }
+
+        if (allNodes.isEmpty()) {
+            speak("これ以上 $directionName に進めません")
+            return
+        }
+
+        // 視覚的な並び順 (Y座標・X座標) でノードを完全整列！
+        allNodes.sortWith(Comparator { n1, n2 ->
+            val r1 = Rect()
+            val r2 = Rect()
+            n1.getBoundsInScreen(r1)
+            n2.getBoundsInScreen(r2)
+            val rowDiff = r1.top - r2.top
+            if (Math.abs(rowDiff) > 25) {
+                rowDiff
+            } else {
+                r1.left - r2.left
+            }
+        })
+
         val currentFocus = if (isKeyguardLocked() && lastFocusedNode != null) {
             lastFocusedNode
         } else {
@@ -990,104 +1026,67 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 ?: lastFocusedNode
         }
 
-        // 1. Google AOSP TalkBack 同等: Android OSネイティブの focusSearch(direction) を最優先実行！
-        // これにより「Geminiに相談」の真隣にある要素へOS精度で1項目ずつ完璧に順序移動！
-        var nextNode: AccessibilityNodeInfo? = null
+        var currentIndex = -1
         if (currentFocus != null) {
-            try {
-                nextNode = currentFocus.focusSearch(direction)
-            } catch (e: Exception) {
-                Log.w(TAG, "native focusSearch error", e)
-            }
-        }
-
-        // 2. もし focusSearch が null の場合は、画面全体のノード走査リストから空間補完検索
-        if (nextNode == null) {
-            val allNodes = mutableListOf<AccessibilityNodeInfo>()
-            val activeRoot = root ?: rootInActiveWindow
-            if (activeRoot != null) {
-                collectFocusableNodes(activeRoot, allNodes)
+            for (i in allNodes.indices) {
+                if (isSameNode(allNodes[i], currentFocus)) {
+                    currentIndex = i
+                    break
+                }
             }
 
-            if (allNodes.isNotEmpty()) {
-                allNodes.sortWith(Comparator { n1, n2 ->
-                    val r1 = Rect()
-                    val r2 = Rect()
-                    n1.getBoundsInScreen(r1)
-                    n2.getBoundsInScreen(r2)
-                    val rowDiff = r1.top - r2.top
-                    if (Math.abs(rowDiff) > 25) {
-                        rowDiff
-                    } else {
-                        r1.left - r2.left
-                    }
-                })
-
-                var currentIndex = -1
-                if (currentFocus != null) {
+            // 直前フォーカスノードの位置 (X, Y 座標) から最も近いインデックスを空間検索！
+            if (currentIndex == -1) {
+                val focusBounds = Rect()
+                currentFocus.getBoundsInScreen(focusBounds)
+                if (focusBounds.width() > 0 && focusBounds.height() > 0) {
+                    var minDistance = Long.MAX_VALUE
+                    var closestIndex = -1
+                    val nodeBounds = Rect()
                     for (i in allNodes.indices) {
-                        if (isSameNode(allNodes[i], currentFocus)) {
-                            currentIndex = i
-                            break
+                        allNodes[i].getBoundsInScreen(nodeBounds)
+                        val dx = (nodeBounds.centerX() - focusBounds.centerX()).toLong()
+                        val dy = (nodeBounds.centerY() - focusBounds.centerY()).toLong()
+                        val dist = dx * dx + dy * dy
+                        if (dist < minDistance) {
+                            minDistance = dist
+                            closestIndex = i
                         }
                     }
-
-                    if (currentIndex == -1) {
-                        val focusBounds = Rect()
-                        currentFocus.getBoundsInScreen(focusBounds)
-                        if (focusBounds.width() > 0 && focusBounds.height() > 0) {
-                            var minDistance = Long.MAX_VALUE
-                            var closestIndex = -1
-                            val nodeBounds = Rect()
-                            for (i in allNodes.indices) {
-                                allNodes[i].getBoundsInScreen(nodeBounds)
-                                val dx = (nodeBounds.centerX() - focusBounds.centerX()).toLong()
-                                val dy = (nodeBounds.centerY() - focusBounds.centerY()).toLong()
-                                val dist = dx * dx + dy * dy
-                                if (dist < minDistance) {
-                                    minDistance = dist
-                                    closestIndex = i
-                                }
-                            }
-                            if (closestIndex != -1) {
-                                currentIndex = closestIndex
-                            }
-                        }
+                    if (closestIndex != -1) {
+                        currentIndex = closestIndex
                     }
-                }
-
-                val targetIndex = if (direction == View.FOCUS_FORWARD) {
-                    if (currentIndex == -1) 0 else currentIndex + 1
-                } else {
-                    if (currentIndex == -1) allNodes.size - 1 else currentIndex - 1
-                }
-
-                if (targetIndex in allNodes.indices) {
-                    nextNode = allNodes[targetIndex]
                 }
             }
         }
 
-        if (nextNode != null) {
+        val targetIndex = if (direction == View.FOCUS_FORWARD) {
+            if (currentIndex == -1) 0 else currentIndex + 1
+        } else {
+            if (currentIndex == -1) allNodes.size - 1 else currentIndex - 1
+        }
+
+        if (targetIndex in allNodes.indices) {
+            val targetNode = allNodes[targetIndex]
+
             currentFocus?.performAction(AccessibilityNodeInfo.ACTION_CLEAR_ACCESSIBILITY_FOCUS)
-            var success = nextNode.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
+            var success = targetNode.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
             if (!success) {
-                val child = findClickableChild(nextNode)
+                val child = findClickableChild(targetNode)
                 if (child != null) {
                     success = child.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
                 }
             }
-            lastFocusedNode = nextNode
+            lastFocusedNode = targetNode
 
-            val pair = parseNodeDescriptionPair(nextNode)
-            Log.d(TAG, "navigateFocus success=$success, text=${pair?.mainText}")
+            val pair = parseNodeDescriptionPair(targetNode)
+            Log.d(TAG, "navigateFocus index=$targetIndex/${allNodes.size}, success=$success, text=${pair?.mainText}")
             if (pair != null) {
                 speakWithSubVoice(pair.mainText, pair.hintText)
             } else {
                 speak("$directionName の要素へ移動")
             }
         } else {
-            // TalkBack Auto-Scroll 準拠: 画面端到達時に自動スクロールを実行し、新ノードへフォーカスを移す！
             val isForward = (direction == View.FOCUS_FORWARD)
             val autoScrolled = performScrollAction(forward = isForward, silent = true)
             if (autoScrolled) {
