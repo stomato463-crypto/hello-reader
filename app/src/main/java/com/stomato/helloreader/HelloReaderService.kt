@@ -2079,14 +2079,18 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     /**
      * メイン表示名と操作ヒントを異なるトーン/Voice（二重音声サブボイス）で連続音読
      */
-    private fun speakWithSubVoice(mainText: String, hintText: String? = null, force: Boolean = true) {
+    private fun speakWithSubVoice(mainText: String, hintText: String? = null, force: Boolean = false) {
         if (!isTtsReady || mainText.isBlank()) return
 
         val fullTextKey = if (!hintText.isNullOrBlank()) "$mainText|$hintText" else mainText
         val currentTime = System.currentTimeMillis()
         val lastTime = recentSpokenTexts[fullTextKey]
 
-        // ユーザーの明示的フォーカス操作（force = true）では重複スキップせず100%確実に即座に音読！
+        // 同一テキストが短時間 (800ms以内) に手動ナビゲーションとアクセシビリティイベントで2重発火するのを完全シャットアウト！
+        if (lastTime != null && (currentTime - lastTime) < 800) {
+            return
+        }
+
         if (!force && lastTime != null && (currentTime - lastTime) < 1500) {
             return
         }
