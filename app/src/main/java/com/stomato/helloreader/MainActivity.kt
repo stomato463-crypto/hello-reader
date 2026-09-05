@@ -22,6 +22,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -248,7 +249,10 @@ fun PermissionSetupScreen(
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier
                 .padding(bottom = 20.dp)
-                .semantics { contentDescription = "Hello Reader 設定ヘッダー" }
+                .semantics {
+                    heading()
+                    contentDescription = "Hello Reader 設定ヘッダー"
+                }
         )
 
         // 1. 初期セットアップ手順カード
@@ -265,7 +269,9 @@ fun PermissionSetupScreen(
                     text = "📋 初期セットアップ手順",
                     fontSize = 18.sp,
                     style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.padding(bottom = 12.dp)
+                    modifier = Modifier
+                        .padding(bottom = 12.dp)
+                        .semantics { heading() }
                 )
 
                 Button(
@@ -302,7 +308,9 @@ fun PermissionSetupScreen(
                     text = "⚙️ 支援モジュール設定",
                     fontSize = 18.sp,
                     style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.padding(bottom = 12.dp)
+                    modifier = Modifier
+                        .padding(bottom = 12.dp)
+                        .semantics { heading() }
                 )
 
                 // 時報機能
@@ -394,7 +402,8 @@ fun PermissionSetupScreen(
                     Text(
                         text = "⚡ フォネティック＆モールス振動",
                         fontSize = 16.sp,
-                        style = MaterialTheme.typography.titleMedium
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.semantics { heading() }
                     )
                     Switch(
                         checked = isPhoneticEnabled,
@@ -444,6 +453,76 @@ fun PermissionSetupScreen(
                 }
             }
         }
+
+        // 4. 診断ログ作成・SOS問い合わせカード
+        ElevatedCard(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            colors = CardDefaults.elevatedCardColors(
+                containerColor = MaterialTheme.colorScheme.secondaryContainer
+            )
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = "✉️ 診断ログ作成・SOS問い合わせ",
+                    fontSize = 18.sp,
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.semantics { heading() }
+                )
+                Text(
+                    text = "動作の不具合や困りごとがある場合、端末診断ログを添えてメーラーから連絡できます。個人情報や電話番号は一切含まれません。",
+                    fontSize = 13.sp,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer,
+                    modifier = Modifier.padding(vertical = 8.dp)
+                )
+
+                Button(
+                    onClick = {
+                        launchDiagnosticMailIntent(context)
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(52.dp)
+                        .semantics { contentDescription = "ボタン。端末診断ログを作成し、メールアプリを起動して問い合わせを作成します。" }
+                ) {
+                    Text("診断ログを生成してメール送信 (SOS)", fontSize = 15.sp)
+                }
+            }
+        }
+    }
+}
+
+/**
+ * 難読化されたサポート用メールアドレスをデコードし、
+ * b3sum 形式の暗号ハッシュを含む診断ログを添付してメーラーを起動します。
+ */
+fun launchDiagnosticMailIntent(context: Context) {
+    val report = HelloReaderService.generateDiagnosticReport(context)
+    
+    // Base64 難読化されたサポート用メールアドレス
+    val encodedEmail = "c3VwcG9ydEBoZWxsb3JlYWRlci5pbmZv"
+    val targetEmail = try {
+        String(android.util.Base64.decode(encodedEmail, android.util.Base64.DEFAULT), Charsets.UTF_8)
+    } catch (e: Exception) {
+        "support@helloreader.info"
+    }
+
+    val uriText = "mailto:${android.net.Uri.encode(targetEmail)}?" +
+            "subject=${android.net.Uri.encode("【Hello Reader 診断レポート・SOS問い合わせ】")}&" +
+            "body=${android.net.Uri.encode(report)}"
+
+    val intent = Intent(Intent.ACTION_SENDTO, android.net.Uri.parse(uriText)).apply {
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
+
+    try {
+        context.startActivity(Intent.createChooser(intent, "メールアプリを選択してください"))
+    } catch (e: Exception) {
+        android.widget.Toast.makeText(context, "メールアプリの起動に失敗しました。診断ログをクリップボードにコピーしました。", android.widget.Toast.LENGTH_LONG).show()
+        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager
+        val clip = android.content.ClipData.newPlainText("Hello Reader Diagnostic Report", report)
+        clipboard?.setPrimaryClip(clip)
     }
 }
 
