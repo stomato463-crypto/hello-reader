@@ -725,7 +725,18 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         playSound(soundFocusId)
         performHapticFeedback()
-        playMorseVibration(ch)
+
+        val currentFocus = rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY) ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
+        val isEditBox = currentFocus != null && (
+            currentFocus.isEditable ||
+            currentFocus.className?.toString()?.contains("EditText", ignoreCase = true) == true
+        )
+        val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
+        val isMorseEnabled = prefs.getBoolean("pref_phonetic_morse_enabled", false)
+        if (isMorseEnabled && isEditBox) {
+            playMorseVibration(ch)
+        }
+
         speak(spoken)
     }
 
@@ -1855,29 +1866,13 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             if (mainTextStr.length == 1) {
                 val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
                 val isPhoneticMorseEnabled = prefs.getBoolean("pref_phonetic_morse_enabled", false)
-                val timing = prefs.getString("pref_phonetic_morse_timing", "AFTER_TTS") ?: "AFTER_TTS"
 
                 val ch = mainTextStr[0]
                 val uppercaseCh = ch.uppercaseChar()
 
                 if (isPhoneticMorseEnabled && PHONETIC_MAP.containsKey(uppercaseCh)) {
                     val phoneticName = PHONETIC_MAP[uppercaseCh]
-                    when (timing) {
-                        "BEFORE_TTS" -> {
-                            playMorseVibration(ch)
-                            mainSb.append(ch).append("。").append(phoneticName)
-                        }
-                        "AFTER_TTS" -> {
-                            mainSb.append(ch).append("。").append(phoneticName)
-                            android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
-                                playMorseVibration(ch)
-                            }, 1200)
-                        }
-                        else -> {
-                            mainSb.append(ch).append("。").append(phoneticName)
-                            playMorseVibration(ch)
-                        }
-                    }
+                    mainSb.append(ch).append("。").append(phoneticName)
                 } else {
                     mainSb.append(rawMainText)
                 }
@@ -2093,18 +2088,29 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         // 違えば、読み上げだけ！
         val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
         val isMorseEnabled = prefs.getBoolean("pref_phonetic_morse_enabled", false)
-        val currentFocus = rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY) ?: lastFocusedNode
-        val isEditBox = currentFocus != null && (
-            currentFocus.isEditable ||
-            currentFocus.className?.toString()?.contains("EditText", ignoreCase = true) == true
+        val targetNode = node ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY) ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
+        val isEditBox = targetNode != null && (
+            targetNode.isEditable ||
+            targetNode.className?.toString()?.contains("EditText", ignoreCase = true) == true
         )
 
         if (isMorseEnabled && isEditBox) {
+            val timing = prefs.getString("pref_phonetic_morse_timing", "AFTER_TTS") ?: "AFTER_TTS"
             val targetChar = mainText.firstOrNull { PHONETIC_MAP.containsKey(it.uppercaseChar()) }
             if (targetChar != null) {
-                mainHandler.postDelayed({
-                    playMorseVibration(targetChar)
-                }, 300)
+                when (timing) {
+                    "BEFORE_TTS" -> {
+                        playMorseVibration(targetChar)
+                    }
+                    "AFTER_TTS" -> {
+                        mainHandler.postDelayed({
+                            playMorseVibration(targetChar)
+                        }, 300)
+                    }
+                    else -> {
+                        playMorseVibration(targetChar)
+                    }
+                }
             }
         }
     }
