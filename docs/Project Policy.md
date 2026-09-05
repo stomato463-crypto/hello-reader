@@ -49,7 +49,7 @@
 
    ```bash
    git add .
-   git commit -v -m "fix: ここに変更内容を書く"
+   git commit -m "fix: ここに変更内容を書く"
    ```
 
 2. **パッチファイル (.patch) を作成する**
@@ -90,4 +90,4 @@ git apply 0001-fix-....patch
 
 ---
 
-*制定日: 2026年9月6日*
+制定日: 2026年9月6日*
