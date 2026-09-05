@@ -70,8 +70,37 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             '5' to ".....", '6' to "-....", '7' to "--...", '8' to "---..", '9' to "----."
         )
 
+        private val recentLogs = java.util.ArrayDeque<String>(20)
+
         /**
-         * 端末情報・サービス動作状態・設定内容を含む診断レポート文面を生成します。
+         * 直近のアクセシビリティ動作イベント・ログメッセージをリングバッファに追記します。
+         */
+        @Synchronized
+        fun logEvent(message: String) {
+            try {
+                val time = java.text.SimpleDateFormat("HH:mm:ss", java.util.Locale.JAPANESE).format(java.util.Date())
+                if (recentLogs.size >= 20) {
+                    recentLogs.removeFirst()
+                }
+                recentLogs.addLast("[$time] $message")
+            } catch (e: Exception) {
+                // Ignore log formatting exceptions
+            }
+        }
+
+        /**
+         * 保持している直近の動作ログ文字列を取得します。
+         */
+        @Synchronized
+        fun getRecentLogsString(): String {
+            if (recentLogs.isEmpty()) {
+                return "・直近の動作ログはありません (サービス初期化直後)"
+            }
+            return recentLogs.joinToString("\n")
+        }
+
+        /**
+         * 端末情報・サービス動作状態・直近の動作ログを含む診断レポート文面を生成します。
          * 個人情報は一切含めず、b3sum 形式の暗号ハッシュ値によって匿名識別を可能にします。
          */
         fun generateDiagnosticReport(context: Context): String {
@@ -105,6 +134,9 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 ・点字ディスプレイ連携: ${if (isBraille) "ON" else "OFF"}
                 ・触覚フィードバック: ${if (isHaptic) "ON" else "OFF"}
                 ・フォネティックモールス: ${if (isPhonetic) "ON" else "OFF"}
+                ----------------------------------------
+                [直近のサービス動作ログ (最新20件)]
+                ${getRecentLogsString()}
                 ========================================
                 ※個人情報や電話番号、氏名等は一切含まれておりません。
                 ※お問い合わせ内容は順次確認しております。
@@ -586,6 +618,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
      */
     private fun handleGestureAction(gestureId: Int): Boolean {
         Log.d(TAG, "handleGestureAction executing for gestureId: $gestureId")
+        logEvent("ジェスチャー検知: ID=$gestureId")
         interruptSpeaking()
         return when (gestureId) {
             // 2本指シングルタップ: 即時消音 (TalkBack標準)
@@ -2183,6 +2216,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
 
         Log.d(TAG, "Speaking Main: ${sanitizeForLog(mainText)}${if (hintText != null) " [SubVoice Hint: $hintText]" else ""}")
+        logEvent("${sanitizeForLog(mainText)}${if (hintText != null) " ($hintText)" else ""}")
 
         val currentTts = tts ?: return
         
