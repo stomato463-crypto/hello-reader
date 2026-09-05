@@ -75,14 +75,30 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Download Verified APK Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: app-debug-apk
+          path: app/build/outputs/apk/debug
+
       - name: Push to GitHub.com main branch
         run: |
+<<<<<<< Updated upstream
           git remote add github git@github.com:stomato463-crypto/hello-reader.git
+=======
+          $env:GIT_SSH_COMMAND = "ssh -o StrictHostKeyChecking=no"
+          if (git remote | Select-String -Pattern "^github$") {
+              git remote set-url github git@github.com:stomato463-crypto/hello-reader.git
+          } else {
+              git remote add github git@github.com:stomato463-crypto/hello-reader.git
+          }
+>>>>>>> Stashed changes
           git push -f github github-main:main
         shell: powershell
 
       - name: Auto Publish to Gitea Releases (No Tag Required)
         uses: https://gitea.com/actions/gitea-release-action@v1
+        continue-on-error: true
         with:
           files: app/build/outputs/apk/debug/debug-*.apk
           name: Hello Reader Latest Alpha Build
@@ -90,4 +106,5 @@ jobs:
           draft: false
           prerelease: true
         env:
+          GITEA_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
