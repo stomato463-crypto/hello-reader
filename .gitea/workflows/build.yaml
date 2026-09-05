@@ -29,7 +29,7 @@ jobs:
         shell: powershell
 
       - name: Build Debug APK Verification (Sparta Check)
-        run: .\gradlew.bat assembleDebug
+        run: .\gradlew.bat clean assembleDebug
         shell: powershell
 
       - name: Rename and Copy APK according to AGENTS.md policy
@@ -83,16 +83,12 @@ jobs:
 
       - name: Push to GitHub.com main branch
         run: |
-<<<<<<< Updated upstream
-          git remote add github git@github.com:stomato463-crypto/hello-reader.git
-=======
           $env:GIT_SSH_COMMAND = "ssh -o StrictHostKeyChecking=no"
           if (git remote | Select-String -Pattern "^github$") {
               git remote set-url github git@github.com:stomato463-crypto/hello-reader.git
           } else {
               git remote add github git@github.com:stomato463-crypto/hello-reader.git
           }
->>>>>>> Stashed changes
           git push -f github github-main:main
         shell: powershell
 
