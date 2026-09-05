@@ -289,11 +289,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     Log.d(TAG, "User Present (Unlocked)")
                     lastUnlockTime = System.currentTimeMillis()
                     speak("ロック解除")
-                    // AOSP TalkBack準拠: ロック解除後、ウィンドウが完全にアクティブ化するのを待ってホーム画面の初動フォーカスをセット！
-                    mainHandler.removeCallbacksAndMessages(null)
-                    mainHandler.postDelayed({
-                        speakHomeScreenItems(getActiveRootNode())
-                    }, 300)
                 }
             }
         }
@@ -730,7 +725,18 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         playSound(soundFocusId)
         performHapticFeedback()
-        playMorseVibration(ch)
+
+        val currentFocus = rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY) ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
+        val isEditBox = currentFocus != null && (
+            currentFocus.isEditable ||
+            currentFocus.className?.toString()?.contains("EditText", ignoreCase = true) == true
+        )
+        val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
+        val isMorseEnabled = prefs.getBoolean("pref_phonetic_morse_enabled", false)
+        if (isMorseEnabled && isEditBox) {
+            playMorseVibration(ch)
+        }
+
         speak(spoken)
     }
 
@@ -969,20 +975,19 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     }
 
     /**
-     * AOSP TalkBack (NodeFocusFinder / TraversalStrategy) 準拠 フォーカス移動処理
-     * 全ウィンドウ（アプリ本体 ＋ システムバー）から順序良くフォーカス可能ノードを収集して100%巡回！
+     * AOSP TalkBack (OrderedTraversalStrategy / Spatial Fallback) 準拠 フォーカス移動処理
+     * ウィジェット内部のサブボタンを含め、画面上の全要素を確実に順序良く1項目ずつ音読！
      */
     private fun navigateFocus(direction: Int, directionName: String, isAutoRetry: Boolean = false) {
-        val allNodes = mutableListOf<AccessibilityNodeInfo>()
         Log.d(TAG, "navigateFocus called: directionName=$directionName, isKeyguardLocked=${isKeyguardLocked()}")
 
-        // 1. アクティブウィンドウのルートノードから最優先で収集
-        val activeRoot = rootInActiveWindow ?: getActiveRootNode()
+        val allNodes = mutableListOf<AccessibilityNodeInfo>()
+        val root = getActiveRootNode()
+        val activeRoot = root ?: rootInActiveWindow
         if (activeRoot != null) {
             collectFocusableNodes(activeRoot, allNodes)
         }
 
-        // 2. システムウィンドウ（ステータスバー・ナビゲーションバー等）からも補完収集
         val currentWindows = windows
         if (!currentWindows.isNullOrEmpty()) {
             for (window in currentWindows) {
@@ -994,14 +999,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             }
         }
 
-        Log.d(TAG, "navigateFocus collected: ${allNodes.size} nodes")
-
         if (allNodes.isEmpty()) {
             speak("これ以上 $directionName に進めません")
             return
         }
 
-        // AOSP TalkBack (TraversalStrategy) 準拠: ノードの画面上位置 (Y座標・X座標) で視覚的な並び順に完全ソート！
+        // 視覚的な並び順 (Y座標・X座標) でノードを完全整列！
         allNodes.sortWith(Comparator { n1, n2 ->
             val r1 = Rect()
             val r2 = Rect()
@@ -1015,12 +1018,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             }
         })
 
-        val root = getActiveRootNode()
-
-        var currentFocus = if (isKeyguardLocked() && lastFocusedNode != null) {
+        val currentFocus = if (isKeyguardLocked() && lastFocusedNode != null) {
             lastFocusedNode
         } else {
-            root?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY) ?: lastFocusedNode
+            root?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
+                ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
+                ?: lastFocusedNode
         }
 
         var currentIndex = -1
@@ -1029,6 +1032,30 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 if (isSameNode(allNodes[i], currentFocus)) {
                     currentIndex = i
                     break
+                }
+            }
+
+            // 直前フォーカスノードの位置 (X, Y 座標) から最も近いインデックスを空間検索！
+            if (currentIndex == -1) {
+                val focusBounds = Rect()
+                currentFocus.getBoundsInScreen(focusBounds)
+                if (focusBounds.width() > 0 && focusBounds.height() > 0) {
+                    var minDistance = Long.MAX_VALUE
+                    var closestIndex = -1
+                    val nodeBounds = Rect()
+                    for (i in allNodes.indices) {
+                        allNodes[i].getBoundsInScreen(nodeBounds)
+                        val dx = (nodeBounds.centerX() - focusBounds.centerX()).toLong()
+                        val dy = (nodeBounds.centerY() - focusBounds.centerY()).toLong()
+                        val dist = dx * dx + dy * dy
+                        if (dist < minDistance) {
+                            minDistance = dist
+                            closestIndex = i
+                        }
+                    }
+                    if (closestIndex != -1) {
+                        currentIndex = closestIndex
+                    }
                 }
             }
         }
@@ -1051,7 +1078,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 }
             }
             lastFocusedNode = targetNode
-            
+
             val pair = parseNodeDescriptionPair(targetNode)
             Log.d(TAG, "navigateFocus index=$targetIndex/${allNodes.size}, success=$success, text=${pair?.mainText}")
             if (pair != null) {
@@ -1060,7 +1087,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 speak("$directionName の要素へ移動")
             }
         } else {
-            // TalkBack Auto-Scroll 準拠: 画面端到達時に自動スクロールを実行し、新ノードへフォーカスを移す！
             val isForward = (direction == View.FOCUS_FORWARD)
             val autoScrolled = performScrollAction(forward = isForward, silent = true)
             if (autoScrolled) {
@@ -1080,14 +1106,23 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private fun isSameNode(node1: AccessibilityNodeInfo?, node2: AccessibilityNodeInfo?): Boolean {
         if (node1 == null || node2 == null) return false
         if (node1 == node2 || node1.equals(node2)) return true
-        val id1 = node1.viewIdResourceName
-        val id2 = node2.viewIdResourceName
-        if (!id1.isNullOrBlank() && id1 == id2) return true
+
         val r1 = Rect()
         val r2 = Rect()
         node1.getBoundsInScreen(r1)
         node2.getBoundsInScreen(r2)
-        return !r1.isEmpty && r1 == r2
+
+        if (r1.isEmpty || r2.isEmpty || r1 != r2) return false
+
+        val text1 = parseNodeDescription(node1)
+        val text2 = parseNodeDescription(node2)
+
+        // 両方ともテキストがあり、テキストと画面領域が完全に一致する場合のみ同一ノードと判定
+        if (!text1.isNullOrBlank() && !text2.isNullOrBlank() && text1 == text2) {
+            return true
+        }
+
+        return false
     }
 
     /**
@@ -1783,8 +1818,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         if (rawMainText.isNullOrBlank()) {
             rawMainText = when {
-                !compat.text.isNullOrBlank() -> compat.text.toString()
                 !compat.contentDescription.isNullOrBlank() -> compat.contentDescription.toString()
+                !compat.text.isNullOrBlank() -> compat.text.toString()
                 !compat.hintText.isNullOrBlank() -> compat.hintText.toString()
                 !compat.error.isNullOrBlank() -> compat.error.toString()
                 !compat.roleDescription.isNullOrBlank() -> compat.roleDescription.toString()
@@ -1860,29 +1895,13 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             if (mainTextStr.length == 1) {
                 val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
                 val isPhoneticMorseEnabled = prefs.getBoolean("pref_phonetic_morse_enabled", false)
-                val timing = prefs.getString("pref_phonetic_morse_timing", "AFTER_TTS") ?: "AFTER_TTS"
 
                 val ch = mainTextStr[0]
                 val uppercaseCh = ch.uppercaseChar()
 
                 if (isPhoneticMorseEnabled && PHONETIC_MAP.containsKey(uppercaseCh)) {
                     val phoneticName = PHONETIC_MAP[uppercaseCh]
-                    when (timing) {
-                        "BEFORE_TTS" -> {
-                            playMorseVibration(ch)
-                            mainSb.append(ch).append("。").append(phoneticName)
-                        }
-                        "AFTER_TTS" -> {
-                            mainSb.append(ch).append("。").append(phoneticName)
-                            android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
-                                playMorseVibration(ch)
-                            }, 1200)
-                        }
-                        else -> {
-                            mainSb.append(ch).append("。").append(phoneticName)
-                            playMorseVibration(ch)
-                        }
-                    }
+                    mainSb.append(ch).append("。").append(phoneticName)
                 } else {
                     mainSb.append(rawMainText)
                 }
@@ -1999,8 +2018,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             val child = node.getChild(i) ?: continue
             val compat = AccessibilityNodeInfoCompat.wrap(child)
             val childText = when {
-                !compat.text.isNullOrBlank() -> compat.text.toString().trim()
                 !compat.contentDescription.isNullOrBlank() -> compat.contentDescription.toString().trim()
+                !compat.text.isNullOrBlank() -> compat.text.toString().trim()
                 else -> null
             }
             if (!childText.isNullOrBlank() && !list.contains(childText)) {
@@ -2059,14 +2078,18 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     /**
      * メイン表示名と操作ヒントを異なるトーン/Voice（二重音声サブボイス）で連続音読
      */
-    private fun speakWithSubVoice(mainText: String, hintText: String? = null, force: Boolean = true) {
+    private fun speakWithSubVoice(mainText: String, hintText: String? = null, force: Boolean = false) {
         if (!isTtsReady || mainText.isBlank()) return
 
         val fullTextKey = if (!hintText.isNullOrBlank()) "$mainText|$hintText" else mainText
         val currentTime = System.currentTimeMillis()
         val lastTime = recentSpokenTexts[fullTextKey]
 
-        // ユーザーの明示的フォーカス操作（force = true）では重複スキップせず100%確実に即座に音読！
+        // 同一テキストが短時間 (800ms以内) に手動ナビゲーションとアクセシビリティイベントで2重発火するのを完全シャットアウト！
+        if (lastTime != null && (currentTime - lastTime) < 800) {
+            return
+        }
+
         if (!force && lastTime != null && (currentTime - lastTime) < 1500) {
             return
         }
@@ -2089,9 +2112,40 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             brailleManager.displayText(brailleSpoken)
         }
 
-        // 3. メインボイスの再生 (QUEUE_FLUSH: 前の発声を即座に割り込みフラッシュして再生！)
+        // 3. メインボイスの再生
         currentTts.setPitch(mainVoicePitch)
         currentTts.speak(mainText, TextToSpeech.QUEUE_FLUSH, null, "HelloReaderMainTTS")
+
+        // 4. 智浩さんの「なでしこ v3 風」仕様 (Morse code conditions.md 精密版) の実行！
+        // もし、フォーカスがエディットボックス (EditText / 入力欄) ならば、文字の読み上げのあとに、モールス信号フィードバックを実行！
+        // 違えば、読み上げだけ！
+        val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
+        val isMorseEnabled = prefs.getBoolean("pref_phonetic_morse_enabled", false)
+        val targetNode = rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY) ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
+        val isEditBox = targetNode != null && (
+            targetNode.isEditable ||
+            targetNode.className?.toString()?.contains("EditText", ignoreCase = true) == true
+        )
+
+        if (isMorseEnabled && isEditBox) {
+            val timing = prefs.getString("pref_phonetic_morse_timing", "AFTER_TTS") ?: "AFTER_TTS"
+            val targetChar = mainText.firstOrNull { PHONETIC_MAP.containsKey(it.uppercaseChar()) }
+            if (targetChar != null) {
+                when (timing) {
+                    "BEFORE_TTS" -> {
+                        playMorseVibration(targetChar)
+                    }
+                    "AFTER_TTS" -> {
+                        mainHandler.postDelayed({
+                            playMorseVibration(targetChar)
+                        }, 300)
+                    }
+                    else -> {
+                        playMorseVibration(targetChar)
+                    }
+                }
+            }
+        }
     }
 
     /**
