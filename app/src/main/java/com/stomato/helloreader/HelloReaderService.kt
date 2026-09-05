@@ -289,11 +289,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     Log.d(TAG, "User Present (Unlocked)")
                     lastUnlockTime = System.currentTimeMillis()
                     speak("ロック解除")
-                    // AOSP TalkBack準拠: ロック解除後、ウィンドウが完全にアクティブ化するのを待ってホーム画面の初動フォーカスをセット！
-                    mainHandler.removeCallbacksAndMessages(null)
-                    mainHandler.postDelayed({
-                        speakHomeScreenItems(getActiveRootNode())
-                    }, 300)
                 }
             }
         }
@@ -2094,13 +2089,15 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         currentTts.speak(mainText, TextToSpeech.QUEUE_FLUSH, null, "HelloReaderMainTTS")
 
         // 4. 智浩さんの「なでしこ v3 風」仕様 (Morse code conditions.md 精密版) の実行！
-        // もし、エディットボックス (EditText / 入力欄) ならば、文字の読み上げのあとに、モールス信号フィードバックを実行！
+        // もし、フォーカスがエディットボックス (EditText / 入力欄) ならば、文字の読み上げのあとに、モールス信号フィードバックを実行！
         // 違えば、読み上げだけ！
         val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
         val isMorseEnabled = prefs.getBoolean("pref_phonetic_morse_enabled", false)
-        val focusedNode = lastFocusedNode
-        val isEditBox = focusedNode?.className?.toString()?.contains("EditText", ignoreCase = true) == true ||
-                focusedNode?.isEditable == true
+        val currentFocus = rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY) ?: lastFocusedNode
+        val isEditBox = currentFocus != null && (
+            currentFocus.isEditable ||
+            currentFocus.className?.toString()?.contains("EditText", ignoreCase = true) == true
+        )
 
         if (isMorseEnabled && isEditBox) {
             val targetChar = mainText.firstOrNull { PHONETIC_MAP.containsKey(it.uppercaseChar()) }
