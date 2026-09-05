@@ -1818,8 +1818,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         if (rawMainText.isNullOrBlank()) {
             rawMainText = when {
-                !compat.text.isNullOrBlank() -> compat.text.toString()
                 !compat.contentDescription.isNullOrBlank() -> compat.contentDescription.toString()
+                !compat.text.isNullOrBlank() -> compat.text.toString()
                 !compat.hintText.isNullOrBlank() -> compat.hintText.toString()
                 !compat.error.isNullOrBlank() -> compat.error.toString()
                 !compat.roleDescription.isNullOrBlank() -> compat.roleDescription.toString()
@@ -2018,8 +2018,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             val child = node.getChild(i) ?: continue
             val compat = AccessibilityNodeInfoCompat.wrap(child)
             val childText = when {
-                !compat.text.isNullOrBlank() -> compat.text.toString().trim()
                 !compat.contentDescription.isNullOrBlank() -> compat.contentDescription.toString().trim()
+                !compat.text.isNullOrBlank() -> compat.text.toString().trim()
                 else -> null
             }
             if (!childText.isNullOrBlank() && !list.contains(childText)) {
