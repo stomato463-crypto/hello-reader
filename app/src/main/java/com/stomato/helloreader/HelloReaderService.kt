@@ -69,6 +69,82 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             '0' to "-----", '1' to ".----", '2' to "..---", '3' to "...--", '4' to "....-",
             '5' to ".....", '6' to "-....", '7' to "--...", '8' to "---..", '9' to "----."
         )
+
+        private val recentLogs = java.util.ArrayDeque<String>(20)
+
+        /**
+         * 直近のアクセシビリティ動作イベント・ログメッセージをリングバッファに追記します。
+         */
+        @Synchronized
+        fun logEvent(message: String) {
+            try {
+                val time = java.text.SimpleDateFormat("HH:mm:ss", java.util.Locale.JAPANESE).format(java.util.Date())
+                if (recentLogs.size >= 20) {
+                    recentLogs.removeFirst()
+                }
+                recentLogs.addLast("[$time] $message")
+            } catch (e: Exception) {
+                // Ignore log formatting exceptions
+            }
+        }
+
+        /**
+         * 保持している直近の動作ログ文字列を取得します。
+         */
+        @Synchronized
+        fun getRecentLogsString(): String {
+            if (recentLogs.isEmpty()) {
+                return "・直近の動作ログはありません (サービス初期化直後)"
+            }
+            return recentLogs.joinToString("\n")
+        }
+
+        /**
+         * 端末情報・サービス動作状態・直近の動作ログを含む診断レポート文面を生成します。
+         * 個人情報は一切含めず、b3sum 形式の暗号ハッシュ値によって匿名識別を可能にします。
+         */
+        fun generateDiagnosticReport(context: Context): String {
+            val prefs = context.getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
+            val isTimeSignal = prefs.getBoolean("pref_time_signal_enabled", true)
+            val isBraille = prefs.getBoolean("pref_braille_display_enabled", true)
+            val isHaptic = prefs.getBoolean("pref_haptic_feedback_enabled", true)
+            val isPhonetic = prefs.getBoolean("pref_phonetic_morse_enabled", false)
+
+            val anonymousHash = com.stomato.helloreader.appsupport.DiagnosticHasher.generateAnonymousHash(context)
+            val appVersion = try {
+                val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+                pInfo.versionName ?: "1.0.0-alpha"
+            } catch (e: Exception) {
+                "1.0.0-alpha"
+            }
+
+            return """
+                ========================================
+                【Hello Reader 診断レポート (SOS問い合わせ)】
+                ========================================
+                [アプリバージョン] Hello Reader $appVersion
+                [OSバージョン] Android ${Build.VERSION.RELEASE} (API level ${Build.VERSION.SDK_INT})
+                [端末メーカー] ${Build.MANUFACTURER}
+                [端末モデル] ${Build.MODEL} (${Build.BRAND})
+                [OSビルド番号] ${Build.DISPLAY}
+                [匿名識別ID] b3sum:$anonymousHash
+                ----------------------------------------
+                [モジュール設定状態]
+                ・時報チャイム: ${if (isTimeSignal) "ON" else "OFF"}
+                ・点字ディスプレイ連携: ${if (isBraille) "ON" else "OFF"}
+                ・触覚フィードバック: ${if (isHaptic) "ON" else "OFF"}
+                ・フォネティックモールス: ${if (isPhonetic) "ON" else "OFF"}
+                ----------------------------------------
+                [直近のサービス動作ログ (最新20件)]
+                ${getRecentLogsString()}
+                ========================================
+                ※個人情報や電話番号、氏名等は一切含まれておりません。
+                ※お問い合わせ内容は順次確認しております。
+
+                【ご報告内容・困っている症状をここにご自由にお書きください】
+
+            """.trimIndent()
+        }
     }
 
     private var tts: TextToSpeech? = null
@@ -542,6 +618,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
      */
     private fun handleGestureAction(gestureId: Int): Boolean {
         Log.d(TAG, "handleGestureAction executing for gestureId: $gestureId")
+        logEvent("ジェスチャー検知: ID=$gestureId")
         interruptSpeaking()
         return when (gestureId) {
             // 2本指シングルタップ: 即時消音 (TalkBack標準)
@@ -552,12 +629,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             }
 
             // 1本指左右スワイプ: 次へ / 前へ移動
-            GESTURE_SWIPE_RIGHT, GESTURE_2_FINGER_SWIPE_RIGHT, 1 -> {
+            GESTURE_SWIPE_RIGHT -> {
                 Log.d(TAG, "Swipe Right Matched -> navigateFocus FORWARD")
                 navigateFocus(View.FOCUS_FORWARD, "次へ")
                 true
             }
-            GESTURE_SWIPE_LEFT, GESTURE_2_FINGER_SWIPE_LEFT, 2 -> {
+            GESTURE_SWIPE_LEFT -> {
                 Log.d(TAG, "Swipe Left Matched -> navigateFocus BACKWARD")
                 navigateFocus(View.FOCUS_BACKWARD, "前へ")
                 true
@@ -758,8 +835,27 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             return
         }
 
-        // 次の見出しへ移動
-        val target = if (forward) headings.first() else headings.last()
+        val currentFocus = root.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
+            ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
+            ?: lastFocusedNode
+
+        var currentIndex = -1
+        if (currentFocus != null) {
+            for (i in headings.indices) {
+                if (isSameNode(headings[i], currentFocus)) {
+                    currentIndex = i
+                    break
+                }
+            }
+        }
+
+        val targetIndex = if (forward) {
+            if (currentIndex == -1) 0 else (currentIndex + 1) % headings.size
+        } else {
+            if (currentIndex == -1) headings.size - 1 else if (currentIndex - 1 < 0) headings.size - 1 else currentIndex - 1
+        }
+
+        val target = headings[targetIndex]
         lastFocusedNode = target
         target.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
         val pair = parseNodeDescriptionPair(target)
@@ -784,7 +880,27 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             return
         }
 
-        val target = if (forward) controls.first() else controls.last()
+        val currentFocus = root.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
+            ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
+            ?: lastFocusedNode
+
+        var currentIndex = -1
+        if (currentFocus != null) {
+            for (i in controls.indices) {
+                if (isSameNode(controls[i], currentFocus)) {
+                    currentIndex = i
+                    break
+                }
+            }
+        }
+
+        val targetIndex = if (forward) {
+            if (currentIndex == -1) 0 else (currentIndex + 1) % controls.size
+        } else {
+            if (currentIndex == -1) controls.size - 1 else if (currentIndex - 1 < 0) controls.size - 1 else currentIndex - 1
+        }
+
+        val target = controls[targetIndex]
         lastFocusedNode = target
         target.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
         val pair = parseNodeDescriptionPair(target)
@@ -2100,6 +2216,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
 
         Log.d(TAG, "Speaking Main: ${sanitizeForLog(mainText)}${if (hintText != null) " [SubVoice Hint: $hintText]" else ""}")
+        logEvent("${sanitizeForLog(mainText)}${if (hintText != null) " ($hintText)" else ""}")
 
         val currentTts = tts ?: return
         
