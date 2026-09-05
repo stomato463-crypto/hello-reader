@@ -2088,7 +2088,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         // 違えば、読み上げだけ！
         val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
         val isMorseEnabled = prefs.getBoolean("pref_phonetic_morse_enabled", false)
-        val targetNode = node ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY) ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
+        val targetNode = rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY) ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
         val isEditBox = targetNode != null && (
             targetNode.isEditable ||
             targetNode.className?.toString()?.contains("EditText", ignoreCase = true) == true
