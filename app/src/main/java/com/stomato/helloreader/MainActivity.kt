@@ -196,6 +196,13 @@ fun HelloReaderApp(
                     icon = { Text("🏷️", fontSize = 18.sp) },
                     modifier = Modifier.semantics { contentDescription = "タブ3。カスタムラベル辞書画面を開きます" }
                 )
+                NavigationBarItem(
+                    selected = (selectedTab == 3),
+                    onClick = { selectedTab = 3 },
+                    label = { Text("サポート") },
+                    icon = { Text("🆘", fontSize = 18.sp) },
+                    modifier = Modifier.semantics { contentDescription = "タブ4。サポート・お問い合わせ画面を開きます" }
+                )
             }
         }
     ) { innerPadding ->
@@ -204,6 +211,7 @@ fun HelloReaderApp(
                 0 -> PermissionSetupScreen(onRequestPermissions, onOpenAccessibilitySettings)
                 1 -> AppProfilesScreen()
                 2 -> CustomLabelsScreen()
+                3 -> SupportScreen()
             }
         }
     }
@@ -493,6 +501,99 @@ fun PermissionSetupScreen(
     }
 }
 
+@Composable
+fun SupportScreen() {
+    val context = LocalContext.current
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top
+    ) {
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "🆘 サポート・お問い合わせ",
+            fontSize = 26.sp,
+            style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier
+                .padding(bottom = 20.dp)
+                .semantics {
+                    heading()
+                    contentDescription = "サポートとお問い合わせヘッダー"
+                }
+        )
+
+        ElevatedCard(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            colors = CardDefaults.elevatedCardColors(
+                containerColor = MaterialTheme.colorScheme.secondaryContainer
+            )
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = "✉️ お問い合わせのご案内",
+                    fontSize = 18.sp,
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier
+                        .padding(bottom = 8.dp)
+                        .semantics { heading() }
+                )
+                Text(
+                    text = "問い合わせ・ご意見は下記のボタンを押して表示されるメール作成画面の本文に入力して送信してください。",
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+
+                Button(
+                    onClick = {
+                        launchDiagnosticMailIntent(context)
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(52.dp)
+                        .semantics { contentDescription = "ボタン。端末診断ログを含むメール作成画面を開きます。" }
+                ) {
+                    Text("メール作成画面を開く (SOS)", fontSize = 16.sp)
+                }
+            }
+        }
+
+        ElevatedCard(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = "🔒 診断レポートとプライバシー保護",
+                    fontSize = 18.sp,
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier
+                        .padding(bottom = 8.dp)
+                        .semantics { heading() }
+                )
+                Text(
+                    text = "メール本文には、不具合調査のために以下の情報が自動添付されます:\n" +
+                            "・OSバージョン / 端末機種名\n" +
+                            "・匿名 b3sum 暗号識別ハッシュ\n" +
+                            "・アプリの各機能設定状態\n" +
+                            "・直近動作ログ (最新20件)\n\n" +
+                            "氏名や電話番号、個人の入力内容は一切含まれません。",
+                    fontSize = 13.sp,
+                    color = MaterialTheme.colorScheme.secondary
+                )
+            }
+        }
+    }
+}
+
 /**
  * 難読化されたサポート用メールアドレスをデコードし、
  * b3sum 形式の暗号ハッシュを含む診断ログを添付してメーラーを起動します。
@@ -501,15 +602,15 @@ fun launchDiagnosticMailIntent(context: Context) {
     val report = HelloReaderService.generateDiagnosticReport(context)
     
     // Base64 難読化されたサポート用メールアドレス
-    val encodedEmail = "c3VwcG9ydEBoZWxsb3JlYWRlci5pbmZv"
+    val encodedEmail = "c3RvbWF0bzQ2M0BnbWFpbC5jb20="
     val targetEmail = try {
-        String(android.util.Base64.decode(encodedEmail, android.util.Base64.DEFAULT), Charsets.UTF_8)
+        String(android.util.Base64.decode(encodedEmail, android.util.Base64.DEFAULT), Charsets.UTF_8).trim()
     } catch (e: Exception) {
-        "support@helloreader.info"
+        ""
     }
 
     val uriText = "mailto:${android.net.Uri.encode(targetEmail)}?" +
-            "subject=${android.net.Uri.encode("【Hello Reader 診断レポート・SOS問い合わせ】")}&" +
+            "subject=${android.net.Uri.encode("■hello-reader問い合わせ・ご意見")}&" +
             "body=${android.net.Uri.encode(report)}"
 
     val intent = Intent(Intent.ACTION_SENDTO, android.net.Uri.parse(uriText)).apply {
@@ -517,9 +618,16 @@ fun launchDiagnosticMailIntent(context: Context) {
     }
 
     try {
-        context.startActivity(Intent.createChooser(intent, "メールアプリを選択してください"))
+        val chooserIntent = Intent.createChooser(intent, "メールアプリを選択してください").apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        context.startActivity(chooserIntent)
     } catch (e: Exception) {
-        android.widget.Toast.makeText(context, "メールアプリの起動に失敗しました。診断ログをクリップボードにコピーしました。", android.widget.Toast.LENGTH_LONG).show()
+        android.widget.Toast.makeText(
+            context,
+            "メーラーの起動に失敗しました。診断ログをクリップボードにコピーしました",
+            android.widget.Toast.LENGTH_LONG
+        ).show()
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager
         val clip = android.content.ClipData.newPlainText("Hello Reader Diagnostic Report", report)
         clipboard?.setPrimaryClip(clip)
