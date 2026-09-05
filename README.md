@@ -67,6 +67,15 @@ adb shell am start -n com.stomato.helloreader/.MainActivity
 
 ---
 
+## 📜 プロジェクトポリシー ＆ コード貢献
+
+本プロジェクトは、Debian / GNU Linux のオープンソース精神（ボランティア主義・相互リスペクト・開発者の自由）を尊重し、開発者の持続可能性とベストエフォート型のサポートを原則として運営されています。
+
+- **プロジェクトポリシー**: [docs/Project Policy.md](docs/Project%20Policy.md)
+- **コード貢献 (PR / パッチ)**: GitHub Pull Request (PR) および `git format-patch` によるパッチ送信を大歓迎します。具体的な作成・送信手順は [Project Policy (コード貢献方法)](docs/Project%20Policy.md#5-コード貢献方法-how-to-contribute) を参照してください。
+
+---
+
 ## 📄 ライセンス
 
 - **プロジェクト全体**: [The Clear BSD License](LICENSE) (Copyright (c) 2026 stomato463-crypto)
