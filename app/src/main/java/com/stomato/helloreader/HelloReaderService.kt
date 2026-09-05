@@ -283,7 +283,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 }
                 Intent.ACTION_SCREEN_OFF -> {
                     Log.d(TAG, "Screen Turned OFF")
-                    tts?.stop()
+                    interruptSpeaking()
                 }
                 Intent.ACTION_USER_PRESENT -> {
                     Log.d(TAG, "User Present (Unlocked)")
@@ -462,6 +462,17 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         } else {
             Log.e(TAG, "TTSの初期化に失敗しました")
         }
+    }
+
+    /**
+     * 電源ボタン・音量キー押下時に起動ガイダンスや音読を即座にピタッと消音する (AOSP KeyEvents)
+     */
+    override fun onKeyEvent(event: KeyEvent?): Boolean {
+        if (event != null && event.action == KeyEvent.ACTION_DOWN) {
+            Log.d(TAG, "onKeyEvent ACTION_DOWN: keyCode=${event.keyCode} - Interrupting Speech")
+            interruptSpeaking()
+        }
+        return super.onKeyEvent(event)
     }
 
     /**
@@ -1093,18 +1104,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     /**
      * 木構造を深さ優先で走査し、読解・フォーカス可能なノード一覧を収集する (AOSP TalkBack準拠・子ノード脱落防止)
      */
-    private fun hasFocusableChildren(node: AccessibilityNodeInfo): Boolean {
-        for (i in 0 until node.childCount) {
-            val child = node.getChild(i) ?: continue
-            val compat = AccessibilityNodeInfoCompat.wrap(child)
-            val childText = parseNodeDescription(child)
-            if (!childText.isNullOrBlank() || compat.isClickable || compat.isFocusable) {
-                return true
-            }
-        }
-        return false
-    }
-
     private fun collectFocusableNodes(
         node: AccessibilityNodeInfo?,
         list: MutableList<AccessibilityNodeInfo>
@@ -1125,14 +1124,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val childCount = node.childCount
 
         val isKeyguard = isKeyguardLocked()
-        val hasChildren = hasFocusableChildren(node)
 
-        // ロック画面中またはフォーカス対象として意味のあるノードを判定 (TalkBack準拠: 子要素がフォーカス可能な場合は子要素にゆずる)
+        // TalkBack 準拠: 独立した操作ボタン/テキストノードを1つずつ順番にフォーカス対象として登録！
         val shouldFocusThisNode = when {
             isKeyguard -> hasText || isClickable || isFocusable
-            hasChildren && (isClickable || isFocusable) -> false
-            hasText -> true
-            (isClickable || isFocusable || isScreenReaderFocusable || isCheckable) -> true
+            isClickable || isFocusable || isScreenReaderFocusable || isCheckable -> true
+            childCount == 0 && hasText -> true
             compat.className?.contains("EditText") == true -> true
             else -> false
         }
@@ -1150,7 +1147,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             }
         }
 
-        // 子要素も再帰的に走査
+        // 子要素も走査（重複する親枠があれば sort ＆ focus で安全処理）
         for (i in 0 until childCount) {
             val child = node.getChild(i)
             collectFocusableNodes(child, list)
@@ -1601,6 +1598,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED,
             AccessibilityEvent.TYPE_VIEW_FOCUSED -> {
                 try {
+                    interruptSpeaking()
                     if (event.source != null) {
                         lastFocusedNode = event.source
                     }
@@ -1795,23 +1793,14 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             return NodeTextPair(customizedPair.first, customizedPair.second)
         }
 
-        val childTextSum = if (node.childCount in 1..12) collectAllChildTexts(node) else null
-
         if (rawMainText.isNullOrBlank()) {
             rawMainText = when {
-                !childTextSum.isNullOrBlank() -> childTextSum
                 !compat.text.isNullOrBlank() -> compat.text.toString()
                 !compat.contentDescription.isNullOrBlank() -> compat.contentDescription.toString()
                 !compat.hintText.isNullOrBlank() -> compat.hintText.toString()
                 !compat.error.isNullOrBlank() -> compat.error.toString()
                 !compat.roleDescription.isNullOrBlank() -> compat.roleDescription.toString()
-                else -> null
-            }
-        } else if (!childTextSum.isNullOrBlank() && childTextSum != rawMainText) {
-            if (childTextSum.contains(rawMainText)) {
-                rawMainText = childTextSum
-            } else {
-                rawMainText = "$rawMainText $childTextSum"
+                else -> collectAllChildTexts(node)
             }
         }
 

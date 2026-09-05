@@ -109,16 +109,17 @@ class MainActivity : ComponentActivity(), TextToSpeech.OnInitListener {
             if (result != TextToSpeech.LANG_MISSING_DATA && result != TextToSpeech.LANG_NOT_SUPPORTED) {
                 isTtsReady = true
                 Log.d("MainActivity", "自前TTS初期化成功！")
-                // 智浩さんの自作メッセージをベースにしたTalkBack無効時対応の極上ガイダンス！
-                speak("Hello Readerへようこそ！初期設定のご案内です。この画面には二つの大きなボタンとフォネティック・モールス設定があります。1のボタンで権限を許可し、2のボタンでアクセシビリティを有効にしてください。操作が難しい場合は、音量ボタンの上下を3秒間同時に長押しして TalkBack をオンにするか、お近くの方にボタンを押してもらってください。")
+                val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
+                val isStartupGuidanceEnabled = prefs.getBoolean("pref_startup_guidance_enabled", false)
+                if (isStartupGuidanceEnabled) {
+                    speak("Hello Reader 初期設定画面")
+                }
             }
         }
     }
 
     private fun speak(text: String) {
-        if (isTtsReady) {
-            tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, "MainActivityTTS")
-        }
+        // MainActivity 自前の単独発声を廃止し、HelloReaderService の一括制御に統合！
     }
 
     private fun checkAndRequestPermissions() {
