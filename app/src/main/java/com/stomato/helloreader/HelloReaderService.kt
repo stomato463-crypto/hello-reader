@@ -283,7 +283,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 }
                 Intent.ACTION_SCREEN_OFF -> {
                     Log.d(TAG, "Screen Turned OFF")
-                    interruptSpeaking()
+                    tts?.stop()
                 }
                 Intent.ACTION_USER_PRESENT -> {
                     Log.d(TAG, "User Present (Unlocked)")
@@ -457,22 +457,11 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     override fun onError(utteranceId: String?) {}
                 })
 
-                speakWithSubVoice("Hello Readerへようこそ！サービスが起動しました。", "音量キー長押しでいつでもTalkBackを起動できます")
+                speakWithSubVoice("Hello Readerが起動しました", "サブボイス案内が有効です")
             }
         } else {
             Log.e(TAG, "TTSの初期化に失敗しました")
         }
-    }
-
-    /**
-     * 電源ボタン・音量キー押下時に起動ガイダンスや音読を即座にピタッと消音する (AOSP KeyEvents)
-     */
-    override fun onKeyEvent(event: KeyEvent?): Boolean {
-        if (event != null && event.action == KeyEvent.ACTION_DOWN) {
-            Log.d(TAG, "onKeyEvent ACTION_DOWN: keyCode=${event.keyCode} - Interrupting Speech")
-            interruptSpeaking()
-        }
-        return super.onKeyEvent(event)
     }
 
     /**
@@ -1125,11 +1114,11 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         val isKeyguard = isKeyguardLocked()
 
-        // TalkBack 準拠: 独立した操作ボタン/テキストノードを1つずつ順番にフォーカス対象として登録！
+        // ロック画面中またはフォーカス対象として意味のあるノードを判定
         val shouldFocusThisNode = when {
             isKeyguard -> hasText || isClickable || isFocusable
-            isClickable || isFocusable || isScreenReaderFocusable || isCheckable -> true
             childCount == 0 && hasText -> true
+            (isClickable || isFocusable || isScreenReaderFocusable || isCheckable) && hasText -> true
             compat.className?.contains("EditText") == true -> true
             else -> false
         }
@@ -1147,7 +1136,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             }
         }
 
-        // 子要素も走査（重複する親枠があれば sort ＆ focus で安全処理）
+        // 子要素も再帰的に走査
         for (i in 0 until childCount) {
             val child = node.getChild(i)
             collectFocusableNodes(child, list)
@@ -1598,7 +1587,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED,
             AccessibilityEvent.TYPE_VIEW_FOCUSED -> {
                 try {
-                    interruptSpeaking()
                     if (event.source != null) {
                         lastFocusedNode = event.source
                     }
@@ -1713,9 +1701,25 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 }
             }
             AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED -> {
-                // TalkBack 準拠: 画面のチラつきや要素更新で勝手に画面全体を長文音読するのを完全にブロック！
-                // ユーザーがスワイプやタッチした時のみフォーカスされた要素を音読する
-                return
+                // 通話中、またはシステムUI（Wi-Fiステータス更新等）の背景チラつき自動連呼・割り込みをブロック！
+                if (isCallActive) return
+                val packageName = event.packageName?.toString() ?: ""
+                if (packageName == "com.android.systemui") {
+                    // Wi-Fiやバッテリーなどのステータスバー変化による割り込み音読を防止
+                    return
+                }
+
+                val text = getEventText(event)
+                if (!text.isNullOrBlank()) {
+                    speak(text)
+                } else if (isHomeScreenPackage(packageName)) {
+                    speakHomeScreenItems(getActiveRootNode())
+                } else if (event.source != null) {
+                    val pair = parseNodeDescriptionPair(event.source)
+                    if (pair != null) {
+                        speakWithSubVoice(pair.mainText, pair.hintText)
+                    }
+                }
             }
             AccessibilityEvent.TYPE_ANNOUNCEMENT -> {
                 val text = getEventText(event)
@@ -1784,8 +1788,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 !compat.hintText.isNullOrBlank() -> compat.hintText.toString()
                 !compat.error.isNullOrBlank() -> compat.error.toString()
                 !compat.roleDescription.isNullOrBlank() -> compat.roleDescription.toString()
-                else -> collectAllChildTexts(node)
+                else -> null
             }
+        }
+
+        if (rawMainText.isNullOrBlank()) {
+            rawMainText = collectAllChildTexts(node)
         }
 
         // App Support: View ID からの汎用アイコン・ボタン名全自動レスキュー
