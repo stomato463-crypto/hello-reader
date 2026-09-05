@@ -39,6 +39,7 @@
 ```
 
 #### 引数オプション一覧
+
 - **`-c` (`-Clean`)**: `gradlew clean` を事前に実行。
 - **`-l 1` (`-Log 1`)**: Hello Reader (Android) 専用リアルタイム Logcat を起動。
 - **`-l 2` (`-Log 2`)**: TalkBack 専用 Logcat を起動。
@@ -64,6 +65,15 @@ adb shell am start -n com.stomato.helloreader/.MainActivity
 - **対応OS**: Android 11.0 (API Level 30) ～ Android 15/16 (API Level 35/36+)
 - **対応チャネル**: Canary Channel / QPR Beta Channel / Stable Channel
 - **16KB ELF ページアライメント**: 0x4000 (16KB) アライメント済
+
+---
+
+## 📜 プロジェクトポリシー ＆ コード貢献
+
+本プロジェクトは、Debian / GNU Linux のオープンソース精神（ボランティア主義・相互リスペクト・開発者の自由）を尊重し、開発者の持続可能性とベストエフォート型のサポートを原則として運営されています。
+
+- **プロジェクトポリシー**: [docs/Project Policy.md](docs/Project%20Policy.md)
+- **コード貢献 (PR / パッチ)**: GitHub Pull Request (PR) および `git format-patch` によるパッチ送信を大歓迎します。具体的な作成・送信手順は [Project Policy (コード貢献方法)](docs/Project%20Policy.md#5-コード貢献方法-how-to-contribute) を参照してください。
 
 ---
 
