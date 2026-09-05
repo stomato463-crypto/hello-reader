@@ -977,114 +977,113 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     /**
      * AOSP TalkBack (NodeFocusFinder / TraversalStrategy) 準拠 フォーカス移動処理
      * 全ウィンドウ（アプリ本体 ＋ システムバー）から順序良くフォーカス可能ノードを収集して100%巡回！
+    /**
+     * AOSP TalkBack (TraversalStrategyUtils / focusSearch) 準拠 フォーカス移動処理
+     * OSネイティブの focusSearch を最優先試行し、隣接項目へ確実に項目移動！
      */
     private fun navigateFocus(direction: Int, directionName: String, isAutoRetry: Boolean = false) {
-        val allNodes = mutableListOf<AccessibilityNodeInfo>()
         Log.d(TAG, "navigateFocus called: directionName=$directionName, isKeyguardLocked=${isKeyguardLocked()}")
 
-        // 1. アクティブウィンドウのルートノードから最優先で収集
-        val activeRoot = rootInActiveWindow ?: getActiveRootNode()
-        if (activeRoot != null) {
-            collectFocusableNodes(activeRoot, allNodes)
-        }
-
-        // 2. システムウィンドウ（ステータスバー・ナビゲーションバー等）からも補完収集
-        val currentWindows = windows
-        if (!currentWindows.isNullOrEmpty()) {
-            for (window in currentWindows) {
-                try {
-                    window.root?.let { collectFocusableNodes(it, allNodes) }
-                } catch (e: Exception) {
-                    Log.w(TAG, "Window node collection error", e)
-                }
-            }
-        }
-
-        Log.d(TAG, "navigateFocus collected: ${allNodes.size} nodes")
-
-        if (allNodes.isEmpty()) {
-            speak("これ以上 $directionName に進めません")
-            return
-        }
-
-        // AOSP TalkBack (TraversalStrategy) 準拠: ノードの画面上位置 (Y座標・X座標) で視覚的な並び順に完全ソート！
-        allNodes.sortWith(Comparator { n1, n2 ->
-            val r1 = Rect()
-            val r2 = Rect()
-            n1.getBoundsInScreen(r1)
-            n2.getBoundsInScreen(r2)
-            val rowDiff = r1.top - r2.top
-            if (Math.abs(rowDiff) > 25) {
-                rowDiff
-            } else {
-                r1.left - r2.left
-            }
-        })
-
         val root = getActiveRootNode()
-
-        var currentFocus = if (isKeyguardLocked() && lastFocusedNode != null) {
+        val currentFocus = if (isKeyguardLocked() && lastFocusedNode != null) {
             lastFocusedNode
         } else {
-            root?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY) ?: lastFocusedNode
+            root?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
+                ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
+                ?: lastFocusedNode
         }
 
-        var currentIndex = -1
+        // 1. Google AOSP TalkBack 同等: Android OSネイティブの focusSearch(direction) を最優先実行！
+        // これにより「Geminiに相談」の真隣にある要素へOS精度で1項目ずつ完璧に順序移動！
+        var nextNode: AccessibilityNodeInfo? = null
         if (currentFocus != null) {
-            // 1. ノード同一性・テキスト・座標による精密一致検索
-            for (i in allNodes.indices) {
-                if (isSameNode(allNodes[i], currentFocus)) {
-                    currentIndex = i
-                    break
-                }
+            try {
+                nextNode = currentFocus.focusSearch(direction)
+            } catch (e: Exception) {
+                Log.w(TAG, "native focusSearch error", e)
+            }
+        }
+
+        // 2. もし focusSearch が null の場合は、画面全体のノード走査リストから空間補完検索
+        if (nextNode == null) {
+            val allNodes = mutableListOf<AccessibilityNodeInfo>()
+            val activeRoot = root ?: rootInActiveWindow
+            if (activeRoot != null) {
+                collectFocusableNodes(activeRoot, allNodes)
             }
 
-            // 2. もし精密一致で見つからなかった場合、直前のフォーカス位置 (画面座標) に最も近いノードのインデックスを空間検索！
-            if (currentIndex == -1) {
-                val focusBounds = Rect()
-                currentFocus.getBoundsInScreen(focusBounds)
-                if (focusBounds.width() > 0 && focusBounds.height() > 0) {
-                    var minDistance = Long.MAX_VALUE
-                    var closestIndex = -1
-                    val nodeBounds = Rect()
+            if (allNodes.isNotEmpty()) {
+                allNodes.sortWith(Comparator { n1, n2 ->
+                    val r1 = Rect()
+                    val r2 = Rect()
+                    n1.getBoundsInScreen(r1)
+                    n2.getBoundsInScreen(r2)
+                    val rowDiff = r1.top - r2.top
+                    if (Math.abs(rowDiff) > 25) {
+                        rowDiff
+                    } else {
+                        r1.left - r2.left
+                    }
+                })
+
+                var currentIndex = -1
+                if (currentFocus != null) {
                     for (i in allNodes.indices) {
-                        allNodes[i].getBoundsInScreen(nodeBounds)
-                        val dx = (nodeBounds.centerX() - focusBounds.centerX()).toLong()
-                        val dy = (nodeBounds.centerY() - focusBounds.centerY()).toLong()
-                        val dist = dx * dx + dy * dy
-                        if (dist < minDistance) {
-                            minDistance = dist
-                            closestIndex = i
+                        if (isSameNode(allNodes[i], currentFocus)) {
+                            currentIndex = i
+                            break
                         }
                     }
-                    if (closestIndex != -1) {
-                        currentIndex = closestIndex
+
+                    if (currentIndex == -1) {
+                        val focusBounds = Rect()
+                        currentFocus.getBoundsInScreen(focusBounds)
+                        if (focusBounds.width() > 0 && focusBounds.height() > 0) {
+                            var minDistance = Long.MAX_VALUE
+                            var closestIndex = -1
+                            val nodeBounds = Rect()
+                            for (i in allNodes.indices) {
+                                allNodes[i].getBoundsInScreen(nodeBounds)
+                                val dx = (nodeBounds.centerX() - focusBounds.centerX()).toLong()
+                                val dy = (nodeBounds.centerY() - focusBounds.centerY()).toLong()
+                                val dist = dx * dx + dy * dy
+                                if (dist < minDistance) {
+                                    minDistance = dist
+                                    closestIndex = i
+                                }
+                            }
+                            if (closestIndex != -1) {
+                                currentIndex = closestIndex
+                            }
+                        }
                     }
+                }
+
+                val targetIndex = if (direction == View.FOCUS_FORWARD) {
+                    if (currentIndex == -1) 0 else currentIndex + 1
+                } else {
+                    if (currentIndex == -1) allNodes.size - 1 else currentIndex - 1
+                }
+
+                if (targetIndex in allNodes.indices) {
+                    nextNode = allNodes[targetIndex]
                 }
             }
         }
 
-        val targetIndex = if (direction == View.FOCUS_FORWARD) {
-            if (currentIndex == -1) 0 else currentIndex + 1
-        } else {
-            if (currentIndex == -1) allNodes.size - 1 else currentIndex - 1
-        }
-
-        if (targetIndex in allNodes.indices) {
-            val targetNode = allNodes[targetIndex]
-
+        if (nextNode != null) {
             currentFocus?.performAction(AccessibilityNodeInfo.ACTION_CLEAR_ACCESSIBILITY_FOCUS)
-            var success = targetNode.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
+            var success = nextNode.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
             if (!success) {
-                val child = findClickableChild(targetNode)
+                val child = findClickableChild(nextNode)
                 if (child != null) {
                     success = child.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
                 }
             }
-            lastFocusedNode = targetNode
-            
-            val pair = parseNodeDescriptionPair(targetNode)
-            Log.d(TAG, "navigateFocus index=$targetIndex/${allNodes.size}, success=$success, text=${pair?.mainText}")
+            lastFocusedNode = nextNode
+
+            val pair = parseNodeDescriptionPair(nextNode)
+            Log.d(TAG, "navigateFocus success=$success, text=${pair?.mainText}")
             if (pair != null) {
                 speakWithSubVoice(pair.mainText, pair.hintText)
             } else {
@@ -1117,20 +1116,13 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         node1.getBoundsInScreen(r1)
         node2.getBoundsInScreen(r2)
 
+        if (r1.isEmpty || r2.isEmpty || r1 != r2) return false
+
         val text1 = parseNodeDescription(node1)
         val text2 = parseNodeDescription(node2)
 
-        // 1. 画面座標とテキスト（説明文）が合致する場合
-        if (!r1.isEmpty && r1 == r2) {
-            if (text1.isNullOrBlank() || text2.isNullOrBlank() || text1 == text2) {
-                return true
-            }
-        }
-
-        // 2. リソースIDとテキストが共に一致する場合（共有IDによる誤判定を防ぐ）
-        val id1 = node1.viewIdResourceName
-        val id2 = node2.viewIdResourceName
-        if (!id1.isNullOrBlank() && id1 == id2 && !text1.isNullOrBlank() && text1 == text2) {
+        // 両方ともテキストがあり、テキストと画面領域が完全に一致する場合のみ同一ノードと判定
+        if (!text1.isNullOrBlank() && !text2.isNullOrBlank() && text1 == text2) {
             return true
         }
 
