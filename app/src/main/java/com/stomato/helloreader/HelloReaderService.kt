@@ -1713,25 +1713,9 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 }
             }
             AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED -> {
-                // 通話中、またはシステムUI（Wi-Fiステータス更新等）の背景チラつき自動連呼・割り込みをブロック！
-                if (isCallActive) return
-                val packageName = event.packageName?.toString() ?: ""
-                if (packageName == "com.android.systemui") {
-                    // Wi-Fiやバッテリーなどのステータスバー変化による割り込み音読を防止
-                    return
-                }
-
-                val text = getEventText(event)
-                if (!text.isNullOrBlank()) {
-                    speak(text)
-                } else if (isHomeScreenPackage(packageName)) {
-                    speakHomeScreenItems(getActiveRootNode())
-                } else if (event.source != null) {
-                    val pair = parseNodeDescriptionPair(event.source)
-                    if (pair != null) {
-                        speakWithSubVoice(pair.mainText, pair.hintText)
-                    }
-                }
+                // TalkBack 準拠: 画面のチラつきや要素更新で勝手に画面全体を長文音読するのを完全にブロック！
+                // ユーザーがスワイプやタッチした時のみフォーカスされた要素を音読する
+                return
             }
             AccessibilityEvent.TYPE_ANNOUNCEMENT -> {
                 val text = getEventText(event)
