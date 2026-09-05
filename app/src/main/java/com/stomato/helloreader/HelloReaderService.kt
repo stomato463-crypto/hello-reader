@@ -1093,6 +1093,18 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     /**
      * 木構造を深さ優先で走査し、読解・フォーカス可能なノード一覧を収集する (AOSP TalkBack準拠・子ノード脱落防止)
      */
+    private fun hasFocusableChildren(node: AccessibilityNodeInfo): Boolean {
+        for (i in 0 until node.childCount) {
+            val child = node.getChild(i) ?: continue
+            val compat = AccessibilityNodeInfoCompat.wrap(child)
+            val childText = parseNodeDescription(child)
+            if (!childText.isNullOrBlank() || compat.isClickable || compat.isFocusable) {
+                return true
+            }
+        }
+        return false
+    }
+
     private fun collectFocusableNodes(
         node: AccessibilityNodeInfo?,
         list: MutableList<AccessibilityNodeInfo>
@@ -1113,12 +1125,14 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val childCount = node.childCount
 
         val isKeyguard = isKeyguardLocked()
+        val hasChildren = hasFocusableChildren(node)
 
-        // ロック画面中またはフォーカス対象として意味のあるノードを判定
+        // ロック画面中またはフォーカス対象として意味のあるノードを判定 (TalkBack準拠: 子要素がフォーカス可能な場合は子要素にゆずる)
         val shouldFocusThisNode = when {
             isKeyguard -> hasText || isClickable || isFocusable
-            childCount == 0 && hasText -> true
-            (isClickable || isFocusable || isScreenReaderFocusable || isCheckable) && hasText -> true
+            hasChildren && (isClickable || isFocusable) -> false
+            hasText -> true
+            (isClickable || isFocusable || isScreenReaderFocusable || isCheckable) -> true
             compat.className?.contains("EditText") == true -> true
             else -> false
         }
