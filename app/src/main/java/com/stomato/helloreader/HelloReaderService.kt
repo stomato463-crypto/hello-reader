@@ -975,9 +975,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     }
 
     /**
-     * AOSP TalkBack (NodeFocusFinder / TraversalStrategy) 準拠 フォーカス移動処理
-     * 全ウィンドウ（アプリ本体 ＋ システムバー）から順序良くフォーカス可能ノードを収集して100%巡回！
-    /**
      * AOSP TalkBack (TraversalStrategyUtils / focusSearch) 準拠 フォーカス移動処理
      * OSネイティブの focusSearch を最優先試行し、隣接項目へ確実に項目移動！
      */
