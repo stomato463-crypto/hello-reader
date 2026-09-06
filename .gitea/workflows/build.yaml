@@ -89,10 +89,7 @@ jobs:
           } else {
               git remote add github git@github.com:stomato463-crypto/hello-reader.git
           }
-<<<<<<< HEAD
-=======
           # 1. GitHub.com の main ブランチへコードをプッシュ
->>>>>>> 59b695b (ci: add auto tagging, release notes, and apk release deployment for GitHub)
           git push -f github github-main:main
 
           # 2. 自動タグの生成 (例: v0.0.1-alpha-20260907-44373b7)
