@@ -81,7 +81,7 @@ jobs:
           name: app-debug-apk
           path: app/build/outputs/apk/debug
 
-      - name: Push to GitHub.com main branch
+      - name: Push to GitHub.com main branch and Create GitHub Release
         run: |
           $env:GIT_SSH_COMMAND = "ssh -o StrictHostKeyChecking=no"
           if (git remote | Select-String -Pattern "^github$") {
@@ -89,7 +89,29 @@ jobs:
           } else {
               git remote add github git@github.com:stomato463-crypto/hello-reader.git
           }
+<<<<<<< HEAD
+=======
+          # 1. GitHub.com の main ブランチへコードをプッシュ
+>>>>>>> 59b695b (ci: add auto tagging, release notes, and apk release deployment for GitHub)
           git push -f github github-main:main
+
+          # 2. 自動タグの生成 (例: v0.0.1-alpha-20260907-44373b7)
+          $shortHash = (git rev-parse --short=8 HEAD).Trim()
+          $dateStr = Get-Date -Format "yyyyMMdd"
+          $tagName = "v0.0.1-alpha-${dateStr}-${shortHash}"
+          
+          Write-Host "Creating and Pushing Tag: $tagName" -ForegroundColor Green
+          git tag -f $tagName
+          git push -f github $tagName
+
+          # 3. GitHub CLI (gh) を使って、GitHub Release と自動リリースノートを生成！
+          if (Get-Command gh -ErrorAction SilentlyContinue) {
+              $apkFile = Get-ChildItem "app/build/outputs/apk/debug/debug-*.apk" | Select-Object -First 1
+              if ($apkFile) {
+                  Write-Host "Publishing Release to GitHub.com..." -ForegroundColor Green
+                  gh release create $tagName $apkFile.FullName --title "Hello Reader $tagName" --generate-notes --prerelease
+              }
+          }
         shell: powershell
 
       - name: Auto Publish to Gitea Releases (No Tag Required)
@@ -104,3 +126,4 @@ jobs:
         env:
           GITEA_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
