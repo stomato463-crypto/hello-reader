@@ -1,0 +1,600 @@
+﻿--------- beginning of main
+09-04 04:00:25.538 D/HelloReaderService( 6331): Speaking Main: ロック画面。9月4日 金曜日 4時00分。指紋センサーは画面の下部中央にあります
+09-04 04:00:25.538 D/HelloReaderService( 6331): LockScreen Details: ロック画面。9月4日 金曜日 4時00分。指紋センサーは画面の下部中央にあります
+09-04 04:00:26.264 D/HelloReaderService( 6331): handleGestureAction: 4
+09-04 04:00:26.409 D/HelloReaderService( 6331): Speaking Main: Android システム
+09-04 04:00:26.463 D/HelloReaderService( 6331): playSound requested for soundId: 3 -> streamId: 1
+09-04 04:00:27.202 D/HelloReaderService( 6331): handleGestureAction: 4
+09-04 04:00:27.405 D/HelloReaderService( 6331): Speaking Main: 次へ の要素へ移動
+09-04 04:00:27.462 D/HelloReaderService( 6331): playSound requested for soundId: 3 -> streamId: 2
+09-04 04:00:28.034 D/HelloReaderService( 6331): handleGestureAction: 4
+09-04 04:00:28.277 D/HelloReaderService( 6331): playSound requested for soundId: 3 -> streamId: 3
+09-04 04:00:29.445 D/HelloReaderService( 6331): handleGestureAction: 4
+09-04 04:00:29.686 D/HelloReaderService( 6331): Speaking Main: 次へ の要素へ移動
+09-04 04:00:29.742 D/HelloReaderService( 6331): playSound requested for soundId: 3 -> streamId: 4
+09-04 04:00:33.366 D/HelloReaderService( 6331): handleGestureAction: 25
+09-04 04:00:33.368 D/HelloReaderService( 6331): Swipe Up Gesture Detected: 25 (KeyguardLocked=true)
+09-04 04:00:33.370 D/HelloReaderService( 6331): Speaking Main: PINコード入力画面
+09-04 04:00:33.386 E/HelloReaderService( 6331): Failed to show PIN entry screen
+09-04 04:00:33.386 E/HelloReaderService( 6331): android.content.ActivityNotFoundException: Unable to find explicit activity class {com.stomato.helloreader/com.stomato.helloreader.MainActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+09-04 04:00:33.386 E/HelloReaderService( 6331): 	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2452)
+09-04 04:00:33.386 E/HelloReaderService( 6331): 	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2022)
+09-04 04:00:33.386 E/HelloReaderService( 6331): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1216)
+09-04 04:00:33.386 E/HelloReaderService( 6331): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1187)
+09-04 04:00:33.386 E/HelloReaderService( 6331): 	at android.content.ContextWrapper.startActivity(ContextWrapper.java:438)
+09-04 04:00:33.386 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.showPinEntryScreen(HelloReaderService.kt:1109)
+09-04 04:00:33.386 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.handleGestureAction(HelloReaderService.kt:432)
+09-04 04:00:33.386 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.onGesture(HelloReaderService.kt:401)
+09-04 04:00:33.386 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$2.onGesture(AccessibilityService.java:2830)
+09-04 04:00:33.386 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.lambda$onGesture$3(AccessibilityService.java:3009)
+09-04 04:00:33.386 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.$r8$lambda$-HFXTC8zgOUh2cwD2xU2Qq2cfsU(AccessibilityService.java:0)
+09-04 04:00:33.386 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+09-04 04:00:33.386 E/HelloReaderService( 6331): 	at android.os.Handler.handleCallback(Handler.java:1095)
+09-04 04:00:33.386 E/HelloReaderService( 6331): 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+09-04 04:00:33.386 E/HelloReaderService( 6331): 	at android.os.Handler.dispatchMessage(Handler.java:125)
+09-04 04:00:33.386 E/HelloReaderService( 6331): 	at android.os.Looper.loopOnce(Looper.java:296)
+09-04 04:00:33.386 E/HelloReaderService( 6331): 	at android.os.Looper.loop(Looper.java:397)
+09-04 04:00:33.386 E/HelloReaderService( 6331): 	at android.app.ActivityThread.main(ActivityThread.java:9523)
+09-04 04:00:33.386 E/HelloReaderService( 6331): 	at java.lang.reflect.Method.invoke(Native Method)
+09-04 04:00:33.386 E/HelloReaderService( 6331): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+09-04 04:00:33.386 E/HelloReaderService( 6331): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:939)
+09-04 04:00:33.598 D/HelloReaderService( 6331): handleGestureAction: 1
+09-04 04:00:33.600 D/HelloReaderService( 6331): Swipe Up Gesture Detected: 1 (KeyguardLocked=true)
+09-04 04:00:33.610 E/HelloReaderService( 6331): Failed to show PIN entry screen
+09-04 04:00:33.610 E/HelloReaderService( 6331): android.content.ActivityNotFoundException: Unable to find explicit activity class {com.stomato.helloreader/com.stomato.helloreader.MainActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+09-04 04:00:33.610 E/HelloReaderService( 6331): 	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2452)
+09-04 04:00:33.610 E/HelloReaderService( 6331): 	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2022)
+09-04 04:00:33.610 E/HelloReaderService( 6331): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1216)
+09-04 04:00:33.610 E/HelloReaderService( 6331): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1187)
+09-04 04:00:33.610 E/HelloReaderService( 6331): 	at android.content.ContextWrapper.startActivity(ContextWrapper.java:438)
+09-04 04:00:33.610 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.showPinEntryScreen(HelloReaderService.kt:1109)
+09-04 04:00:33.610 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.handleGestureAction(HelloReaderService.kt:432)
+09-04 04:00:33.610 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.onGesture(HelloReaderService.kt:401)
+09-04 04:00:33.610 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$2.onGesture(AccessibilityService.java:2830)
+09-04 04:00:33.610 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.lambda$onGesture$3(AccessibilityService.java:3009)
+09-04 04:00:33.610 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.$r8$lambda$-HFXTC8zgOUh2cwD2xU2Qq2cfsU(AccessibilityService.java:0)
+09-04 04:00:33.610 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+09-04 04:00:33.610 E/HelloReaderService( 6331): 	at android.os.Handler.handleCallback(Handler.java:1095)
+09-04 04:00:33.610 E/HelloReaderService( 6331): 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+09-04 04:00:33.610 E/HelloReaderService( 6331): 	at android.os.Handler.dispatchMessage(Handler.java:125)
+09-04 04:00:33.610 E/HelloReaderService( 6331): 	at android.os.Looper.loopOnce(Looper.java:296)
+09-04 04:00:33.610 E/HelloReaderService( 6331): 	at android.os.Looper.loop(Looper.java:397)
+09-04 04:00:33.610 E/HelloReaderService( 6331): 	at android.app.ActivityThread.main(ActivityThread.java:9523)
+09-04 04:00:33.610 E/HelloReaderService( 6331): 	at java.lang.reflect.Method.invoke(Native Method)
+09-04 04:00:33.610 E/HelloReaderService( 6331): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+09-04 04:00:33.610 E/HelloReaderService( 6331): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:939)
+09-04 04:00:33.828 D/HelloReaderService( 6331): handleGestureAction: 1
+09-04 04:00:33.837 E/HelloReaderService( 6331): Failed to show PIN entry screen
+09-04 04:00:33.837 E/HelloReaderService( 6331): android.content.ActivityNotFoundException: Unable to find explicit activity class {com.stomato.helloreader/com.stomato.helloreader.MainActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+09-04 04:00:33.837 E/HelloReaderService( 6331): 	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2452)
+09-04 04:00:33.837 E/HelloReaderService( 6331): 	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2022)
+09-04 04:00:33.837 E/HelloReaderService( 6331): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1216)
+09-04 04:00:33.837 E/HelloReaderService( 6331): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1187)
+09-04 04:00:33.837 E/HelloReaderService( 6331): 	at android.content.ContextWrapper.startActivity(ContextWrapper.java:438)
+09-04 04:00:33.837 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.showPinEntryScreen(HelloReaderService.kt:1109)
+09-04 04:00:33.837 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.handleGestureAction(HelloReaderService.kt:432)
+09-04 04:00:33.837 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.onGesture(HelloReaderService.kt:401)
+09-04 04:00:33.837 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$2.onGesture(AccessibilityService.java:2830)
+09-04 04:00:33.837 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.lambda$onGesture$3(AccessibilityService.java:3009)
+09-04 04:00:33.837 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.$r8$lambda$-HFXTC8zgOUh2cwD2xU2Qq2cfsU(AccessibilityService.java:0)
+09-04 04:00:33.837 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+09-04 04:00:33.837 E/HelloReaderService( 6331): 	at android.os.Handler.handleCallback(Handler.java:1095)
+09-04 04:00:33.837 E/HelloReaderService( 6331): 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+09-04 04:00:33.837 E/HelloReaderService( 6331): 	at android.os.Handler.dispatchMessage(Handler.java:125)
+09-04 04:00:33.837 E/HelloReaderService( 6331): 	at android.os.Looper.loopOnce(Looper.java:296)
+09-04 04:00:33.837 E/HelloReaderService( 6331): 	at android.os.Looper.loop(Looper.java:397)
+09-04 04:00:33.837 E/HelloReaderService( 6331): 	at android.app.ActivityThread.main(ActivityThread.java:9523)
+09-04 04:00:33.837 E/HelloReaderService( 6331): 	at java.lang.reflect.Method.invoke(Native Method)
+09-04 04:00:33.837 E/HelloReaderService( 6331): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+09-04 04:00:33.837 E/HelloReaderService( 6331): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:939)
+09-04 04:00:33.829 D/HelloReaderService( 6331): Swipe Up Gesture Detected: 1 (KeyguardLocked=true)
+09-04 04:00:34.071 D/HelloReaderService( 6331): handleGestureAction: 1
+09-04 04:00:34.074 D/HelloReaderService( 6331): Swipe Up Gesture Detected: 1 (KeyguardLocked=true)
+09-04 04:00:34.089 E/HelloReaderService( 6331): Failed to show PIN entry screen
+09-04 04:00:34.089 E/HelloReaderService( 6331): android.content.ActivityNotFoundException: Unable to find explicit activity class {com.stomato.helloreader/com.stomato.helloreader.MainActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+09-04 04:00:34.089 E/HelloReaderService( 6331): 	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2452)
+09-04 04:00:34.089 E/HelloReaderService( 6331): 	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2022)
+09-04 04:00:34.089 E/HelloReaderService( 6331): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1216)
+09-04 04:00:34.089 E/HelloReaderService( 6331): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1187)
+09-04 04:00:34.089 E/HelloReaderService( 6331): 	at android.content.ContextWrapper.startActivity(ContextWrapper.java:438)
+09-04 04:00:34.089 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.showPinEntryScreen(HelloReaderService.kt:1109)
+09-04 04:00:34.089 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.handleGestureAction(HelloReaderService.kt:432)
+09-04 04:00:34.089 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.onGesture(HelloReaderService.kt:401)
+09-04 04:00:34.089 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$2.onGesture(AccessibilityService.java:2830)
+09-04 04:00:34.089 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.lambda$onGesture$3(AccessibilityService.java:3009)
+09-04 04:00:34.089 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.$r8$lambda$-HFXTC8zgOUh2cwD2xU2Qq2cfsU(AccessibilityService.java:0)
+09-04 04:00:34.089 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+09-04 04:00:34.089 E/HelloReaderService( 6331): 	at android.os.Handler.handleCallback(Handler.java:1095)
+09-04 04:00:34.089 E/HelloReaderService( 6331): 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+09-04 04:00:34.089 E/HelloReaderService( 6331): 	at android.os.Handler.dispatchMessage(Handler.java:125)
+09-04 04:00:34.089 E/HelloReaderService( 6331): 	at android.os.Looper.loopOnce(Looper.java:296)
+09-04 04:00:34.089 E/HelloReaderService( 6331): 	at android.os.Looper.loop(Looper.java:397)
+09-04 04:00:34.089 E/HelloReaderService( 6331): 	at android.app.ActivityThread.main(ActivityThread.java:9523)
+09-04 04:00:34.089 E/HelloReaderService( 6331): 	at java.lang.reflect.Method.invoke(Native Method)
+09-04 04:00:34.089 E/HelloReaderService( 6331): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+09-04 04:00:34.089 E/HelloReaderService( 6331): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:939)
+09-04 04:00:34.307 D/HelloReaderService( 6331): handleGestureAction: 1
+09-04 04:00:34.309 D/HelloReaderService( 6331): Swipe Up Gesture Detected: 1 (KeyguardLocked=true)
+09-04 04:00:34.358 E/HelloReaderService( 6331): Failed to show PIN entry screen
+09-04 04:00:34.358 E/HelloReaderService( 6331): android.content.ActivityNotFoundException: Unable to find explicit activity class {com.stomato.helloreader/com.stomato.helloreader.MainActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+09-04 04:00:34.358 E/HelloReaderService( 6331): 	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2452)
+09-04 04:00:34.358 E/HelloReaderService( 6331): 	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2022)
+09-04 04:00:34.358 E/HelloReaderService( 6331): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1216)
+09-04 04:00:34.358 E/HelloReaderService( 6331): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1187)
+09-04 04:00:34.358 E/HelloReaderService( 6331): 	at android.content.ContextWrapper.startActivity(ContextWrapper.java:438)
+09-04 04:00:34.358 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.showPinEntryScreen(HelloReaderService.kt:1109)
+09-04 04:00:34.358 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.handleGestureAction(HelloReaderService.kt:432)
+09-04 04:00:34.358 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.onGesture(HelloReaderService.kt:401)
+09-04 04:00:34.358 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$2.onGesture(AccessibilityService.java:2830)
+09-04 04:00:34.358 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.lambda$onGesture$3(AccessibilityService.java:3009)
+09-04 04:00:34.358 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.$r8$lambda$-HFXTC8zgOUh2cwD2xU2Qq2cfsU(AccessibilityService.java:0)
+09-04 04:00:34.358 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+09-04 04:00:34.358 E/HelloReaderService( 6331): 	at android.os.Handler.handleCallback(Handler.java:1095)
+09-04 04:00:34.358 E/HelloReaderService( 6331): 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+09-04 04:00:34.358 E/HelloReaderService( 6331): 	at android.os.Looper.loopOnce(Looper.java:296)
+09-04 04:00:34.358 E/HelloReaderService( 6331): 	at android.os.Looper.loop(Looper.java:397)
+09-04 04:00:34.358 E/HelloReaderService( 6331): 	at android.os.Handler.dispatchMessage(Handler.java:125)
+09-04 04:00:34.358 E/HelloReaderService( 6331): 	at android.app.ActivityThread.main(ActivityThread.java:9523)
+09-04 04:00:34.358 E/HelloReaderService( 6331): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+09-04 04:00:34.358 E/HelloReaderService( 6331): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:939)
+09-04 04:00:34.583 D/HelloReaderService( 6331): handleGestureAction: 1
+09-04 04:00:34.586 D/HelloReaderService( 6331): Swipe Up Gesture Detected: 1 (KeyguardLocked=true)
+09-04 04:00:34.601 E/HelloReaderService( 6331): Failed to show PIN entry screen
+09-04 04:00:34.358 E/HelloReaderService( 6331): 	at java.lang.reflect.Method.invoke(Native Method)
+09-04 04:00:34.601 E/HelloReaderService( 6331): android.content.ActivityNotFoundException: Unable to find explicit activity class {com.stomato.helloreader/com.stomato.helloreader.MainActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+09-04 04:00:34.601 E/HelloReaderService( 6331): 	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2452)
+09-04 04:00:34.601 E/HelloReaderService( 6331): 	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2022)
+09-04 04:00:34.601 E/HelloReaderService( 6331): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1216)
+09-04 04:00:34.601 E/HelloReaderService( 6331): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1187)
+09-04 04:00:34.601 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.showPinEntryScreen(HelloReaderService.kt:1109)
+09-04 04:00:34.601 E/HelloReaderService( 6331): 	at android.content.ContextWrapper.startActivity(ContextWrapper.java:438)
+09-04 04:00:34.601 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.handleGestureAction(HelloReaderService.kt:432)
+09-04 04:00:34.601 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.onGesture(HelloReaderService.kt:401)
+09-04 04:00:34.601 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$2.onGesture(AccessibilityService.java:2830)
+09-04 04:00:34.601 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.lambda$onGesture$3(AccessibilityService.java:3009)
+09-04 04:00:34.601 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.$r8$lambda$-HFXTC8zgOUh2cwD2xU2Qq2cfsU(AccessibilityService.java:0)
+09-04 04:00:34.601 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+09-04 04:00:34.601 E/HelloReaderService( 6331): 	at android.os.Handler.handleCallback(Handler.java:1095)
+09-04 04:00:34.601 E/HelloReaderService( 6331): 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+09-04 04:00:34.601 E/HelloReaderService( 6331): 	at android.os.Looper.loopOnce(Looper.java:296)
+09-04 04:00:34.601 E/HelloReaderService( 6331): 	at android.os.Looper.loop(Looper.java:397)
+09-04 04:00:34.601 E/HelloReaderService( 6331): 	at android.app.ActivityThread.main(ActivityThread.java:9523)
+09-04 04:00:34.601 E/HelloReaderService( 6331): 	at java.lang.reflect.Method.invoke(Native Method)
+09-04 04:00:34.601 E/HelloReaderService( 6331): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+09-04 04:00:34.601 E/HelloReaderService( 6331): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:939)
+09-04 04:00:34.815 D/HelloReaderService( 6331): handleGestureAction: 1
+09-04 04:00:34.601 E/HelloReaderService( 6331): 	at android.os.Handler.dispatchMessage(Handler.java:125)
+09-04 04:00:34.817 D/HelloReaderService( 6331): Swipe Up Gesture Detected: 1 (KeyguardLocked=true)
+09-04 04:00:34.828 E/HelloReaderService( 6331): Failed to show PIN entry screen
+09-04 04:00:34.828 E/HelloReaderService( 6331): android.content.ActivityNotFoundException: Unable to find explicit activity class {com.stomato.helloreader/com.stomato.helloreader.MainActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+09-04 04:00:34.828 E/HelloReaderService( 6331): 	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2452)
+09-04 04:00:34.828 E/HelloReaderService( 6331): 	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2022)
+09-04 04:00:34.828 E/HelloReaderService( 6331): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1216)
+09-04 04:00:34.828 E/HelloReaderService( 6331): 	at android.content.ContextWrapper.startActivity(ContextWrapper.java:438)
+09-04 04:00:34.828 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.showPinEntryScreen(HelloReaderService.kt:1109)
+09-04 04:00:34.828 E/HelloReaderService( 6331): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1187)
+09-04 04:00:34.828 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.handleGestureAction(HelloReaderService.kt:432)
+09-04 04:00:34.828 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.onGesture(HelloReaderService.kt:401)
+09-04 04:00:34.828 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$2.onGesture(AccessibilityService.java:2830)
+09-04 04:00:34.828 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.lambda$onGesture$3(AccessibilityService.java:3009)
+09-04 04:00:34.828 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.$r8$lambda$-HFXTC8zgOUh2cwD2xU2Qq2cfsU(AccessibilityService.java:0)
+09-04 04:00:34.828 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+09-04 04:00:34.828 E/HelloReaderService( 6331): 	at android.os.Handler.handleCallback(Handler.java:1095)
+09-04 04:00:34.828 E/HelloReaderService( 6331): 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+09-04 04:00:34.828 E/HelloReaderService( 6331): 	at android.os.Handler.dispatchMessage(Handler.java:125)
+09-04 04:00:34.828 E/HelloReaderService( 6331): 	at android.os.Looper.loopOnce(Looper.java:296)
+09-04 04:00:34.828 E/HelloReaderService( 6331): 	at android.os.Looper.loop(Looper.java:397)
+09-04 04:00:34.828 E/HelloReaderService( 6331): 	at android.app.ActivityThread.main(ActivityThread.java:9523)
+09-04 04:00:34.828 E/HelloReaderService( 6331): 	at java.lang.reflect.Method.invoke(Native Method)
+09-04 04:00:34.828 E/HelloReaderService( 6331): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+09-04 04:00:34.828 E/HelloReaderService( 6331): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:939)
+09-04 04:00:35.043 D/HelloReaderService( 6331): handleGestureAction: 1
+09-04 04:00:35.044 D/HelloReaderService( 6331): Swipe Up Gesture Detected: 1 (KeyguardLocked=true)
+09-04 04:00:35.055 E/HelloReaderService( 6331): Failed to show PIN entry screen
+09-04 04:00:35.055 E/HelloReaderService( 6331): android.content.ActivityNotFoundException: Unable to find explicit activity class {com.stomato.helloreader/com.stomato.helloreader.MainActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+09-04 04:00:35.055 E/HelloReaderService( 6331): 	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2452)
+09-04 04:00:35.055 E/HelloReaderService( 6331): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1216)
+09-04 04:00:35.055 E/HelloReaderService( 6331): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1187)
+09-04 04:00:35.055 E/HelloReaderService( 6331): 	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2022)
+09-04 04:00:35.055 E/HelloReaderService( 6331): 	at android.content.ContextWrapper.startActivity(ContextWrapper.java:438)
+09-04 04:00:35.055 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.showPinEntryScreen(HelloReaderService.kt:1109)
+09-04 04:00:35.055 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.handleGestureAction(HelloReaderService.kt:432)
+09-04 04:00:35.055 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.onGesture(HelloReaderService.kt:401)
+09-04 04:00:35.055 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$2.onGesture(AccessibilityService.java:2830)
+09-04 04:00:35.055 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.lambda$onGesture$3(AccessibilityService.java:3009)
+09-04 04:00:35.055 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+09-04 04:00:35.055 E/HelloReaderService( 6331): 	at android.os.Handler.handleCallback(Handler.java:1095)
+09-04 04:00:35.055 E/HelloReaderService( 6331): 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+09-04 04:00:35.055 E/HelloReaderService( 6331): 	at android.os.Handler.dispatchMessage(Handler.java:125)
+09-04 04:00:35.055 E/HelloReaderService( 6331): 	at android.os.Looper.loopOnce(Looper.java:296)
+09-04 04:00:35.055 E/HelloReaderService( 6331): 	at android.os.Looper.loop(Looper.java:397)
+09-04 04:00:35.055 E/HelloReaderService( 6331): 	at java.lang.reflect.Method.invoke(Native Method)
+09-04 04:00:35.055 E/HelloReaderService( 6331): 	at android.app.ActivityThread.main(ActivityThread.java:9523)
+09-04 04:00:35.055 E/HelloReaderService( 6331): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+09-04 04:00:35.055 E/HelloReaderService( 6331): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:939)
+09-04 04:00:35.269 D/HelloReaderService( 6331): handleGestureAction: 1
+09-04 04:00:35.271 D/HelloReaderService( 6331): Swipe Up Gesture Detected: 1 (KeyguardLocked=true)
+09-04 04:00:35.296 E/HelloReaderService( 6331): Failed to show PIN entry screen
+09-04 04:00:35.296 E/HelloReaderService( 6331): android.content.ActivityNotFoundException: Unable to find explicit activity class {com.stomato.helloreader/com.stomato.helloreader.MainActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+09-04 04:00:35.296 E/HelloReaderService( 6331): 	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2452)
+09-04 04:00:35.296 E/HelloReaderService( 6331): 	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2022)
+09-04 04:00:35.296 E/HelloReaderService( 6331): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1216)
+09-04 04:00:35.296 E/HelloReaderService( 6331): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1187)
+09-04 04:00:35.296 E/HelloReaderService( 6331): 	at android.content.ContextWrapper.startActivity(ContextWrapper.java:438)
+09-04 04:00:35.296 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.showPinEntryScreen(HelloReaderService.kt:1109)
+09-04 04:00:35.296 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.handleGestureAction(HelloReaderService.kt:432)
+09-04 04:00:35.296 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.onGesture(HelloReaderService.kt:401)
+09-04 04:00:35.296 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$2.onGesture(AccessibilityService.java:2830)
+09-04 04:00:35.296 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.lambda$onGesture$3(AccessibilityService.java:3009)
+09-04 04:00:35.296 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.$r8$lambda$-HFXTC8zgOUh2cwD2xU2Qq2cfsU(AccessibilityService.java:0)
+09-04 04:00:35.296 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+09-04 04:00:35.296 E/HelloReaderService( 6331): 	at android.os.Handler.handleCallback(Handler.java:1095)
+09-04 04:00:35.296 E/HelloReaderService( 6331): 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+09-04 04:00:35.296 E/HelloReaderService( 6331): 	at android.os.Handler.dispatchMessage(Handler.java:125)
+09-04 04:00:35.296 E/HelloReaderService( 6331): 	at android.os.Looper.loopOnce(Looper.java:296)
+09-04 04:00:35.296 E/HelloReaderService( 6331): 	at android.os.Looper.loop(Looper.java:397)
+09-04 04:00:35.296 E/HelloReaderService( 6331): 	at android.app.ActivityThread.main(ActivityThread.java:9523)
+09-04 04:00:35.296 E/HelloReaderService( 6331): 	at java.lang.reflect.Method.invoke(Native Method)
+09-04 04:00:35.296 E/HelloReaderService( 6331): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:939)
+09-04 04:00:35.522 D/HelloReaderService( 6331): handleGestureAction: 1
+09-04 04:00:35.523 D/HelloReaderService( 6331): Swipe Up Gesture Detected: 1 (KeyguardLocked=true)
+09-04 04:00:35.524 D/HelloReaderService( 6331): Speaking Main: PINコード入力画面
+09-04 04:00:35.532 E/HelloReaderService( 6331): Failed to show PIN entry screen
+09-04 04:00:35.296 E/HelloReaderService( 6331): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+09-04 04:00:35.532 E/HelloReaderService( 6331): android.content.ActivityNotFoundException: Unable to find explicit activity class {com.stomato.helloreader/com.stomato.helloreader.MainActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+09-04 04:00:35.532 E/HelloReaderService( 6331): 	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2452)
+09-04 04:00:35.532 E/HelloReaderService( 6331): 	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2022)
+09-04 04:00:35.532 E/HelloReaderService( 6331): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1216)
+09-04 04:00:35.532 E/HelloReaderService( 6331): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1187)
+09-04 04:00:35.532 E/HelloReaderService( 6331): 	at android.content.ContextWrapper.startActivity(ContextWrapper.java:438)
+09-04 04:00:35.532 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.showPinEntryScreen(HelloReaderService.kt:1109)
+09-04 04:00:35.532 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.handleGestureAction(HelloReaderService.kt:432)
+09-04 04:00:35.532 E/HelloReaderService( 6331): 	at com.stomato.helloreader.HelloReaderService.onGesture(HelloReaderService.kt:401)
+09-04 04:00:35.532 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$2.onGesture(AccessibilityService.java:2830)
+09-04 04:00:35.532 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.lambda$onGesture$3(AccessibilityService.java:3009)
+09-04 04:00:35.532 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.$r8$lambda$-HFXTC8zgOUh2cwD2xU2Qq2cfsU(AccessibilityService.java:0)
+09-04 04:00:35.532 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+09-04 04:00:35.532 E/HelloReaderService( 6331): 	at android.os.Handler.handleCallback(Handler.java:1095)
+09-04 04:00:35.532 E/HelloReaderService( 6331): 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+09-04 04:00:35.532 E/HelloReaderService( 6331): 	at android.os.Handler.dispatchMessage(Handler.java:125)
+09-04 04:00:35.532 E/HelloReaderService( 6331): 	at android.os.Looper.loopOnce(Looper.java:296)
+09-04 04:00:35.532 E/HelloReaderService( 6331): 	at android.os.Looper.loop(Looper.java:397)
+09-04 04:00:35.532 E/HelloReaderService( 6331): 	at android.app.ActivityThread.main(ActivityThread.java:9523)
+09-04 04:00:35.532 E/HelloReaderService( 6331): 	at java.lang.reflect.Method.invoke(Native Method)
+09-04 04:00:35.532 E/HelloReaderService( 6331): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+09-04 04:00:35.532 E/HelloReaderService( 6331): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:939)
+09-04 04:00:36.486 D/HelloReaderService( 6331): handleGestureAction: 4
+09-04 04:00:36.764 D/HelloReaderService( 6331): Speaking Main: 次へ の要素へ移動
+09-04 04:00:36.831 D/HelloReaderService( 6331): playSound requested for soundId: 3 -> streamId: 5
+09-04 04:00:37.266 D/HelloReaderService( 6331): handleGestureAction: 4
+09-04 04:00:37.692 D/HelloReaderService( 6331): playSound requested for soundId: 3 -> streamId: 6
+09-04 04:00:38.369 D/HelloReaderService( 6331): handleGestureAction: 4
+09-04 04:00:38.629 D/HelloReaderService( 6331): playSound requested for soundId: 3 -> streamId: 7
+09-04 04:00:39.564 D/HelloReaderService( 6331): Speaking Main: 次へ の要素へ移動
+09-04 04:00:39.322 D/HelloReaderService( 6331): handleGestureAction: 4
+09-04 04:00:39.621 D/HelloReaderService( 6331): playSound requested for soundId: 3 -> streamId: 8
+09-04 04:00:40.181 D/HelloReaderService( 6331): handleGestureAction: 4
+09-04 04:00:40.523 D/HelloReaderService( 6331): playSound requested for soundId: 3 -> streamId: 9
+09-04 04:00:41.142 D/HelloReaderService( 6331): handleGestureAction: 4
+09-04 04:00:41.591 D/HelloReaderService( 6331): playSound requested for soundId: 3 -> streamId: 10
+09-04 04:00:35.055 E/HelloReaderService( 6331): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.$r8$lambda$-HFXTC8zgOUh2cwD2xU2Qq2cfsU(AccessibilityService.java:0)
+09-04 04:00:42.260 D/HelloReaderService( 6331): handleGestureAction: 3
+09-04 04:00:42.517 D/HelloReaderService( 6331): Speaking Main: Android システム
+09-04 04:00:42.580 D/HelloReaderService( 6331): playSound requested for soundId: 3 -> streamId: 11
+09-04 04:00:43.102 D/HelloReaderService( 6331): handleGestureAction: 3
+09-04 04:00:43.379 D/HelloReaderService( 6331): playSound requested for soundId: 2 -> streamId: 12
+09-04 04:00:43.384 D/HelloReaderService( 6331): Speaking Main: これ以上 前へ に進めません
+09-04 04:00:43.736 D/HelloReaderService( 6331): handleGestureAction: 3
+09-04 04:00:43.997 D/HelloReaderService( 6331): playSound requested for soundId: 2 -> streamId: 13
+09-04 04:00:44.332 D/HelloReaderService( 6331): handleGestureAction: 3
+09-04 04:00:44.652 D/HelloReaderService( 6331): playSound requested for soundId: 2 -> streamId: 14
+09-04 04:00:55.203 D/HelloReaderService( 6331): Screen Turned OFF
+09-04 04:04:01.016 D/HelloReaderService( 6479): Hello Reader Accessibility Service Connected!
+09-04 04:04:01.057 D/HelloReaderService( 6479): SoundPool Initialized (Hybrid Custom & AOSP Sounds). Activate: 1, Deactivate: 2, Focus: 3, ViewEntered: 4, Scroll: 5
+09-04 04:04:01.288 D/HelloReaderService( 6479): Sound loaded successfully! sampleId: 1
+09-04 04:04:01.300 D/HelloReaderService( 6479): Sound loaded successfully! sampleId: 2
+09-04 04:04:01.409 D/HelloReaderService( 6479): Sound loaded successfully! sampleId: 4
+09-04 04:04:01.811 D/HelloReaderService( 6479): Sub-Voice: 安定動作ピッチ変調モード (MainPitch: 1.0, SubPitch: 0.82) を有効化しました
+09-04 04:04:01.822 D/HelloReaderService( 6479): Speaking Main: Hello Readerが起動しました [SubVoice Hint: サブボイス案内が有効です]
+09-04 04:04:01.824 D/HelloReaderService( 6479): Sound loaded successfully! sampleId: 3
+09-04 04:04:01.824 D/HelloReaderService( 6479): Sound loaded successfully! sampleId: 5
+09-04 04:04:16.981 D/HelloReaderService( 6479): Screen Turned ON
+09-04 04:04:17.432 D/HelloReaderService( 6479): LockScreen Details: ロック画面。9月4日 金曜日 4時04分。指紋センサーは画面の下部中央にあります
+09-04 04:04:17.433 D/HelloReaderService( 6479): Speaking Main: ロック画面。9月4日 金曜日 4時04分。指紋センサーは画面の下部中央にあります
+09-04 04:04:18.467 D/HelloReaderService( 6479): handleGestureAction: 4
+09-04 04:04:18.468 D/HelloReaderService( 6479): navigateFocus called: directionName=次へ, isKeyguardLocked=true
+09-04 04:04:18.899 D/HelloReaderService( 6479): navigateFocus index=0/88, success=true, text=Android システム
+09-04 04:04:18.901 D/HelloReaderService( 6479): Speaking Main: Android システム
+09-04 04:04:18.948 D/HelloReaderService( 6479): playSound requested for soundId: 3 -> streamId: 1
+09-04 04:04:19.368 D/HelloReaderService( 6479): handleGestureAction: 4
+09-04 04:04:19.373 D/HelloReaderService( 6479): navigateFocus called: directionName=次へ, isKeyguardLocked=true
+09-04 04:04:19.581 D/HelloReaderService( 6479): navigateFocus index=1/88, success=true, text=null
+09-04 04:04:19.584 D/HelloReaderService( 6479): Speaking Main: 次へ の要素へ移動
+09-04 04:04:19.640 D/HelloReaderService( 6479): playSound requested for soundId: 3 -> streamId: 2
+09-04 04:04:20.305 D/HelloReaderService( 6479): handleGestureAction: 4
+09-04 04:04:20.319 D/HelloReaderService( 6479): navigateFocus called: directionName=次へ, isKeyguardLocked=true
+09-04 04:04:20.531 D/HelloReaderService( 6479): navigateFocus index=2/88, success=true, text=null
+09-04 04:04:20.587 D/HelloReaderService( 6479): playSound requested for soundId: 3 -> streamId: 3
+09-04 04:04:21.826 D/HelloReaderService( 6479): handleGestureAction: 4
+09-04 04:04:21.831 D/HelloReaderService( 6479): navigateFocus called: directionName=次へ, isKeyguardLocked=true
+09-04 04:04:22.163 D/HelloReaderService( 6479): navigateFocus index=2/88, success=true, text=null
+09-04 04:04:22.163 D/HelloReaderService( 6479): Speaking Main: 次へ の要素へ移動
+09-04 04:04:22.229 D/HelloReaderService( 6479): playSound requested for soundId: 3 -> streamId: 4
+09-04 04:04:23.501 D/HelloReaderService( 6479): handleGestureAction: 25
+09-04 04:04:23.503 D/HelloReaderService( 6479): Swipe Up Gesture Detected: 25 (KeyguardLocked=true)
+09-04 04:04:23.512 D/HelloReaderService( 6479): Speaking Main: PINコード入力画面
+09-04 04:04:23.535 E/HelloReaderService( 6479): Failed to show PIN entry screen
+09-04 04:04:23.535 E/HelloReaderService( 6479): android.content.ActivityNotFoundException: Unable to find explicit activity class {com.stomato.helloreader/com.stomato.helloreader.MainActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+09-04 04:04:23.535 E/HelloReaderService( 6479): 	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2452)
+09-04 04:04:23.535 E/HelloReaderService( 6479): 	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2022)
+09-04 04:04:23.535 E/HelloReaderService( 6479): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1216)
+09-04 04:04:23.535 E/HelloReaderService( 6479): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1187)
+09-04 04:04:23.535 E/HelloReaderService( 6479): 	at android.content.ContextWrapper.startActivity(ContextWrapper.java:438)
+09-04 04:04:23.535 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.showPinEntryScreen(HelloReaderService.kt:1117)
+09-04 04:04:23.535 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.handleGestureAction(HelloReaderService.kt:432)
+09-04 04:04:23.535 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.onGesture(HelloReaderService.kt:401)
+09-04 04:04:23.535 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$2.onGesture(AccessibilityService.java:2830)
+09-04 04:04:23.535 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.lambda$onGesture$3(AccessibilityService.java:3009)
+09-04 04:04:23.535 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.$r8$lambda$-HFXTC8zgOUh2cwD2xU2Qq2cfsU(AccessibilityService.java:0)
+09-04 04:04:23.535 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+09-04 04:04:23.535 E/HelloReaderService( 6479): 	at android.os.Handler.handleCallback(Handler.java:1095)
+09-04 04:04:23.535 E/HelloReaderService( 6479): 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+09-04 04:04:23.535 E/HelloReaderService( 6479): 	at android.os.Handler.dispatchMessage(Handler.java:125)
+09-04 04:04:23.535 E/HelloReaderService( 6479): 	at android.os.Looper.loopOnce(Looper.java:296)
+09-04 04:04:23.535 E/HelloReaderService( 6479): 	at android.os.Looper.loop(Looper.java:397)
+09-04 04:04:23.535 E/HelloReaderService( 6479): 	at android.app.ActivityThread.main(ActivityThread.java:9523)
+09-04 04:04:23.535 E/HelloReaderService( 6479): 	at java.lang.reflect.Method.invoke(Native Method)
+09-04 04:04:23.535 E/HelloReaderService( 6479): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+09-04 04:04:23.535 E/HelloReaderService( 6479): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:939)
+09-04 04:04:23.748 D/HelloReaderService( 6479): handleGestureAction: 1
+09-04 04:04:23.749 D/HelloReaderService( 6479): Swipe Up Gesture Detected: 1 (KeyguardLocked=true)
+09-04 04:04:23.781 E/HelloReaderService( 6479): Failed to show PIN entry screen
+09-04 04:04:23.781 E/HelloReaderService( 6479): android.content.ActivityNotFoundException: Unable to find explicit activity class {com.stomato.helloreader/com.stomato.helloreader.MainActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+09-04 04:04:23.781 E/HelloReaderService( 6479): 	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2452)
+09-04 04:04:23.781 E/HelloReaderService( 6479): 	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2022)
+09-04 04:04:23.781 E/HelloReaderService( 6479): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1216)
+09-04 04:04:23.781 E/HelloReaderService( 6479): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1187)
+09-04 04:04:23.781 E/HelloReaderService( 6479): 	at android.content.ContextWrapper.startActivity(ContextWrapper.java:438)
+09-04 04:04:23.781 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.showPinEntryScreen(HelloReaderService.kt:1117)
+09-04 04:04:23.781 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.handleGestureAction(HelloReaderService.kt:432)
+09-04 04:04:23.781 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.onGesture(HelloReaderService.kt:401)
+09-04 04:04:23.781 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$2.onGesture(AccessibilityService.java:2830)
+09-04 04:04:23.781 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.lambda$onGesture$3(AccessibilityService.java:3009)
+09-04 04:04:23.781 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.$r8$lambda$-HFXTC8zgOUh2cwD2xU2Qq2cfsU(AccessibilityService.java:0)
+09-04 04:04:23.781 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+09-04 04:04:23.781 E/HelloReaderService( 6479): 	at android.os.Handler.handleCallback(Handler.java:1095)
+09-04 04:04:23.781 E/HelloReaderService( 6479): 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+09-04 04:04:23.781 E/HelloReaderService( 6479): 	at android.os.Handler.dispatchMessage(Handler.java:125)
+09-04 04:04:23.781 E/HelloReaderService( 6479): 	at android.os.Looper.loopOnce(Looper.java:296)
+09-04 04:04:23.781 E/HelloReaderService( 6479): 	at android.os.Looper.loop(Looper.java:397)
+09-04 04:04:23.781 E/HelloReaderService( 6479): 	at android.app.ActivityThread.main(ActivityThread.java:9523)
+09-04 04:04:23.781 E/HelloReaderService( 6479): 	at java.lang.reflect.Method.invoke(Native Method)
+09-04 04:04:23.781 E/HelloReaderService( 6479): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+09-04 04:04:23.781 E/HelloReaderService( 6479): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:939)
+09-04 04:04:24.000 D/HelloReaderService( 6479): handleGestureAction: 1
+09-04 04:04:24.005 D/HelloReaderService( 6479): Swipe Up Gesture Detected: 1 (KeyguardLocked=true)
+09-04 04:04:24.013 E/HelloReaderService( 6479): Failed to show PIN entry screen
+09-04 04:04:24.013 E/HelloReaderService( 6479): android.content.ActivityNotFoundException: Unable to find explicit activity class {com.stomato.helloreader/com.stomato.helloreader.MainActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+09-04 04:04:24.013 E/HelloReaderService( 6479): 	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2452)
+09-04 04:04:24.013 E/HelloReaderService( 6479): 	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2022)
+09-04 04:04:24.013 E/HelloReaderService( 6479): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1216)
+09-04 04:04:24.013 E/HelloReaderService( 6479): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1187)
+09-04 04:04:24.013 E/HelloReaderService( 6479): 	at android.content.ContextWrapper.startActivity(ContextWrapper.java:438)
+09-04 04:04:24.013 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.showPinEntryScreen(HelloReaderService.kt:1117)
+09-04 04:04:24.013 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.handleGestureAction(HelloReaderService.kt:432)
+09-04 04:04:24.013 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.onGesture(HelloReaderService.kt:401)
+09-04 04:04:24.013 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$2.onGesture(AccessibilityService.java:2830)
+09-04 04:04:24.013 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.lambda$onGesture$3(AccessibilityService.java:3009)
+09-04 04:04:24.013 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.$r8$lambda$-HFXTC8zgOUh2cwD2xU2Qq2cfsU(AccessibilityService.java:0)
+09-04 04:04:24.013 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+09-04 04:04:24.013 E/HelloReaderService( 6479): 	at android.os.Handler.handleCallback(Handler.java:1095)
+09-04 04:04:24.013 E/HelloReaderService( 6479): 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+09-04 04:04:24.013 E/HelloReaderService( 6479): 	at android.os.Handler.dispatchMessage(Handler.java:125)
+09-04 04:04:24.013 E/HelloReaderService( 6479): 	at android.os.Looper.loopOnce(Looper.java:296)
+09-04 04:04:24.013 E/HelloReaderService( 6479): 	at android.os.Looper.loop(Looper.java:397)
+09-04 04:04:24.013 E/HelloReaderService( 6479): 	at android.app.ActivityThread.main(ActivityThread.java:9523)
+09-04 04:04:24.013 E/HelloReaderService( 6479): 	at java.lang.reflect.Method.invoke(Native Method)
+09-04 04:04:24.013 E/HelloReaderService( 6479): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+09-04 04:04:24.013 E/HelloReaderService( 6479): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:939)
+09-04 04:04:24.228 D/HelloReaderService( 6479): handleGestureAction: 1
+09-04 04:04:24.231 D/HelloReaderService( 6479): Swipe Up Gesture Detected: 1 (KeyguardLocked=true)
+09-04 04:04:24.240 E/HelloReaderService( 6479): Failed to show PIN entry screen
+09-04 04:04:24.240 E/HelloReaderService( 6479): android.content.ActivityNotFoundException: Unable to find explicit activity class {com.stomato.helloreader/com.stomato.helloreader.MainActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+09-04 04:04:24.240 E/HelloReaderService( 6479): 	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2452)
+09-04 04:04:24.240 E/HelloReaderService( 6479): 	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2022)
+09-04 04:04:24.240 E/HelloReaderService( 6479): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1216)
+09-04 04:04:24.240 E/HelloReaderService( 6479): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1187)
+09-04 04:04:24.240 E/HelloReaderService( 6479): 	at android.content.ContextWrapper.startActivity(ContextWrapper.java:438)
+09-04 04:04:24.240 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.showPinEntryScreen(HelloReaderService.kt:1117)
+09-04 04:04:24.240 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.handleGestureAction(HelloReaderService.kt:432)
+09-04 04:04:24.240 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.onGesture(HelloReaderService.kt:401)
+09-04 04:04:24.240 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$2.onGesture(AccessibilityService.java:2830)
+09-04 04:04:24.240 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.lambda$onGesture$3(AccessibilityService.java:3009)
+09-04 04:04:24.240 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.$r8$lambda$-HFXTC8zgOUh2cwD2xU2Qq2cfsU(AccessibilityService.java:0)
+09-04 04:04:24.240 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+09-04 04:04:24.240 E/HelloReaderService( 6479): 	at android.os.Handler.handleCallback(Handler.java:1095)
+09-04 04:04:24.240 E/HelloReaderService( 6479): 	at android.os.Handler.dispatchMessage(Handler.java:125)
+09-04 04:04:24.240 E/HelloReaderService( 6479): 	at android.os.Looper.loopOnce(Looper.java:296)
+09-04 04:04:24.240 E/HelloReaderService( 6479): 	at android.os.Looper.loop(Looper.java:397)
+09-04 04:04:24.240 E/HelloReaderService( 6479): 	at android.app.ActivityThread.main(ActivityThread.java:9523)
+09-04 04:04:24.240 E/HelloReaderService( 6479): 	at java.lang.reflect.Method.invoke(Native Method)
+09-04 04:04:24.240 E/HelloReaderService( 6479): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+09-04 04:04:24.240 E/HelloReaderService( 6479): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:939)
+09-04 04:04:24.240 E/HelloReaderService( 6479): 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+09-04 04:04:24.463 D/HelloReaderService( 6479): handleGestureAction: 1
+09-04 04:04:24.466 D/HelloReaderService( 6479): Swipe Up Gesture Detected: 1 (KeyguardLocked=true)
+09-04 04:04:24.474 E/HelloReaderService( 6479): Failed to show PIN entry screen
+09-04 04:04:24.474 E/HelloReaderService( 6479): android.content.ActivityNotFoundException: Unable to find explicit activity class {com.stomato.helloreader/com.stomato.helloreader.MainActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+09-04 04:04:24.474 E/HelloReaderService( 6479): 	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2452)
+09-04 04:04:24.474 E/HelloReaderService( 6479): 	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2022)
+09-04 04:04:24.474 E/HelloReaderService( 6479): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1216)
+09-04 04:04:24.474 E/HelloReaderService( 6479): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1187)
+09-04 04:04:24.474 E/HelloReaderService( 6479): 	at android.content.ContextWrapper.startActivity(ContextWrapper.java:438)
+09-04 04:04:24.474 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.showPinEntryScreen(HelloReaderService.kt:1117)
+09-04 04:04:24.474 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.handleGestureAction(HelloReaderService.kt:432)
+09-04 04:04:24.474 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.onGesture(HelloReaderService.kt:401)
+09-04 04:04:24.474 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$2.onGesture(AccessibilityService.java:2830)
+09-04 04:04:24.474 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.lambda$onGesture$3(AccessibilityService.java:3009)
+09-04 04:04:24.474 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.$r8$lambda$-HFXTC8zgOUh2cwD2xU2Qq2cfsU(AccessibilityService.java:0)
+09-04 04:04:24.474 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+09-04 04:04:24.474 E/HelloReaderService( 6479): 	at android.os.Handler.handleCallback(Handler.java:1095)
+09-04 04:04:24.474 E/HelloReaderService( 6479): 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+09-04 04:04:24.474 E/HelloReaderService( 6479): 	at android.os.Handler.dispatchMessage(Handler.java:125)
+09-04 04:04:24.474 E/HelloReaderService( 6479): 	at android.os.Looper.loopOnce(Looper.java:296)
+09-04 04:04:24.474 E/HelloReaderService( 6479): 	at android.os.Looper.loop(Looper.java:397)
+09-04 04:04:24.474 E/HelloReaderService( 6479): 	at android.app.ActivityThread.main(ActivityThread.java:9523)
+09-04 04:04:24.474 E/HelloReaderService( 6479): 	at java.lang.reflect.Method.invoke(Native Method)
+09-04 04:04:24.474 E/HelloReaderService( 6479): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+09-04 04:04:24.474 E/HelloReaderService( 6479): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:939)
+09-04 04:04:24.691 D/HelloReaderService( 6479): handleGestureAction: 1
+09-04 04:04:24.693 D/HelloReaderService( 6479): Swipe Up Gesture Detected: 1 (KeyguardLocked=true)
+09-04 04:04:24.700 E/HelloReaderService( 6479): Failed to show PIN entry screen
+09-04 04:04:24.700 E/HelloReaderService( 6479): 	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2452)
+09-04 04:04:24.700 E/HelloReaderService( 6479): 	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2022)
+09-04 04:04:24.700 E/HelloReaderService( 6479): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1216)
+09-04 04:04:24.700 E/HelloReaderService( 6479): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1187)
+09-04 04:04:24.700 E/HelloReaderService( 6479): 	at android.content.ContextWrapper.startActivity(ContextWrapper.java:438)
+09-04 04:04:24.700 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.showPinEntryScreen(HelloReaderService.kt:1117)
+09-04 04:04:24.700 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.handleGestureAction(HelloReaderService.kt:432)
+09-04 04:04:24.700 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.onGesture(HelloReaderService.kt:401)
+09-04 04:04:24.700 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$2.onGesture(AccessibilityService.java:2830)
+09-04 04:04:24.700 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.lambda$onGesture$3(AccessibilityService.java:3009)
+09-04 04:04:24.700 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.$r8$lambda$-HFXTC8zgOUh2cwD2xU2Qq2cfsU(AccessibilityService.java:0)
+09-04 04:04:24.700 E/HelloReaderService( 6479): android.content.ActivityNotFoundException: Unable to find explicit activity class {com.stomato.helloreader/com.stomato.helloreader.MainActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+09-04 04:04:24.700 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+09-04 04:04:24.700 E/HelloReaderService( 6479): 	at android.os.Handler.handleCallback(Handler.java:1095)
+09-04 04:04:24.700 E/HelloReaderService( 6479): 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+09-04 04:04:24.700 E/HelloReaderService( 6479): 	at android.os.Handler.dispatchMessage(Handler.java:125)
+09-04 04:04:24.700 E/HelloReaderService( 6479): 	at android.os.Looper.loopOnce(Looper.java:296)
+09-04 04:04:24.700 E/HelloReaderService( 6479): 	at android.os.Looper.loop(Looper.java:397)
+09-04 04:04:24.700 E/HelloReaderService( 6479): 	at android.app.ActivityThread.main(ActivityThread.java:9523)
+09-04 04:04:24.700 E/HelloReaderService( 6479): 	at java.lang.reflect.Method.invoke(Native Method)
+09-04 04:04:24.700 E/HelloReaderService( 6479): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+09-04 04:04:24.700 E/HelloReaderService( 6479): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:939)
+09-04 04:04:24.919 D/HelloReaderService( 6479): handleGestureAction: 1
+09-04 04:04:24.924 D/HelloReaderService( 6479): Swipe Up Gesture Detected: 1 (KeyguardLocked=true)
+09-04 04:04:24.932 E/HelloReaderService( 6479): Failed to show PIN entry screen
+09-04 04:04:24.932 E/HelloReaderService( 6479): android.content.ActivityNotFoundException: Unable to find explicit activity class {com.stomato.helloreader/com.stomato.helloreader.MainActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+09-04 04:04:24.932 E/HelloReaderService( 6479): 	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2022)
+09-04 04:04:24.932 E/HelloReaderService( 6479): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1216)
+09-04 04:04:24.932 E/HelloReaderService( 6479): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1187)
+09-04 04:04:24.932 E/HelloReaderService( 6479): 	at android.content.ContextWrapper.startActivity(ContextWrapper.java:438)
+09-04 04:04:24.932 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.showPinEntryScreen(HelloReaderService.kt:1117)
+09-04 04:04:24.932 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.handleGestureAction(HelloReaderService.kt:432)
+09-04 04:04:24.932 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.onGesture(HelloReaderService.kt:401)
+09-04 04:04:24.932 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$2.onGesture(AccessibilityService.java:2830)
+09-04 04:04:24.932 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.lambda$onGesture$3(AccessibilityService.java:3009)
+09-04 04:04:24.932 E/HelloReaderService( 6479): 	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2452)
+09-04 04:04:24.932 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.$r8$lambda$-HFXTC8zgOUh2cwD2xU2Qq2cfsU(AccessibilityService.java:0)
+09-04 04:04:24.932 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+09-04 04:04:24.932 E/HelloReaderService( 6479): 	at android.os.Handler.handleCallback(Handler.java:1095)
+09-04 04:04:24.932 E/HelloReaderService( 6479): 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+09-04 04:04:24.932 E/HelloReaderService( 6479): 	at android.os.Looper.loopOnce(Looper.java:296)
+09-04 04:04:24.932 E/HelloReaderService( 6479): 	at android.os.Handler.dispatchMessage(Handler.java:125)
+09-04 04:04:24.932 E/HelloReaderService( 6479): 	at android.os.Looper.loop(Looper.java:397)
+09-04 04:04:24.932 E/HelloReaderService( 6479): 	at android.app.ActivityThread.main(ActivityThread.java:9523)
+09-04 04:04:24.932 E/HelloReaderService( 6479): 	at java.lang.reflect.Method.invoke(Native Method)
+09-04 04:04:24.932 E/HelloReaderService( 6479): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+09-04 04:04:24.932 E/HelloReaderService( 6479): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:939)
+09-04 04:04:26.147 D/HelloReaderService( 6479): handleGestureAction: 4
+09-04 04:04:26.151 D/HelloReaderService( 6479): navigateFocus called: directionName=次へ, isKeyguardLocked=true
+09-04 04:04:26.544 D/HelloReaderService( 6479): navigateFocus index=2/88, success=true, text=null
+09-04 04:04:26.546 D/HelloReaderService( 6479): Speaking Main: 次へ の要素へ移動
+09-04 04:04:26.599 D/HelloReaderService( 6479): playSound requested for soundId: 3 -> streamId: 5
+09-04 04:04:27.061 D/HelloReaderService( 6479): handleGestureAction: 4
+09-04 04:04:27.063 D/HelloReaderService( 6479): navigateFocus called: directionName=次へ, isKeyguardLocked=true
+09-04 04:04:27.261 D/HelloReaderService( 6479): navigateFocus index=2/88, success=true, text=null
+09-04 04:04:27.321 D/HelloReaderService( 6479): playSound requested for soundId: 3 -> streamId: 6
+09-04 04:04:27.815 D/HelloReaderService( 6479): handleGestureAction: 3
+09-04 04:04:27.823 D/HelloReaderService( 6479): navigateFocus called: directionName=前へ, isKeyguardLocked=true
+09-04 04:04:28.131 D/HelloReaderService( 6479): navigateFocus index=0/88, success=true, text=Android システム
+09-04 04:04:28.132 D/HelloReaderService( 6479): Speaking Main: Android システム
+09-04 04:04:28.184 D/HelloReaderService( 6479): playSound requested for soundId: 3 -> streamId: 7
+09-04 04:04:31.169 D/HelloReaderService( 6479): handleGestureAction: 25
+09-04 04:04:31.170 D/HelloReaderService( 6479): Swipe Up Gesture Detected: 25 (KeyguardLocked=true)
+09-04 04:04:31.171 D/HelloReaderService( 6479): Speaking Main: PINコード入力画面
+09-04 04:04:31.179 E/HelloReaderService( 6479): Failed to show PIN entry screen
+09-04 04:04:31.179 E/HelloReaderService( 6479): android.content.ActivityNotFoundException: Unable to find explicit activity class {com.stomato.helloreader/com.stomato.helloreader.MainActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+09-04 04:04:31.179 E/HelloReaderService( 6479): 	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2452)
+09-04 04:04:31.179 E/HelloReaderService( 6479): 	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2022)
+09-04 04:04:31.179 E/HelloReaderService( 6479): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1216)
+09-04 04:04:31.179 E/HelloReaderService( 6479): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1187)
+09-04 04:04:31.179 E/HelloReaderService( 6479): 	at android.content.ContextWrapper.startActivity(ContextWrapper.java:438)
+09-04 04:04:31.179 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.showPinEntryScreen(HelloReaderService.kt:1117)
+09-04 04:04:31.179 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.handleGestureAction(HelloReaderService.kt:432)
+09-04 04:04:31.179 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.onGesture(HelloReaderService.kt:401)
+09-04 04:04:31.179 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$2.onGesture(AccessibilityService.java:2830)
+09-04 04:04:31.179 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.lambda$onGesture$3(AccessibilityService.java:3009)
+09-04 04:04:31.179 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.$r8$lambda$-HFXTC8zgOUh2cwD2xU2Qq2cfsU(AccessibilityService.java:0)
+09-04 04:04:31.179 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+09-04 04:04:31.179 E/HelloReaderService( 6479): 	at android.os.Handler.handleCallback(Handler.java:1095)
+09-04 04:04:31.179 E/HelloReaderService( 6479): 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+09-04 04:04:31.179 E/HelloReaderService( 6479): 	at android.os.Handler.dispatchMessage(Handler.java:125)
+09-04 04:04:31.179 E/HelloReaderService( 6479): 	at android.os.Looper.loopOnce(Looper.java:296)
+09-04 04:04:31.179 E/HelloReaderService( 6479): 	at android.os.Looper.loop(Looper.java:397)
+09-04 04:04:31.179 E/HelloReaderService( 6479): 	at android.app.ActivityThread.main(ActivityThread.java:9523)
+09-04 04:04:31.179 E/HelloReaderService( 6479): 	at java.lang.reflect.Method.invoke(Native Method)
+09-04 04:04:31.179 E/HelloReaderService( 6479): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+09-04 04:04:31.179 E/HelloReaderService( 6479): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:939)
+09-04 04:04:31.390 D/HelloReaderService( 6479): handleGestureAction: 1
+09-04 04:04:31.392 D/HelloReaderService( 6479): Swipe Up Gesture Detected: 1 (KeyguardLocked=true)
+09-04 04:04:31.428 E/HelloReaderService( 6479): Failed to show PIN entry screen
+09-04 04:04:31.428 E/HelloReaderService( 6479): android.content.ActivityNotFoundException: Unable to find explicit activity class {com.stomato.helloreader/com.stomato.helloreader.MainActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+09-04 04:04:31.428 E/HelloReaderService( 6479): 	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2452)
+09-04 04:04:31.428 E/HelloReaderService( 6479): 	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2022)
+09-04 04:04:31.428 E/HelloReaderService( 6479): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1216)
+09-04 04:04:31.428 E/HelloReaderService( 6479): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1187)
+09-04 04:04:31.428 E/HelloReaderService( 6479): 	at android.content.ContextWrapper.startActivity(ContextWrapper.java:438)
+09-04 04:04:31.428 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.showPinEntryScreen(HelloReaderService.kt:1117)
+09-04 04:04:31.428 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.handleGestureAction(HelloReaderService.kt:432)
+09-04 04:04:31.428 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.onGesture(HelloReaderService.kt:401)
+09-04 04:04:31.428 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$2.onGesture(AccessibilityService.java:2830)
+09-04 04:04:31.428 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.lambda$onGesture$3(AccessibilityService.java:3009)
+09-04 04:04:31.428 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.$r8$lambda$-HFXTC8zgOUh2cwD2xU2Qq2cfsU(AccessibilityService.java:0)
+09-04 04:04:31.428 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+09-04 04:04:31.428 E/HelloReaderService( 6479): 	at android.os.Handler.handleCallback(Handler.java:1095)
+09-04 04:04:31.428 E/HelloReaderService( 6479): 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+09-04 04:04:31.428 E/HelloReaderService( 6479): 	at android.os.Handler.dispatchMessage(Handler.java:125)
+09-04 04:04:31.428 E/HelloReaderService( 6479): 	at android.os.Looper.loopOnce(Looper.java:296)
+09-04 04:04:31.428 E/HelloReaderService( 6479): 	at android.os.Looper.loop(Looper.java:397)
+09-04 04:04:31.428 E/HelloReaderService( 6479): 	at android.app.ActivityThread.main(ActivityThread.java:9523)
+09-04 04:04:31.428 E/HelloReaderService( 6479): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+09-04 04:04:31.428 E/HelloReaderService( 6479): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:939)
+09-04 04:04:31.428 E/HelloReaderService( 6479): 	at java.lang.reflect.Method.invoke(Native Method)
+09-04 04:04:31.645 D/HelloReaderService( 6479): handleGestureAction: 1
+09-04 04:04:31.649 D/HelloReaderService( 6479): Swipe Up Gesture Detected: 1 (KeyguardLocked=true)
+09-04 04:04:31.658 E/HelloReaderService( 6479): Failed to show PIN entry screen
+09-04 04:04:31.658 E/HelloReaderService( 6479): android.content.ActivityNotFoundException: Unable to find explicit activity class {com.stomato.helloreader/com.stomato.helloreader.MainActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+09-04 04:04:31.658 E/HelloReaderService( 6479): 	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2452)
+09-04 04:04:31.658 E/HelloReaderService( 6479): 	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2022)
+09-04 04:04:31.658 E/HelloReaderService( 6479): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1216)
+09-04 04:04:31.658 E/HelloReaderService( 6479): 	at android.app.ContextImpl.startActivity(ContextImpl.java:1187)
+09-04 04:04:31.658 E/HelloReaderService( 6479): 	at android.content.ContextWrapper.startActivity(ContextWrapper.java:438)
+09-04 04:04:31.658 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.showPinEntryScreen(HelloReaderService.kt:1117)
+09-04 04:04:31.658 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.handleGestureAction(HelloReaderService.kt:432)
+09-04 04:04:31.658 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$2.onGesture(AccessibilityService.java:2830)
+09-04 04:04:31.658 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.lambda$onGesture$3(AccessibilityService.java:3009)
+09-04 04:04:31.658 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.$r8$lambda$-HFXTC8zgOUh2cwD2xU2Qq2cfsU(AccessibilityService.java:0)
+09-04 04:04:31.658 E/HelloReaderService( 6479): 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+09-04 04:04:31.658 E/HelloReaderService( 6479): 	at android.os.Handler.handleCallback(Handler.java:1095)
+09-04 04:04:31.658 E/HelloReaderService( 6479): 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+09-04 04:04:31.658 E/HelloReaderService( 6479): 	at android.os.Handler.dispatchMessage(Handler.java:125)
+09-04 04:04:31.658 E/HelloReaderService( 6479): 	at android.os.Looper.loopOnce(Looper.java:296)
+09-04 04:04:31.658 E/HelloReaderService( 6479): 	at android.os.Looper.loop(Looper.java:397)
+09-04 04:04:31.658 E/HelloReaderService( 6479): 	at com.stomato.helloreader.HelloReaderService.onGesture(HelloReaderService.kt:401)
+09-04 04:04:31.658 E/HelloReaderService( 6479): 	at android.app.ActivityThread.main(ActivityThread.java:9523)
+09-04 04:04:31.658 E/HelloReaderService( 6479): 	at java.lang.reflect.Method.invoke(Native Method)
+09-04 04:04:31.658 E/HelloReaderService( 6479): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+09-04 04:04:31.658 E/HelloReaderService( 6479): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:939)
+09-04 04:04:35.047 D/HelloReaderService( 6479): handleGestureAction: 4
+09-04 04:04:35.051 D/HelloReaderService( 6479): navigateFocus called: directionName=次へ, isKeyguardLocked=true
+09-04 04:04:35.360 D/HelloReaderService( 6479): navigateFocus index=1/88, success=true, text=null
+09-04 04:04:35.361 D/HelloReaderService( 6479): Speaking Main: 次へ の要素へ移動
+09-04 04:04:35.414 D/HelloReaderService( 6479): handleGestureAction: 4
+09-04 04:04:35.416 D/HelloReaderService( 6479): navigateFocus called: directionName=次へ, isKeyguardLocked=true
+09-04 04:04:35.722 D/HelloReaderService( 6479): navigateFocus index=2/88, success=true, text=null
+09-04 04:04:35.741 D/HelloReaderService( 6479): playSound requested for soundId: 3 -> streamId: 8
+09-04 04:04:35.855 D/HelloReaderService( 6479): handleGestureAction: 4
+09-04 04:04:35.857 D/HelloReaderService( 6479): navigateFocus called: directionName=次へ, isKeyguardLocked=true
+09-04 04:04:36.171 D/HelloReaderService( 6479): navigateFocus index=2/88, success=true, text=null
+09-04 04:04:36.231 D/HelloReaderService( 6479): playSound requested for soundId: 3 -> streamId: 9

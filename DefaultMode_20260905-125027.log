@@ -1,0 +1,386 @@
+﻿--------- beginning of main
+09-05 12:50:20.379 D/HelloReaderService( 7956): Hello Reader Accessibility Service Connected!
+09-05 12:50:20.388 D/HelloReaderService( 7956): SoundPool Initialized (Hybrid Custom & AOSP Sounds). Activate: 1, Deactivate: 2, Focus: 3, ViewEntered: 4, Scroll: 5
+09-05 12:50:20.487 D/HelloReaderService( 7956): Sub-Voice: 安定動作ピッチ変調モード (MainPitch: 1.0, SubPitch: 0.82) を有効化しました
+09-05 12:50:20.487 D/HelloReaderService( 7956): Speaking Main: Hello Readerが起動しました [SubVoice Hint: サブボイス案内が有効です]
+09-05 12:50:20.640 D/HelloReaderService( 7956): Speaking Main: Hello Reader 設定ヘッダー 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オン です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 タブ1。初期設定画面を開きます 初期設定 タブ2。全アプリ対応プロファイル画面を開きます 全アプリ対応 タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 12:50:20.671 D/HelloReaderService( 7956): Speaking Main: ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 [SubVoice Hint: ダブルタップで実行できます]
+09-05 12:50:20.702 D/HelloReaderService( 7956): Speaking Main: フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動
+09-05 12:50:20.768 D/HelloReaderService( 7956): Speaking Main: ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する [SubVoice Hint: ダブルタップで実行できます]
+09-05 12:50:20.791 D/HelloReaderService( 7956): Speaking Main: 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化
+09-05 12:50:20.833 D/HelloReaderService( 7956): Speaking Main: Hello Reader 設定ヘッダー 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オン です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動
+09-05 12:50:20.871 D/HelloReaderService( 7956): Speaking Main: ⏰ 毎時0分の時報・チャイム
+09-05 12:50:20.889 D/HelloReaderService( 7956): Speaking Main: 点字ディスプレイ連携。現在は オフ です。
+09-05 12:50:20.957 D/HelloReaderService( 7956): Speaking Main: ⠃⠗⠇ 点字ディスプレイ連携
+09-05 12:50:20.971 D/HelloReaderService( 7956): Speaking Main: タブ2。全アプリ対応プロファイル画面を開きます 全アプリ対応 [SubVoice Hint: ダブルタップで実行できます]
+09-05 12:50:20.987 D/HelloReaderService( 7956): Speaking Main: Hello Reader 設定ヘッダー
+09-05 12:50:20.996 D/HelloReaderService( 7956): Speaking Main: ボタン [SubVoice Hint: チェックあり]
+09-05 12:50:21.010 D/HelloReaderService( 7956): Speaking Main: タブ3。カスタムラベル辞書画面を開きます カスタムラベル [SubVoice Hint: ダブルタップで実行できます]
+09-05 12:50:21.022 D/HelloReaderService( 7956): Speaking Main: 毎時0分に優しく時刻をお知らせします
+09-05 12:50:20.854 D/HelloReaderService( 7956): Speaking Main: ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オン です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内
+09-05 12:50:21.032 D/HelloReaderService( 7956): Speaking Main: 触覚フィードバック。現在は オン です。
+09-05 12:50:21.043 D/HelloReaderService( 7956): Speaking Main: BrailleSense 6 Mini / 7 等の点字出力サポート
+09-05 12:50:21.055 D/HelloReaderService( 7956): Speaking Main: タブ1。初期設定画面を開きます 初期設定 [SubVoice Hint: 選択中]
+09-05 12:50:21.085 D/HelloReaderService( 7956): Speaking Main: タブ1。初期設定画面を開きます 初期設定 タブ2。全アプリ対応プロファイル画面を開きます 全アプリ対応 タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 12:50:21.156 D/HelloReaderService( 7956): Speaking Main: ⚙️ 支援モジュール設定
+09-05 12:50:21.167 D/HelloReaderService( 7956): Speaking Main: スマート時報・チャイム機能。現在は オン です。
+09-05 12:50:21.176 D/HelloReaderService( 7956): Speaking Main: 📳 触覚フィードバック (振動)
+09-05 12:50:21.199 D/HelloReaderService( 7956): Speaking Main: ボタン [SubVoice Hint: ラジオボタン チェックあり]
+09-05 12:50:21.213 D/HelloReaderService( 7956): Speaking Main: TTS音声の後にモールス振動
+09-05 12:50:21.226 D/HelloReaderService( 7956): Speaking Main: ⚡ フォネティック＆モールス振動
+09-05 12:50:21.248 D/HelloReaderService( 7956): Speaking Main: ボタン [SubVoice Hint: チェックなし]
+09-05 12:50:21.261 D/HelloReaderService( 7956): Speaking Main: 発火タイミング設定:
+09-05 12:50:21.280 D/HelloReaderService( 7956): Speaking Main: フォネティックコードとモールス信号機能。現在は オン です。
+09-05 12:50:21.302 D/HelloReaderService( 7956): Speaking Main: フォーカス移動やボタンタップ時の振動案内
+09-05 12:50:21.317 D/HelloReaderService( 7956): Speaking Main: 📋 初期セットアップ手順
+09-05 12:50:21.324 D/HelloReaderService( 7956): playSound requested for soundId: 4 -> streamId: 1
+09-05 12:50:21.325 D/HelloReaderService( 7956): Speaking Main: helloreader
+09-05 12:50:21.333 D/HelloReaderService( 7956): Sound loaded successfully! sampleId: 1
+09-05 12:50:21.336 D/HelloReaderService( 7956): Sound loaded successfully! sampleId: 2
+09-05 12:50:21.336 D/HelloReaderService( 7956): Sound loaded successfully! sampleId: 4
+09-05 12:50:21.397 D/HelloReaderService( 7956): Speaking Main: Hello Reader 設定ヘッダー 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オン です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 タブ1。初期設定画面を開きます 初期設定 タブ2。全アプリ対応プロファイル画面を開きます 全アプリ対応 タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 12:50:21.470 D/HelloReaderService( 7956): Sound loaded successfully! sampleId: 3
+09-05 12:50:21.471 D/HelloReaderService( 7956): Sound loaded successfully! sampleId: 5
+09-05 12:50:21.562 D/HelloReaderService( 7956): Speaking Main: Hello Reader 設定ヘッダー 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オン です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動
+09-05 12:50:29.618 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 2
+09-05 12:50:29.622 D/HelloReaderService( 7956): Speaking Main: Hello Reader 設定ヘッダー 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オン です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動
+09-05 12:50:29.807 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 3
+09-05 12:50:29.809 D/HelloReaderService( 7956): Speaking Main: フォーカス移動やボタンタップ時の振動案内
+09-05 12:50:30.113 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 12:50:30.113 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 4
+09-05 12:50:30.117 D/HelloReaderService( 7956): Swipe Right Matched -> navigateFocus FORWARD
+09-05 12:50:30.118 D/HelloReaderService( 7956): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 12:50:30.565 D/HelloReaderService( 7956): navigateFocus index=39/62, success=true, text=ボタン
+09-05 12:50:30.565 D/HelloReaderService( 7956): Speaking Main: ボタン [SubVoice Hint: チェックあり]
+09-05 12:50:30.620 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 4
+09-05 12:50:31.659 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 12:50:31.659 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 4
+09-05 12:50:31.663 D/HelloReaderService( 7956): Swipe Right Matched -> navigateFocus FORWARD
+09-05 12:50:31.664 D/HelloReaderService( 7956): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 12:50:32.034 D/HelloReaderService( 7956): navigateFocus index=40/62, success=true, text=⚡ フォネティック＆モールス振動
+09-05 12:50:32.035 D/HelloReaderService( 7956): Speaking Main: ⚡ フォネティック＆モールス振動
+09-05 12:50:32.098 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 5
+09-05 12:50:34.818 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=32, displayId=0
+09-05 12:50:34.818 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 32
+09-05 12:50:34.821 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 6
+09-05 12:50:34.822 D/HelloReaderService( 7956): Speaking Main: 文字
+09-05 12:50:35.850 D/HelloReaderService( 7956): Speaking Main: Hello Reader 設定ヘッダー 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オン です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力
+09-05 12:50:35.855 D/HelloReaderService( 7956): playSound requested for soundId: 5 -> streamId: 7
+09-05 12:50:35.996 D/HelloReaderService( 7956): Speaking Main: フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力
+09-05 12:50:37.164 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=31, displayId=0
+09-05 12:50:37.164 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 31
+09-05 12:50:37.169 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 8
+09-05 12:50:37.170 D/HelloReaderService( 7956): Speaking Main: デフォルト
+09-05 12:50:38.378 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=31, displayId=0
+09-05 12:50:38.379 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 31
+09-05 12:50:38.380 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 9
+09-05 12:50:38.381 D/HelloReaderService( 7956): Speaking Main: 読み上げ速度
+09-05 12:50:39.129 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=31, displayId=0
+09-05 12:50:39.130 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 31
+09-05 12:50:39.135 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 10
+09-05 12:50:39.137 D/HelloReaderService( 7956): Speaking Main: コントロール
+09-05 12:50:40.602 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=32, displayId=0
+09-05 12:50:40.603 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 32
+09-05 12:50:40.606 D/HelloReaderService( 7956): Speaking Main: 読み上げ速度
+09-05 12:50:40.605 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 11
+09-05 12:50:41.251 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=32, displayId=0
+09-05 12:50:41.251 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 32
+09-05 12:50:41.257 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 12
+09-05 12:50:41.258 D/HelloReaderService( 7956): Speaking Main: デフォルト
+09-05 12:50:41.795 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=32, displayId=0
+09-05 12:50:41.796 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 32
+09-05 12:50:41.800 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 13
+09-05 12:50:41.801 D/HelloReaderService( 7956): Speaking Main: 文字
+09-05 12:50:42.461 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=32, displayId=0
+09-05 12:50:42.461 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 32
+09-05 12:50:42.462 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 14
+09-05 12:50:42.463 D/HelloReaderService( 7956): Speaking Main: 単語
+09-05 12:50:43.001 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=32, displayId=0
+09-05 12:50:43.001 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 32
+09-05 12:50:43.006 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 15
+09-05 12:50:43.007 D/HelloReaderService( 7956): Speaking Main: 見出し
+09-05 12:50:43.853 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=2, displayId=0
+09-05 12:50:43.853 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 2
+09-05 12:50:43.854 D/HelloReaderService( 7956): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 12:50:43.854 D/HelloReaderService( 7956): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 12:50:44.286 D/HelloReaderService( 7956): navigateFocus index=39/64, success=true, text=ボタン
+09-05 12:50:44.286 D/HelloReaderService( 7956): Speaking Main: ボタン [SubVoice Hint: チェックあり]
+09-05 12:50:44.342 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 16
+09-05 12:50:46.203 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=2, displayId=0
+09-05 12:50:46.203 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 2
+09-05 12:50:46.204 D/HelloReaderService( 7956): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 12:50:46.205 D/HelloReaderService( 7956): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 12:50:46.464 D/HelloReaderService( 7956): navigateFocus index=38/64, success=true, text=フォーカス移動やボタンタップ時の振動案内
+09-05 12:50:46.464 D/HelloReaderService( 7956): Speaking Main: フォーカス移動やボタンタップ時の振動案内
+09-05 12:50:46.521 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 17
+09-05 12:50:48.801 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=2, displayId=0
+09-05 12:50:48.801 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 2
+09-05 12:50:48.805 D/HelloReaderService( 7956): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 12:50:48.805 D/HelloReaderService( 7956): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 12:50:49.194 D/HelloReaderService( 7956): navigateFocus index=37/64, success=true, text=切り替える
+09-05 12:50:49.194 D/HelloReaderService( 7956): Speaking Main: 切り替える
+09-05 12:50:49.249 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 18
+09-05 12:50:50.542 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=2, displayId=0
+09-05 12:50:50.542 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 2
+09-05 12:50:50.543 D/HelloReaderService( 7956): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 12:50:50.544 D/HelloReaderService( 7956): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 12:50:50.986 D/HelloReaderService( 7956): navigateFocus index=36/64, success=true, text=ボタン
+09-05 12:50:50.987 D/HelloReaderService( 7956): Speaking Main: ボタン [SubVoice Hint: チェックあり]
+09-05 12:50:51.042 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 20
+09-05 12:50:52.074 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=32, displayId=0
+09-05 12:50:52.075 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 32
+09-05 12:50:52.079 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 21
+09-05 12:50:52.080 D/HelloReaderService( 7956): Speaking Main: コントロール
+09-05 12:50:52.990 D/HelloReaderService( 7956): Speaking Main: Hello Reader 設定ヘッダー 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 タブ1。初期設定画面を開きます 初期設定 タブ2。全アプリ対応プロファイル画面を開きます 全アプリ対応 タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 12:50:53.022 D/HelloReaderService( 7956): Speaking Main: ボタン [SubVoice Hint: チェックなし]
+09-05 12:50:53.029 D/HelloReaderService( 7956): Speaking Main: 触覚フィードバック。現在は オフ です。
+09-05 12:50:53.048 D/HelloReaderService( 7956): Speaking Main: Hello Reader 設定ヘッダー 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力
+09-05 12:50:53.052 D/HelloReaderService( 7956): playSound requested for soundId: 5 -> streamId: 22
+09-05 12:50:53.135 D/HelloReaderService( 7956): Speaking Main: ボタン [SubVoice Hint: チェックなし]
+09-05 12:50:53.189 D/HelloReaderService( 7956): Speaking Main: Hello Reader 設定ヘッダー 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動
+09-05 12:50:53.388 D/HelloReaderService( 7956): Speaking Main: フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動
+09-05 12:50:54.734 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=32, displayId=0
+09-05 12:50:54.734 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 32
+09-05 12:50:54.738 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 24
+09-05 12:50:54.738 D/HelloReaderService( 7956): Speaking Main: 読み上げ速度
+09-05 12:50:59.332 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=32, displayId=0
+09-05 12:50:59.332 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 32
+09-05 12:50:59.334 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 25
+09-05 12:50:59.335 D/HelloReaderService( 7956): Speaking Main: デフォルト
+09-05 12:51:01.382 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=44, displayId=0
+09-05 12:51:01.383 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 44
+09-05 12:51:02.472 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 26
+09-05 12:51:02.476 D/HelloReaderService( 7956): Speaking Main: ボタン [SubVoice Hint: チェックなし]
+09-05 12:51:03.597 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=31, displayId=0
+09-05 12:51:03.597 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 31
+09-05 12:51:03.602 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 27
+09-05 12:51:03.603 D/HelloReaderService( 7956): Speaking Main: 読み上げ速度
+09-05 12:51:04.646 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=31, displayId=0
+09-05 12:51:04.646 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 31
+09-05 12:51:04.651 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 28
+09-05 12:51:04.652 D/HelloReaderService( 7956): Speaking Main: コントロール
+09-05 12:51:06.300 D/HelloReaderService( 7956): Speaking Main: Hello Reader 設定ヘッダー 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動
+09-05 12:51:06.308 D/HelloReaderService( 7956): playSound requested for soundId: 5 -> streamId: 29
+09-05 12:51:09.236 D/HelloReaderService( 7956): Speaking Main: Hello Reader 設定ヘッダー 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動
+09-05 12:51:09.247 D/HelloReaderService( 7956): playSound requested for soundId: 5 -> streamId: 30
+09-05 12:51:09.354 D/HelloReaderService( 7956): Speaking Main: フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動
+09-05 12:51:10.207 D/HelloReaderService( 7956): playSound requested for soundId: 5 -> streamId: 31
+09-05 12:51:11.489 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=31, displayId=0
+09-05 12:51:11.489 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 31
+09-05 12:51:11.494 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 32
+09-05 12:51:11.495 D/HelloReaderService( 7956): Speaking Main: 見出し
+09-05 12:51:12.794 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=2, displayId=0
+09-05 12:51:12.794 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 2
+09-05 12:51:12.796 D/HelloReaderService( 7956): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 12:51:12.796 D/HelloReaderService( 7956): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 12:51:13.309 D/HelloReaderService( 7956): navigateFocus index=35/62, success=true, text=📳 触覚フィードバック (振動)
+09-05 12:51:13.310 D/HelloReaderService( 7956): Speaking Main: 📳 触覚フィードバック (振動)
+09-05 12:51:13.365 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 33
+09-05 12:51:15.967 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=2, displayId=0
+09-05 12:51:15.967 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 2
+09-05 12:51:15.971 D/HelloReaderService( 7956): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 12:51:15.972 D/HelloReaderService( 7956): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 12:51:16.340 D/HelloReaderService( 7956): navigateFocus index=34/62, success=true, text=BrailleSense 6 Mini / 7 等の点字出力サポート
+09-05 12:51:16.340 D/HelloReaderService( 7956): Speaking Main: BrailleSense 6 Mini / 7 等の点字出力サポート
+09-05 12:51:16.394 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 34
+09-05 12:51:17.860 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=2, displayId=0
+09-05 12:51:17.860 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 2
+09-05 12:51:17.866 D/HelloReaderService( 7956): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 12:51:17.868 D/HelloReaderService( 7956): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 12:51:18.238 D/HelloReaderService( 7956): navigateFocus index=33/62, success=true, text=切り替える
+09-05 12:51:18.238 D/HelloReaderService( 7956): Speaking Main: 切り替える
+09-05 12:51:18.295 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 35
+09-05 12:51:19.448 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=2, displayId=0
+09-05 12:51:19.448 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 2
+09-05 12:51:19.449 D/HelloReaderService( 7956): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 12:51:19.450 D/HelloReaderService( 7956): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 12:51:19.811 D/HelloReaderService( 7956): navigateFocus index=32/62, success=true, text=ボタン
+09-05 12:51:19.812 D/HelloReaderService( 7956): Speaking Main: ボタン [SubVoice Hint: チェックなし]
+09-05 12:51:19.868 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 37
+09-05 12:51:20.566 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=2, displayId=0
+09-05 12:51:20.567 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 2
+09-05 12:51:20.568 D/HelloReaderService( 7956): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 12:51:20.569 D/HelloReaderService( 7956): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 12:51:20.888 D/HelloReaderService( 7956): navigateFocus index=31/62, success=true, text=⠃⠗⠇ 点字ディスプレイ連携
+09-05 12:51:20.888 D/HelloReaderService( 7956): Speaking Main: ⠃⠗⠇ 点字ディスプレイ連携
+09-05 12:51:20.946 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 38
+09-05 12:51:21.609 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=2, displayId=0
+09-05 12:51:21.609 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 2
+09-05 12:51:21.615 D/HelloReaderService( 7956): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 12:51:21.617 D/HelloReaderService( 7956): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 12:51:21.961 D/HelloReaderService( 7956): navigateFocus index=30/62, success=true, text=毎時0分に優しく時刻をお知らせします
+09-05 12:51:21.961 D/HelloReaderService( 7956): Speaking Main: 毎時0分に優しく時刻をお知らせします
+09-05 12:51:22.016 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 39
+09-05 12:51:22.614 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=2, displayId=0
+09-05 12:51:22.614 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 2
+09-05 12:51:22.618 D/HelloReaderService( 7956): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 12:51:22.618 D/HelloReaderService( 7956): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 12:51:22.974 D/HelloReaderService( 7956): navigateFocus index=29/62, success=true, text=切り替える
+09-05 12:51:22.974 D/HelloReaderService( 7956): Speaking Main: 切り替える
+09-05 12:51:23.030 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 40
+09-05 12:51:23.558 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=2, displayId=0
+09-05 12:51:23.558 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 2
+09-05 12:51:23.564 D/HelloReaderService( 7956): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 12:51:23.565 D/HelloReaderService( 7956): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 12:51:23.918 D/HelloReaderService( 7956): navigateFocus index=28/62, success=true, text=ボタン
+09-05 12:51:23.919 D/HelloReaderService( 7956): Speaking Main: ボタン [SubVoice Hint: チェックあり]
+09-05 12:51:23.970 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 41
+09-05 12:51:25.188 D/HelloReaderService( 7956): Speaking Main: Hello Reader 設定ヘッダー 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動
+09-05 12:51:25.200 D/HelloReaderService( 7956): playSound requested for soundId: 5 -> streamId: 42
+09-05 12:51:25.298 D/HelloReaderService( 7956): Speaking Main: Hello Reader 設定ヘッダー 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力
+09-05 12:51:25.396 D/HelloReaderService( 7956): Speaking Main: フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力
+09-05 12:51:26.865 D/HelloReaderService( 7956): Speaking Main: Hello Reader 設定ヘッダー 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動
+09-05 12:51:26.875 D/HelloReaderService( 7956): playSound requested for soundId: 5 -> streamId: 43
+09-05 12:51:26.994 D/HelloReaderService( 7956): Speaking Main: フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動
+09-05 12:51:28.181 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 44
+09-05 12:51:28.250 D/HelloReaderService( 7956): Speaking Main: ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内
+09-05 12:51:28.322 D/HelloReaderService( 7956): Speaking Main: 触覚フィードバック。現在は オフ です。
+09-05 12:51:28.385 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 45
+09-05 12:51:28.597 D/HelloReaderService( 7956): Speaking Main: Hello Reader 設定ヘッダー 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動
+09-05 12:51:28.608 D/HelloReaderService( 7956): playSound requested for soundId: 5 -> streamId: 46
+09-05 12:51:29.676 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=32, displayId=0
+09-05 12:51:29.676 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 32
+09-05 12:51:29.686 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 47
+09-05 12:51:29.687 D/HelloReaderService( 7956): Speaking Main: コントロール
+09-05 12:51:30.758 D/HelloReaderService( 7956): Speaking Main: Hello Reader 設定ヘッダー 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力
+09-05 12:51:30.767 D/HelloReaderService( 7956): playSound requested for soundId: 5 -> streamId: 48
+09-05 12:51:30.995 D/HelloReaderService( 7956): Speaking Main: フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力
+09-05 12:51:31.771 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=32, displayId=0
+09-05 12:51:31.771 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 32
+09-05 12:51:31.775 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 49
+09-05 12:51:31.776 D/HelloReaderService( 7956): Speaking Main: 読み上げ速度
+09-05 12:51:32.677 D/HelloReaderService( 7956): Speaking Main: Hello Reader 設定ヘッダー 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動
+09-05 12:51:32.688 D/HelloReaderService( 7956): playSound requested for soundId: 5 -> streamId: 50
+09-05 12:51:32.934 D/HelloReaderService( 7956): Speaking Main: フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動
+09-05 12:51:34.012 D/HelloReaderService( 7956): playSound requested for soundId: 5 -> streamId: 51
+09-05 12:51:35.142 D/HelloReaderService( 7956): Speaking Main: Hello Reader 設定ヘッダー 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力
+09-05 12:51:35.156 D/HelloReaderService( 7956): playSound requested for soundId: 5 -> streamId: 52
+09-05 12:51:35.260 D/HelloReaderService( 7956): Speaking Main: ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 モールス振動の後にTTS音声 ✉️ 診断ログ作成・SOS問い合わせ
+09-05 12:51:35.359 D/HelloReaderService( 7956): Speaking Main: ボタン1。必要なアクセス権限を許可するダイアログを開きます ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 モールス振動の後にTTS音声 ✉️ 診断ログ作成・SOS問い合わせ 動作の不具合や困りごとがある場合、端末診断ログを添えてメーラーから連絡できます。個人情報や電話番号は一切含まれません。
+09-05 12:51:35.463 D/HelloReaderService( 7956): Speaking Main: ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 モールス振動の後にTTS音声 ✉️ 診断ログ作成・SOS問い合わせ 動作の不具合や困りごとがある場合、端末診断ログを添えてメーラーから連絡できます。個人情報や電話番号は一切含まれません。
+09-05 12:51:35.707 D/HelloReaderService( 7956): Speaking Main: ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化
+09-05 12:51:35.803 D/HelloReaderService( 7956): playSound requested for soundId: 5 -> streamId: 53
+09-05 12:51:36.261 D/HelloReaderService( 7956): Speaking Main: Hello Reader 設定ヘッダー 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動
+09-05 12:51:36.283 D/HelloReaderService( 7956): Speaking Main: 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化
+09-05 12:51:42.980 D/HelloReaderService( 7956): Speaking Main: ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 モールス振動の後にTTS音声 ✉️ 診断ログ作成・SOS問い合わせ
+09-05 12:51:42.991 D/HelloReaderService( 7956): playSound requested for soundId: 5 -> streamId: 54
+09-05 12:51:43.103 D/HelloReaderService( 7956): Speaking Main: スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 モールス振動の後にTTS音声 ✉️ 診断ログ作成・SOS問い合わせ 動作の不具合や困りごとがある場合、端末診断ログを添えてメーラーから連絡できます。個人情報や電話番号は一切含まれません。 ボタン。端末診断ログを作成し、メールアプリを起動して問い合わせを作成します。 診断ログを生成してメール送信 (SOS)
+09-05 12:51:43.122 D/HelloReaderService( 7956): Speaking Main: フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 モールス振動の後にTTS音声
+09-05 12:51:43.801 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=32, displayId=0
+09-05 12:51:43.801 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 32
+09-05 12:51:43.807 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 55
+09-05 12:51:43.807 D/HelloReaderService( 7956): Speaking Main: デフォルト
+09-05 12:51:45.169 D/HelloReaderService( 7956): Speaking Main: スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 モールス振動の後にTTS音声 ✉️ 診断ログ作成・SOS問い合わせ 動作の不具合や困りごとがある場合、端末診断ログを添えてメーラーから連絡できます。個人情報や電話番号は一切含まれません。 ボタン。端末診断ログを作成し、メールアプリを起動して問い合わせを作成します。 診断ログを生成してメール送信 (SOS)
+09-05 12:51:45.174 D/HelloReaderService( 7956): playSound requested for soundId: 5 -> streamId: 56
+09-05 12:51:45.385 D/HelloReaderService( 7956): Speaking Main: ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 モールス振動の後にTTS音声 ✉️ 診断ログ作成・SOS問い合わせ 動作の不具合や困りごとがある場合、端末診断ログを添えてメーラーから連絡できます。個人情報や電話番号は一切含まれません。 ボタン。端末診断ログを作成し、メールアプリを起動して問い合わせを作成します。 診断ログを生成してメール送信 (SOS)
+09-05 12:51:45.516 D/HelloReaderService( 7956): Speaking Main: ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内
+09-05 12:51:45.754 D/HelloReaderService( 7956): Speaking Main: スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内
+09-05 12:51:46.566 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=32, displayId=0
+09-05 12:51:46.566 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 32
+09-05 12:51:46.571 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 57
+09-05 12:51:46.571 D/HelloReaderService( 7956): Speaking Main: 文字
+09-05 12:51:47.568 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 32
+09-05 12:51:47.567 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=32, displayId=0
+09-05 12:51:47.570 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 58
+09-05 12:51:47.572 D/HelloReaderService( 7956): Speaking Main: 単語
+09-05 12:51:48.702 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=32, displayId=0
+09-05 12:51:48.702 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 32
+09-05 12:51:48.704 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 59
+09-05 12:51:48.705 D/HelloReaderService( 7956): Speaking Main: 見出し
+09-05 12:51:49.500 D/HelloReaderService( 7956): Speaking Main: スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 モールス振動の後にTTS音声 ✉️ 診断ログ作成・SOS問い合わせ 動作の不具合や困りごとがある場合、端末診断ログを添えてメーラーから連絡できます。個人情報や電話番号は一切含まれません。 ボタン。端末診断ログを作成し、メールアプリを起動して問い合わせを作成します。 診断ログを生成してメール送信 (SOS)
+09-05 12:51:49.516 D/HelloReaderService( 7956): playSound requested for soundId: 5 -> streamId: 60
+09-05 12:51:49.627 D/HelloReaderService( 7956): Speaking Main: ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 モールス振動の後にTTS音声 ✉️ 診断ログ作成・SOS問い合わせ 動作の不具合や困りごとがある場合、端末診断ログを添えてメーラーから連絡できます。個人情報や電話番号は一切含まれません。 ボタン。端末診断ログを作成し、メールアプリを起動して問い合わせを作成します。 診断ログを生成してメール送信 (SOS)
+09-05 12:51:49.743 D/HelloReaderService( 7956): Speaking Main: ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 モールス振動の後にTTS音声 ✉️ 診断ログ作成・SOS問い合わせ 動作の不具合や困りごとがある場合、端末診断ログを添えてメーラーから連絡できます。個人情報や電話番号は一切含まれません。
+09-05 12:51:49.769 D/HelloReaderService( 7956): Speaking Main: ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内
+09-05 12:51:49.885 D/HelloReaderService( 7956): Speaking Main: ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 モールス振動の後にTTS音声 ✉️ 診断ログ作成・SOS問い合わせ 動作の不具合や困りごとがある場合、端末診断ログを添えてメーラーから連絡できます。個人情報や電話番号は一切含まれません。
+09-05 12:51:49.975 D/HelloReaderService( 7956): Speaking Main: ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 [SubVoice Hint: ダブルタップで実行できます]
+09-05 12:51:51.298 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=31, displayId=0
+09-05 12:51:51.298 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 31
+09-05 12:51:51.304 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 61
+09-05 12:51:51.304 D/HelloReaderService( 7956): Speaking Main: 単語
+09-05 12:51:52.316 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=31, displayId=0
+09-05 12:51:52.316 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 31
+09-05 12:51:52.318 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 62
+09-05 12:51:52.319 D/HelloReaderService( 7956): Speaking Main: 文字
+09-05 12:51:53.382 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=31, displayId=0
+09-05 12:51:53.382 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 31
+09-05 12:51:53.385 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 63
+09-05 12:51:53.388 D/HelloReaderService( 7956): Speaking Main: デフォルト
+09-05 12:51:55.650 D/HelloReaderService( 7956): Speaking Main: ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 モールス振動の後にTTS音声 ✉️ 診断ログ作成・SOS問い合わせ 動作の不具合や困りごとがある場合、端末診断ログを添えてメーラーから連絡できます。個人情報や電話番号は一切含まれません。
+09-05 12:51:55.662 D/HelloReaderService( 7956): playSound requested for soundId: 5 -> streamId: 64
+09-05 12:51:55.772 D/HelloReaderService( 7956): Speaking Main: Hello Reader 設定ヘッダー 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動
+09-05 12:51:58.290 D/HelloReaderService( 7956): Speaking Main: ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 モールス振動の後にTTS音声 ✉️ 診断ログ作成・SOS問い合わせ
+09-05 12:51:58.302 D/HelloReaderService( 7956): playSound requested for soundId: 5 -> streamId: 65
+09-05 12:51:58.403 D/HelloReaderService( 7956): Speaking Main: スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 モールス振動の後にTTS音声 ✉️ 診断ログ作成・SOS問い合わせ 動作の不具合や困りごとがある場合、端末診断ログを添えてメーラーから連絡できます。個人情報や電話番号は一切含まれません。 ボタン。端末診断ログを作成し、メールアプリを起動して問い合わせを作成します。 診断ログを生成してメール送信 (SOS)
+09-05 12:51:58.425 D/HelloReaderService( 7956): Speaking Main: フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 モールス振動の後にTTS音声
+09-05 12:51:58.602 D/HelloReaderService( 7956): Speaking Main: スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内
+09-05 12:51:58.627 D/HelloReaderService( 7956): Speaking Main: ボタン。端末診断ログを作成し、メールアプリを起動して問い合わせを作成します。 診断ログを生成してメール送信 (SOS) [SubVoice Hint: ダブルタップで実行できます]
+09-05 12:51:59.385 D/HelloReaderService( 7956): playSound requested for soundId: 5 -> streamId: 66
+09-05 12:51:59.616 D/HelloReaderService( 7956): Speaking Main: Hello Reader 設定ヘッダー 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動
+09-05 12:52:00.760 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=2, displayId=0
+09-05 12:52:00.760 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 2
+09-05 12:52:00.765 D/HelloReaderService( 7956): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 12:52:00.766 D/HelloReaderService( 7956): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 12:52:01.279 D/HelloReaderService( 7956): navigateFocus index=37/62, success=true, text=切り替える
+09-05 12:52:01.279 D/HelloReaderService( 7956): Speaking Main: 切り替える
+09-05 12:52:01.337 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 67
+09-05 12:52:02.458 D/HelloReaderService( 7956): Speaking Main: 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 モールス振動の後にTTS音声
+09-05 12:52:02.466 D/HelloReaderService( 7956): playSound requested for soundId: 5 -> streamId: 68
+09-05 12:52:02.570 D/HelloReaderService( 7956): Speaking Main: ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 モールス振動の後にTTS音声 ✉️ 診断ログ作成・SOS問い合わせ 動作の不具合や困りごとがある場合、端末診断ログを添えてメーラーから連絡できます。個人情報や電話番号は一切含まれません。
+09-05 12:52:02.614 D/HelloReaderService( 7956): Speaking Main: フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 モールス振動の後にTTS音声
+09-05 12:52:02.740 D/HelloReaderService( 7956): Speaking Main: スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 モールス振動の後にTTS音声 ✉️ 診断ログ作成・SOS問い合わせ 動作の不具合や困りごとがある場合、端末診断ログを添えてメーラーから連絡できます。個人情報や電話番号は一切含まれません。 ボタン。端末診断ログを作成し、メールアプリを起動して問い合わせを作成します。 診断ログを生成してメール送信 (SOS)
+09-05 12:52:03.949 D/HelloReaderService( 7956): Speaking Main: スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 モールス振動の後にTTS音声 ✉️ 診断ログ作成・SOS問い合わせ 動作の不具合や困りごとがある場合、端末診断ログを添えてメーラーから連絡できます。個人情報や電話番号は一切含まれません。 ボタン。端末診断ログを作成し、メールアプリを起動して問い合わせを作成します。 診断ログを生成してメール送信 (SOS) タブ1。初期設定画面を開きます 初期設定 タブ2。全アプリ対応プロファイル画面を開きます 全アプリ対応 タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 12:52:05.921 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 69
+09-05 12:52:05.924 D/HelloReaderService( 7956): Speaking Main: 動作の不具合や困りごとがある場合、端末診断ログを添えてメーラーから連絡できます。個人情報や電話番号は一切含まれません。
+09-05 12:52:06.342 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 70
+09-05 12:52:06.358 D/HelloReaderService( 7956): Speaking Main: ✉️ 診断ログ作成・SOS問い合わせ 動作の不具合や困りごとがある場合、端末診断ログを添えてメーラーから連絡できます。個人情報や電話番号は一切含まれません。 ボタン。端末診断ログを作成し、メールアプリを起動して問い合わせを作成します。 診断ログを生成してメール送信 (SOS)
+09-05 12:52:06.481 D/HelloReaderService( 7956): Speaking Main: 診断ログを生成してメール送信 (SOS)
+09-05 12:52:06.532 D/HelloReaderService( 7956): Speaking Main: ボタン。端末診断ログを作成し、メールアプリを起動して問い合わせを作成します。 診断ログを生成してメール送信 (SOS) [SubVoice Hint: ダブルタップで実行できます]
+09-05 12:52:06.550 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 71
+09-05 12:52:08.698 D/HelloReaderService( 7956): Speaking Main: ボタン。端末診断ログを作成し、メールアプリを起動して問い合わせを作成します。 診断ログを生成してメール送信 (SOS) [SubVoice Hint: ダブルタップで実行できます]
+09-05 12:52:10.563 D/HelloReaderService( 7956): Speaking Main: スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オフ です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 音声とモールス振動を同時に出力 モールス振動の後にTTS音声 ✉️ 診断ログ作成・SOS問い合わせ 動作の不具合や困りごとがある場合、端末診断ログを添えてメーラーから連絡できます。個人情報や電話番号は一切含まれません。 ボタン。端末診断ログを作成し、メールアプリを起動して問い合わせを作成します。 診断ログを生成してメール送信 (SOS) タブ1。初期設定画面を開きます 初期設定 タブ2。全アプリ対応プロファイル画面を開きます 全アプリ対応 タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 12:52:10.728 D/HelloReaderService( 7956): Speaking Main: Gmail ドコモメール
+09-05 12:52:10.795 D/HelloReaderService( 7956): playSound requested for soundId: 4 -> streamId: 72
+09-05 12:52:10.796 D/HelloReaderService( 7956): Speaking Main: メールアプリを選択してください
+09-05 12:52:10.806 D/HelloReaderService( 7956): playSound requested for soundId: 5 -> streamId: 73
+09-05 12:52:10.807 D/HelloReaderService( 7956): Speaking Main: 1項目中 1項目を表示中
+09-05 12:52:14.841 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 12:52:14.841 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 4
+09-05 12:52:14.843 D/HelloReaderService( 7956): Swipe Right Matched -> navigateFocus FORWARD
+09-05 12:52:14.843 D/HelloReaderService( 7956): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 12:52:15.195 D/HelloReaderService( 7956): navigateFocus index=19/30, success=true, text=アカウント
+09-05 12:52:15.196 D/HelloReaderService( 7956): Speaking Main: アカウント [SubVoice Hint: タブ 未選択]
+09-05 12:52:17.456 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 12:52:17.457 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 4
+09-05 12:52:17.458 D/HelloReaderService( 7956): Swipe Right Matched -> navigateFocus FORWARD
+09-05 12:52:17.460 D/HelloReaderService( 7956): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 12:52:17.752 D/HelloReaderService( 7956): navigateFocus index=20/30, success=true, text=Gmail ドコモメール
+09-05 12:52:17.753 D/HelloReaderService( 7956): Speaking Main: Gmail ドコモメール
+09-05 12:52:17.808 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 74
+09-05 12:52:20.071 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 12:52:20.071 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 3
+09-05 12:52:20.072 D/HelloReaderService( 7956): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 12:52:20.073 D/HelloReaderService( 7956): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 12:52:20.348 D/HelloReaderService( 7956): navigateFocus index=19/30, success=true, text=アカウント
+09-05 12:52:20.349 D/HelloReaderService( 7956): Speaking Main: アカウント [SubVoice Hint: タブ 未選択]
+09-05 12:52:20.782 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 12:52:20.782 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 3
+09-05 12:52:20.785 D/HelloReaderService( 7956): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 12:52:20.786 D/HelloReaderService( 7956): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 12:52:20.913 D/HelloReaderService( 7956): navigateFocus index=18/30, success=true, text=ボタン
+09-05 12:52:20.914 D/HelloReaderService( 7956): Speaking Main: ボタン
+09-05 12:52:20.969 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 75
+09-05 12:52:22.423 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 12:52:22.424 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 3
+09-05 12:52:22.425 D/HelloReaderService( 7956): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 12:52:22.426 D/HelloReaderService( 7956): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 12:52:22.684 D/HelloReaderService( 7956): navigateFocus index=17/30, success=true, text=helloreader
+09-05 12:52:22.686 D/HelloReaderService( 7956): Speaking Main: helloreader [SubVoice Hint: ダブルタップで実行できます]
+09-05 12:52:22.739 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 76
+09-05 12:52:25.529 D/HelloReaderService( 7956): onGesture API 30+ received: gestureId=15, displayId=0
+09-05 12:52:25.530 D/HelloReaderService( 7956): handleGestureAction executing for gestureId: 15
+09-05 12:52:25.542 D/HelloReaderService( 7956): Speaking Main: 戻る
+09-05 12:52:25.644 D/HelloReaderService( 7956): playSound requested for soundId: 4 -> streamId: 77
+09-05 12:52:25.650 D/HelloReaderService( 7956): Speaking Main: helloreader
+09-05 12:52:27.789 D/HelloReaderService( 7956): playSound requested for soundId: 3 -> streamId: 78
+09-05 12:52:27.791 D/HelloReaderService( 7956): Speaking Main: 動作の不具合や困りごとがある場合、端末診断ログを添えてメーラーから連絡できます。個人情報や電話番号は一切含まれません。

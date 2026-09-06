@@ -1,0 +1,80 @@
+﻿--------- beginning of main
+09-03 21:09:42.077 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 16
+09-03 21:09:42.179 D/HelloReaderService(22437): Speaking Main: 📱 全アプリ対応プロファイル
+09-03 21:09:42.224 D/HelloReaderService(22437): Speaking Main: 📞 AOSP / Google 電話
+09-03 21:09:42.276 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 17
+09-03 21:09:43.189 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 19
+09-03 21:09:43.192 D/HelloReaderService(22437): Speaking Main: ⚙️ AOSP / Google 設定
+09-03 21:09:44.795 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 20
+09-03 21:09:44.799 D/HelloReaderService(22437): Speaking Main: 📱 全アプリ対応プロファイル
+09-03 21:09:45.075 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 21
+09-03 21:09:45.077 D/HelloReaderService(22437): Speaking Main: AOSP標準アプリや各種アプリへの最適化プロファイル一覧です
+09-03 21:09:42.961 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 18
+09-03 21:09:50.299 D/HelloReaderService(22437): handleGestureAction: 4
+09-03 21:09:50.399 D/HelloReaderService(22437): Speaking Main: ⚙️ AOSP / Google 設定
+09-03 21:09:50.452 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 22
+09-03 21:09:55.176 D/HelloReaderService(22437): handleGestureAction: 4
+09-03 21:09:55.261 D/HelloReaderService(22437): Speaking Main: com.android.settings
+09-03 21:09:55.314 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 23
+09-03 21:09:56.081 D/HelloReaderService(22437): handleGestureAction: 4
+09-03 21:09:56.215 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 24
+09-03 21:09:57.164 D/HelloReaderService(22437): handleGestureAction: 3
+09-03 21:09:57.308 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 25
+09-03 21:09:57.311 D/HelloReaderService(22437): Speaking Main: com.android.settings
+09-03 21:09:56.162 D/HelloReaderService(22437): Speaking Main: 有効 (Active) [SubVoice Hint: ダブルタップで実行できます]
+09-03 21:10:01.514 D/HelloReaderService(22437): handleGestureAction: 4
+09-03 21:10:01.677 D/HelloReaderService(22437): Speaking Main: 有効 (Active) [SubVoice Hint: ダブルタップで実行できます]
+09-03 21:10:01.734 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 26
+09-03 21:10:03.221 D/HelloReaderService(22437): handleGestureAction: 4
+09-03 21:10:03.401 D/HelloReaderService(22437): Speaking Main: 📞 AOSP / Google 電話
+09-03 21:10:03.454 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 27
+09-03 21:10:05.077 D/HelloReaderService(22437): handleGestureAction: 13
+09-03 21:10:05.152 D/HelloReaderService(22437): Speaking Main: ホーム画面
+09-03 21:10:05.304 D/HelloReaderService(22437): Speaking Main: ホーム画面。明日の 二本松市 の 26°C
+09-03 21:10:05.307 D/HelloReaderService(22437): playSound requested for soundId: 4 -> streamId: 28
+09-03 21:10:05.488 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 29
+09-03 21:10:05.490 D/HelloReaderService(22437): Speaking Main: スナップショット
+09-03 21:10:06.631 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 31
+09-03 21:10:06.633 D/HelloReaderService(22437): Speaking Main: 曇り [SubVoice Hint: ダブルタップで実行できます]
+09-03 21:10:07.135 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 33
+09-03 21:10:07.491 D/HelloReaderService(22437): handleGestureAction: 4
+09-03 21:10:07.739 D/HelloReaderService(22437): Speaking Main: スナップショット
+09-03 21:10:07.795 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 35
+09-03 21:10:08.188 D/HelloReaderService(22437): handleGestureAction: 4
+09-03 21:10:08.289 D/HelloReaderService(22437): Speaking Main: 明日の 二本松市 の 26°C
+09-03 21:10:08.348 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 36
+09-03 21:10:08.917 D/HelloReaderService(22437): handleGestureAction: 4
+09-03 21:10:09.022 D/HelloReaderService(22437): Speaking Main: 1/1 ページ
+09-03 21:10:09.077 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 37
+09-03 21:10:09.675 D/HelloReaderService(22437): handleGestureAction: 4
+09-03 21:10:09.787 D/HelloReaderService(22437): Speaking Main: 設定 [SubVoice Hint: ダブルタップで実行できます]
+09-03 21:10:09.853 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 38
+09-03 21:10:10.473 D/HelloReaderService(22437): handleGestureAction: 4
+09-03 21:10:10.571 D/HelloReaderService(22437): Speaking Main: マップ [SubVoice Hint: ダブルタップで実行できます]
+09-03 21:10:10.625 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 39
+09-03 21:10:11.056 D/HelloReaderService(22437): handleGestureAction: 3
+09-03 21:10:11.212 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 40
+09-03 21:10:11.713 D/HelloReaderService(22437): playSound requested for soundId: 1 -> streamId: 41
+09-03 21:10:11.730 D/HelloReaderService(22437): Speaking Main: ホーム画面
+09-03 21:10:11.882 D/HelloReaderService(22437): Speaking Main: 設定を検索
+09-03 21:10:11.908 D/HelloReaderService(22437): playSound requested for soundId: 4 -> streamId: 42
+09-03 21:10:11.911 D/HelloReaderService(22437): Speaking Main: 設定
+09-03 21:10:11.923 D/HelloReaderService(22437): Speaking Main: Tomohiro Saito
+09-03 21:10:13.079 D/HelloReaderService(22437): handleGestureAction: 4
+09-03 21:10:13.206 D/HelloReaderService(22437): Speaking Main: 設定を検索 [SubVoice Hint: タップして設定項目を検索します]
+09-03 21:10:13.258 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 43
+09-03 21:10:13.260 D/HelloReaderService(22437): Speaking Main: 設定を検索 タップして設定項目を検索します
+09-03 21:10:13.891 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 45
+09-03 21:10:14.410 D/HelloReaderService(22437): handleGestureAction: 4
+09-03 21:10:14.466 D/HelloReaderService(22437): Speaking Main: 使用を開始する機能をタップ:
+09-03 21:10:14.516 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 46
+09-03 21:10:13.773 D/HelloReaderService(22437): handleGestureAction: 4
+09-03 21:10:15.144 D/HelloReaderService(22437): Speaking Main: 戻る [SubVoice Hint: ダブルタップで実行できます]
+09-03 21:10:15.204 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 47
+09-03 21:10:15.739 D/HelloReaderService(22437): handleGestureAction: 4
+09-03 21:10:15.820 D/HelloReaderService(22437): Speaking Main: ホーム [SubVoice Hint: ダブルタップで実行できます]
+09-03 21:10:15.874 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 48
+09-03 21:10:16.614 D/HelloReaderService(22437): handleGestureAction: 4
+09-03 21:10:16.667 D/HelloReaderService(22437): Speaking Main: 最近 [SubVoice Hint: ダブルタップで実行できます]
+09-03 21:10:16.719 D/HelloReaderService(22437): playSound requested for soundId: 3 -> streamId: 49
+09-03 21:10:15.071 D/HelloReaderService(22437): handleGestureAction: 4

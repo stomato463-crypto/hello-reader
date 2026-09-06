@@ -1,0 +1,59 @@
+﻿--------- beginning of main
+08-31 10:36:17.517 D/HelloReaderService(10818): Speaking: 10:36
+08-31 10:36:27.376 D/HelloReaderService(10818): Speaking: 10:36
+08-31 10:36:29.465 D/HelloReaderService(10818): Speaking: バッテリー残量: 68パーセント
+08-31 10:36:53.174 D/HelloReaderService(10818): handleGestureAction: 5
+08-31 10:36:53.597 D/HelloReaderService(10818): handleGestureAction: 4
+08-31 10:36:53.723 D/HelloReaderService(10818): Speaking: Hello Reader 設定へようこそ
+08-31 10:36:53.781 D/HelloReaderService(10818): playSound requested for soundId: 3 -> streamId: 1
+08-31 10:36:54.966 D/HelloReaderService(10818): handleGestureAction: 4
+08-31 10:36:55.100 D/HelloReaderService(10818): Speaking: Hello Reader を使用するには、電話帳照会権限の許可とアクセシビリティサービスの有効化が必要です。
+08-31 10:36:55.154 D/HelloReaderService(10818): playSound requested for soundId: 3 -> streamId: 2
+08-31 10:36:55.636 D/HelloReaderService(10818): handleGestureAction: 4
+08-31 10:36:55.681 D/HelloReaderService(10818): Speaking: 権限の許可ダイアログを再表示するボタン
+08-31 10:36:55.735 D/HelloReaderService(10818): playSound requested for soundId: 3 -> streamId: 3
+08-31 10:36:56.358 D/HelloReaderService(10818): handleGestureAction: 4
+08-31 10:36:56.454 D/HelloReaderService(10818): playSound requested for soundId: 3 -> streamId: 4
+08-31 10:36:57.283 D/HelloReaderService(10818): handleGestureAction: 4
+08-31 10:36:57.327 D/HelloReaderService(10818): Speaking: Androidアクセシビリティ設定を開くボタン
+08-31 10:36:57.384 D/HelloReaderService(10818): playSound requested for soundId: 3 -> streamId: 5
+08-31 10:36:58.645 D/HelloReaderService(10818): handleGestureAction: 4
+08-31 10:36:58.744 D/HelloReaderService(10818): playSound requested for soundId: 3 -> streamId: 6
+08-31 10:36:59.959 D/HelloReaderService(10818): handleGestureAction: 4
+08-31 10:36:59.996 D/HelloReaderService(10818): Speaking: フォネティックコードとモールス信号機能。現在は オフ です。
+08-31 10:37:00.050 D/HelloReaderService(10818): playSound requested for soundId: 3 -> streamId: 7
+08-31 10:37:00.113 D/HelloReaderService(10818): Speaking: 10:36
+08-31 10:37:00.217 D/HelloReaderService(10818): Speaking: 10:37
+08-31 10:37:01.514 D/HelloReaderService(10818): handleGestureAction: 4
+08-31 10:37:01.606 D/HelloReaderService(10818): Speaking: フォネティック＆モールス振動機能 (標準:OFF)
+08-31 10:37:01.663 D/HelloReaderService(10818): playSound requested for soundId: 3 -> streamId: 8
+08-31 10:37:05.064 D/HelloReaderService(10818): handleGestureAction: 4
+08-31 10:37:05.092 D/HelloReaderService(10818): Speaking: チェックなし
+08-31 10:37:05.148 D/HelloReaderService(10818): playSound requested for soundId: 3 -> streamId: 9
+08-31 10:37:07.490 D/HelloReaderService(10818): handleGestureAction: 4
+08-31 10:37:07.536 D/HelloReaderService(10818): Speaking: 使用を開始する機能をタップ:
+08-31 10:37:07.596 D/HelloReaderService(10818): playSound requested for soundId: 3 -> streamId: 10
+08-31 10:37:10.064 D/HelloReaderService(10818): handleGestureAction: 4
+08-31 10:37:10.116 D/HelloReaderService(10818): Speaking: helloreader
+08-31 10:37:10.169 D/HelloReaderService(10818): playSound requested for soundId: 3 -> streamId: 11
+08-31 10:37:12.364 D/HelloReaderService(10818): handleGestureAction: 3
+08-31 10:37:12.416 D/HelloReaderService(10818): Speaking: 使用を開始する機能をタップ:
+08-31 10:37:12.477 D/HelloReaderService(10818): playSound requested for soundId: 3 -> streamId: 12
+08-31 10:37:15.600 D/HelloReaderService(10818): handleGestureAction: 4
+08-31 10:37:15.628 D/HelloReaderService(10818): Speaking: helloreader
+08-31 10:37:15.683 D/HelloReaderService(10818): playSound requested for soundId: 3 -> streamId: 13
+08-31 10:37:16.121 D/HelloReaderService(10818): handleGestureAction: 4
+08-31 10:37:16.170 D/HelloReaderService(10818): Speaking: 戻る
+08-31 10:37:16.232 D/HelloReaderService(10818): playSound requested for soundId: 3 -> streamId: 14
+08-31 10:37:17.535 D/HelloReaderService(10818): handleGestureAction: 4
+08-31 10:37:17.578 D/HelloReaderService(10818): Speaking: ホーム
+08-31 10:37:17.637 D/HelloReaderService(10818): playSound requested for soundId: 3 -> streamId: 15
+08-31 10:37:18.677 D/HelloReaderService(10818): handleGestureAction: 3
+08-31 10:37:18.727 D/HelloReaderService(10818): Speaking: 戻る
+08-31 10:37:18.781 D/HelloReaderService(10818): playSound requested for soundId: 3 -> streamId: 16
+08-31 10:37:19.170 D/HelloReaderService(10818): handleGestureAction: 3
+08-31 10:37:19.209 D/HelloReaderService(10818): Speaking: helloreader
+08-31 10:37:19.266 D/HelloReaderService(10818): playSound requested for soundId: 3 -> streamId: 17
+08-31 10:37:21.202 D/HelloReaderService(10818): handleGestureAction: 3
+08-31 10:37:21.244 D/HelloReaderService(10818): Speaking: 使用を開始する機能をタップ:
+08-31 10:37:21.300 D/HelloReaderService(10818): playSound requested for soundId: 3 -> streamId: 18

@@ -1,0 +1,224 @@
+﻿--------- beginning of main
+09-05 09:30:19.889 D/HelloReaderService(14428): playSound requested for soundId: 4 -> streamId: 25
+09-05 09:30:19.892 D/HelloReaderService(14428): Speaking Main: git add -A
+09-05 09:30:19.892 D/HelloReaderService(14428): git commit -v -m "fix: block automatic full screen text reading on window content changes to ensure quiet user-driven interaction"
+09-05 09:30:19.892 D/HelloReaderService(14428): git push -v origin dev-straightforward-crab-aqua
+09-05 09:30:54.202 D/HelloReaderService(14428): Speaking Main: Pixel 10 80% バッテリーを保護するため、充電を一時停止しています 充電完了 80% Pixel 10
+09-05 09:30:54.284 D/HelloReaderService(14428): Speaking Main: ホーム画面
+09-05 09:31:01.151 D/HelloReaderService(14428): Speaking Main: スナップショット
+09-05 09:31:01.259 D/HelloReaderService(14428): Speaking Main: スナップショット
+09-05 09:31:07.005 D/HelloReaderService(15081): Hello Reader Accessibility Service Connected!
+09-05 09:31:07.008 D/HelloReaderService(15081): SoundPool Initialized (Hybrid Custom & AOSP Sounds). Activate: 1, Deactivate: 2, Focus: 3, ViewEntered: 4, Scroll: 5
+09-05 09:31:07.118 D/HelloReaderService(15081): Sub-Voice: 安定動作ピッチ変調モード (MainPitch: 1.0, SubPitch: 0.82) を有効化しました
+09-05 09:31:07.119 D/HelloReaderService(15081): Speaking Main: Hello Readerへようこそ！サービスが起動しました。 [SubVoice Hint: 音量キー長押しでいつでもTalkBackを起動できます]
+09-05 09:31:07.121 D/HelloReaderService(15081): Sound loaded successfully! sampleId: 2
+09-05 09:31:07.121 D/HelloReaderService(15081): playSound requested for soundId: 4 -> streamId: 1
+09-05 09:31:07.122 D/HelloReaderService(15081): Speaking Main: helloreader
+09-05 09:31:07.123 D/HelloReaderService(15081): Sound loaded successfully! sampleId: 1
+09-05 09:31:07.123 D/HelloReaderService(15081): Sound loaded successfully! sampleId: 4
+09-05 09:31:07.135 D/HelloReaderService(15081): Sound loaded successfully! sampleId: 3
+09-05 09:31:07.156 D/HelloReaderService(15081): Sound loaded successfully! sampleId: 5
+09-05 09:31:19.676 D/HelloReaderService(15081): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 09:31:19.676 D/HelloReaderService(15081): handleGestureAction executing for gestureId: 4
+09-05 09:31:19.678 D/HelloReaderService(15081): Swipe Right Matched -> navigateFocus FORWARD
+09-05 09:31:19.681 D/HelloReaderService(15081): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 09:31:20.096 D/HelloReaderService(15081): navigateFocus collected: 47 nodes
+09-05 09:31:20.104 D/HelloReaderService(15081): navigateFocus index=0/47, success=true, text=Messenger の通知:
+09-05 09:31:20.104 D/HelloReaderService(15081): Speaking Main: Messenger の通知:
+09-05 09:31:20.190 D/HelloReaderService(15081): playSound requested for soundId: 3 -> streamId: 2
+09-05 09:31:20.194 D/HelloReaderService(15081): Speaking Main: Messenger の通知:
+09-05 09:31:21.257 D/HelloReaderService(15081): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 09:31:21.258 D/HelloReaderService(15081): handleGestureAction executing for gestureId: 4
+09-05 09:31:21.264 D/HelloReaderService(15081): Swipe Right Matched -> navigateFocus FORWARD
+09-05 09:31:21.265 D/HelloReaderService(15081): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 09:31:21.686 D/HelloReaderService(15081): navigateFocus collected: 47 nodes
+09-05 09:31:21.707 D/HelloReaderService(15081): navigateFocus index=1/47, success=true, text=Google の通知:
+09-05 09:31:21.707 D/HelloReaderService(15081): Speaking Main: Google の通知:
+09-05 09:31:21.812 D/HelloReaderService(15081): playSound requested for soundId: 3 -> streamId: 3
+09-05 09:31:21.818 D/HelloReaderService(15081): Speaking Main: Google の通知:
+09-05 09:31:23.345 D/HelloReaderService(15081): playSound requested for soundId: 3 -> streamId: 4
+09-05 09:31:23.347 D/HelloReaderService(15081): Speaking Main: フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動
+09-05 09:31:23.400 D/HelloReaderService(15081): Speaking Main: フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動
+09-05 09:31:24.555 D/HelloReaderService(15081): playSound requested for soundId: 3 -> streamId: 5
+09-05 09:31:24.561 D/HelloReaderService(15081): Speaking Main: ⚡ フォネティック＆モールス振動
+09-05 09:31:24.618 D/HelloReaderService(15081): Speaking Main: ⚡ フォネティック＆モールス振動
+09-05 09:31:24.977 D/HelloReaderService(15081): playSound requested for soundId: 3 -> streamId: 6
+09-05 09:31:24.978 D/HelloReaderService(15081): Speaking Main: ⚡ フォネティック＆モールス振動
+09-05 09:31:25.828 D/HelloReaderService(15081): onGesture API 30+ received: gestureId=13, displayId=0
+09-05 09:31:25.829 D/HelloReaderService(15081): handleGestureAction executing for gestureId: 13
+09-05 09:31:25.848 D/HelloReaderService(15081): Speaking Main: ホーム画面
+09-05 09:31:25.987 D/HelloReaderService(15081): playSound requested for soundId: 4 -> streamId: 7
+09-05 09:31:27.522 D/HelloReaderService(15081): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 09:31:27.522 D/HelloReaderService(15081): handleGestureAction executing for gestureId: 4
+09-05 09:31:27.524 D/HelloReaderService(15081): Swipe Right Matched -> navigateFocus FORWARD
+09-05 09:31:27.524 D/HelloReaderService(15081): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 09:31:28.550 D/HelloReaderService(15081): navigateFocus collected: 55 nodes
+09-05 09:31:28.566 D/HelloReaderService(15081): navigateFocus index=0/55, success=true, text=Messenger の通知:
+09-05 09:31:28.567 D/HelloReaderService(15081): Speaking Main: Messenger の通知:
+09-05 09:31:28.680 D/HelloReaderService(15081): playSound requested for soundId: 3 -> streamId: 8
+09-05 09:31:28.686 D/HelloReaderService(15081): Speaking Main: Messenger の通知:
+09-05 09:31:29.149 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:29.620 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:30.796 D/HelloReaderService(15081): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 09:31:30.796 D/HelloReaderService(15081): handleGestureAction executing for gestureId: 4
+09-05 09:31:30.798 D/HelloReaderService(15081): Swipe Right Matched -> navigateFocus FORWARD
+09-05 09:31:30.798 D/HelloReaderService(15081): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 09:31:31.393 D/HelloReaderService(15081): navigateFocus collected: 55 nodes
+09-05 09:31:31.418 D/HelloReaderService(15081): navigateFocus index=1/55, success=true, text=Google の通知:
+09-05 09:31:31.419 D/HelloReaderService(15081): Speaking Main: Google の通知:
+09-05 09:31:31.518 D/HelloReaderService(15081): playSound requested for soundId: 3 -> streamId: 9
+09-05 09:31:31.522 D/HelloReaderService(15081): Speaking Main: Google の通知:
+09-05 09:31:32.066 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:32.461 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:32.815 D/HelloReaderService(15081): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 09:31:32.815 D/HelloReaderService(15081): handleGestureAction executing for gestureId: 4
+09-05 09:31:32.815 D/HelloReaderService(15081): Swipe Right Matched -> navigateFocus FORWARD
+09-05 09:31:32.816 D/HelloReaderService(15081): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 09:31:33.299 D/HelloReaderService(15081): navigateFocus collected: 55 nodes
+09-05 09:31:33.318 D/HelloReaderService(15081): navigateFocus index=2/55, success=true, text=Bing の通知:
+09-05 09:31:33.318 D/HelloReaderService(15081): Speaking Main: Bing の通知:
+09-05 09:31:33.323 D/HelloReaderService(15081): playSound requested for soundId: 3 -> streamId: 10
+09-05 09:31:33.327 D/HelloReaderService(15081): Speaking Main: メッセージ [SubVoice Hint: ダブルタップで実行できます]
+09-05 09:31:33.388 D/HelloReaderService(15081): Speaking Main: メッセージ [SubVoice Hint: ダブルタップで実行できます]
+09-05 09:31:33.987 D/HelloReaderService(15081): playSound requested for soundId: 3 -> streamId: 11
+09-05 09:31:33.991 D/HelloReaderService(15081): Speaking Main: ホーム
+09-05 09:31:34.048 D/HelloReaderService(15081): Speaking Main: ホーム
+09-05 09:31:34.074 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:34.356 D/HelloReaderService(15081): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 09:31:34.356 D/HelloReaderService(15081): handleGestureAction executing for gestureId: 3
+09-05 09:31:34.360 D/HelloReaderService(15081): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 09:31:34.360 D/HelloReaderService(15081): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 09:31:34.869 D/HelloReaderService(15081): navigateFocus collected: 55 nodes
+09-05 09:31:34.883 D/HelloReaderService(15081): navigateFocus index=8/55, success=true, text=バッテリー残量 80%: バッテリー保護のため、充電を一時停止しました。
+09-05 09:31:34.884 D/HelloReaderService(15081): Speaking Main: バッテリー残量 80%: バッテリー保護のため、充電を一時停止しました。
+09-05 09:31:34.887 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:34.888 D/HelloReaderService(15081): handleGestureAction executing for gestureId: 3
+09-05 09:31:34.889 D/HelloReaderService(15081): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 09:31:34.889 D/HelloReaderService(15081): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 09:31:34.888 D/HelloReaderService(15081): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 09:31:35.217 D/HelloReaderService(15081): navigateFocus collected: 55 nodes
+09-05 09:31:35.248 D/HelloReaderService(15081): navigateFocus index=7/55, success=true, text=Wi-Fiはレベル2です。
+09-05 09:31:35.249 D/HelloReaderService(15081): Speaking Main: Wi-Fiはレベル2です。 [SubVoice Hint: ステータスバー]
+09-05 09:31:35.266 D/HelloReaderService(15081): playSound requested for soundId: 3 -> streamId: 12
+09-05 09:31:35.269 D/HelloReaderService(15081): Speaking Main: バッテリー残量 80%: バッテリー保護のため、充電を一時停止しました。
+09-05 09:31:35.328 D/HelloReaderService(15081): Speaking Main: Wi-Fiはレベル2です。 ステータスバー
+09-05 09:31:35.370 D/HelloReaderService(15081): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 09:31:35.370 D/HelloReaderService(15081): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 09:31:35.370 D/HelloReaderService(15081): handleGestureAction executing for gestureId: 3
+09-05 09:31:35.371 D/HelloReaderService(15081): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 09:31:35.783 D/HelloReaderService(15081): navigateFocus collected: 55 nodes
+09-05 09:31:35.814 D/HelloReaderService(15081): Speaking Main: 電波状態 [SubVoice Hint: ステータスバー]
+09-05 09:31:35.813 D/HelloReaderService(15081): navigateFocus index=6/55, success=true, text=電波状態
+09-05 09:31:35.816 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:35.932 D/HelloReaderService(15081): playSound requested for soundId: 3 -> streamId: 13
+09-05 09:31:35.935 D/HelloReaderService(15081): Speaking Main: 電波状態 ステータスバー
+09-05 09:31:35.939 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:36.055 D/HelloReaderService(15081): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 09:31:36.055 D/HelloReaderService(15081): handleGestureAction executing for gestureId: 3
+09-05 09:31:36.058 D/HelloReaderService(15081): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 09:31:36.057 D/HelloReaderService(15081): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 09:31:36.418 D/HelloReaderService(15081): navigateFocus collected: 55 nodes
+09-05 09:31:36.448 D/HelloReaderService(15081): navigateFocus index=5/55, success=true, text=現在時刻、9:31
+09-05 09:31:36.448 D/HelloReaderService(15081): Speaking Main: 現在時刻、9:31
+09-05 09:31:36.451 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:36.453 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:36.507 D/HelloReaderService(15081): playSound requested for soundId: 3 -> streamId: 14
+09-05 09:31:36.509 D/HelloReaderService(15081): Speaking Main: 現在時刻、9:31
+09-05 09:31:36.625 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:36.874 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:37.147 D/HelloReaderService(15081): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 09:31:37.147 D/HelloReaderService(15081): handleGestureAction executing for gestureId: 3
+09-05 09:31:37.152 D/HelloReaderService(15081): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 09:31:37.152 D/HelloReaderService(15081): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 09:31:37.647 D/HelloReaderService(15081): navigateFocus collected: 55 nodes
+09-05 09:31:37.666 D/HelloReaderService(15081): navigateFocus index=4/55, success=true, text=Lite の通知:
+09-05 09:31:37.668 D/HelloReaderService(15081): Speaking Main: Lite の通知:
+09-05 09:31:37.672 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:37.674 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:37.720 D/HelloReaderService(15081): playSound requested for soundId: 3 -> streamId: 15
+09-05 09:31:37.722 D/HelloReaderService(15081): Speaking Main: Lite の通知:
+09-05 09:31:38.103 D/HelloReaderService(15081): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 09:31:38.103 D/HelloReaderService(15081): handleGestureAction executing for gestureId: 3
+09-05 09:31:38.109 D/HelloReaderService(15081): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 09:31:38.111 D/HelloReaderService(15081): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 09:31:38.569 D/HelloReaderService(15081): navigateFocus collected: 55 nodes
+09-05 09:31:38.598 D/HelloReaderService(15081): navigateFocus index=3/55, success=true, text=YouTube の通知:
+09-05 09:31:38.600 D/HelloReaderService(15081): Speaking Main: YouTube の通知:
+09-05 09:31:38.603 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:38.653 D/HelloReaderService(15081): playSound requested for soundId: 3 -> streamId: 16
+09-05 09:31:38.658 D/HelloReaderService(15081): Speaking Main: YouTube の通知:
+09-05 09:31:38.723 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:39.373 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:39.660 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:41.100 D/HelloReaderService(15081): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 09:31:41.102 D/HelloReaderService(15081): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 09:31:41.103 D/HelloReaderService(15081): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 09:31:41.100 D/HelloReaderService(15081): handleGestureAction executing for gestureId: 3
+09-05 09:31:41.551 D/HelloReaderService(15081): navigateFocus collected: 55 nodes
+09-05 09:31:41.578 D/HelloReaderService(15081): navigateFocus index=2/55, success=true, text=Bing の通知:
+09-05 09:31:41.578 D/HelloReaderService(15081): Speaking Main: Bing の通知:
+09-05 09:31:41.683 D/HelloReaderService(15081): playSound requested for soundId: 3 -> streamId: 17
+09-05 09:31:41.688 D/HelloReaderService(15081): Speaking Main: Bing の通知:
+09-05 09:31:42.366 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:42.637 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:42.966 D/HelloReaderService(15081): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 09:31:42.966 D/HelloReaderService(15081): handleGestureAction executing for gestureId: 4
+09-05 09:31:42.967 D/HelloReaderService(15081): Swipe Right Matched -> navigateFocus FORWARD
+09-05 09:31:42.968 D/HelloReaderService(15081): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 09:31:43.439 D/HelloReaderService(15081): navigateFocus collected: 55 nodes
+09-05 09:31:43.458 D/HelloReaderService(15081): navigateFocus index=3/55, success=true, text=YouTube の通知:
+09-05 09:31:43.458 D/HelloReaderService(15081): Speaking Main: YouTube の通知:
+09-05 09:31:43.558 D/HelloReaderService(15081): playSound requested for soundId: 3 -> streamId: 18
+09-05 09:31:43.562 D/HelloReaderService(15081): Speaking Main: YouTube の通知:
+09-05 09:31:44.228 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:44.522 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:44.771 D/HelloReaderService(15081): playSound requested for soundId: 3 -> streamId: 19
+09-05 09:31:44.775 D/HelloReaderService(15081): Speaking Main: ホーム
+09-05 09:31:44.833 D/HelloReaderService(15081): Speaking Main: ホーム
+09-05 09:31:45.160 D/HelloReaderService(15081): playSound requested for soundId: 3 -> streamId: 20
+09-05 09:31:45.166 D/HelloReaderService(15081): Speaking Main: Gmail [SubVoice Hint: ダブルタップで実行できます]
+09-05 09:31:45.223 D/HelloReaderService(15081): Speaking Main: Gmail [SubVoice Hint: ダブルタップで実行できます]
+09-05 09:31:46.279 D/HelloReaderService(15081): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 09:31:46.279 D/HelloReaderService(15081): handleGestureAction executing for gestureId: 3
+09-05 09:31:46.282 D/HelloReaderService(15081): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 09:31:46.282 D/HelloReaderService(15081): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 09:31:46.671 D/HelloReaderService(15081): navigateFocus collected: 55 nodes
+09-05 09:31:46.690 D/HelloReaderService(15081): navigateFocus index=29/55, success=true, text=Play ストア
+09-05 09:31:46.691 D/HelloReaderService(15081): Speaking Main: Play ストア [SubVoice Hint: ダブルタップで実行できます]
+09-05 09:31:46.796 D/HelloReaderService(15081): playSound requested for soundId: 3 -> streamId: 21
+09-05 09:31:46.803 D/HelloReaderService(15081): Speaking Main: Play ストア [SubVoice Hint: ダブルタップで実行できます]
+09-05 09:31:47.510 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:47.759 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:47.770 D/HelloReaderService(15081): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 09:31:47.770 D/HelloReaderService(15081): handleGestureAction executing for gestureId: 3
+09-05 09:31:47.774 D/HelloReaderService(15081): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 09:31:47.775 D/HelloReaderService(15081): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 09:31:48.164 D/HelloReaderService(15081): navigateFocus collected: 55 nodes
+09-05 09:31:48.190 D/HelloReaderService(15081): navigateFocus index=28/55, success=true, text=Live
+09-05 09:31:48.192 D/HelloReaderService(15081): Speaking Main: Live
+09-05 09:31:48.288 D/HelloReaderService(15081): playSound requested for soundId: 3 -> streamId: 22
+09-05 09:31:48.293 D/HelloReaderService(15081): Speaking Main: Live
+09-05 09:31:49.031 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:49.258 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:49.464 D/HelloReaderService(15081): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 09:31:49.464 D/HelloReaderService(15081): handleGestureAction executing for gestureId: 3
+09-05 09:31:49.465 D/HelloReaderService(15081): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 09:31:49.466 D/HelloReaderService(15081): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 09:31:49.942 D/HelloReaderService(15081): navigateFocus collected: 55 nodes
+09-05 09:31:49.956 D/HelloReaderService(15081): navigateFocus index=27/55, success=true, text=動画
+09-05 09:31:49.957 D/HelloReaderService(15081): Speaking Main: 動画
+09-05 09:31:50.083 D/HelloReaderService(15081): playSound requested for soundId: 3 -> streamId: 23
+09-05 09:31:50.088 D/HelloReaderService(15081): Speaking Main: 動画
+09-05 09:31:50.740 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:51.011 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:51.050 D/HelloReaderService(15081): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 09:31:51.050 D/HelloReaderService(15081): handleGestureAction executing for gestureId: 3
+09-05 09:31:51.052 D/HelloReaderService(15081): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 09:31:51.053 D/HelloReaderService(15081): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 09:31:51.517 D/HelloReaderService(15081): navigateFocus collected: 55 nodes
+09-05 09:31:51.537 D/HelloReaderService(15081): navigateFocus index=26/55, success=true, text=最近のアイテムはありません
+09-05 09:31:51.538 D/HelloReaderService(15081): Speaking Main: 最近のアイテムはありません
+09-05 09:31:51.639 D/HelloReaderService(15081): playSound requested for soundId: 3 -> streamId: 24
+09-05 09:31:51.643 D/HelloReaderService(15081): Speaking Main: 最近のアイテムはありません
+09-05 09:31:52.309 D/HelloReaderService(15081): Played Morse Vibration for '0': -----
+09-05 09:31:52.603 D/HelloReaderService(15081): Played Morse Vibration for '0': -----

@@ -1,0 +1,43 @@
+﻿--------- beginning of main
+09-04 01:53:11.934 D/HelloReaderService( 3302): Screen Turned OFF
+09-04 01:53:16.241 D/HelloReaderService( 3302): Screen Turned ON
+09-04 01:53:16.832 D/HelloReaderService( 3302): LockScreen Details: ロック画面。9月4日 金曜日 1時53分。指紋センサーは画面の下部中央にあります
+09-04 01:53:16.832 D/HelloReaderService( 3302): Speaking Main: ロック画面。9月4日 金曜日 1時53分。指紋センサーは画面の下部中央にあります
+09-04 01:53:21.486 D/HelloReaderService( 3302): playSound requested for soundId: 3 -> streamId: 1
+09-04 01:53:21.495 D/HelloReaderService( 3302): Speaking Main: デバイスはロックされています [SubVoice Hint: ボタン]
+09-04 01:53:23.375 D/HelloReaderService( 3302): handleGestureAction: 25
+09-04 01:53:23.375 D/HelloReaderService( 3302): 2-Finger Swipe Up
+09-04 01:53:23.377 D/HelloReaderService( 3302): Speaking Main: PINコード入力画面
+09-04 01:53:23.598 D/HelloReaderService( 3302): handleGestureAction: 1
+09-04 01:53:23.817 D/HelloReaderService( 3302): handleGestureAction: 1
+09-04 01:53:24.038 D/HelloReaderService( 3302): handleGestureAction: 1
+09-04 01:53:24.255 D/HelloReaderService( 3302): handleGestureAction: 1
+09-04 01:53:24.473 D/HelloReaderService( 3302): handleGestureAction: 1
+09-04 01:53:24.700 D/HelloReaderService( 3302): handleGestureAction: 1
+09-04 01:53:24.927 D/HelloReaderService( 3302): handleGestureAction: 1
+09-04 01:53:25.155 D/HelloReaderService( 3302): handleGestureAction: 1
+09-04 01:53:29.141 D/HelloReaderService( 3302): handleGestureAction: 4
+09-04 01:53:30.006 D/HelloReaderService( 3302): playSound requested for soundId: 2 -> streamId: 2
+09-04 01:53:30.010 D/HelloReaderService( 3302): Speaking Main: これ以上 次へ に進めません
+09-04 01:53:30.013 D/HelloReaderService( 3302): handleGestureAction: 3
+09-04 01:53:30.079 D/HelloReaderService( 3302): Speaking Main: サイレント モード: ON [SubVoice Hint: ボタン]
+09-04 01:53:30.146 D/HelloReaderService( 3302): playSound requested for soundId: 3 -> streamId: 3
+09-04 01:53:30.362 D/HelloReaderService( 3302): handleGestureAction: 4
+09-04 01:53:30.455 D/HelloReaderService( 3302): Speaking Main: デバイスはロックされています [SubVoice Hint: ボタン]
+09-04 01:53:30.514 D/HelloReaderService( 3302): playSound requested for soundId: 3 -> streamId: 4
+09-04 01:53:31.258 D/HelloReaderService( 3302): handleGestureAction: 4
+09-04 01:53:31.768 D/HelloReaderService( 3302): playSound requested for soundId: 2 -> streamId: 5
+09-04 01:53:31.821 D/HelloReaderService( 3302): handleGestureAction: 4
+09-04 01:53:32.416 D/HelloReaderService( 3302): playSound requested for soundId: 2 -> streamId: 6
+09-04 01:53:32.417 D/HelloReaderService( 3302): Speaking Main: これ以上 次へ に進めません
+09-04 01:53:34.276 D/HelloReaderService( 3302): handleGestureAction: 25
+09-04 01:53:34.276 D/HelloReaderService( 3302): 2-Finger Swipe Up
+09-04 01:53:34.281 D/HelloReaderService( 3302): Speaking Main: PINコード入力画面
+09-04 01:53:34.496 D/HelloReaderService( 3302): handleGestureAction: 1
+09-04 01:53:34.712 D/HelloReaderService( 3302): handleGestureAction: 1
+09-04 01:53:34.931 D/HelloReaderService( 3302): handleGestureAction: 1
+09-04 01:53:36.876 D/HelloReaderService( 3302): playSound requested for soundId: 3 -> streamId: 7
+09-04 01:53:36.879 D/HelloReaderService( 3302): Speaking Main: ロック画面
+09-04 01:53:37.142 D/HelloReaderService( 3302): playSound requested for soundId: 3 -> streamId: 8
+09-04 01:53:37.145 D/HelloReaderService( 3302): Speaking Main: デバイスはロックされています [SubVoice Hint: ボタン]
+09-04 01:53:37.461 D/HelloReaderService( 3302): playSound requested for soundId: 3 -> streamId: 9

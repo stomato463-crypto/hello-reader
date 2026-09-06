@@ -1,0 +1,220 @@
+﻿--------- beginning of main
+08-30 09:50:56.637 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時50分。legacy_window_root
+08-30 09:50:56.637 D/HelloReaderService(15963): Speaking: ロック画面。8月30日 日曜日 9時50分。legacy_window_root
+08-30 09:50:56.856 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時50分。legacy_window_root
+08-30 09:50:56.981 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時50分。legacy_window_root
+08-30 09:50:57.045 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時50分。legacy_window_root
+08-30 09:50:57.046 D/HelloReaderService(15963): Screen Turned OFF
+08-30 09:50:57.175 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時50分。legacy_window_root
+08-30 09:50:57.215 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時50分。legacy_window_root
+08-30 09:50:57.259 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時50分。legacy_window_root
+08-30 09:50:57.363 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時50分。legacy_window_root
+08-30 09:50:57.468 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時50分。legacy_window_root
+08-30 09:50:57.577 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時50分。legacy_window_root
+08-30 09:50:57.681 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時50分。legacy_window_root
+08-30 09:50:57.769 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時50分。legacy_window_root
+08-30 09:50:57.867 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時50分。legacy_window_root
+08-30 09:50:57.994 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時50分。legacy_window_root
+08-30 09:50:58.057 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時50分。legacy_window_root
+08-30 09:50:58.153 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時50分。legacy_window_root
+08-30 09:50:58.153 D/HelloReaderService(15963): Speaking: ロック画面。8月30日 日曜日 9時50分。legacy_window_root
+08-30 09:51:01.157 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時51分。legacy_window_root
+08-30 09:51:01.158 D/HelloReaderService(15963): Speaking: ロック画面。8月30日 日曜日 9時51分。legacy_window_root
+08-30 09:51:01.265 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時51分。legacy_window_root
+08-30 09:52:01.161 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時52分。legacy_window_root
+08-30 09:52:01.162 D/HelloReaderService(15963): Speaking: ロック画面。8月30日 日曜日 9時52分。legacy_window_root
+08-30 09:52:01.300 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時52分。legacy_window_root
+08-30 09:53:01.158 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時53分。legacy_window_root
+08-30 09:53:01.158 D/HelloReaderService(15963): Speaking: ロック画面。8月30日 日曜日 9時53分。legacy_window_root
+08-30 09:53:01.276 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時53分。legacy_window_root
+08-30 09:53:01.774 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時53分。legacy_window_root
+08-30 09:54:01.195 D/HelloReaderService(15963): Speaking: ロック画面。8月30日 日曜日 9時54分。legacy_window_root
+08-30 09:54:01.194 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時54分。legacy_window_root
+08-30 09:54:01.394 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時54分。legacy_window_root
+08-30 09:54:01.494 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時54分。legacy_window_root
+08-30 09:55:01.247 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時55分。legacy_window_root
+08-30 09:55:01.248 D/HelloReaderService(15963): Speaking: ロック画面。8月30日 日曜日 9時55分。legacy_window_root
+08-30 09:55:01.379 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時55分。legacy_window_root
+08-30 09:56:01.194 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時56分。legacy_window_root
+08-30 09:56:01.194 D/HelloReaderService(15963): Speaking: ロック画面。8月30日 日曜日 9時56分。legacy_window_root
+08-30 09:56:01.355 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時56分。legacy_window_root
+08-30 09:57:01.160 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時57分。legacy_window_root
+08-30 09:57:01.161 D/HelloReaderService(15963): Speaking: ロック画面。8月30日 日曜日 9時57分。legacy_window_root
+08-30 09:57:01.348 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時57分。legacy_window_root
+08-30 09:58:00.099 D/HelloReaderService(15963): Speaking: 09:58
+08-30 09:58:00.320 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時58分。legacy_window_root
+08-30 09:58:00.320 D/HelloReaderService(15963): Speaking: ロック画面。8月30日 日曜日 9時58分。legacy_window_root
+08-30 09:58:01.232 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時58分。legacy_window_root
+08-30 09:58:01.417 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時58分。legacy_window_root
+08-30 09:58:03.933 D/HelloReaderService(15963): Speaking: スナップショット
+08-30 09:58:04.108 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時58分。legacy_window_root
+08-30 09:58:04.108 D/HelloReaderService(15963): Speaking: ロック画面。8月30日 日曜日 9時58分。legacy_window_root
+08-30 09:58:04.435 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時58分。legacy_window_root
+08-30 09:58:04.512 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時58分。legacy_window_root
+08-30 09:58:14.934 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時58分。legacy_window_root
+08-30 09:58:14.934 D/HelloReaderService(15963): Speaking: ロック画面。8月30日 日曜日 9時58分。legacy_window_root
+08-30 09:58:15.091 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時58分。legacy_window_root
+08-30 09:58:15.178 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時58分。legacy_window_root
+08-30 09:59:01.159 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時59分。legacy_window_root
+08-30 09:59:01.159 D/HelloReaderService(15963): Speaking: ロック画面。8月30日 日曜日 9時59分。legacy_window_root
+08-30 09:59:01.355 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 9時59分。legacy_window_root
+08-30 10:00:00.115 D/HelloReaderService(15963): Speaking: 10:00
+08-30 10:00:00.308 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:00.309 D/HelloReaderService(15963): Speaking: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:09.171 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:09.172 D/HelloReaderService(15963): Speaking: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:09.199 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:09.304 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:19.693 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:19.693 D/HelloReaderService(15963): Speaking: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:19.843 D/HelloReaderService(15963): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:40.703 D/HelloReaderService(17299): Hello Reader Accessibility Service Connected!
+08-30 10:00:41.787 D/HelloReaderService(17299): Speaking: Hello Readerが起動したにょろ
+08-30 10:00:41.953 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:41.953 D/HelloReaderService(17299): Speaking: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:41.996 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:41.999 D/HelloReaderService(17299): Speaking: helloreader
+08-30 10:00:47.185 D/HelloReaderService(17299): Screen Turned ON
+08-30 10:00:47.735 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:47.735 D/HelloReaderService(17299): Speaking: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:47.802 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:47.876 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:47.892 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:47.899 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:47.906 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:47.915 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:47.924 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:47.976 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:47.985 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:48.089 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:48.188 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:48.288 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:48.388 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:48.488 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:48.589 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:48.720 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:49.707 D/HelloReaderService(17299): handleGestureAction: 4
+08-30 10:00:49.737 D/HelloReaderService(17299): Speaking: scrim_behind
+08-30 10:00:50.420 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:50.420 D/HelloReaderService(17299): Speaking: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:50.519 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:50.603 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:50.631 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:50.644 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:50.708 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:50.810 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:50.914 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:51.001 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:51.113 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:51.211 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:51.311 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:51.406 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:51.507 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:51.606 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:51.714 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:52.287 D/HelloReaderService(17299): handleGestureAction: 4
+08-30 10:00:52.326 D/HelloReaderService(17299): Speaking: scrim_notifications
+08-30 10:00:53.907 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:53.907 D/HelloReaderService(17299): Speaking: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:53.995 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:54.109 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:54.212 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:54.300 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:54.404 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:54.507 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:54.612 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:54.706 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:54.801 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:54.902 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:55.017 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:55.108 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:55.152 D/HelloReaderService(17299): handleGestureAction: 4
+08-30 10:00:55.188 D/HelloReaderService(17299): Speaking: light_reveal_scrim
+08-30 10:00:55.868 D/HelloReaderService(17299): Speaking: docomo、レベル 3。
+08-30 10:00:57.169 D/HelloReaderService(17299): handleGestureAction: 4
+08-30 10:00:57.205 D/HelloReaderService(17299): Speaking: scrim_in_front
+08-30 10:00:57.414 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:57.415 D/HelloReaderService(17299): Speaking: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:57.511 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:57.621 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:57.718 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:57.812 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:57.910 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:58.028 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:58.114 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:58.218 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:58.310 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:58.411 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:58.524 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:58.651 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時00分。legacy_window_root
+08-30 10:00:58.821 D/HelloReaderService(17299): handleGestureAction: 4
+08-30 10:00:58.859 D/HelloReaderService(17299): Speaking: low_light_animation_container
+08-30 10:01:00.210 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:00.210 D/HelloReaderService(17299): Speaking: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:01.123 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:01.216 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:01.540 D/HelloReaderService(17299): handleGestureAction: 4
+08-30 10:01:01.571 D/HelloReaderService(17299): Speaking: auth_ripple
+08-30 10:01:03.625 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:03.626 D/HelloReaderService(17299): Speaking: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:03.716 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:03.833 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:04.000 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:04.018 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:04.122 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:04.267 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:04.323 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:04.405 D/HelloReaderService(17299): handleGestureAction: 4
+08-30 10:01:04.438 D/HelloReaderService(17299): Speaking: expandableNotificationRow
+08-30 10:01:04.469 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:04.469 D/HelloReaderService(17299): Speaking: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:04.489 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:04.501 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:04.502 D/HelloReaderService(17299): Speaking: expandableNotificationRow
+08-30 10:01:04.614 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:04.614 D/HelloReaderService(17299): Speaking: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:04.698 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:04.818 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:04.911 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:05.584 D/HelloReaderService(17299): handleGestureAction: 4
+08-30 10:01:05.619 D/HelloReaderService(17299): Speaking: backgroundNormal
+08-30 10:01:07.127 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:07.128 D/HelloReaderService(17299): Speaking: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:07.177 D/HelloReaderService(17299): handleGestureAction: 4
+08-30 10:01:07.201 D/HelloReaderService(17299): Speaking: backgroundDimmed
+08-30 10:01:07.236 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:07.236 D/HelloReaderService(17299): Speaking: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:07.253 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:07.266 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:07.268 D/HelloReaderService(17299): Speaking: backgroundDimmed
+08-30 10:01:07.419 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:07.419 D/HelloReaderService(17299): Speaking: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:07.468 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:07.577 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:07.684 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:07.787 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:07.880 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:07.979 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:08.079 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:08.185 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:08.291 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:08.385 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:08.651 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:08.779 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:08.960 D/HelloReaderService(17299): Speaking: ウォレット
+08-30 10:01:09.193 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:09.193 D/HelloReaderService(17299): Speaking: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:09.346 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:09.347 D/HelloReaderService(17299): Screen Turned OFF
+08-30 10:01:09.410 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:09.460 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:09.599 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:09.673 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:09.771 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:09.875 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:09.975 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:10.078 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:10.180 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:10.279 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:10.375 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root
+08-30 10:01:10.478 D/HelloReaderService(17299): LockScreen Details: ロック画面。8月30日 日曜日 10時01分。legacy_window_root

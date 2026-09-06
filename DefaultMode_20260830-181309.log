@@ -1,0 +1,19 @@
+﻿--------- beginning of main
+08-30 18:12:13.416 D/HelloReaderService( 6236): Speaking: Wi-Fiはレベル2です。
+08-30 18:12:16.563 D/HelloReaderService( 6236): Speaking: Wi-Fiはレベル3です。
+08-30 18:12:22.687 D/HelloReaderService( 6236): Speaking: Wi-Fiはレベル2です。
+08-30 18:12:39.514 D/HelloReaderService( 6955): Hello Reader Accessibility Service Connected!
+08-30 18:12:39.519 D/HelloReaderService( 6955): SoundPool Initialized. Activate: 1, Deactivate: 2, Focus: 3, ViewEntered: 4
+08-30 18:12:39.610 D/HelloReaderService( 6955): Sound loaded successfully! sampleId: 1
+08-30 18:12:39.620 D/HelloReaderService( 6955): Sound loaded successfully! sampleId: 2
+08-30 18:12:39.674 D/HelloReaderService( 6955): Sound loaded successfully! sampleId: 4
+08-30 18:12:39.751 D/HelloReaderService( 6955): Sound loaded successfully! sampleId: 3
+08-30 18:12:39.889 D/HelloReaderService( 6955): Speaking: Hello Readerが起動したにょろ
+08-30 18:12:43.994 D/HelloReaderService( 6955): playSound requested for soundId: 3 -> streamId: 1
+08-30 18:12:47.464 D/HelloReaderService( 6955): Speaking: Wi-Fiはレベル3です。
+08-30 18:13:00.112 D/HelloReaderService( 6955): Speaking: 18:12
+08-30 18:13:00.222 D/HelloReaderService( 6955): Speaking: 18:13
+08-30 18:13:06.140 D/HelloReaderService( 6955): Speaking: Wi-Fiはレベル2です。
+08-30 18:13:10.410 D/HelloReaderService( 6955): playSound requested for soundId: 3 -> streamId: 2
+08-30 18:13:12.100 D/HelloReaderService( 6955): playSound requested for soundId: 3 -> streamId: 3
+08-30 18:13:12.831 D/HelloReaderService( 6955): handleGestureAction: 4

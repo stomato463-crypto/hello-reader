@@ -1,0 +1,19 @@
+﻿--------- beginning of main
+08-31 12:41:02.526 D/HelloReaderService(29877): Speaking: ホーム
+08-31 12:41:02.441 D/HelloReaderService(29877): handleGestureAction: 4
+08-31 12:41:02.586 D/HelloReaderService(29877): playSound requested for soundId: 3 -> streamId: 121
+08-31 12:41:03.535 D/HelloReaderService(29877): handleGestureAction: 4
+08-31 12:41:03.654 D/HelloReaderService(29877): playSound requested for soundId: 3 -> streamId: 123
+08-31 12:41:03.594 D/HelloReaderService(29877): Speaking: 最近
+08-31 12:41:04.084 D/HelloReaderService(29877): handleGestureAction: 4
+08-31 12:41:04.231 D/HelloReaderService(29877): Speaking: 予測
+08-31 12:41:04.342 D/HelloReaderService(29877): playSound requested for soundId: 5 -> streamId: 124
+08-31 12:41:04.342 D/HelloReaderService(29877): Speaking: 28項目中 8項目を表示中
+08-31 12:41:04.442 D/HelloReaderService(29877): Speaking: 予測
+08-31 12:41:04.539 D/HelloReaderService(29877): handleGestureAction: 4
+08-31 12:41:04.648 D/HelloReaderService(29877): playSound requested for soundId: 2 -> streamId: 125
+08-31 12:41:04.648 D/HelloReaderService(29877): Speaking: これ以上 次へ に進めません
+08-31 12:41:04.653 D/HelloReaderService(29877): Speaking: 予測
+08-31 12:41:04.759 D/HelloReaderService(29877): Speaking: これ以上 次へ に進めません
+08-31 12:41:05.352 D/HelloReaderService(29877): handleGestureAction: 4
+08-31 12:41:05.429 D/HelloReaderService(29877): playSound requested for soundId: 2 -> streamId: 126

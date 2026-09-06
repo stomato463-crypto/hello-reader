@@ -1,0 +1,71 @@
+﻿--------- beginning of main
+09-04 02:00:44.031 D/HelloReaderService( 4738): Hello Reader Accessibility Service Connected!
+09-04 02:00:44.078 D/HelloReaderService( 4738): SoundPool Initialized (Hybrid Custom & AOSP Sounds). Activate: 1, Deactivate: 2, Focus: 3, ViewEntered: 4, Scroll: 5
+09-04 02:00:45.174 D/HelloReaderService( 4738): Sub-Voice: 安定動作ピッチ変調モード (MainPitch: 1.0, SubPitch: 0.82) を有効化しました
+09-04 02:00:45.185 D/HelloReaderService( 4738): Speaking Main: Hello Readerが起動しました [SubVoice Hint: サブボイス案内が有効です]
+09-04 02:00:45.188 D/HelloReaderService( 4738): Sound loaded successfully! sampleId: 1
+09-04 02:00:45.188 D/HelloReaderService( 4738): Sound loaded successfully! sampleId: 2
+09-04 02:00:45.188 D/HelloReaderService( 4738): Sound loaded successfully! sampleId: 4
+09-04 02:00:45.188 D/HelloReaderService( 4738): Sound loaded successfully! sampleId: 3
+09-04 02:00:45.189 D/HelloReaderService( 4738): Sound loaded successfully! sampleId: 5
+09-04 02:01:13.433 D/HelloReaderService( 4738): Screen Turned ON
+09-04 02:01:14.000 D/HelloReaderService( 4738): LockScreen Details: ロック画面。9月4日 金曜日 2時01分。指紋センサーは画面の下部中央にあります
+09-04 02:01:14.001 D/HelloReaderService( 4738): Speaking Main: ロック画面。9月4日 金曜日 2時01分。指紋センサーは画面の下部中央にあります
+09-04 02:01:21.669 D/HelloReaderService( 4738): handleGestureAction: 4
+09-04 02:01:22.101 D/HelloReaderService( 4738): Speaking Main: Android システム
+09-04 02:01:22.172 D/HelloReaderService( 4738): playSound requested for soundId: 3 -> streamId: 1
+09-04 02:01:22.354 D/HelloReaderService( 4738): handleGestureAction: 4
+09-04 02:01:22.746 D/HelloReaderService( 4738): Speaking Main: Digital Wellbeing [SubVoice Hint: ボタン]
+09-04 02:01:22.799 D/HelloReaderService( 4738): playSound requested for soundId: 3 -> streamId: 2
+09-04 02:01:24.229 D/HelloReaderService( 4738): handleGestureAction: 25
+09-04 02:01:24.229 D/HelloReaderService( 4738): 2-Finger Swipe Up
+09-04 02:01:24.230 D/HelloReaderService( 4738): Speaking Main: PINコード入力画面
+09-04 02:01:24.441 D/HelloReaderService( 4738): handleGestureAction: 1
+09-04 02:01:24.658 D/HelloReaderService( 4738): handleGestureAction: 1
+09-04 02:01:24.881 D/HelloReaderService( 4738): handleGestureAction: 1
+09-04 02:01:25.100 D/HelloReaderService( 4738): handleGestureAction: 1
+09-04 02:01:25.318 D/HelloReaderService( 4738): handleGestureAction: 1
+09-04 02:01:25.538 D/HelloReaderService( 4738): handleGestureAction: 1
+09-04 02:01:25.762 D/HelloReaderService( 4738): handleGestureAction: 1
+09-04 02:01:25.997 D/HelloReaderService( 4738): handleGestureAction: 1
+09-04 02:01:31.898 D/HelloReaderService( 4738): handleGestureAction: 4
+09-04 02:01:32.348 D/HelloReaderService( 4738): Speaking Main: ロック画面
+09-04 02:01:32.349 D/HelloReaderService( 4738): handleGestureAction: 4
+09-04 02:01:32.745 D/HelloReaderService( 4738): Speaking Main: サイレント モード: ON
+09-04 02:01:32.773 D/HelloReaderService( 4738): playSound requested for soundId: 3 -> streamId: 3
+09-04 02:01:32.775 D/HelloReaderService( 4738): handleGestureAction: 3
+09-04 02:01:33.211 D/HelloReaderService( 4738): playSound requested for soundId: 3 -> streamId: 4
+09-04 02:01:33.228 D/HelloReaderService( 4738): handleGestureAction: 4
+09-04 02:01:33.394 D/HelloReaderService( 4738): playSound requested for soundId: 3 -> streamId: 5
+09-04 02:01:33.590 D/HelloReaderService( 4738): handleGestureAction: 4
+09-04 02:01:33.679 D/HelloReaderService( 4738): Speaking Main: docomo、レベル 2。
+09-04 02:01:33.743 D/HelloReaderService( 4738): playSound requested for soundId: 3 -> streamId: 6
+09-04 02:01:34.034 D/HelloReaderService( 4738): handleGestureAction: 4
+09-04 02:01:34.113 D/HelloReaderService( 4738): Speaking Main: Wi-Fiはレベル3です。
+09-04 02:01:34.177 D/HelloReaderService( 4738): playSound requested for soundId: 3 -> streamId: 7
+09-04 02:01:34.496 D/HelloReaderService( 4738): handleGestureAction: 4
+09-04 02:01:34.577 D/HelloReaderService( 4738): Speaking Main: 電池充電中: 51パーセント
+09-04 02:01:34.641 D/HelloReaderService( 4738): playSound requested for soundId: 3 -> streamId: 8
+09-04 02:01:34.911 D/HelloReaderService( 4738): handleGestureAction: 4
+09-04 02:01:35.282 D/HelloReaderService( 4738): Speaking Main: ロック画面
+09-04 02:01:35.377 D/HelloReaderService( 4738): playSound requested for soundId: 3 -> streamId: 9
+09-04 02:01:35.400 D/HelloReaderService( 4738): handleGestureAction: 4
+09-04 02:01:35.766 D/HelloReaderService( 4738): Speaking Main: 02:01
+09-04 02:01:35.827 D/HelloReaderService( 4738): playSound requested for soundId: 3 -> streamId: 10
+09-04 02:01:35.913 D/HelloReaderService( 4738): handleGestureAction: 4
+09-04 02:01:36.444 D/HelloReaderService( 4738): Speaking Main: サイレント モード: ON [SubVoice Hint: ボタン]
+09-04 02:01:36.508 D/HelloReaderService( 4738): playSound requested for soundId: 3 -> streamId: 11
+09-04 02:01:36.541 D/HelloReaderService( 4738): handleGestureAction: 4
+09-04 02:01:36.864 D/HelloReaderService( 4738): Speaking Main: デバイスはロックされています [SubVoice Hint: ボタン]
+09-04 02:01:36.925 D/HelloReaderService( 4738): playSound requested for soundId: 3 -> streamId: 12
+09-04 02:01:37.208 D/HelloReaderService( 4738): handleGestureAction: 4
+09-04 02:01:37.292 D/HelloReaderService( 4738): playSound requested for soundId: 2 -> streamId: 13
+09-04 02:01:37.293 D/HelloReaderService( 4738): Speaking Main: これ以上 次へ に進めません
+09-04 02:01:38.675 D/HelloReaderService( 4738): handleGestureAction: 25
+09-04 02:01:38.676 D/HelloReaderService( 4738): 2-Finger Swipe Up
+09-04 02:01:38.685 D/HelloReaderService( 4738): Speaking Main: PINコード入力画面
+09-04 02:01:38.905 D/HelloReaderService( 4738): handleGestureAction: 1
+09-04 02:01:39.126 D/HelloReaderService( 4738): handleGestureAction: 1
+09-04 02:01:39.354 D/HelloReaderService( 4738): handleGestureAction: 1
+09-04 02:01:39.571 D/HelloReaderService( 4738): handleGestureAction: 1
+09-04 02:01:39.797 D/HelloReaderService( 4738): handleGestureAction: 1

@@ -1,0 +1,117 @@
+﻿--------- beginning of main
+08-31 04:04:01.092 D/HelloReaderService( 7203): Speaking: スナップショット
+08-31 04:04:28.348 D/HelloReaderService( 7203): Speaking: docomo、レベル 1。
+08-31 04:04:42.416 D/HelloReaderService( 7203): Speaking: docomo、レベル 2。
+08-31 04:05:00.094 D/HelloReaderService( 7203): Speaking: 4:04
+08-31 04:05:01.080 D/HelloReaderService( 7203): Speaking: スナップショット
+08-31 04:05:17.966 D/HelloReaderService( 8147): Hello Reader Accessibility Service Connected!
+08-31 04:05:17.972 D/HelloReaderService( 8147): SoundPool Initialized (Hybrid Custom & AOSP Sounds). Activate: 1, Deactivate: 2, Focus: 3, ViewEntered: 4, Scroll: 5
+08-31 04:05:18.070 D/HelloReaderService( 8147): Sound loaded successfully! sampleId: 2
+08-31 04:05:18.092 D/HelloReaderService( 8147): Sound loaded successfully! sampleId: 4
+08-31 04:05:18.129 D/HelloReaderService( 8147): Sound loaded successfully! sampleId: 3
+08-31 04:05:18.152 D/HelloReaderService( 8147): Sound loaded successfully! sampleId: 5
+08-31 04:05:18.306 D/HelloReaderService( 8147): Speaking: Hello Readerが起動したにょろ
+08-31 04:05:18.055 D/HelloReaderService( 8147): Sound loaded successfully! sampleId: 1
+08-31 04:05:38.763 D/HelloReaderService( 8147): Speaking: docomo、レベル 1。
+08-31 04:05:38.833 D/HelloReaderService( 8147): Speaking: ホーム画面
+08-31 04:05:39.356 D/HelloReaderService( 8147): Speaking: ホーム画面。戻る
+08-31 04:05:39.490 D/HelloReaderService( 8147): Speaking: ホーム画面
+08-31 04:05:39.496 D/HelloReaderService( 8147): playSound requested for soundId: 3 -> streamId: 1
+08-31 04:05:39.503 D/HelloReaderService( 8147): playSound requested for soundId: 4 -> streamId: 2
+08-31 04:05:39.503 D/HelloReaderService( 8147): Speaking: 通知シェード 04:05 8月31日(月) 20°C デバイスはロックされています
+08-31 04:05:39.506 D/HelloReaderService( 8147): Screen Turned OFF
+08-31 04:05:39.664 D/HelloReaderService( 8147): Speaking: 40%
+08-31 04:05:40.282 D/HelloReaderService( 8147): playSound requested for soundId: 4 -> streamId: 3
+08-31 04:05:43.838 D/HelloReaderService( 8147): Screen Turned ON
+08-31 04:05:43.866 D/HelloReaderService( 8147): LockScreen Details: ロック画面。8月31日 月曜日 4時05分。指紋センサーは画面の下部中央にあります
+08-31 04:05:43.866 D/HelloReaderService( 8147): Speaking: ロック画面。8月31日 月曜日 4時05分。指紋センサーは画面の下部中央にあります
+08-31 04:05:43.990 D/HelloReaderService( 8147): Speaking: ウォレット
+08-31 04:05:44.236 D/HelloReaderService( 8147): Speaking: ロック画面
+08-31 04:05:44.902 D/HelloReaderService( 8147): Speaking: センサーにしっかりと押し当ててください
+08-31 04:05:45.768 D/HelloReaderService( 8147): playSound requested for soundId: 4 -> streamId: 4
+08-31 04:05:45.768 D/HelloReaderService( 8147): Speaking: helloreader
+08-31 04:05:46.042 D/HelloReaderService( 8147): User Present (Unlocked)
+08-31 04:05:46.042 D/HelloReaderService( 8147): Speaking: ロック解除
+08-31 04:05:46.157 D/HelloReaderService( 8147): playSound requested for soundId: 4 -> streamId: 5
+08-31 04:05:46.157 D/HelloReaderService( 8147): Speaking: helloreader
+08-31 04:05:46.205 D/HelloReaderService( 8147): Speaking: ホーム画面
+08-31 04:05:46.455 D/HelloReaderService( 8147): playSound requested for soundId: 4 -> streamId: 6
+08-31 04:05:46.455 D/HelloReaderService( 8147): Speaking: 通知シェード
+08-31 04:05:48.059 D/HelloReaderService( 8147): handleGestureAction: 4
+08-31 04:05:48.079 D/HelloReaderService( 8147): Speaking: ホーム
+08-31 04:05:48.132 D/HelloReaderService( 8147): playSound requested for soundId: 3 -> streamId: 7
+08-31 04:05:49.539 D/HelloReaderService( 8147): handleGestureAction: 4
+08-31 04:05:49.584 D/HelloReaderService( 8147): Speaking: 最近
+08-31 04:05:49.641 D/HelloReaderService( 8147): playSound requested for soundId: 3 -> streamId: 8
+08-31 04:05:50.239 D/HelloReaderService( 8147): handleGestureAction: 4
+08-31 04:05:50.286 D/HelloReaderService( 8147): playSound requested for soundId: 2 -> streamId: 9
+08-31 04:05:50.287 D/HelloReaderService( 8147): Speaking: これ以上 次へ に要素はないにょろ
+08-31 04:05:52.314 D/HelloReaderService( 8147): playSound requested for soundId: 1 -> streamId: 10
+08-31 04:05:52.396 D/HelloReaderService( 8147): playSound requested for soundId: 4 -> streamId: 11
+08-31 04:05:52.445 D/HelloReaderService( 8147): Speaking: ホーム画面
+08-31 04:05:52.749 D/HelloReaderService( 8147): Speaking: ホーム画面。スクリーンショット ボタン
+08-31 04:05:52.750 D/HelloReaderService( 8147): playSound requested for soundId: 4 -> streamId: 12
+08-31 04:05:52.762 D/HelloReaderService( 8147): playSound requested for soundId: 3 -> streamId: 13
+08-31 04:05:52.811 D/HelloReaderService( 8147): Speaking: スクリーンショット ボタン
+08-31 04:05:52.958 D/HelloReaderService( 8147): Speaking: ホーム画面。スクリーンショット ボタン
+08-31 04:05:55.905 D/HelloReaderService( 8147): handleGestureAction: 4
+08-31 04:05:55.982 D/HelloReaderService( 8147): Speaking: 選択 ボタン
+08-31 04:05:56.039 D/HelloReaderService( 8147): playSound requested for soundId: 3 -> streamId: 14
+08-31 04:05:57.964 D/HelloReaderService( 8147): handleGestureAction: 4
+08-31 04:05:58.025 D/HelloReaderService( 8147): Speaking: 戻る
+08-31 04:05:58.082 D/HelloReaderService( 8147): playSound requested for soundId: 3 -> streamId: 15
+08-31 04:05:59.179 D/HelloReaderService( 8147): Speaking: helloreader
+08-31 04:05:59.319 D/HelloReaderService( 8147): Speaking: ホーム画面
+08-31 04:05:59.601 D/HelloReaderService( 8147): playSound requested for soundId: 4 -> streamId: 16
+08-31 04:05:59.602 D/HelloReaderService( 8147): Speaking: helloreader
+08-31 04:06:00.097 D/HelloReaderService( 8147): Speaking: 4:05
+08-31 04:06:00.109 D/HelloReaderService( 8147): playSound requested for soundId: 4 -> streamId: 17
+08-31 04:06:00.189 D/HelloReaderService( 8147): Speaking: 4:06
+08-31 04:06:00.354 D/HelloReaderService( 8147): Speaking: ホーム画面
+08-31 04:06:01.764 D/HelloReaderService( 8147): handleGestureAction: 4
+08-31 04:06:01.828 D/HelloReaderService( 8147): Speaking: ホーム
+08-31 04:06:01.884 D/HelloReaderService( 8147): playSound requested for soundId: 3 -> streamId: 18
+08-31 04:06:03.055 D/HelloReaderService( 8147): playSound requested for soundId: 1 -> streamId: 19
+08-31 04:06:03.141 D/HelloReaderService( 8147): Speaking: ホーム画面。8月31日(月)
+08-31 04:06:03.142 D/HelloReaderService( 8147): playSound requested for soundId: 4 -> streamId: 20
+08-31 04:06:03.289 D/HelloReaderService( 8147): playSound requested for soundId: 3 -> streamId: 21
+08-31 04:06:03.289 D/HelloReaderService( 8147): Speaking: 8月31日(月)
+08-31 04:06:03.388 D/HelloReaderService( 8147): Speaking: ホーム画面。8月31日(月)
+08-31 04:06:05.188 D/HelloReaderService( 8147): handleGestureAction: 4
+08-31 04:06:05.393 D/HelloReaderService( 8147): Speaking: 20°C
+08-31 04:06:05.452 D/HelloReaderService( 8147): playSound requested for soundId: 3 -> streamId: 22
+08-31 04:06:06.631 D/HelloReaderService( 8147): handleGestureAction: 3
+08-31 04:06:06.676 D/HelloReaderService( 8147): Speaking: 8月31日(月)
+08-31 04:06:06.732 D/HelloReaderService( 8147): playSound requested for soundId: 3 -> streamId: 23
+08-31 04:06:07.619 D/HelloReaderService( 8147): handleGestureAction: 4
+08-31 04:06:07.675 D/HelloReaderService( 8147): Speaking: 20°C
+08-31 04:06:07.735 D/HelloReaderService( 8147): playSound requested for soundId: 3 -> streamId: 24
+08-31 04:06:08.058 D/HelloReaderService( 8147): handleGestureAction: 4
+08-31 04:06:08.106 D/HelloReaderService( 8147): Speaking: 設定
+08-31 04:06:08.163 D/HelloReaderService( 8147): playSound requested for soundId: 3 -> streamId: 25
+08-31 04:06:09.017 D/HelloReaderService( 8147): handleGestureAction: 4
+08-31 04:06:09.074 D/HelloReaderService( 8147): Speaking: マップ
+08-31 04:06:09.131 D/HelloReaderService( 8147): playSound requested for soundId: 3 -> streamId: 26
+08-31 04:06:09.797 D/HelloReaderService( 8147): handleGestureAction: 4
+08-31 04:06:09.841 D/HelloReaderService( 8147): Speaking: 現在の天気
+08-31 04:06:09.898 D/HelloReaderService( 8147): playSound requested for soundId: 3 -> streamId: 27
+08-31 04:06:10.554 D/HelloReaderService( 8147): handleGestureAction: 4
+08-31 04:06:10.606 D/HelloReaderService( 8147): Speaking: 画像
+08-31 04:06:10.660 D/HelloReaderService( 8147): playSound requested for soundId: 3 -> streamId: 28
+08-31 04:06:11.349 D/HelloReaderService( 8147): handleGestureAction: 4
+08-31 04:06:11.451 D/HelloReaderService( 8147): playSound requested for soundId: 3 -> streamId: 29
+08-31 04:06:12.506 D/HelloReaderService( 8147): handleGestureAction: 4
+08-31 04:06:12.555 D/HelloReaderService( 8147): Speaking: 画像
+08-31 04:06:12.608 D/HelloReaderService( 8147): playSound requested for soundId: 3 -> streamId: 30
+08-31 04:06:13.412 D/HelloReaderService( 8147): handleGestureAction: 4
+08-31 04:06:13.510 D/HelloReaderService( 8147): playSound requested for soundId: 3 -> streamId: 31
+08-31 04:06:14.706 D/HelloReaderService( 8147): handleGestureAction: 4
+08-31 04:06:14.753 D/HelloReaderService( 8147): Speaking: 画像
+08-31 04:06:14.808 D/HelloReaderService( 8147): playSound requested for soundId: 3 -> streamId: 32
+08-31 04:06:15.393 D/HelloReaderService( 8147): handleGestureAction: 4
+08-31 04:06:15.514 D/HelloReaderService( 8147): playSound requested for soundId: 3 -> streamId: 33
+08-31 04:06:16.257 D/HelloReaderService( 8147): handleGestureAction: 4
+08-31 04:06:16.302 D/HelloReaderService( 8147): Speaking: 画像
+08-31 04:06:16.358 D/HelloReaderService( 8147): playSound requested for soundId: 3 -> streamId: 34
+08-31 04:06:16.795 D/HelloReaderService( 8147): handleGestureAction: 4
+08-31 04:06:16.896 D/HelloReaderService( 8147): playSound requested for soundId: 3 -> streamId: 35

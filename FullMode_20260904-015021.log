@@ -1,0 +1,154 @@
+﻿--------- beginning of main
+09-04 01:49:41.176 D/HelloReaderService(22437): Screen Turned OFF
+09-04 01:50:10.893 D/HelloReaderService(30359): Hello Reader Accessibility Service Connected!
+09-04 01:50:10.941 D/HelloReaderService(30359): SoundPool Initialized (Hybrid Custom & AOSP Sounds). Activate: 1, Deactivate: 2, Focus: 3, ViewEntered: 4, Scroll: 5
+09-04 01:50:11.372 D/HelloReaderService(30359): Sound loaded successfully! sampleId: 2
+09-04 01:50:11.464 D/HelloReaderService(30359): Sound loaded successfully! sampleId: 1
+09-04 01:50:11.507 D/HelloReaderService(30359): Sound loaded successfully! sampleId: 4
+09-04 01:50:11.516 D/HelloReaderService(30359): Sound loaded successfully! sampleId: 3
+09-04 01:50:11.516 D/HelloReaderService(30359): Sound loaded successfully! sampleId: 5
+09-04 01:50:12.547 D/HelloReaderService(30359): Sub-Voice: 安定動作ピッチ変調モード (MainPitch: 1.0, SubPitch: 0.82) を有効化しました
+09-04 01:50:12.550 D/HelloReaderService(30359): Speaking Main: Hello Readerが起動しました [SubVoice Hint: サブボイス案内が有効です]
+09-04 01:50:13.023 D/HelloReaderService(30359): playSound requested for soundId: 4 -> streamId: 1
+09-04 01:50:13.028 D/HelloReaderService(30359): Speaking Main: helloreader
+09-04 01:50:40.619 D/HelloReaderService(30359): Screen Turned ON
+09-04 01:50:41.309 D/HelloReaderService(30359): LockScreen Details: ロック画面。9月4日 金曜日 1時50分。指紋センサーは画面の下部中央にあります
+09-04 01:50:41.310 D/HelloReaderService(30359): Speaking Main: ロック画面。9月4日 金曜日 1時50分。指紋センサーは画面の下部中央にあります
+09-04 01:50:42.132 D/HelloReaderService(30359): handleGestureAction: 4
+09-04 01:50:42.138 D/HelloReaderService(30359): Speaking Main: これ以上 次へ に進めません
+09-04 01:50:42.732 D/HelloReaderService(30359): handleGestureAction: 4
+09-04 01:50:47.403 D/HelloReaderService(30359): handleGestureAction: 4
+09-04 01:50:47.410 D/HelloReaderService(30359): Speaking Main: これ以上 次へ に進めません
+09-04 01:50:47.965 D/HelloReaderService(30359): handleGestureAction: 4
+09-04 01:50:48.399 D/HelloReaderService(30359): handleGestureAction: 3
+09-04 01:50:48.406 D/HelloReaderService(30359): Speaking Main: これ以上 前へ に進めません
+09-04 01:50:48.833 D/HelloReaderService(30359): handleGestureAction: 3
+09-04 01:50:49.256 D/HelloReaderService(30359): handleGestureAction: 3
+09-04 01:50:50.679 D/HelloReaderService(30359): playSound requested for soundId: 4 -> streamId: 2
+09-04 01:50:50.680 D/HelloReaderService(30359): Speaking Main: helloreader
+09-04 01:50:50.783 D/HelloReaderService(30359): Speaking Main: Hello Reader 設定
+09-04 01:50:51.048 D/HelloReaderService(30359): playSound requested for soundId: 4 -> streamId: 3
+09-04 01:50:51.049 D/HelloReaderService(30359): Speaking Main: アプリのアイコン
+09-04 01:50:51.068 D/HelloReaderService(30359): User Present (Unlocked)
+09-04 01:50:51.068 D/HelloReaderService(30359): Speaking Main: ロック解除
+09-04 01:50:51.256 D/HelloReaderService(30359): Speaking Main: ホーム画面。ボタン1。必要なアクセス権限を許可するダイアログを開きます [SubVoice Hint: ダブルタップで実行できます]
+09-04 01:50:51.267 D/HelloReaderService(30359): playSound requested for soundId: 4 -> streamId: 4
+09-04 01:50:51.273 D/HelloReaderService(30359): Speaking Main: 使用を開始する機能をタップ:
+09-04 01:50:51.293 D/HelloReaderService(30359): Speaking Main: ホーム
+09-04 01:50:51.309 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 5
+09-04 01:50:51.315 D/HelloReaderService(30359): Speaking Main: ボタン1。必要なアクセス権限を許可するダイアログを開きます [SubVoice Hint: ダブルタップで実行できます]
+09-04 01:50:51.353 D/HelloReaderService(30359): playSound requested for soundId: 4 -> streamId: 6
+09-04 01:50:51.354 D/HelloReaderService(30359): Speaking Main: ロック画面
+09-04 01:50:51.366 D/HelloReaderService(30359): handleGestureAction: 25
+09-04 01:50:51.366 D/HelloReaderService(30359): 2-Finger Swipe Up
+09-04 01:50:51.457 D/HelloReaderService(30359): playSound requested for soundId: 2 -> streamId: 7
+09-04 01:50:53.439 D/HelloReaderService(30359): handleGestureAction: 25
+09-04 01:50:53.439 D/HelloReaderService(30359): 2-Finger Swipe Up
+09-04 01:50:53.584 D/HelloReaderService(30359): playSound requested for soundId: 2 -> streamId: 8
+09-04 01:50:57.431 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 9
+09-04 01:50:57.435 D/HelloReaderService(30359): Speaking Main: Hello Reader 設定
+09-04 01:50:59.355 D/HelloReaderService(30359): handleGestureAction: 4
+09-04 01:50:59.494 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 10
+09-04 01:50:59.496 D/HelloReaderService(30359): Speaking Main: Hello Reader 設定
+09-04 01:51:00.055 D/HelloReaderService(30359): handleGestureAction: 4
+09-04 01:51:00.115 D/HelloReaderService(30359): Speaking Main: 完全ハンズフリー＆全アプリ解読対応スクリーンリーダー
+09-04 01:51:00.167 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 11
+09-04 01:51:01.232 D/HelloReaderService(30359): handleGestureAction: 4
+09-04 01:51:01.451 D/HelloReaderService(30359): Speaking Main: 📋 初期セットアップ手順
+09-04 01:51:01.505 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 12
+09-04 01:51:03.237 D/HelloReaderService(30359): handleGestureAction: 4
+09-04 01:51:03.312 D/HelloReaderService(30359): Speaking Main: ボタン1。必要なアクセス権限を許可するダイアログを開きます [SubVoice Hint: ダブルタップで実行できます]
+09-04 01:51:03.363 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 13
+09-04 01:51:07.452 D/HelloReaderService(30359): handleGestureAction: 13
+09-04 01:51:07.482 D/HelloReaderService(30359): Speaking Main: ホーム画面。ボタン1。必要なアクセス権限を許可するダイアログを開きます [SubVoice Hint: ダブルタップで実行できます]
+09-04 01:51:07.681 D/HelloReaderService(30359): Speaking Main: ホーム画面。使用を開始する機能をタップ:
+09-04 01:51:07.714 D/HelloReaderService(30359): playSound requested for soundId: 4 -> streamId: 14
+09-04 01:51:07.749 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 15
+09-04 01:51:07.750 D/HelloReaderService(30359): Speaking Main: 使用を開始する機能をタップ:
+09-04 01:51:07.771 D/HelloReaderService(30359): Speaking Main: ホーム画面。9月4日(金)
+09-04 01:51:07.771 D/HelloReaderService(30359): playSound requested for soundId: 5 -> streamId: 16
+09-04 01:51:07.772 D/HelloReaderService(30359): Speaking Main: 1項目中 1項目を表示中
+09-04 01:51:07.781 D/HelloReaderService(30359): Speaking Main: ホーム
+09-04 01:51:07.952 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 17
+09-04 01:51:07.953 D/HelloReaderService(30359): Speaking Main: スナップショット
+09-04 01:51:20.491 D/HelloReaderService(30359): Speaking Main: Pixel 10 44%バッテリーの充電完了まであと約2:30までに充電完了です 充電
+09-04 01:51:20.607 D/HelloReaderService(30359): Speaking Main: ホーム画面。9月4日(金)
+09-04 01:51:31.779 D/HelloReaderService(30359): handleGestureAction: 4
+09-04 01:51:32.015 D/HelloReaderService(30359): Speaking Main: 設定 [SubVoice Hint: ダブルタップで実行できます]
+09-04 01:51:32.079 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 18
+09-04 01:51:32.256 D/HelloReaderService(30359): handleGestureAction: 4
+09-04 01:51:32.390 D/HelloReaderService(30359): Speaking Main: マップ [SubVoice Hint: ダブルタップで実行できます]
+09-04 01:51:32.454 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 19
+09-04 01:51:33.166 D/HelloReaderService(30359): handleGestureAction: 4
+09-04 01:51:33.256 D/HelloReaderService(30359): Speaking Main: 現在の天気
+09-04 01:51:33.313 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 20
+09-04 01:51:34.742 D/HelloReaderService(30359): Speaking Main: ホーム画面。9月4日(金)
+09-04 01:51:34.796 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 21
+09-04 01:51:34.803 D/HelloReaderService(30359): Speaking Main: スナップショット
+09-04 01:51:35.236 D/HelloReaderService(30359): Speaking Main: ホーム画面。使用を開始する機能をタップ:
+09-04 01:51:35.310 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 22
+09-04 01:51:35.345 D/HelloReaderService(30359): Screen Turned OFF
+09-04 01:51:35.366 D/HelloReaderService(30359): playSound requested for soundId: 4 -> streamId: 23
+09-04 01:51:36.125 D/HelloReaderService(30359): Screen Turned ON
+09-04 01:51:36.589 D/HelloReaderService(30359): LockScreen Details: ロック画面。9月4日 金曜日 1時51分。指紋センサーは画面の下部中央にあります
+09-04 01:51:36.590 D/HelloReaderService(30359): Speaking Main: ロック画面。9月4日 金曜日 1時51分。指紋センサーは画面の下部中央にあります
+09-04 01:51:36.591 D/HelloReaderService(30359): playSound requested for soundId: 4 -> streamId: 24
+09-04 01:51:41.956 D/HelloReaderService(30359): handleGestureAction: 25
+09-04 01:51:41.956 D/HelloReaderService(30359): 2-Finger Swipe Up
+09-04 01:51:41.958 D/HelloReaderService(30359): Speaking Main: PINコード入力画面
+09-04 01:51:42.172 D/HelloReaderService(30359): handleGestureAction: 1
+09-04 01:51:42.386 D/HelloReaderService(30359): handleGestureAction: 1
+09-04 01:51:42.594 D/HelloReaderService(30359): handleGestureAction: 1
+09-04 01:51:42.802 D/HelloReaderService(30359): handleGestureAction: 1
+09-04 01:51:43.016 D/HelloReaderService(30359): handleGestureAction: 1
+09-04 01:51:43.229 D/HelloReaderService(30359): handleGestureAction: 1
+09-04 01:51:43.980 D/HelloReaderService(30359): Speaking Main: ホーム画面。9月4日(金)
+09-04 01:51:43.981 D/HelloReaderService(30359): playSound requested for soundId: 4 -> streamId: 25
+09-04 01:51:44.215 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 26
+09-04 01:51:44.216 D/HelloReaderService(30359): Speaking Main: スナップショット
+09-04 01:51:44.364 D/HelloReaderService(30359): User Present (Unlocked)
+09-04 01:51:44.364 D/HelloReaderService(30359): Speaking Main: ロック解除
+09-04 01:51:44.615 D/HelloReaderService(30359): playSound requested for soundId: 4 -> streamId: 27
+09-04 01:51:44.617 D/HelloReaderService(30359): Speaking Main: ロック画面
+09-04 01:51:49.182 D/HelloReaderService(30359): handleGestureAction: 7
+09-04 01:51:49.448 D/HelloReaderService(30359): handleGestureAction: 4
+09-04 01:51:49.730 D/HelloReaderService(30359): Speaking Main: 設定 [SubVoice Hint: ダブルタップで実行できます]
+09-04 01:51:49.784 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 28
+09-04 01:51:50.298 D/HelloReaderService(30359): handleGestureAction: 3
+09-04 01:51:50.396 D/HelloReaderService(30359): Speaking Main: 9月4日(金)
+09-04 01:51:50.449 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 29
+09-04 01:51:50.451 D/HelloReaderService(30359): Speaking Main: スナップショット
+09-04 01:51:55.375 D/HelloReaderService(30359): Speaking Main: ホーム画面。9月4日(金)
+09-04 01:51:55.863 D/HelloReaderService(30359): Speaking Main: ホーム画面。使用を開始する機能をタップ:
+09-04 01:51:55.917 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 30
+09-04 01:51:56.015 D/HelloReaderService(30359): Speaking Main: ホーム画面
+09-04 01:51:56.025 D/HelloReaderService(30359): playSound requested for soundId: 4 -> streamId: 31
+09-04 01:51:56.035 D/HelloReaderService(30359): Speaking Main: ロック画面 01:51 サイレント モード: ON 9月4日(金) 21°C 指紋認証センサー
+09-04 01:51:56.043 D/HelloReaderService(30359): Screen Turned OFF
+09-04 01:51:56.570 D/HelloReaderService(30359): Screen Turned ON
+09-04 01:51:57.005 D/HelloReaderService(30359): LockScreen Details: ロック画面。9月4日 金曜日 1時51分。指紋センサーは画面の下部中央にあります
+09-04 01:51:57.006 D/HelloReaderService(30359): Speaking Main: ロック画面。9月4日 金曜日 1時51分。指紋センサーは画面の下部中央にあります
+09-04 01:51:57.018 D/HelloReaderService(30359): playSound requested for soundId: 4 -> streamId: 32
+09-04 01:52:00.428 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 33
+09-04 01:52:00.431 D/HelloReaderService(30359): Speaking Main: Windows にリンク
+09-04 01:52:01.531 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 34
+09-04 01:52:01.533 D/HelloReaderService(30359): Speaking Main: デバイスはロックされています [SubVoice Hint: ダブルタップで実行できます]
+09-04 01:52:01.617 D/HelloReaderService(30359): playSound requested for soundId: 4 -> streamId: 35
+09-04 01:52:01.630 D/HelloReaderService(30359): Speaking Main: ホーム画面。9月4日(金)
+09-04 01:52:01.652 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 36
+09-04 01:52:01.654 D/HelloReaderService(30359): Speaking Main: ホーム
+09-04 01:52:01.708 D/HelloReaderService(30359): playSound requested for soundId: 4 -> streamId: 37
+09-04 01:52:01.823 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 38
+09-04 01:52:01.825 D/HelloReaderService(30359): Speaking Main: スナップショット
+09-04 01:52:02.000 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 39
+09-04 01:52:02.161 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 40
+09-04 01:52:02.176 D/HelloReaderService(30359): User Present (Unlocked)
+09-04 01:52:02.176 D/HelloReaderService(30359): Speaking Main: ロック解除
+09-04 01:52:02.270 D/HelloReaderService(30359): playSound requested for soundId: 4 -> streamId: 41
+09-04 01:52:02.287 D/HelloReaderService(30359): Speaking Main: 使用を開始する機能をタップ:
+09-04 01:52:02.317 D/HelloReaderService(30359): Speaking Main: ロック画面
+09-04 01:52:03.075 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 42
+09-04 01:52:03.170 D/HelloReaderService(30359): Speaking Main: メッセージ [SubVoice Hint: ダブルタップで実行できます]
+09-04 01:52:04.850 D/HelloReaderService(30359): playSound requested for soundId: 3 -> streamId: 43
+09-04 01:52:04.851 D/HelloReaderService(30359): Speaking Main: ホーム
+09-04 01:52:04.923 D/HelloReaderService(30359): Speaking Main: Gmail [SubVoice Hint: ダブルタップで実行できます]

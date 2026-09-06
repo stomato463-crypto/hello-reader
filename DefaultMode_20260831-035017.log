@@ -1,0 +1,10 @@
+﻿--------- beginning of main
+08-31 03:50:11.919 D/HelloReaderService( 1311): handleGestureAction: 4
+08-31 03:50:11.963 D/HelloReaderService( 1311): Speaking: 画像
+08-31 03:50:12.016 D/HelloReaderService( 1311): playSound requested for soundId: 3 -> streamId: 33
+08-31 03:50:12.460 D/HelloReaderService( 1311): handleGestureAction: 4
+08-31 03:50:12.567 D/HelloReaderService( 1311): playSound requested for soundId: 3 -> streamId: 34
+08-31 03:50:13.117 D/HelloReaderService( 1311): handleGestureAction: 4
+08-31 03:50:13.219 D/HelloReaderService( 1311): playSound requested for soundId: 3 -> streamId: 36
+08-31 03:50:15.877 D/HelloReaderService( 1311): Speaking: docomo、レベル 2。
+08-31 03:50:16.603 D/HelloReaderService( 1311): Speaking: Wi-Fiはレベル2です。

@@ -1,0 +1,89 @@
+﻿--------- beginning of main
+09-02 18:07:09.367 D/HelloReaderService(14412): Speaking Main: 音声の設定
+09-02 18:07:09.365 D/HelloReaderService(14412): playSound requested for soundId: 4 -> streamId: 30
+09-02 18:07:11.344 D/HelloReaderService(14412): Speaking Main: Wi-Fiはレベル2です。
+09-02 18:07:14.516 D/HelloReaderService(14412): Speaking Main: Wi-Fiはレベル3です。
+09-02 18:07:17.633 D/HelloReaderService(14412): Speaking Main: Wi-Fiはレベル2です。
+09-02 18:07:19.055 D/HelloReaderService(14412): Speaking Main: docomo
+09-02 18:07:19.171 D/HelloReaderService(14412): Speaking Main: ロック画面
+09-02 18:07:19.393 D/HelloReaderService(14412): Speaking Main: ウォレット
+09-02 18:07:19.673 D/HelloReaderService(14412): Speaking Main: メッセージ
+09-02 18:07:19.785 D/HelloReaderService(14412): Screen Turned OFF
+09-02 18:07:19.961 D/HelloReaderService(14412): Speaking Main: 54%
+09-02 18:08:01.462 D/HelloReaderService(14412): Speaking Main: ロック画面
+09-02 18:08:05.616 D/HelloReaderService(18963): Hello Reader Accessibility Service Connected!
+09-02 18:08:05.619 D/HelloReaderService(18963): SoundPool Initialized (Hybrid Custom & AOSP Sounds). Activate: 1, Deactivate: 2, Focus: 3, ViewEntered: 4, Scroll: 5
+09-02 18:08:06.423 D/HelloReaderService(18963): Sub-Voice: 安定動作ピッチ変調モード (MainPitch: 1.0, SubPitch: 0.82) を有効化しました
+09-02 18:08:06.429 D/HelloReaderService(18963): Sound loaded successfully! sampleId: 1
+09-02 18:08:06.429 D/HelloReaderService(18963): Sound loaded successfully! sampleId: 2
+09-02 18:08:06.438 D/HelloReaderService(18963): Sound loaded successfully! sampleId: 4
+09-02 18:08:06.438 D/HelloReaderService(18963): Sound loaded successfully! sampleId: 3
+09-02 18:08:06.426 D/HelloReaderService(18963): Speaking Main: Hello Readerが起動しました [SubVoice Hint: サブボイス案内が有効です]
+09-02 18:08:06.438 D/HelloReaderService(18963): Sound loaded successfully! sampleId: 5
+09-02 18:08:06.528 D/HelloReaderService(18963): playSound requested for soundId: 4 -> streamId: 1
+09-02 18:08:06.529 D/HelloReaderService(18963): Speaking Main: helloreader
+09-02 18:08:20.230 D/HelloReaderService(18963): Screen Turned ON
+09-02 18:08:20.810 D/HelloReaderService(18963): LockScreen Details: ロック画面。9月2日 水曜日 18時08分。指紋センサーは画面の下部中央にあります
+09-02 18:08:20.812 D/HelloReaderService(18963): Speaking Main: ロック画面。9月2日 水曜日 18時08分。指紋センサーは画面の下部中央にあります
+09-02 18:08:20.820 D/HelloReaderService(18963): Speaking Main: メッセージ
+09-02 18:08:20.838 D/HelloReaderService(18963): Speaking Main: ロック画面
+09-02 18:08:21.795 D/HelloReaderService(18963): playSound requested for soundId: 3 -> streamId: 2
+09-02 18:08:21.798 D/HelloReaderService(18963): Speaking Main: デバイスはロックされています [SubVoice Hint: ダブルタップで実行できます]
+09-02 18:08:21.830 D/HelloReaderService(18963): playSound requested for soundId: 4 -> streamId: 3
+09-02 18:08:21.831 D/HelloReaderService(18963): Speaking Main: helloreader
+09-02 18:08:21.848 D/HelloReaderService(18963): playSound requested for soundId: 3 -> streamId: 4
+09-02 18:08:21.930 D/HelloReaderService(18963): Speaking Main: Hello Reader 設定へようこそ
+09-02 18:08:22.082 D/HelloReaderService(18963): Speaking Main: デバイスはロックされています
+09-02 18:08:22.148 D/HelloReaderService(18963): User Present (Unlocked)
+09-02 18:08:22.148 D/HelloReaderService(18963): Speaking Main: ロック解除
+09-02 18:08:22.271 D/HelloReaderService(18963): playSound requested for soundId: 4 -> streamId: 5
+09-02 18:08:22.316 D/HelloReaderService(18963): Speaking Main: ホーム画面。権限の許可ダイアログを再表示するボタン [SubVoice Hint: ダブルタップで実行できます]
+09-02 18:08:22.369 D/HelloReaderService(18963): playSound requested for soundId: 3 -> streamId: 6
+09-02 18:08:22.370 D/HelloReaderService(18963): Speaking Main: 権限の許可ダイアログを再表示するボタン [SubVoice Hint: ダブルタップで実行できます]
+09-02 18:08:22.515 D/HelloReaderService(18963): playSound requested for soundId: 4 -> streamId: 7
+09-02 18:08:22.850 D/HelloReaderService(18963): Speaking Main: 通知: Microsoft Rewards
+09-02 18:08:22.894 D/HelloReaderService(18963): Speaking Main: 18:08
+09-02 18:08:23.256 D/HelloReaderService(18963): playSound requested for soundId: 4 -> streamId: 8
+09-02 18:08:23.257 D/HelloReaderService(18963): Speaking Main: ロック画面
+09-02 18:08:23.338 D/HelloReaderService(18963): Speaking Main: Microsoft Rewards
+09-02 18:08:23.436 D/HelloReaderService(18963): Speaking Main: Microsoft Rewards [SubVoice Hint: ダブルタップで実行できます]
+09-02 18:08:24.472 D/HelloReaderService(18963): playSound requested for soundId: 3 -> streamId: 9
+09-02 18:08:24.473 D/HelloReaderService(18963): Speaking Main: フォネティック＆モールス振動機能 (標準:OFF)
+09-02 18:08:25.370 D/HelloReaderService(18963): handleGestureAction: 4
+09-02 18:08:25.487 D/HelloReaderService(18963): Speaking Main: 戻る [SubVoice Hint: ダブルタップで実行できます]
+09-02 18:08:25.540 D/HelloReaderService(18963): playSound requested for soundId: 3 -> streamId: 10
+09-02 18:08:27.595 D/HelloReaderService(18963): handleGestureAction: 4
+09-02 18:08:27.646 D/HelloReaderService(18963): Speaking Main: ホーム [SubVoice Hint: ダブルタップで実行できます]
+09-02 18:08:27.698 D/HelloReaderService(18963): playSound requested for soundId: 3 -> streamId: 11
+09-02 18:08:29.341 D/HelloReaderService(18963): playSound requested for soundId: 1 -> streamId: 12
+09-02 18:08:29.486 D/HelloReaderService(18963): Speaking Main: ホーム画面。9月2日(水)
+09-02 18:08:29.490 D/HelloReaderService(18963): playSound requested for soundId: 4 -> streamId: 13
+09-02 18:08:29.490 D/HelloReaderService(18963): playSound requested for soundId: 5 -> streamId: 14
+09-02 18:08:29.490 D/HelloReaderService(18963): Speaking Main: 1項目中 1項目を表示中
+09-02 18:08:29.712 D/HelloReaderService(18963): playSound requested for soundId: 3 -> streamId: 15
+09-02 18:08:29.714 D/HelloReaderService(18963): Speaking Main: スナップショット
+09-02 18:08:31.641 D/HelloReaderService(18963): handleGestureAction: 4
+09-02 18:08:31.939 D/HelloReaderService(18963): Speaking Main: 設定 [SubVoice Hint: ダブルタップで実行できます]
+09-02 18:08:32.005 D/HelloReaderService(18963): playSound requested for soundId: 3 -> streamId: 16
+09-02 18:08:33.904 D/HelloReaderService(18963): Speaking Main: Microsoft Rewards [SubVoice Hint: ダブルタップで実行できます]
+09-02 18:08:33.998 D/HelloReaderService(18963): Speaking Main: Microsoft Rewards
+09-02 18:08:34.369 D/HelloReaderService(18963): playSound requested for soundId: 4 -> streamId: 17
+09-02 18:08:34.371 D/HelloReaderService(18963): Speaking Main: ロック画面
+09-02 18:08:34.409 D/HelloReaderService(18963): handleGestureAction: 4
+09-02 18:08:34.478 D/HelloReaderService(18963): Speaking Main: マップ [SubVoice Hint: ダブルタップで実行できます]
+09-02 18:08:34.491 D/HelloReaderService(18963): Speaking Main: 18:08
+09-02 18:08:34.534 D/HelloReaderService(18963): playSound requested for soundId: 3 -> streamId: 18
+09-02 18:08:34.690 D/HelloReaderService(18963): Speaking Main: Telegram の通知:
+09-02 18:08:35.740 D/HelloReaderService(18963): Speaking Main: Wi-Fiはレベル2です。
+09-02 18:08:37.359 D/HelloReaderService(18963): handleGestureAction: 4
+09-02 18:08:37.495 D/HelloReaderService(18963): Speaking Main: 現在の天気
+09-02 18:08:37.547 D/HelloReaderService(18963): playSound requested for soundId: 3 -> streamId: 19
+09-02 18:08:38.837 D/HelloReaderService(18963): Speaking Main: Wi-Fiはレベル3です。
+09-02 18:08:39.398 D/HelloReaderService(18963): handleGestureAction: 4
+09-02 18:08:39.442 D/HelloReaderService(18963): Speaking Main: Gemini
+09-02 18:08:39.498 D/HelloReaderService(18963): playSound requested for soundId: 3 -> streamId: 20
+09-02 18:08:42.605 D/HelloReaderService(18963): handleGestureAction: 4
+09-02 18:08:42.658 D/HelloReaderService(18963): Speaking Main: Play ストア [SubVoice Hint: ダブルタップで実行できます]
+09-02 18:08:42.711 D/HelloReaderService(18963): playSound requested for soundId: 3 -> streamId: 21
+09-02 18:08:45.121 D/HelloReaderService(18963): Speaking Main: Wi-Fiはレベル2です。
+09-02 18:08:46.916 D/HelloReaderService(18963): Speaking Main: docomo、レベル 2。

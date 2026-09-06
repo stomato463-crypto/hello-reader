@@ -1,0 +1,39 @@
+﻿--------- beginning of main
+08-30 17:49:36.902 D/HelloReaderService(28038): LockScreen Details: ロック画面。8月30日 日曜日 17時49分。指紋センサーは画面の下部中央にあります
+08-30 17:49:36.903 D/HelloReaderService(28038): Speaking: ロック画面。8月30日 日曜日 17時49分。指紋センサーは画面の下部中央にあります
+08-30 17:49:36.873 D/HelloReaderService(28038): Screen Turned ON
+08-30 17:49:37.439 D/HelloReaderService(28038): Speaking: ロック画面
+08-30 17:49:38.650 D/HelloReaderService(28038): handleGestureAction: 4
+08-30 17:49:38.656 D/HelloReaderService(28038): Speaking: これ以上 次へ に要素はないにょろ
+08-30 17:49:39.023 D/HelloReaderService(28038): Speaking: 指紋を認識できません
+08-30 17:49:40.815 D/HelloReaderService(28038): Speaking: 下に移動
+08-30 17:49:40.824 D/HelloReaderService(28038): Speaking: ロック画面: ロック画面をカスタマイズするには、ダブルタップして長押しします。
+08-30 17:49:40.824 D/HelloReaderService(28038): 下に移動
+08-30 17:49:40.828 D/HelloReaderService(28038): Speaking: 下に移動
+08-30 17:49:41.372 D/HelloReaderService(28038): Speaking: デバイスはロックされています
+08-30 17:49:41.481 D/HelloReaderService(28038): Speaking: 指紋を認識できません
+08-30 17:49:41.487 D/HelloReaderService(28038): Speaking: helloreader
+08-30 17:49:41.762 D/HelloReaderService(28038): User Present (Unlocked)
+08-30 17:49:41.762 D/HelloReaderService(28038): Speaking: ロック解除
+08-30 17:49:41.909 D/HelloReaderService(28038): Speaking: helloreader
+08-30 17:49:41.942 D/HelloReaderService(28038): Speaking: ホーム画面。戻る
+08-30 17:49:41.994 D/HelloReaderService(28038): Speaking: 戻る
+08-30 17:49:42.174 D/HelloReaderService(28038): Speaking: ロック画面
+08-30 17:49:43.341 D/HelloReaderService(28038): Speaking: Wi-Fiはレベル3です。
+08-30 17:49:45.342 D/HelloReaderService(28038): handleGestureAction: 4
+08-30 17:49:45.373 D/HelloReaderService(28038): Speaking: ホーム
+08-30 17:49:45.825 D/HelloReaderService(28038): handleGestureAction: 4
+08-30 17:49:45.855 D/HelloReaderService(28038): Speaking: 最近
+08-30 17:49:47.399 D/HelloReaderService(28038): Speaking: 最近
+08-30 17:49:47.451 D/HelloReaderService(28038): Speaking: 最近使ったアプリ
+08-30 17:49:47.536 D/HelloReaderService(28038): Speaking: ホーム画面。戻る
+08-30 17:49:47.587 D/HelloReaderService(28038): Speaking: 戻る
+08-30 17:49:47.635 D/HelloReaderService(28038): Speaking: ホーム画面。戻る
+08-30 17:49:47.789 D/HelloReaderService(28038): Speaking: 最近使ったアプリ
+08-30 17:49:47.890 D/HelloReaderService(28038): Speaking: ホーム画面。戻る
+08-30 17:49:49.807 D/HelloReaderService(28038): Speaking: helloreader
+08-30 17:49:49.851 D/HelloReaderService(28038): Speaking: ホーム画面。戻る
+08-30 17:49:51.656 D/HelloReaderService(28038): Speaking: helloreader
+08-30 17:49:51.773 D/HelloReaderService(28038): Speaking: ホーム画面。戻る
+08-30 17:49:52.058 D/HelloReaderService(28038): Speaking: helloreader
+08-30 17:49:52.589 D/HelloReaderService(28038): Speaking: 最近使ったアプリ

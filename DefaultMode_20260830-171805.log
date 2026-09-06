@@ -1,0 +1,13 @@
+﻿--------- beginning of main
+08-30 17:20:52.522 D/HelloReaderService(22040): Hello Reader Accessibility Service Connected!
+08-30 17:20:52.635 D/HelloReaderService(22040): SoundPool Initialized. Activate sound ID: 1, Deactivate sound ID: 2
+08-30 17:20:59.301 D/HelloReaderService(22040): Speaking: Hello Readerが起動したにょろ
+08-30 17:21:30.521 D/HelloReaderService(22040): Screen Turned ON
+08-30 17:21:30.575 D/HelloReaderService(22040): LockScreen Details: ロック画面。8月30日 日曜日 17時21分。指紋センサーは画面の下部中央にあります
+08-30 17:21:30.575 D/HelloReaderService(22040): Speaking: ロック画面。8月30日 日曜日 17時21分。指紋センサーは画面の下部中央にあります
+08-30 17:21:33.831 D/HelloReaderService(22040): Screen Turned OFF
+08-30 17:21:36.695 D/HelloReaderService(22040): Screen Turned ON
+08-30 17:21:36.697 D/HelloReaderService(22040): LockScreen Details: ロック画面。8月30日 日曜日 17時21分。指紋センサーは画面の下部中央にあります
+08-30 17:21:36.697 D/HelloReaderService(22040): Speaking: ロック画面。8月30日 日曜日 17時21分。指紋センサーは画面の下部中央にあります
+08-30 17:21:49.082 D/HelloReaderService(22040): User Present (Unlocked)
+08-30 17:21:49.082 D/HelloReaderService(22040): Speaking: ロック解除

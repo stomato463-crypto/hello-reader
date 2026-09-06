@@ -1,0 +1,80 @@
+﻿--------- beginning of main
+08-31 17:00:44.730 D/HelloReaderService(24628): LockScreen Details: ロック画面。8月31日 月曜日 17時00分。指紋センサーは画面の下部中央にあります
+08-31 17:00:44.730 D/HelloReaderService(24628): Speaking: ロック画面。8月31日 月曜日 17時00分。指紋センサーは画面の下部中央にあります
+08-31 17:00:44.761 D/HelloReaderService(24628): Speaking: ロック画面
+08-31 17:00:44.741 D/HelloReaderService(24628): Speaking: 1 件の新着メール
+08-31 17:00:44.769 D/HelloReaderService(24628): Speaking: 1 件の新着メール
+08-31 17:00:44.867 D/HelloReaderService(24628): Speaking: ロック画面
+08-31 17:00:45.013 D/HelloReaderService(24628): playSound requested for soundId: 3 -> streamId: 150
+08-31 17:00:45.013 D/HelloReaderService(24628): Speaking: デバイスはロックされています
+08-31 17:00:45.124 D/HelloReaderService(24628): Speaking: ホーム画面。8月31日(月)
+08-31 17:00:45.141 D/HelloReaderService(24628): Speaking: ホーム
+08-31 17:00:45.159 D/HelloReaderService(24628): Speaking: ロック画面
+08-31 17:00:45.210 D/HelloReaderService(24628): Speaking: ホーム画面。8月31日(月)
+08-31 17:00:45.259 D/HelloReaderService(24628): playSound requested for soundId: 4 -> streamId: 151
+08-31 17:00:45.291 D/HelloReaderService(24628): Speaking: ロック画面
+08-31 17:00:45.298 D/HelloReaderService(24628): playSound requested for soundId: 3 -> streamId: 152
+08-31 17:00:45.308 D/HelloReaderService(24628): Speaking: デバイスはロックされています
+08-31 17:00:45.369 D/HelloReaderService(24628): Speaking: ホーム画面。8月31日(月)
+08-31 17:00:45.455 D/HelloReaderService(24628): Speaking: ロック画面
+08-31 17:00:45.611 D/HelloReaderService(24628): Speaking: ロック画面
+08-31 17:00:45.638 D/HelloReaderService(24628): Speaking: ホーム画面。8月31日(月)
+08-31 17:00:45.499 D/HelloReaderService(24628): Speaking: ホーム画面。8月31日(月)
+08-31 17:00:45.590 D/HelloReaderService(24628): playSound requested for soundId: 3 -> streamId: 153
+08-31 17:00:45.591 D/HelloReaderService(24628): Speaking: スナップショット
+08-31 17:00:45.660 D/HelloReaderService(24628): User Present (Unlocked)
+08-31 17:00:45.660 D/HelloReaderService(24628): Speaking: ロック解除
+08-31 17:00:45.673 D/HelloReaderService(24628): Speaking: ホーム画面。8月31日(月)
+08-31 17:00:45.737 D/HelloReaderService(24628): playSound requested for soundId: 4 -> streamId: 154
+08-31 17:00:45.737 D/HelloReaderService(24628): Speaking: 通知シェード
+08-31 17:00:45.854 D/HelloReaderService(24628): Speaking: 通知: 個人名マスク済さんと他の人が自分のストーリーズに追加しました。
+08-31 17:00:45.872 D/HelloReaderService(24628): Speaking: Lite の通知が 1 件あります
+08-31 17:00:45.977 D/HelloReaderService(24628): Speaking: ホーム画面。8月31日(月)
+08-31 17:00:46.205 D/HelloReaderService(24628): playSound requested for soundId: 4 -> streamId: 155
+08-31 17:00:46.171 D/HelloReaderService(24628): Speaking: 17:00
+08-31 17:00:46.205 D/HelloReaderService(24628): Speaking: 通知シェード
+08-31 17:00:46.274 D/HelloReaderService(24628): Speaking: 17:00
+08-31 17:00:46.282 D/HelloReaderService(24628): Speaking: 個人名マスク済さん
+08-31 17:00:46.372 D/HelloReaderService(24628): Speaking: 17:00
+08-31 17:00:46.386 D/HelloReaderService(24628): Speaking: 個人名マスク済さん
+08-31 17:00:46.480 D/HelloReaderService(24628): Speaking: 個人名マスク済さん
+08-31 17:00:46.464 D/HelloReaderService(24628): Speaking: 17:00
+08-31 17:00:46.806 D/HelloReaderService(24628): Speaking: ホーム画面。8月31日(月)
+08-31 17:00:46.688 D/HelloReaderService(24628): Speaking: Pixel 10 61%バッテリー駆動時間は残り約22:30 までです
+08-31 17:00:47.474 D/HelloReaderService(24628): Speaking: スナップショット
+08-31 17:00:47.472 D/HelloReaderService(24628): playSound requested for soundId: 3 -> streamId: 156
+08-31 17:00:47.787 D/HelloReaderService(24628): playSound requested for soundId: 3 -> streamId: 157
+08-31 17:00:47.733 D/HelloReaderService(24628): Speaking: ホーム画面。8月31日(月)
+08-31 17:00:47.788 D/HelloReaderService(24628): Speaking: スナップショット
+08-31 17:00:47.987 D/HelloReaderService(24628): handleGestureAction: 4
+08-31 17:00:47.627 D/HelloReaderService(24628): Speaking: Pixel 10 61%バッテリー駆動時間は残り約22:30 までです
+08-31 17:00:48.107 D/HelloReaderService(24628): playSound requested for soundId: 3 -> streamId: 158
+08-31 17:00:48.048 D/HelloReaderService(24628): Speaking: 設定
+08-31 17:00:48.949 D/HelloReaderService(24628): Speaking: マップ
+08-31 17:00:49.004 D/HelloReaderService(24628): playSound requested for soundId: 3 -> streamId: 159
+08-31 17:00:50.242 D/HelloReaderService(24628): handleGestureAction: 19
+08-31 17:00:48.899 D/HelloReaderService(24628): handleGestureAction: 4
+08-31 17:00:53.203 D/HelloReaderService(24628): playSound requested for soundId: 3 -> streamId: 160
+08-31 17:00:53.205 D/HelloReaderService(24628): Speaking: ホーム
+08-31 17:00:53.528 D/HelloReaderService(24628): Speaking: 個人名マスク済さん
+08-31 17:00:53.411 D/HelloReaderService(24628): Speaking: docomo、レベル 2。
+08-31 17:00:56.847 D/HelloReaderService(24628): Speaking: 個人名マスク済さん
+08-31 17:00:57.318 D/HelloReaderService(24628): playSound requested for soundId: 4 -> streamId: 161
+08-31 17:00:57.318 D/HelloReaderService(24628): Speaking: 通知シェード
+08-31 17:01:00.079 D/HelloReaderService(24628): Speaking: 17:00
+08-31 17:01:01.140 D/HelloReaderService(24628): Speaking: スナップショット
+08-31 17:01:00.186 D/HelloReaderService(24628): Speaking: 17:01
+08-31 17:01:05.720 D/HelloReaderService(24628): handleGestureAction: 4
+08-31 17:01:05.855 D/HelloReaderService(24628): Speaking: 電話
+08-31 17:01:05.929 D/HelloReaderService(24628): playSound requested for soundId: 3 -> streamId: 162
+08-31 17:01:06.226 D/HelloReaderService(24628): handleGestureAction: 3
+08-31 17:01:06.272 D/HelloReaderService(24628): Speaking: ホーム
+08-31 17:01:06.327 D/HelloReaderService(24628): playSound requested for soundId: 3 -> streamId: 163
+08-31 17:01:07.460 D/HelloReaderService(24628): handleGestureAction: 3
+08-31 17:01:07.505 D/HelloReaderService(24628): Speaking: カメラ
+08-31 17:01:07.558 D/HelloReaderService(24628): playSound requested for soundId: 3 -> streamId: 164
+08-31 17:01:37.236 D/HelloReaderService(24628): Speaking: Wi-Fiはレベル2です。
+08-31 17:01:39.348 D/HelloReaderService(24628): Speaking: YouTube の通知が 1 件あります
+08-31 17:01:39.708 D/HelloReaderService(24628): Speaking: 17:01
+08-31 17:01:39.739 D/HelloReaderService(24628): playSound requested for soundId: 4 -> streamId: 165
+08-31 17:01:39.739 D/HelloReaderService(24628): Speaking: 通知シェード

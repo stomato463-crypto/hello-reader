@@ -1,0 +1,291 @@
+﻿--------- beginning of main
+09-05 07:15:10.062 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 4
+09-05 07:15:10.062 D/HelloReaderService(23255): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:15:10.065 D/HelloReaderService(23255): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:15:10.194 D/HelloReaderService(23255): navigateFocus index=15/26, success=true, text=タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 07:15:10.062 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:15:10.195 D/HelloReaderService(23255): Speaking Main: タブ3。カスタムラベル辞書画面を開きます カスタムラベル [SubVoice Hint: ダブルタップで実行できます]
+09-05 07:15:10.253 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 13
+09-05 07:15:12.073 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:15:12.073 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 4
+09-05 07:15:12.073 D/HelloReaderService(23255): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:15:12.075 D/HelloReaderService(23255): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:15:12.189 D/HelloReaderService(23255): navigateFocus index=16/26, success=true, text=戻る ホーム 最近
+09-05 07:15:12.189 D/HelloReaderService(23255): Speaking Main: 戻る ホーム 最近
+09-05 07:15:12.245 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 14
+09-05 07:15:16.081 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 07:15:16.081 D/HelloReaderService(23255): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 07:15:16.084 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:16.081 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 3
+09-05 07:15:16.219 D/HelloReaderService(23255): navigateFocus index=15/26, success=true, text=タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 07:15:16.219 D/HelloReaderService(23255): Speaking Main: タブ3。カスタムラベル辞書画面を開きます カスタムラベル [SubVoice Hint: ダブルタップで実行できます]
+09-05 07:15:16.280 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 15
+09-05 07:15:17.556 D/HelloReaderService(23255): playSound requested for soundId: 1 -> streamId: 16
+09-05 07:15:17.603 D/HelloReaderService(23255): Speaking Main: タブ1。初期設定画面を開きます 初期設定 [SubVoice Hint: ダブルタップで実行できます]
+09-05 07:15:17.627 D/HelloReaderService(23255): Speaking Main: 登録済みラベル (プリセット) • com.android.systemui -> 戻るボタン • com.android.systemui -> ホームボタン • com.android.systemui -> 最近のアプリボタン
+09-05 07:15:17.631 D/HelloReaderService(23255): Speaking Main: • com.android.systemui -> ホームボタン
+09-05 07:15:17.658 D/HelloReaderService(23255): Speaking Main: 🏷️ カスタムラベル辞書 名無しの画像ボタン等に設定したカスタム読み上げラベル一覧です 登録済みラベル (プリセット) • com.android.systemui -> 戻るボタン • com.android.systemui -> ホームボタン • com.android.systemui -> 最近のアプリボタン タブ1。初期設定画面を開きます 初期設定 タブ2。全アプリ対応プロファイル画面を開きます 全アプリ対応 タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 07:15:17.661 D/HelloReaderService(23255): Speaking Main: • com.android.systemui -> 最近のアプリボタン
+09-05 07:15:17.663 D/HelloReaderService(23255): Speaking Main: 🏷️ カスタムラベル辞書
+09-05 07:15:17.665 D/HelloReaderService(23255): Speaking Main: 名無しの画像ボタン等に設定したカスタム読み上げラベル一覧です
+09-05 07:15:17.672 D/HelloReaderService(23255): Speaking Main: 登録済みラベル (プリセット)
+09-05 07:15:17.758 D/HelloReaderService(23255): Speaking Main: タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 07:15:19.084 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 17
+09-05 07:15:17.669 D/HelloReaderService(23255): Speaking Main: • com.android.systemui -> 戻るボタン
+09-05 07:15:19.810 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 07:15:19.811 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 3
+09-05 07:15:19.811 D/HelloReaderService(23255): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 07:15:19.814 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:19.945 D/HelloReaderService(23255): Speaking Main: これ以上 前へ に進めません
+09-05 07:15:19.945 D/HelloReaderService(23255): playSound requested for soundId: 2 -> streamId: 18
+09-05 07:15:20.536 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:15:20.536 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 4
+09-05 07:15:20.536 D/HelloReaderService(23255): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:15:20.633 D/HelloReaderService(23255): Speaking Main: 次へ の要素へ移動
+09-05 07:15:20.537 D/HelloReaderService(23255): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:15:20.632 D/HelloReaderService(23255): navigateFocus index=1/24, success=true, text=null
+09-05 07:15:20.684 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 19
+09-05 07:15:21.828 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:15:21.832 D/HelloReaderService(23255): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:15:22.015 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 20
+09-05 07:15:21.828 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 4
+09-05 07:15:21.828 D/HelloReaderService(23255): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:15:21.959 D/HelloReaderService(23255): navigateFocus index=2/24, success=true, text=null
+09-05 07:15:22.732 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:15:22.732 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 4
+09-05 07:15:22.735 D/HelloReaderService(23255): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:15:22.875 D/HelloReaderService(23255): navigateFocus index=2/24, success=true, text=null
+09-05 07:15:22.875 D/HelloReaderService(23255): Speaking Main: 次へ の要素へ移動
+09-05 07:15:22.930 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 22
+09-05 07:15:22.732 D/HelloReaderService(23255): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:15:23.833 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:15:23.833 D/HelloReaderService(23255): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:15:23.836 D/HelloReaderService(23255): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:15:23.940 D/HelloReaderService(23255): navigateFocus index=2/24, success=true, text=null
+09-05 07:15:23.997 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 23
+09-05 07:15:24.960 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 24
+09-05 07:15:23.833 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 4
+09-05 07:15:24.963 D/HelloReaderService(23255): Speaking Main: 🏷️ カスタムラベル辞書 名無しの画像ボタン等に設定したカスタム読み上げラベル一覧です 登録済みラベル (プリセット) • com.android.systemui -> 戻るボタン • com.android.systemui -> ホームボタン • com.android.systemui -> 最近のアプリボタン タブ1。初期設定画面を開きます 初期設定 タブ2。全アプリ対応プロファイル画面を開きます 全アプリ対応 タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 07:15:25.126 D/HelloReaderService(23255): Speaking Main: タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 07:15:25.125 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 25
+09-05 07:15:26.677 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 07:15:26.678 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 3
+09-05 07:15:26.678 D/HelloReaderService(23255): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 07:15:26.685 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:26.799 D/HelloReaderService(23255): navigateFocus index=12/24, success=true, text=タブ2。全アプリ対応プロファイル画面を開きます 全アプリ対応
+09-05 07:15:26.800 D/HelloReaderService(23255): Speaking Main: タブ2。全アプリ対応プロファイル画面を開きます 全アプリ対応 [SubVoice Hint: ダブルタップで実行できます]
+09-05 07:15:26.855 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 26
+09-05 07:15:31.875 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:15:31.875 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 4
+09-05 07:15:31.875 D/HelloReaderService(23255): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:15:31.880 D/HelloReaderService(23255): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:15:31.986 D/HelloReaderService(23255): navigateFocus index=13/24, success=true, text=タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 07:15:31.987 D/HelloReaderService(23255): Speaking Main: タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 07:15:32.038 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 27
+09-05 07:15:34.781 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=19, displayId=0
+09-05 07:15:34.781 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 19
+09-05 07:15:36.655 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=13, displayId=0
+09-05 07:15:36.659 D/HelloReaderService(23255): Speaking Main: ホーム画面
+09-05 07:15:36.655 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 13
+09-05 07:15:37.026 D/HelloReaderService(23255): Speaking Main: ホーム画面。全般台風情報、台風第24号 気象庁
+09-05 07:15:37.028 D/HelloReaderService(23255): playSound requested for soundId: 4 -> streamId: 28
+09-05 07:15:37.394 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 29
+09-05 07:15:37.396 D/HelloReaderService(23255): Speaking Main: スナップショット
+09-05 07:15:38.520 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 30
+09-05 07:15:38.523 D/HelloReaderService(23255): Speaking Main: ホーム
+09-05 07:15:38.652 D/HelloReaderService(23255): Speaking Main: メッセージ [SubVoice Hint: ダブルタップで実行できます]
+09-05 07:15:38.707 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 31
+09-05 07:15:38.888 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 32
+09-05 07:15:39.550 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:15:39.550 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 4
+09-05 07:15:39.550 D/HelloReaderService(23255): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:15:39.551 D/HelloReaderService(23255): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:15:39.815 D/HelloReaderService(23255): navigateFocus index=9/49, success=true, text=スナップショット 1/1 ページ
+09-05 07:15:39.816 D/HelloReaderService(23255): Speaking Main: スナップショット 1/1 ページ
+09-05 07:15:39.869 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 33
+09-05 07:15:40.067 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 07:15:40.067 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 3
+09-05 07:15:40.067 D/HelloReaderService(23255): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 07:15:40.071 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:40.250 D/HelloReaderService(23255): navigateFocus index=8/49, success=true, text=ホーム
+09-05 07:15:40.305 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 34
+09-05 07:15:40.424 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 07:15:40.424 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 3
+09-05 07:15:40.424 D/HelloReaderService(23255): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 07:15:40.427 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:40.604 D/HelloReaderService(23255): navigateFocus index=7/49, success=true, text=null
+09-05 07:15:40.605 D/HelloReaderService(23255): Speaking Main: 前へ の要素へ移動
+09-05 07:15:40.655 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 35
+09-05 07:15:40.656 D/HelloReaderService(23255): Speaking Main: 7:15 Google の通知:  Gmail の通知:  YouTube の通知:  YouTube の通知:  Bing の通知:  Lite の通知:  ドコモメール の通知:  Athan の通知:  聖書 の通知:  Android システム の通知:  YouTube の通知:  Windows にリンク の通知:  YouTube の通知:  YouTube の通知:  Wi-Fiはレベル2です。
+09-05 07:15:40.840 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 07:15:40.840 D/HelloReaderService(23255): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 07:15:40.843 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:40.941 D/HelloReaderService(23255): navigateFocus index=4/49, success=true, text=スナップショット 1/1 ページ 設定 マップ 現在の天気 Gemini Play ストア Gmail フォト YouTube 電話 メッセージ Chrome カメラ アヤメキーボード LINE 読み上げモード Lookout Signal Lite WhatsApp ＋メッセージ ドコモメール dアカウント設定 Amazon ショッピング バンドル Seeing AI Be My Eyes ユニボイスブラインド Messenger バッテリー Pixel 10 64%バッテリーの充電完了まであと約7:45までに充電完了です 充電 Windows にリンク Authenticator Athan JW Library Fajr 03:42 Dhuhr 11:38 Asr 16:12 Maghrib 18:03 Isha 19:27 Plan your day with Athan. Tap to view your daily goals [PHONE NUMBER MASKED]88 Ramadan in 156 days Let's get ready Ramadan illustration Envision AI Chat Health Element X 詐欺対策 NERV防災 Discord Bitwarden BBN聖書放送 FIFA Audio Description Crafting Kingdom Visa Sailing Telegram VLC Soundscape Bing Spotify GitHub
+09-05 07:15:40.943 D/HelloReaderService(23255): Speaking Main: スナップショット 1/1 ページ 設定 マップ 現在の天気 Gemini Play ストア Gmail フォト YouTube 電話 メッセージ Chrome カメラ アヤメキーボード LINE 読み上げモード Lookout Signal Lite WhatsApp ＋メッセージ ドコモメール dアカウント設定 Amazon ショッピング バンドル Seeing AI Be My Eyes ユニボイスブラインド Messenger バッテリー Pixel 10 64%バッテリーの充電完了まであと約7:45までに充電完了です 充電 Windows にリンク Authenticator Athan JW Library Fajr 03:42 Dhuhr 11:38 Asr 16:12 Maghrib 18:03 Isha 19:27 Plan your day with Athan. Tap to view your daily goals [電話番号匿名化]88 Ramadan in 156 days Let's get ready Ramadan illustration Envision AI Chat Health Element X 詐欺対策 NERV防災 Discord Bitwarden BBN聖書放送 FIFA Audio Description Crafting Kingdom Visa Sailing Telegram VLC Soundscape Bing Spotify GitHub
+09-05 07:15:40.988 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 36
+09-05 07:15:40.840 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 3
+09-05 07:15:41.378 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 07:15:41.378 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 3
+09-05 07:15:41.379 D/HelloReaderService(23255): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 07:15:41.381 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:41.651 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:42.015 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:42.294 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 07:15:42.294 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 3
+09-05 07:15:42.295 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:42.294 D/HelloReaderService(23255): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 07:15:42.429 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:42.630 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:42.804 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:42.964 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:15:42.964 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 4
+09-05 07:15:42.965 D/HelloReaderService(23255): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:15:42.966 D/HelloReaderService(23255): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:15:43.115 D/HelloReaderService(23255): navigateFocus index=1/49, success=true, text=スナップショット 1/1 ページ 設定 マップ 現在の天気 Gemini Play ストア Gmail フォト YouTube 電話 メッセージ Chrome カメラ アヤメキーボード LINE 読み上げモード Lookout Signal Lite WhatsApp ＋メッセージ ドコモメール dアカウント設定 Amazon ショッピング バンドル Seeing AI Be My Eyes ユニボイスブラインド Messenger バッテリー Windows にリンク Authenticator Athan JW Library [PHONE NUMBER MASKED]88 Ramadan in 156 days Envision AI Chat Health Element X 詐欺対策 NERV防災 Discord Bitwarden BBN聖書放送 FIFA Audio Description Crafting Kingdom Visa Sailing Telegram VLC Soundscape Bing Spotify GitHub ホーム 最近のアイテムはありません Google
+09-05 07:15:43.116 D/HelloReaderService(23255): Speaking Main: スナップショット 1/1 ページ 設定 マップ 現在の天気 Gemini Play ストア Gmail フォト YouTube 電話 メッセージ Chrome カメラ アヤメキーボード LINE 読み上げモード Lookout Signal Lite WhatsApp ＋メッセージ ドコモメール dアカウント設定 Amazon ショッピング バンドル Seeing AI Be My Eyes ユニボイスブラインド Messenger バッテリー Windows にリンク Authenticator Athan JW Library [電話番号匿名化]88 Ramadan in 156 days Envision AI Chat Health Element X 詐欺対策 NERV防災 Discord Bitwarden BBN聖書放送 FIFA Audio Description Crafting Kingdom Visa Sailing Telegram VLC Soundscape Bing Spotify GitHub ホーム 最近のアイテムはありません Google
+09-05 07:15:43.122 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:43.218 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:43.312 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 37
+09-05 07:15:43.420 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:43.505 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:15:43.505 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 4
+09-05 07:15:43.505 D/HelloReaderService(23255): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:15:43.506 D/HelloReaderService(23255): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:15:43.635 D/HelloReaderService(23255): navigateFocus index=1/49, success=true, text=スナップショット 1/1 ページ 設定 マップ 現在の天気 Gemini Play ストア Gmail フォト YouTube 電話 メッセージ Chrome カメラ アヤメキーボード LINE 読み上げモード Lookout Signal Lite WhatsApp ＋メッセージ ドコモメール dアカウント設定 Amazon ショッピング バンドル Seeing AI Be My Eyes ユニボイスブラインド Messenger バッテリー Windows にリンク Authenticator Athan JW Library [PHONE NUMBER MASKED]88 Ramadan in 156 days Envision AI Chat Health Element X 詐欺対策 NERV防災 Discord Bitwarden BBN聖書放送 FIFA Audio Description Crafting Kingdom Visa Sailing Telegram VLC Soundscape Bing Spotify GitHub ホーム 最近のアイテムはありません Google
+09-05 07:15:43.636 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:43.703 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 38
+09-05 07:15:43.707 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:43.903 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:44.088 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:44.227 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:15:44.227 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 4
+09-05 07:15:44.227 D/HelloReaderService(23255): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:15:44.227 D/HelloReaderService(23255): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:15:44.361 D/HelloReaderService(23255): navigateFocus index=1/49, success=true, text=スナップショット 1/1 ページ 設定 マップ 現在の天気 Gemini Play ストア Gmail フォト YouTube 電話 メッセージ Chrome カメラ アヤメキーボード LINE 読み上げモード Lookout Signal Lite WhatsApp ＋メッセージ ドコモメール dアカウント設定 Amazon ショッピング バンドル Seeing AI Be My Eyes ユニボイスブラインド Messenger バッテリー Windows にリンク Authenticator Athan JW Library [PHONE NUMBER MASKED]88 Ramadan in 156 days Envision AI Chat Health Element X 詐欺対策 NERV防災 Discord Bitwarden BBN聖書放送 FIFA Audio Description Crafting Kingdom Visa Sailing Telegram VLC Soundscape Bing Spotify GitHub ホーム 最近のアイテムはありません Google
+09-05 07:15:44.361 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:44.522 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 39
+09-05 07:15:44.545 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:44.690 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:15:44.690 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 4
+09-05 07:15:44.690 D/HelloReaderService(23255): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:15:44.690 D/HelloReaderService(23255): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:15:44.833 D/HelloReaderService(23255): navigateFocus index=1/49, success=true, text=スナップショット 1/1 ページ 設定 マップ 現在の天気 Gemini Play ストア Gmail フォト YouTube 電話 メッセージ Chrome カメラ アヤメキーボード LINE 読み上げモード Lookout Signal Lite WhatsApp ＋メッセージ ドコモメール dアカウント設定 Amazon ショッピング バンドル Seeing AI Be My Eyes ユニボイスブラインド Messenger バッテリー Windows にリンク Authenticator Athan JW Library [PHONE NUMBER MASKED]88 Ramadan in 156 days Envision AI Chat Health Element X 詐欺対策 NERV防災 Discord Bitwarden BBN聖書放送 FIFA Audio Description Crafting Kingdom Visa Sailing Telegram VLC Soundscape Bing Spotify GitHub ホーム 最近のアイテムはありません Google
+09-05 07:15:44.835 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:44.967 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 40
+09-05 07:15:44.972 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:45.162 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:45.319 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:45.434 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 41
+09-05 07:15:45.519 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:45.611 D/HelloReaderService(23255): Speaking Main: Play ストア [SubVoice Hint: ダブルタップで実行できます]
+09-05 07:15:45.632 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:45.437 D/HelloReaderService(23255): Speaking Main: Gmail [SubVoice Hint: ダブルタップで実行できます]
+09-05 07:15:45.611 D/HelloReaderService(23255): navigateFocus index=19/49, success=true, text=Play ストア
+09-05 07:15:45.731 D/HelloReaderService(23255): navigateFocus index=19/49, success=false, text=Play ストア
+09-05 07:15:45.738 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 42
+09-05 07:15:46.697 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:15:46.697 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 4
+09-05 07:15:46.697 D/HelloReaderService(23255): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:15:46.715 D/HelloReaderService(23255): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:15:46.876 D/HelloReaderService(23255): navigateFocus index=20/49, success=true, text=Gmail
+09-05 07:15:46.931 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 43
+09-05 07:15:47.483 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:15:47.484 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 4
+09-05 07:15:47.484 D/HelloReaderService(23255): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:15:47.494 D/HelloReaderService(23255): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:15:47.708 D/HelloReaderService(23255): navigateFocus index=21/49, success=true, text=フォト
+09-05 07:15:47.708 D/HelloReaderService(23255): Speaking Main: フォト [SubVoice Hint: ダブルタップで実行できます]
+09-05 07:15:47.767 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 44
+09-05 07:15:48.070 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:15:48.070 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 4
+09-05 07:15:48.070 D/HelloReaderService(23255): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:15:48.073 D/HelloReaderService(23255): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:15:48.244 D/HelloReaderService(23255): navigateFocus index=22/49, success=true, text=YouTube
+09-05 07:15:48.245 D/HelloReaderService(23255): Speaking Main: YouTube [SubVoice Hint: ダブルタップで実行できます]
+09-05 07:15:48.297 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 45
+09-05 07:15:48.876 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:15:48.876 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 4
+09-05 07:15:48.877 D/HelloReaderService(23255): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:15:48.886 D/HelloReaderService(23255): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:15:49.077 D/HelloReaderService(23255): navigateFocus index=23/49, success=true, text=電話
+09-05 07:15:49.078 D/HelloReaderService(23255): Speaking Main: 電話 [SubVoice Hint: ダブルタップで実行できます]
+09-05 07:15:49.137 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 46
+09-05 07:15:49.503 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:15:49.503 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 4
+09-05 07:15:49.503 D/HelloReaderService(23255): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:15:49.507 D/HelloReaderService(23255): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:15:49.696 D/HelloReaderService(23255): navigateFocus index=24/49, success=true, text=メッセージ
+09-05 07:15:49.697 D/HelloReaderService(23255): Speaking Main: メッセージ [SubVoice Hint: ダブルタップで実行できます]
+09-05 07:15:49.749 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 47
+09-05 07:15:50.215 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 07:15:50.215 D/HelloReaderService(23255): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 07:15:50.219 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:50.374 D/HelloReaderService(23255): navigateFocus index=23/49, success=true, text=電話
+09-05 07:15:50.431 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 48
+09-05 07:15:50.516 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 07:15:50.517 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 3
+09-05 07:15:50.517 D/HelloReaderService(23255): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 07:15:50.520 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:50.215 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 3
+09-05 07:15:50.692 D/HelloReaderService(23255): navigateFocus index=22/49, success=true, text=YouTube
+09-05 07:15:50.694 D/HelloReaderService(23255): Speaking Main: YouTube [SubVoice Hint: ダブルタップで実行できます]
+09-05 07:15:50.747 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 49
+09-05 07:15:50.838 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 07:15:50.838 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 3
+09-05 07:15:50.838 D/HelloReaderService(23255): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 07:15:50.841 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:50.992 D/HelloReaderService(23255): navigateFocus index=21/49, success=true, text=フォト
+09-05 07:15:50.992 D/HelloReaderService(23255): Speaking Main: フォト [SubVoice Hint: ダブルタップで実行できます]
+09-05 07:15:51.050 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 50
+09-05 07:15:51.165 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 07:15:51.165 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 3
+09-05 07:15:51.165 D/HelloReaderService(23255): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 07:15:51.169 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:51.324 D/HelloReaderService(23255): navigateFocus index=20/49, success=true, text=Gmail
+09-05 07:15:51.324 D/HelloReaderService(23255): Speaking Main: Gmail [SubVoice Hint: ダブルタップで実行できます]
+09-05 07:15:51.383 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 51
+09-05 07:15:51.660 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 07:15:51.660 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 3
+09-05 07:15:51.660 D/HelloReaderService(23255): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 07:15:51.663 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:51.827 D/HelloReaderService(23255): Speaking Main: Play ストア [SubVoice Hint: ダブルタップで実行できます]
+09-05 07:15:51.826 D/HelloReaderService(23255): navigateFocus index=19/49, success=true, text=Play ストア
+09-05 07:15:51.892 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 52
+09-05 07:15:52.247 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 07:15:52.248 D/HelloReaderService(23255): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 07:15:52.252 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:52.410 D/HelloReaderService(23255): navigateFocus index=18/49, success=true, text=使用を開始する機能をタップ:
+09-05 07:15:52.411 D/HelloReaderService(23255): Speaking Main: 使用を開始する機能をタップ:
+09-05 07:15:52.463 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 53
+09-05 07:15:52.248 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 3
+09-05 07:15:52.818 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 07:15:52.818 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 3
+09-05 07:15:52.818 D/HelloReaderService(23255): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 07:15:52.822 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:52.996 D/HelloReaderService(23255): navigateFocus index=17/49, success=true, text=Gemini
+09-05 07:15:52.997 D/HelloReaderService(23255): Speaking Main: Gemini
+09-05 07:15:53.049 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 54
+09-05 07:15:53.456 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 3
+09-05 07:15:53.456 D/HelloReaderService(23255): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 07:15:53.461 D/HelloReaderService(23255): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:15:53.639 D/HelloReaderService(23255): navigateFocus index=16/49, success=true, text=現在の天気
+09-05 07:15:53.639 D/HelloReaderService(23255): Speaking Main: 現在の天気
+09-05 07:15:53.456 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 07:15:53.693 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 55
+09-05 07:15:54.796 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:15:54.796 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 4
+09-05 07:15:54.796 D/HelloReaderService(23255): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:15:54.800 D/HelloReaderService(23255): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:15:55.042 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 56
+09-05 07:15:55.049 D/HelloReaderService(23255): Speaking Main: Gemini
+09-05 07:15:54.972 D/HelloReaderService(23255): navigateFocus index=17/49, success=true, text=Gemini
+09-05 07:15:56.456 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:15:56.456 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 4
+09-05 07:15:56.456 D/HelloReaderService(23255): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:15:56.459 D/HelloReaderService(23255): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:15:56.634 D/HelloReaderService(23255): navigateFocus index=18/49, success=true, text=使用を開始する機能をタップ:
+09-05 07:15:56.635 D/HelloReaderService(23255): Speaking Main: 使用を開始する機能をタップ:
+09-05 07:15:56.687 D/HelloReaderService(23255): playSound requested for soundId: 3 -> streamId: 57
+09-05 07:15:58.528 D/HelloReaderService(23255): onGesture API 30+ received: gestureId=19, displayId=0
+09-05 07:15:58.529 D/HelloReaderService(23255): handleGestureAction executing for gestureId: 19
+09-05 07:16:01.131 D/HelloReaderService(23255): Speaking Main: スナップショット

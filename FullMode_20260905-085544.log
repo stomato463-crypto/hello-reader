@@ -1,0 +1,194 @@
+﻿--------- beginning of main
+09-05 08:54:53.015 D/HelloReaderService( 9617): navigateFocus collected: 55 nodes
+09-05 08:54:53.045 D/HelloReaderService( 9617): navigateFocus index=10/55, success=true, text=9月5日(土) 22°C 今日 26°C / 19°C · 快晴
+09-05 08:54:53.046 D/HelloReaderService( 9617): Speaking Main: 9月5日(土) 22°C 今日 26°C / 19°C · 快晴
+09-05 08:54:53.047 D/HelloReaderService( 9617): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 08:54:53.047 D/HelloReaderService( 9617): handleGestureAction executing for gestureId: 4
+09-05 08:54:53.048 D/HelloReaderService( 9617): Swipe Right Matched -> navigateFocus FORWARD
+09-05 08:54:53.048 D/HelloReaderService( 9617): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 08:54:53.409 D/HelloReaderService( 9617): navigateFocus collected: 55 nodes
+09-05 08:54:53.427 D/HelloReaderService( 9617): navigateFocus index=11/55, success=true, text=9月5日(土)
+09-05 08:54:53.427 D/HelloReaderService( 9617): Speaking Main: 9月5日(土) [SubVoice Hint: ダブルタップで実行できます]
+09-05 08:54:53.429 D/HelloReaderService( 9617): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 08:54:53.429 D/HelloReaderService( 9617): handleGestureAction executing for gestureId: 4
+09-05 08:54:53.429 D/HelloReaderService( 9617): Swipe Right Matched -> navigateFocus FORWARD
+09-05 08:54:53.430 D/HelloReaderService( 9617): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 08:54:53.779 D/HelloReaderService( 9617): navigateFocus collected: 55 nodes
+09-05 08:54:53.809 D/HelloReaderService( 9617): navigateFocus index=12/55, success=true, text=22°C
+09-05 08:54:53.810 D/HelloReaderService( 9617): Speaking Main: 22°C [SubVoice Hint: ダブルタップで実行できます]
+09-05 08:54:53.826 D/HelloReaderService( 9617): playSound requested for soundId: 3 -> streamId: 18
+09-05 08:54:53.843 D/HelloReaderService( 9617): Speaking Main: 9月5日(土) 22°C 今日 26°C / 19°C · 快晴
+09-05 08:54:53.845 D/HelloReaderService( 9617): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 08:54:53.845 D/HelloReaderService( 9617): handleGestureAction executing for gestureId: 4
+09-05 08:54:53.845 D/HelloReaderService( 9617): Swipe Right Matched -> navigateFocus FORWARD
+09-05 08:54:53.846 D/HelloReaderService( 9617): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 08:54:54.062 D/HelloReaderService( 9617): navigateFocus collected: 55 nodes
+09-05 08:54:54.075 D/HelloReaderService( 9617): navigateFocus index=13/55, success=true, text=今日 26°C / 19°C · 快晴
+09-05 08:54:54.091 D/HelloReaderService( 9617): playSound requested for soundId: 3 -> streamId: 19
+09-05 08:54:54.094 D/HelloReaderService( 9617): Speaking Main: 9月5日(土) [SubVoice Hint: ダブルタップで実行できます]
+09-05 08:54:54.095 D/HelloReaderService( 9617): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 08:54:54.095 D/HelloReaderService( 9617): handleGestureAction executing for gestureId: 4
+09-05 08:54:54.095 D/HelloReaderService( 9617): Swipe Right Matched -> navigateFocus FORWARD
+09-05 08:54:54.095 D/HelloReaderService( 9617): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 08:54:54.231 D/HelloReaderService( 9617): navigateFocus collected: 55 nodes
+09-05 08:54:54.240 D/HelloReaderService( 9617): navigateFocus index=14/55, success=true, text=設定
+09-05 08:54:54.241 D/HelloReaderService( 9617): Speaking Main: 設定 [SubVoice Hint: ダブルタップで実行できます]
+09-05 08:54:54.243 D/HelloReaderService( 9617): Played Morse Vibration for '0': -----
+09-05 08:54:54.258 D/HelloReaderService( 9617): playSound requested for soundId: 3 -> streamId: 21
+09-05 08:54:54.259 D/HelloReaderService( 9617): Speaking Main: 22°C [SubVoice Hint: ダブルタップで実行できます]
+09-05 08:54:54.260 D/HelloReaderService( 9617): Played Morse Vibration for '0': -----
+09-05 08:54:54.274 D/HelloReaderService( 9617): Speaking Main: 今日 26°C / 19°C · 快晴 [SubVoice Hint: ダブルタップで実行できます]
+09-05 08:54:54.292 D/HelloReaderService( 9617): Played Morse Vibration for '0': -----
+09-05 08:54:54.296 D/HelloReaderService( 9617): Speaking Main: 設定 [SubVoice Hint: ダブルタップで実行できます]
+09-05 08:54:54.504 D/HelloReaderService( 9617): Played Morse Vibration for '0': -----
+09-05 08:54:54.667 D/HelloReaderService( 9617): Played Morse Vibration for '0': -----
+09-05 08:54:54.877 D/HelloReaderService( 9617): Played Morse Vibration for '0': -----
+09-05 08:54:55.083 D/HelloReaderService( 9617): Played Morse Vibration for '0': -----
+09-05 08:54:55.218 D/HelloReaderService( 9617): Played Morse Vibration for '0': -----
+09-05 08:54:54.075 D/HelloReaderService( 9617): Speaking Main: 今日 26°C / 19°C · 快晴 [SubVoice Hint: ダブルタップで実行できます]
+09-05 08:54:55.324 D/HelloReaderService( 9617): Played Morse Vibration for '0': -----
+09-05 08:54:55.397 D/HelloReaderService( 9617): Played Morse Vibration for '0': -----
+09-05 08:54:55.800 D/HelloReaderService( 9617): playSound requested for soundId: 1 -> streamId: 22
+09-05 08:54:55.817 D/HelloReaderService( 9617): Speaking Main: ホーム画面
+09-05 08:54:56.122 D/HelloReaderService( 9617): playSound requested for soundId: 4 -> streamId: 23
+09-05 08:54:56.123 D/HelloReaderService( 9617): Speaking Main: 設定
+09-05 08:54:56.364 D/HelloReaderService( 9617): Speaking Main: 設定を検索。Tomohiro Saito。Google サービスと設定。ネットワークとインターネット。モバイル、Wi-Fi、アクセス ポイント。接続設定。Bluetooth、ペア設定。アプリ。アシスタント、最近使ったアプリ、デフォルトのアプリ。通知。通知履歴、会話。音とバイブレーション。音量とハプティクス。モード。サイレント モード、おやすみ時間、運転中。ディスプレイとタップ。ダークモード、フォントサイズ、タップ。壁紙とスタイル。色、テーマアイコン、アプリグリッド。ストレージ。使用済み 40% - 空き容量 76.23 GB。バッテリー。システム。言語、ジェスチャー、時間。デバイス情報。Pixel 10。セキュリティとプライバシー。アプリのセキュリティ、デバイスのロック、アクセス許可。位置情報。ON / 19 個のアプリに位置情報へのアクセスを許可。パスワードとパスキー。ログイン情報や自動入力の候補。アカウントとバックアップ。データのバックアップ、別のデバイスからのデータのコピー。Digital Wellbeing。利用時間、アプリタイマー、おやすみ時間のスケジュール。保護者による使用制限。デバイス利用に関する基本ルールと利用時間の上限。マジック サジェスト。パーソナライズされた提案と操作。安全性と緊急情報。緊急 SOS、医療情報、アラート。ユーザー補助。ディスプレイ、操作、音声。デバイスの状態とサポート。デバイスが最適な状態で動作していることを確認します
+09-05 08:54:56.366 D/HelloReaderService( 9617): playSound requested for soundId: 3 -> streamId: 24
+09-05 08:54:56.367 D/HelloReaderService( 9617): Speaking Main: アプリ。アシスタント、最近使ったアプリ、デフォルトのアプリ ダブルタップで開く
+09-05 08:54:56.368 D/HelloReaderService( 9617): playSound requested for soundId: 4 -> streamId: 25
+09-05 08:54:56.369 D/HelloReaderService( 9617): Speaking Main: アプリのアイコン
+09-05 08:54:56.472 D/HelloReaderService( 9617): Speaking Main: Tomohiro Saito。Google サービスと設定。ネットワークとインターネット。モバイル、Wi-Fi、アクセス ポイント。接続設定。Bluetooth、ペア設定。アプリ。アシスタント、最近使ったアプリ、デフォルトのアプリ。通知。通知履歴、会話。音とバイブレーション。音量とハプティクス。モード。サイレント モード、おやすみ時間、運転中。ディスプレイとタップ。ダークモード、フォントサイズ、タップ。壁紙とスタイル。色、テーマアイコン、アプリグリッド。ストレージ。使用済み 40% - 空き容量 76.23 GB。バッテリー。システム。言語、ジェスチャー、時間。デバイス情報。Pixel 10。セキュリティとプライバシー。アプリのセキュリティ、デバイスのロック、アクセス許可。位置情報。ON / 19 個のアプリに位置情報へのアクセスを許可。パスワードとパスキー。ログイン情報や自動入力の候補。アカウントとバックアップ。データのバックアップ、別のデバイスからのデータのコピー。Digital Wellbeing。利用時間、アプリタイマー、おやすみ時間のスケジュール。保護者による使用制限。デバイス利用に関する基本ルールと利用時間の上限。マジック サジェスト。パーソナライズされた提案と操作。安全性と緊急情報。緊急 SOS、医療情報、アラート。ユーザー補助。ディスプレイ、操作、音声。デバイスの状態とサポート。デバイスが最適な状態で動作していることを確認します
+09-05 08:54:56.474 D/HelloReaderService( 9617): playSound requested for soundId: 5 -> streamId: 26
+09-05 08:54:56.477 D/HelloReaderService( 9617): playSound requested for soundId: 3 -> streamId: 27
+09-05 08:54:56.492 D/HelloReaderService( 9617): Speaking Main: アプリ。アシスタント、最近使ったアプリ、デフォルトのアプリ ダブルタップで開く
+09-05 08:54:56.660 D/HelloReaderService( 9617): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 08:54:56.660 D/HelloReaderService( 9617): handleGestureAction executing for gestureId: 4
+09-05 08:54:56.662 D/HelloReaderService( 9617): Swipe Right Matched -> navigateFocus FORWARD
+09-05 08:54:56.662 D/HelloReaderService( 9617): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 08:54:56.829 D/HelloReaderService( 9617): navigateFocus collected: 29 nodes
+09-05 08:54:56.839 D/HelloReaderService( 9617): navigateFocus index=19/29, success=true, text=通知。通知履歴、会話
+09-05 08:54:56.840 D/HelloReaderService( 9617): Speaking Main: 通知。通知履歴、会話 [SubVoice Hint: ダブルタップで開く]
+09-05 08:54:56.952 D/HelloReaderService( 9617): Speaking Main: Tomohiro Saito。Google サービスと設定。ネットワークとインターネット。モバイル、Wi-Fi、アクセス ポイント。接続設定。Bluetooth、ペア設定。アプリ。アシスタント、最近使ったアプリ、デフォルトのアプリ。通知。通知履歴、会話。音とバイブレーション。音量とハプティクス。モード。サイレント モード、おやすみ時間、運転中。ディスプレイとタップ。ダークモード、フォントサイズ、タップ。壁紙とスタイル。色、テーマアイコン、アプリグリッド。ストレージ。使用済み 40% - 空き容量 76.23 GB。バッテリー。80% - 充電完了。システム。言語、ジェスチャー、時間。デバイス情報。Pixel 10。セキュリティとプライバシー。アプリのセキュリティ、デバイスのロック、アクセス許可。位置情報。ON / 19 個のアプリに位置情報へのアクセスを許可。パスワードとパスキー。ログイン情報や自動入力の候補。アカウントとバックアップ。データのバックアップ、別のデバイスからのデータのコピー。Digital Wellbeing。利用時間、アプリタイマー、おやすみ時間のスケジュール。保護者による使用制限。デバイス利用に関する基本ルールと利用時間の上限。マジック サジェスト。パーソナライズされた提案と操作。安全性と緊急情報。緊急 SOS、医療情報、アラート。ユーザー補助。ディスプレイ、操作、音声。デバイスの状態とサポート。デバイスが最適な状態で動作していることを確認します
+09-05 08:54:57.027 D/HelloReaderService( 9617): Speaking Main: Tomohiro Saito。Google サービスと設定。ネットワークとインターネット。モバイル、Wi-Fi、アクセス ポイント。接続設定。Bluetooth、ペア設定。アプリ。アシスタント、最近使ったアプリ、デフォルトのアプリ。通知。通知履歴、会話。音とバイブレーション。音量とハプティクス。モード。サイレント モード、おやすみ時間、運転中。ディスプレイとタップ。ダークモード、フォントサイズ、タップ。壁紙とスタイル。色、テーマアイコン、アプリグリッド。ストレージ。使用済み 40% - 空き容量 76.23 GB。バッテリー。80% - 充電完了。システム。言語、ジェスチャー、時間。デバイス情報。Pixel 10。セキュリティとプライバシー。アプリのセキュリティ、デバイスのロック、アクセス許可。位置情報。ON / 19 個のアプリに位置情報へのアクセスを許可。パスワードとパスキー。ログイン情報や自動入力の候補。アカウントとバックアップ。データのバックアップ、別のデバイスからのデータのコピー。Digital Wellbeing。利用時間、アプリタイマー、おやすみ時間のスケジュール。保護者による使用制限。デバイス利用に関する基本ルールと利用時間の上限。マジック サジェスト。パーソナライズされた提案と操作。安全性と緊急情報。緊急 SOS、医療情報、アラート。ユーザー補助。ディスプレイ、操作、音声。デバイスの状態とサポート。デバイスが最適な状態で動作していることを確認します
+09-05 08:54:57.032 D/HelloReaderService( 9617): playSound requested for soundId: 3 -> streamId: 28
+09-05 08:54:57.034 D/HelloReaderService( 9617): Speaking Main: 通知。通知履歴、会話 ダブルタップで開く
+09-05 08:54:57.918 D/HelloReaderService( 9617): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 08:54:57.918 D/HelloReaderService( 9617): handleGestureAction executing for gestureId: 4
+09-05 08:54:57.921 D/HelloReaderService( 9617): Swipe Right Matched -> navigateFocus FORWARD
+09-05 08:54:57.921 D/HelloReaderService( 9617): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 08:54:58.188 D/HelloReaderService( 9617): navigateFocus collected: 29 nodes
+09-05 08:54:58.206 D/HelloReaderService( 9617): navigateFocus index=20/29, success=true, text=音とバイブレーション。音量とハプティクス
+09-05 08:54:58.207 D/HelloReaderService( 9617): Speaking Main: 音とバイブレーション。音量とハプティクス [SubVoice Hint: ダブルタップで開く]
+09-05 08:54:58.259 D/HelloReaderService( 9617): playSound requested for soundId: 3 -> streamId: 29
+09-05 08:54:58.261 D/HelloReaderService( 9617): Speaking Main: 音とバイブレーション。音量とハプティクス ダブルタップで開く
+09-05 08:54:58.868 D/HelloReaderService( 9617): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 08:54:58.868 D/HelloReaderService( 9617): handleGestureAction executing for gestureId: 4
+09-05 08:54:58.873 D/HelloReaderService( 9617): Swipe Right Matched -> navigateFocus FORWARD
+09-05 08:54:58.874 D/HelloReaderService( 9617): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 08:54:59.094 D/HelloReaderService( 9617): navigateFocus collected: 29 nodes
+09-05 08:54:59.108 D/HelloReaderService( 9617): navigateFocus index=21/29, success=true, text=モード。サイレント モード、おやすみ時間、運転中
+09-05 08:54:59.109 D/HelloReaderService( 9617): Speaking Main: モード。サイレント モード、おやすみ時間、運転中 [SubVoice Hint: ダブルタップで開く]
+09-05 08:54:59.166 D/HelloReaderService( 9617): playSound requested for soundId: 3 -> streamId: 30
+09-05 08:54:59.167 D/HelloReaderService( 9617): Speaking Main: モード。サイレント モード、おやすみ時間、運転中 ダブルタップで開く
+09-05 08:55:00.133 D/HelloReaderService( 9617): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 08:55:00.133 D/HelloReaderService( 9617): handleGestureAction executing for gestureId: 4
+09-05 08:55:00.139 D/HelloReaderService( 9617): Swipe Right Matched -> navigateFocus FORWARD
+09-05 08:55:00.139 D/HelloReaderService( 9617): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 08:55:00.395 D/HelloReaderService( 9617): navigateFocus collected: 29 nodes
+09-05 08:55:00.423 D/HelloReaderService( 9617): navigateFocus index=22/29, success=true, text=ディスプレイとタップ。ダークモード、フォントサイズ、タップ
+09-05 08:55:00.423 D/HelloReaderService( 9617): Speaking Main: ディスプレイとタップ。ダークモード、フォントサイズ、タップ [SubVoice Hint: ダブルタップで開く]
+09-05 08:55:00.477 D/HelloReaderService( 9617): playSound requested for soundId: 3 -> streamId: 31
+09-05 08:55:00.479 D/HelloReaderService( 9617): Speaking Main: ディスプレイとタップ。ダークモード、フォントサイズ、タップ ダブルタップで開く
+09-05 08:55:01.428 D/HelloReaderService( 9617): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 08:55:01.428 D/HelloReaderService( 9617): handleGestureAction executing for gestureId: 4
+09-05 08:55:01.432 D/HelloReaderService( 9617): Swipe Right Matched -> navigateFocus FORWARD
+09-05 08:55:01.434 D/HelloReaderService( 9617): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 08:55:01.738 D/HelloReaderService( 9617): navigateFocus collected: 29 nodes
+09-05 08:55:01.754 D/HelloReaderService( 9617): navigateFocus index=23/29, success=true, text=壁紙とスタイル。色、テーマアイコン、アプリグリッド
+09-05 08:55:01.755 D/HelloReaderService( 9617): Speaking Main: 壁紙とスタイル。色、テーマアイコン、アプリグリッド [SubVoice Hint: ダブルタップで開く]
+09-05 08:55:01.808 D/HelloReaderService( 9617): playSound requested for soundId: 3 -> streamId: 32
+09-05 08:55:02.460 D/HelloReaderService( 9617): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 08:55:02.460 D/HelloReaderService( 9617): handleGestureAction executing for gestureId: 4
+09-05 08:55:02.465 D/HelloReaderService( 9617): Swipe Right Matched -> navigateFocus FORWARD
+09-05 08:55:02.466 D/HelloReaderService( 9617): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 08:55:02.756 D/HelloReaderService( 9617): navigateFocus collected: 29 nodes
+09-05 08:55:02.773 D/HelloReaderService( 9617): navigateFocus index=24/29, success=true, text=戻る
+09-05 08:55:02.774 D/HelloReaderService( 9617): Speaking Main: 戻る
+09-05 08:55:02.828 D/HelloReaderService( 9617): playSound requested for soundId: 3 -> streamId: 33
+09-05 08:55:02.835 D/HelloReaderService( 9617): Speaking Main: 戻る
+09-05 08:55:03.772 D/HelloReaderService( 9617): onGesture API 30+ received: gestureId=15, displayId=0
+09-05 08:55:03.772 D/HelloReaderService( 9617): handleGestureAction executing for gestureId: 15
+09-05 08:55:03.778 D/HelloReaderService( 9617): Speaking Main: 戻る
+09-05 08:55:03.947 D/HelloReaderService( 9617): Speaking Main: ホーム画面
+09-05 08:55:03.949 D/HelloReaderService( 9617): playSound requested for soundId: 4 -> streamId: 34
+09-05 08:55:05.364 D/HelloReaderService( 9617): playSound requested for soundId: 3 -> streamId: 36
+09-05 08:55:05.367 D/HelloReaderService( 9617): Speaking Main: ホーム
+09-05 08:55:05.428 D/HelloReaderService( 9617): Speaking Main: ホーム
+09-05 08:55:05.599 D/HelloReaderService( 9617): playSound requested for soundId: 3 -> streamId: 37
+09-05 08:55:05.602 D/HelloReaderService( 9617): Speaking Main: Gmail [SubVoice Hint: ダブルタップで実行できます]
+09-05 08:55:01.810 D/HelloReaderService( 9617): Speaking Main: 壁紙とスタイル。色、テーマアイコン、アプリグリッド ダブルタップで開く
+09-05 08:55:05.668 D/HelloReaderService( 9617): Speaking Main: Gmail [SubVoice Hint: ダブルタップで実行できます]
+09-05 08:55:05.748 D/HelloReaderService( 9617): Speaking Main: ホーム
+09-05 08:55:05.805 D/HelloReaderService( 9617): playSound requested for soundId: 3 -> streamId: 39
+09-05 08:55:05.807 D/HelloReaderService( 9617): Speaking Main: ホーム
+09-05 08:55:07.119 D/HelloReaderService( 9617): playSound requested for soundId: 3 -> streamId: 41
+09-05 08:55:07.138 D/HelloReaderService( 9617): Speaking Main: 晴れ 21° [SubVoice Hint: ダブルタップで実行できます]
+09-05 08:55:07.326 D/HelloReaderService( 9617): playSound requested for soundId: 3 -> streamId: 43
+09-05 08:55:07.331 D/HelloReaderService( 9617): Speaking Main: 21°
+09-05 08:55:07.380 D/HelloReaderService( 9617): Speaking Main: 21°
+09-05 08:55:07.180 D/HelloReaderService( 9617): Speaking Main: 晴れ 21° [SubVoice Hint: ダブルタップで実行できます]
+09-05 08:55:08.537 D/HelloReaderService( 9617): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 08:55:08.538 D/HelloReaderService( 9617): handleGestureAction executing for gestureId: 4
+09-05 08:55:08.540 D/HelloReaderService( 9617): Swipe Right Matched -> navigateFocus FORWARD
+09-05 08:55:08.541 D/HelloReaderService( 9617): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 08:55:09.254 D/HelloReaderService( 9617): navigateFocus collected: 55 nodes
+09-05 08:55:09.269 D/HelloReaderService( 9617): navigateFocus index=20/55, success=true, text=最近のアイテムはありません
+09-05 08:55:09.269 D/HelloReaderService( 9617): Speaking Main: 最近のアイテムはありません
+09-05 08:55:09.326 D/HelloReaderService( 9617): playSound requested for soundId: 3 -> streamId: 44
+09-05 08:55:09.329 D/HelloReaderService( 9617): Speaking Main: 最近のアイテムはありません
+09-05 08:55:10.067 D/HelloReaderService( 9617): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 08:55:10.067 D/HelloReaderService( 9617): handleGestureAction executing for gestureId: 4
+09-05 08:55:10.073 D/HelloReaderService( 9617): Swipe Right Matched -> navigateFocus FORWARD
+09-05 08:55:10.074 D/HelloReaderService( 9617): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 08:55:10.515 D/HelloReaderService( 9617): navigateFocus index=21/55, success=true, text=Gemini
+09-05 08:55:10.515 D/HelloReaderService( 9617): Speaking Main: Gemini
+09-05 08:55:10.518 D/HelloReaderService( 9617): Played Morse Vibration for '0': -----
+09-05 08:55:10.519 D/HelloReaderService( 9617): Played Morse Vibration for '0': -----
+09-05 08:55:10.581 D/HelloReaderService( 9617): playSound requested for soundId: 3 -> streamId: 45
+09-05 08:55:10.495 D/HelloReaderService( 9617): navigateFocus collected: 55 nodes
+09-05 08:55:10.584 D/HelloReaderService( 9617): Speaking Main: Gemini
+09-05 08:55:11.254 D/HelloReaderService( 9617): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 08:55:11.254 D/HelloReaderService( 9617): handleGestureAction executing for gestureId: 4
+09-05 08:55:11.259 D/HelloReaderService( 9617): Swipe Right Matched -> navigateFocus FORWARD
+09-05 08:55:11.260 D/HelloReaderService( 9617): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 08:55:11.738 D/HelloReaderService( 9617): navigateFocus collected: 55 nodes
+09-05 08:55:11.754 D/HelloReaderService( 9617): navigateFocus index=22/55, success=true, text=helloreader
+09-05 08:55:11.755 D/HelloReaderService( 9617): Speaking Main: helloreader
+09-05 08:55:11.761 D/HelloReaderService( 9617): Played Morse Vibration for '0': -----
+09-05 08:55:11.806 D/HelloReaderService( 9617): playSound requested for soundId: 3 -> streamId: 46
+09-05 08:55:11.808 D/HelloReaderService( 9617): Speaking Main: helloreader
+09-05 08:55:11.759 D/HelloReaderService( 9617): Played Morse Vibration for '0': -----
+09-05 08:55:12.811 D/HelloReaderService( 9617): Played Morse Vibration for '0': -----
+09-05 08:55:14.199 D/HelloReaderService( 9617): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 08:55:14.199 D/HelloReaderService( 9617): handleGestureAction executing for gestureId: 3
+09-05 08:55:14.200 D/HelloReaderService( 9617): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 08:55:14.201 D/HelloReaderService( 9617): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 08:55:14.457 D/HelloReaderService( 9617): navigateFocus collected: 55 nodes
+09-05 08:55:14.472 D/HelloReaderService( 9617): navigateFocus index=21/55, success=true, text=Gemini
+09-05 08:55:14.472 D/HelloReaderService( 9617): Speaking Main: Gemini
+09-05 08:55:14.529 D/HelloReaderService( 9617): playSound requested for soundId: 3 -> streamId: 47
+09-05 08:55:14.532 D/HelloReaderService( 9617): Speaking Main: Gemini
+09-05 08:55:12.524 D/HelloReaderService( 9617): Played Morse Vibration for '0': -----
+09-05 08:55:15.460 D/HelloReaderService( 9617): Played Morse Vibration for '0': -----
+09-05 08:55:16.001 D/HelloReaderService( 9617): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 08:55:15.610 D/HelloReaderService( 9617): Played Morse Vibration for '0': -----
+09-05 08:55:16.001 D/HelloReaderService( 9617): handleGestureAction executing for gestureId: 4
+09-05 08:55:16.002 D/HelloReaderService( 9617): Swipe Right Matched -> navigateFocus FORWARD
+09-05 08:55:16.003 D/HelloReaderService( 9617): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 08:55:16.468 D/HelloReaderService( 9617): navigateFocus collected: 55 nodes
+09-05 08:55:16.484 D/HelloReaderService( 9617): Speaking Main: helloreader
+09-05 08:55:16.542 D/HelloReaderService( 9617): playSound requested for soundId: 3 -> streamId: 48
+09-05 08:55:16.546 D/HelloReaderService( 9617): Speaking Main: helloreader
+09-05 08:55:16.483 D/HelloReaderService( 9617): navigateFocus index=22/55, success=true, text=helloreader
+09-05 08:55:17.266 D/HelloReaderService( 9617): Played Morse Vibration for '0': -----
+09-05 08:55:17.554 D/HelloReaderService( 9617): Played Morse Vibration for '0': -----

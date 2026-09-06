@@ -1,0 +1,18 @@
+﻿--------- beginning of main
+09-02 06:56:05.473 D/HelloReaderService( 2244): Speaking Main: ホーム画面。9月2日(水)
+09-02 06:56:05.531 D/HelloReaderService( 2244): playSound requested for soundId: 3 -> streamId: 29
+09-02 06:56:05.536 D/HelloReaderService( 2244): Speaking Main: スナップショット
+09-02 06:56:05.351 D/HelloReaderService( 2244): Speaking Main: Pixel 10 93% バッテリーを保護するため、充電を一時停止しています
+09-02 06:56:41.465 D/HelloReaderService( 2244): Speaking Main: スナップショット
+09-02 06:56:41.583 D/HelloReaderService( 2244): Speaking Main: ホーム画面。全般台風情報、台風第24号
+09-02 06:56:41.585 D/HelloReaderService( 2244): playSound requested for soundId: 5 -> streamId: 30
+09-02 06:56:41.586 D/HelloReaderService( 2244): Speaking Main: 2項目中 1項目を表示中
+09-02 06:57:00.081 D/HelloReaderService( 2244): Speaking Main: 6:56
+09-02 06:57:00.186 D/HelloReaderService( 2244): Speaking Main: 6:57
+09-02 06:57:01.152 D/HelloReaderService( 2244): Speaking Main: スナップショット
+09-02 06:58:00.096 D/HelloReaderService( 2244): Speaking Main: 6:57
+09-02 06:58:00.199 D/HelloReaderService( 2244): Speaking Main: 6:58
+09-02 06:58:01.136 D/HelloReaderService( 2244): Speaking Main: スナップショット
+09-02 06:59:00.110 D/HelloReaderService( 2244): Speaking Main: 6:58
+09-02 06:59:01.143 D/HelloReaderService( 2244): Speaking Main: スナップショット
+09-02 06:59:00.204 D/HelloReaderService( 2244): Speaking Main: 6:59

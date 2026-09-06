@@ -1,0 +1,114 @@
+﻿--------- beginning of main
+09-04 07:11:44.226 D/HelloReaderService(29986): playSound requested for soundId: 5 -> streamId: 9
+09-04 07:11:44.228 D/HelloReaderService(29986): Speaking Main: 1項目中 1項目を表示中
+09-04 07:13:18.205 D/HelloReaderService(30429): Hello Reader Accessibility Service Connected!
+09-04 07:13:18.218 D/HelloReaderService(30429): SoundPool Initialized (Hybrid Custom & AOSP Sounds). Activate: 1, Deactivate: 2, Focus: 3, ViewEntered: 4, Scroll: 5
+09-04 07:13:19.645 D/HelloReaderService(30429): Sub-Voice: 安定動作ピッチ変調モード (MainPitch: 1.0, SubPitch: 0.82) を有効化しました
+09-04 07:13:19.648 D/HelloReaderService(30429): Speaking Main: Hello Readerが起動しました [SubVoice Hint: サブボイス案内が有効です]
+09-04 07:13:19.651 D/HelloReaderService(30429): Sound loaded successfully! sampleId: 1
+09-04 07:13:19.651 D/HelloReaderService(30429): Sound loaded successfully! sampleId: 2
+09-04 07:13:19.652 D/HelloReaderService(30429): Sound loaded successfully! sampleId: 4
+09-04 07:13:20.009 D/HelloReaderService(30429): Sound loaded successfully! sampleId: 3
+09-04 07:13:20.017 D/HelloReaderService(30429): Sound loaded successfully! sampleId: 5
+09-04 07:13:28.298 D/HelloReaderService(30429): Screen Turned ON
+09-04 07:13:28.963 D/HelloReaderService(30429): LockScreen Details: ロック画面。9月4日 金曜日 7時13分。指紋センサーは画面の下部中央にあります
+09-04 07:13:28.964 D/HelloReaderService(30429): Speaking Main: ロック画面。9月4日 金曜日 7時13分。指紋センサーは画面の下部中央にあります
+09-04 07:13:31.668 D/HelloReaderService(30429): playSound requested for soundId: 3 -> streamId: 1
+09-04 07:13:31.682 D/HelloReaderService(30429): Speaking Main: PIN を入力
+09-04 07:13:31.692 D/HelloReaderService(30429): Speaking Main: PIN エリア
+09-04 07:13:31.757 D/HelloReaderService(30429): playSound requested for soundId: 4 -> streamId: 2
+09-04 07:13:31.761 D/HelloReaderService(30429): Speaking Main: 使用を開始する機能をタップ:
+09-04 07:13:31.912 D/HelloReaderService(30429): Speaking Main: ホーム画面。使用を開始する機能をタップ:
+09-04 07:13:31.964 D/HelloReaderService(30429): playSound requested for soundId: 3 -> streamId: 3
+09-04 07:13:33.734 D/HelloReaderService(30429): playSound requested for soundId: 3 -> streamId: 4
+09-04 07:13:33.741 D/HelloReaderService(30429): Speaking Main: 2 キー
+09-04 07:13:34.112 D/HelloReaderService(30429): playSound requested for soundId: 3 -> streamId: 5
+09-04 07:13:34.162 D/HelloReaderService(30429): Speaking Main: ロック画面
+09-04 07:13:34.262 D/HelloReaderService(30429): Speaking Main: 5 キー
+09-04 07:13:34.321 D/HelloReaderService(30429): playSound requested for soundId: 3 -> streamId: 6
+09-04 07:13:35.175 D/HelloReaderService(30429): playSound requested for soundId: 3 -> streamId: 7
+09-04 07:13:35.295 D/HelloReaderService(30429): Speaking Main: 8 キー
+09-04 07:13:35.348 D/HelloReaderService(30429): playSound requested for soundId: 3 -> streamId: 8
+09-04 07:13:36.239 D/HelloReaderService(30429): onGesture API 30+ received: gestureId=4, displayId=0
+09-04 07:13:36.239 D/HelloReaderService(30429): handleGestureAction executing for gestureId: 4
+09-04 07:13:36.240 D/HelloReaderService(30429): Swipe Right Matched -> navigateFocus FORWARD
+09-04 07:13:36.246 D/HelloReaderService(30429): navigateFocus called: directionName=次へ, isKeyguardLocked=true
+09-04 07:13:36.437 D/HelloReaderService(30429): navigateFocus index=46/65, success=true, text=9
+09-04 07:13:36.438 D/HelloReaderService(30429): Speaking Main: 9 [SubVoice Hint: キー]
+09-04 07:13:36.499 D/HelloReaderService(30429): playSound requested for soundId: 3 -> streamId: 9
+09-04 07:13:36.503 D/HelloReaderService(30429): Speaking Main: 9 キー
+09-04 07:13:36.822 D/HelloReaderService(30429): onGesture API 30+ received: gestureId=4, displayId=0
+09-04 07:13:36.823 D/HelloReaderService(30429): handleGestureAction executing for gestureId: 4
+09-04 07:13:36.823 D/HelloReaderService(30429): Swipe Right Matched -> navigateFocus FORWARD
+09-04 07:13:36.825 D/HelloReaderService(30429): navigateFocus called: directionName=次へ, isKeyguardLocked=true
+09-04 07:13:36.955 D/HelloReaderService(30429): navigateFocus index=47/65, success=true, text=7
+09-04 07:13:36.955 D/HelloReaderService(30429): Speaking Main: 7
+09-04 07:13:37.020 D/HelloReaderService(30429): playSound requested for soundId: 3 -> streamId: 10
+09-04 07:13:37.485 D/HelloReaderService(30429): onGesture API 30+ received: gestureId=4, displayId=0
+09-04 07:13:37.485 D/HelloReaderService(30429): Swipe Right Matched -> navigateFocus FORWARD
+09-04 07:13:37.489 D/HelloReaderService(30429): navigateFocus called: directionName=次へ, isKeyguardLocked=true
+09-04 07:13:37.485 D/HelloReaderService(30429): handleGestureAction executing for gestureId: 4
+09-04 07:13:37.623 D/HelloReaderService(30429): navigateFocus index=36/65, success=true, text=2
+09-04 07:13:37.624 D/HelloReaderService(30429): Speaking Main: 2
+09-04 07:13:37.674 D/HelloReaderService(30429): playSound requested for soundId: 3 -> streamId: 11
+09-04 07:13:38.018 D/HelloReaderService(30429): onGesture API 30+ received: gestureId=4, displayId=0
+09-04 07:13:38.019 D/HelloReaderService(30429): handleGestureAction executing for gestureId: 4
+09-04 07:13:38.019 D/HelloReaderService(30429): Swipe Right Matched -> navigateFocus FORWARD
+09-04 07:13:38.021 D/HelloReaderService(30429): navigateFocus called: directionName=次へ, isKeyguardLocked=true
+09-04 07:13:38.170 D/HelloReaderService(30429): navigateFocus index=36/65, success=true, text=2
+09-04 07:13:38.225 D/HelloReaderService(30429): playSound requested for soundId: 3 -> streamId: 12
+09-04 07:13:38.582 D/HelloReaderService(30429): onGesture API 30+ received: gestureId=4, displayId=0
+09-04 07:13:38.582 D/HelloReaderService(30429): handleGestureAction executing for gestureId: 4
+09-04 07:13:38.582 D/HelloReaderService(30429): Swipe Right Matched -> navigateFocus FORWARD
+09-04 07:13:38.584 D/HelloReaderService(30429): navigateFocus called: directionName=次へ, isKeyguardLocked=true
+09-04 07:13:38.719 D/HelloReaderService(30429): navigateFocus index=36/65, success=true, text=2
+09-04 07:13:38.777 D/HelloReaderService(30429): playSound requested for soundId: 3 -> streamId: 13
+09-04 07:13:39.173 D/HelloReaderService(30429): onGesture API 30+ received: gestureId=4, displayId=0
+09-04 07:13:39.173 D/HelloReaderService(30429): handleGestureAction executing for gestureId: 4
+09-04 07:13:39.173 D/HelloReaderService(30429): Swipe Right Matched -> navigateFocus FORWARD
+09-04 07:13:39.182 D/HelloReaderService(30429): navigateFocus called: directionName=次へ, isKeyguardLocked=true
+09-04 07:13:39.320 D/HelloReaderService(30429): navigateFocus index=36/65, success=true, text=2
+09-04 07:13:39.372 D/HelloReaderService(30429): playSound requested for soundId: 3 -> streamId: 14
+09-04 07:13:39.881 D/HelloReaderService(30429): onGesture API 30+ received: gestureId=4, displayId=0
+09-04 07:13:39.882 D/HelloReaderService(30429): Swipe Right Matched -> navigateFocus FORWARD
+09-04 07:13:39.882 D/HelloReaderService(30429): handleGestureAction executing for gestureId: 4
+09-04 07:13:39.884 D/HelloReaderService(30429): navigateFocus called: directionName=次へ, isKeyguardLocked=true
+09-04 07:13:40.016 D/HelloReaderService(30429): navigateFocus index=36/65, success=true, text=2
+09-04 07:13:40.017 D/HelloReaderService(30429): Speaking Main: 2
+09-04 07:13:40.071 D/HelloReaderService(30429): playSound requested for soundId: 3 -> streamId: 15
+09-04 07:13:41.243 D/HelloReaderService(30429): onGesture API 30+ received: gestureId=4, displayId=0
+09-04 07:13:41.243 D/HelloReaderService(30429): handleGestureAction executing for gestureId: 4
+09-04 07:13:41.244 D/HelloReaderService(30429): Swipe Right Matched -> navigateFocus FORWARD
+09-04 07:13:41.248 D/HelloReaderService(30429): navigateFocus called: directionName=次へ, isKeyguardLocked=true
+09-04 07:13:41.383 D/HelloReaderService(30429): navigateFocus index=36/65, success=true, text=2
+09-04 07:13:41.438 D/HelloReaderService(30429): playSound requested for soundId: 3 -> streamId: 16
+09-04 07:13:42.304 D/HelloReaderService(30429): handleGestureAction executing for gestureId: 4
+09-04 07:13:42.304 D/HelloReaderService(30429): Swipe Right Matched -> navigateFocus FORWARD
+09-04 07:13:42.307 D/HelloReaderService(30429): navigateFocus called: directionName=次へ, isKeyguardLocked=true
+09-04 07:13:42.304 D/HelloReaderService(30429): onGesture API 30+ received: gestureId=4, displayId=0
+09-04 07:13:42.382 D/HelloReaderService(30429): navigateFocus index=36/65, success=true, text=2
+09-04 07:13:42.382 D/HelloReaderService(30429): Speaking Main: 2
+09-04 07:13:42.441 D/HelloReaderService(30429): playSound requested for soundId: 3 -> streamId: 17
+09-04 07:13:43.095 D/HelloReaderService(30429): onGesture API 30+ received: gestureId=3, displayId=0
+09-04 07:13:43.095 D/HelloReaderService(30429): handleGestureAction executing for gestureId: 3
+09-04 07:13:43.095 D/HelloReaderService(30429): Swipe Left Matched -> navigateFocus BACKWARD
+09-04 07:13:43.098 D/HelloReaderService(30429): navigateFocus called: directionName=前へ, isKeyguardLocked=true
+09-04 07:13:43.216 D/HelloReaderService(30429): navigateFocus index=34/65, success=true, text=3
+09-04 07:13:43.217 D/HelloReaderService(30429): Speaking Main: 3 [SubVoice Hint: キー]
+09-04 07:13:43.279 D/HelloReaderService(30429): playSound requested for soundId: 3 -> streamId: 18
+09-04 07:13:43.288 D/HelloReaderService(30429): Speaking Main: 3 キー
+09-04 07:13:43.686 D/HelloReaderService(30429): onGesture API 30+ received: gestureId=3, displayId=0
+09-04 07:13:43.686 D/HelloReaderService(30429): handleGestureAction executing for gestureId: 3
+09-04 07:13:43.686 D/HelloReaderService(30429): Swipe Left Matched -> navigateFocus BACKWARD
+09-04 07:13:43.689 D/HelloReaderService(30429): navigateFocus called: directionName=前へ, isKeyguardLocked=true
+09-04 07:13:43.850 D/HelloReaderService(30429): navigateFocus index=33/65, success=true, text=2
+09-04 07:13:43.850 D/HelloReaderService(30429): Speaking Main: 2 [SubVoice Hint: キー]
+09-04 07:13:43.905 D/HelloReaderService(30429): playSound requested for soundId: 3 -> streamId: 19
+09-04 07:13:43.909 D/HelloReaderService(30429): Speaking Main: 2 キー
+09-04 07:13:46.383 D/HelloReaderService(30429): Speaking Main: ホーム画面。使用を開始する機能をタップ:
+09-04 07:13:46.390 D/HelloReaderService(30429): playSound requested for soundId: 4 -> streamId: 20
+09-04 07:13:46.419 D/HelloReaderService(30429): Speaking Main: キー
+09-04 07:13:46.434 D/HelloReaderService(30429): playSound requested for soundId: 3 -> streamId: 21
+09-04 07:13:46.465 D/HelloReaderService(30429): Speaking Main: 使用を開始する機能をタップ:
+09-04 07:13:46.835 D/HelloReaderService(30429): playSound requested for soundId: 4 -> streamId: 23
+09-04 07:13:46.943 D/HelloReaderService(30429): Screen Turned OFF

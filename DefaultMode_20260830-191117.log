@@ -1,0 +1,305 @@
+﻿--------- beginning of main
+08-30 19:10:59.098 D/HelloReaderService(29624): SoundPool Initialized (Hybrid Custom & AOSP Sounds). Activate: 1, Deactivate: 2, Focus: 3, ViewEntered: 4
+08-30 19:10:59.091 D/HelloReaderService(29624): Hello Reader Accessibility Service Connected!
+08-30 19:10:59.342 D/HelloReaderService(29624): Sound loaded successfully! sampleId: 1
+08-30 19:10:59.343 D/HelloReaderService(29624): Sound loaded successfully! sampleId: 2
+08-30 19:10:59.343 D/HelloReaderService(29624): Sound loaded successfully! sampleId: 4
+08-30 19:10:59.350 D/HelloReaderService(29624): Sound loaded successfully! sampleId: 3
+08-30 19:11:00.790 D/HelloReaderService(29624): Speaking: Hello Readerが起動したにょろ
+08-30 19:11:00.798 D/HelloReaderService(29624): playSound requested for soundId: 4 -> streamId: 1
+08-30 19:11:00.798 D/HelloReaderService(29624): Speaking: helloreader
+08-30 19:11:13.955 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 2
+08-30 19:11:14.537 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 3
+08-30 19:11:19.715 D/HelloReaderService(29624): Screen Turned ON
+08-30 19:11:20.085 D/HelloReaderService(29624): LockScreen Details: ロック画面。8月30日 日曜日 19時11分。指紋センサーは画面の下部中央にあります
+08-30 19:11:20.085 D/HelloReaderService(29624): Speaking: ロック画面。8月30日 日曜日 19時11分。指紋センサーは画面の下部中央にあります
+08-30 19:11:20.148 D/HelloReaderService(29624): Speaking: ウォレット
+08-30 19:11:20.301 D/HelloReaderService(29624): Speaking: ロック画面
+08-30 19:11:21.056 D/HelloReaderService(29624): Speaking: デバイスはロックされています
+08-30 19:11:21.120 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 4
+08-30 19:11:21.253 D/HelloReaderService(29624): playSound requested for soundId: 4 -> streamId: 5
+08-30 19:11:21.253 D/HelloReaderService(29624): Speaking: helloreader
+08-30 19:11:21.292 D/HelloReaderService(29624): Speaking: Hello Android!
+08-30 19:11:21.331 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 6
+08-30 19:11:21.551 D/HelloReaderService(29624): User Present (Unlocked)
+08-30 19:11:21.551 D/HelloReaderService(29624): Speaking: ロック解除
+08-30 19:11:21.688 D/HelloReaderService(29624): playSound requested for soundId: 4 -> streamId: 7
+08-30 19:11:21.688 D/HelloReaderService(29624): Speaking: helloreader
+08-30 19:11:21.727 D/HelloReaderService(29624): Speaking: ホーム画面。戻る
+08-30 19:11:21.812 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 8
+08-30 19:11:21.812 D/HelloReaderService(29624): Speaking: 戻る
+08-30 19:11:21.870 D/HelloReaderService(29624): playSound requested for soundId: 4 -> streamId: 9
+08-30 19:11:21.870 D/HelloReaderService(29624): Speaking: ロック画面
+08-30 19:11:24.015 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 10
+08-30 19:11:25.084 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 11
+08-30 19:11:25.858 D/HelloReaderService(29624): Speaking: Wi-Fiはレベル2です。
+08-30 19:11:27.235 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 12
+08-30 19:11:27.970 D/HelloReaderService(29624): handleGestureAction: 4
+08-30 19:11:27.999 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 13
+08-30 19:11:27.999 D/HelloReaderService(29624): Speaking: ホーム
+08-30 19:11:28.539 D/HelloReaderService(29624): handleGestureAction: 4
+08-30 19:11:28.563 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 14
+08-30 19:11:28.563 D/HelloReaderService(29624): Speaking: 最近
+08-30 19:11:29.771 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 15
+08-30 19:11:31.460 D/HelloReaderService(29624): handleGestureAction: 3
+08-30 19:11:31.480 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 16
+08-30 19:11:31.480 D/HelloReaderService(29624): Speaking: ホーム
+08-30 19:11:31.844 D/HelloReaderService(29624): handleGestureAction: 3
+08-30 19:11:31.863 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 17
+08-30 19:11:31.863 D/HelloReaderService(29624): Speaking: 戻る
+08-30 19:11:32.294 D/HelloReaderService(29624): handleGestureAction: 3
+08-30 19:11:32.307 D/HelloReaderService(29624): playSound requested for soundId: 2 -> streamId: 18
+08-30 19:11:32.307 D/HelloReaderService(29624): Speaking: これ以上 前へ に要素はないにょろ
+08-30 19:11:33.471 D/HelloReaderService(29624): handleGestureAction: 4
+08-30 19:11:33.496 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 19
+08-30 19:11:33.496 D/HelloReaderService(29624): Speaking: ホーム
+08-30 19:11:34.025 D/HelloReaderService(29624): handleGestureAction: 4
+08-30 19:11:34.062 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 20
+08-30 19:11:34.062 D/HelloReaderService(29624): Speaking: 最近
+08-30 19:11:34.619 D/HelloReaderService(29624): handleGestureAction: 4
+08-30 19:11:34.628 D/HelloReaderService(29624): playSound requested for soundId: 2 -> streamId: 21
+08-30 19:11:34.628 D/HelloReaderService(29624): Speaking: これ以上 次へ に要素はないにょろ
+08-30 19:11:35.181 D/HelloReaderService(29624): Speaking: Wi-Fiはレベル3です。
+08-30 19:11:35.657 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 22
+08-30 19:11:39.223 D/HelloReaderService(29624): handleGestureAction: 28
+08-30 19:11:40.036 D/HelloReaderService(29624): handleGestureAction: 27
+08-30 19:11:42.728 D/HelloReaderService(29624): Speaking: docomo、レベル 3。
+08-30 19:11:43.143 D/HelloReaderService(29624): handleGestureAction: 25
+08-30 19:11:43.143 D/HelloReaderService(29624): 2-Finger Swipe Up: Lockscreen PIN Entry
+08-30 19:11:43.143 D/HelloReaderService(29624): Speaking: PINコード入力画面
+08-30 19:11:45.619 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 23
+08-30 19:11:46.496 D/HelloReaderService(29624): Speaking: docomo、レベル 2。
+08-30 19:12:00.096 D/HelloReaderService(29624): Speaking: 19:11
+08-30 19:12:00.531 D/HelloReaderService(29624): handleGestureAction: 25
+08-30 19:12:00.531 D/HelloReaderService(29624): 2-Finger Swipe Up: Lockscreen PIN Entry
+08-30 19:12:00.531 D/HelloReaderService(29624): Speaking: PINコード入力画面
+08-30 19:12:01.617 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 24
+08-30 19:12:02.422 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 26
+08-30 19:12:05.089 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 27
+08-30 19:12:05.801 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 28
+08-30 19:12:06.884 D/HelloReaderService(29624): Speaking: ホーム画面。戻る
+08-30 19:12:06.964 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 29
+08-30 19:12:06.964 D/HelloReaderService(29624): Speaking: 戻る
+08-30 19:12:07.443 D/HelloReaderService(29624): Speaking: ホーム画面。戻る
+08-30 19:12:07.591 D/HelloReaderService(29624): Speaking: ホーム画面
+08-30 19:12:07.596 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 30
+08-30 19:12:07.602 D/HelloReaderService(29624): Screen Turned OFF
+08-30 19:12:07.618 D/HelloReaderService(29624): playSound requested for soundId: 4 -> streamId: 31
+08-30 19:12:08.066 D/HelloReaderService(29624): Speaking: 53%
+08-30 19:12:08.319 D/HelloReaderService(29624): playSound requested for soundId: 4 -> streamId: 32
+08-30 19:12:08.597 D/HelloReaderService(29624): Screen Turned ON
+08-30 19:12:08.984 D/HelloReaderService(29624): LockScreen Details: ロック画面。8月30日 日曜日 19時12分。指紋センサーは画面の下部中央にあります
+08-30 19:12:08.984 D/HelloReaderService(29624): Speaking: ロック画面。8月30日 日曜日 19時12分。指紋センサーは画面の下部中央にあります
+08-30 19:12:09.132 D/HelloReaderService(29624): Speaking: ロック画面
+08-30 19:12:09.403 D/HelloReaderService(29624): Speaking: センサーにしっかりと押し当ててください
+08-30 19:12:09.434 D/HelloReaderService(29624): Speaking: ロック画面: ロック画面をカスタマイズするには、ダブルタップして長押しします。
+08-30 19:12:09.434 D/HelloReaderService(29624): 上に移動
+08-30 19:12:09.436 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 33
+08-30 19:12:09.438 D/HelloReaderService(29624): Speaking: 上に移動
+08-30 19:12:09.442 D/HelloReaderService(29624): Speaking: ロック画面: ロック画面をカスタマイズするには、ダブルタップして長押しします。
+08-30 19:12:09.442 D/HelloReaderService(29624): 上に移動
+08-30 19:12:09.455 D/HelloReaderService(29624): Speaking: 上に移動
+08-30 19:12:09.658 D/HelloReaderService(29624): Speaking: センサーにしっかりと押し当ててください
+08-30 19:12:09.664 D/HelloReaderService(29624): Speaking: 上に移動
+08-30 19:12:09.738 D/HelloReaderService(29624): Speaking: センサーにしっかりと押し当ててください
+08-30 19:12:09.752 D/HelloReaderService(29624): Speaking: 上に移動
+08-30 19:12:09.820 D/HelloReaderService(29624): Speaking: センサーにしっかりと押し当ててください
+08-30 19:12:09.842 D/HelloReaderService(29624): Speaking: 上に移動
+08-30 19:12:09.924 D/HelloReaderService(29624): Speaking: センサーにしっかりと押し当ててください
+08-30 19:12:09.934 D/HelloReaderService(29624): Speaking: 上に移動
+08-30 19:12:10.021 D/HelloReaderService(29624): Speaking: センサーにしっかりと押し当ててください
+08-30 19:12:10.033 D/HelloReaderService(29624): Speaking: 上に移動
+08-30 19:12:10.122 D/HelloReaderService(29624): Speaking: センサーにしっかりと押し当ててください
+08-30 19:12:10.136 D/HelloReaderService(29624): Speaking: 上に移動
+08-30 19:12:10.220 D/HelloReaderService(29624): Speaking: センサーにしっかりと押し当ててください
+08-30 19:12:10.241 D/HelloReaderService(29624): Speaking: 上に移動
+08-30 19:12:10.320 D/HelloReaderService(29624): Speaking: センサーにしっかりと押し当ててください
+08-30 19:12:10.336 D/HelloReaderService(29624): Speaking: 上に移動
+08-30 19:12:10.420 D/HelloReaderService(29624): Speaking: センサーにしっかりと押し当ててください
+08-30 19:12:10.433 D/HelloReaderService(29624): Speaking: 上に移動
+08-30 19:12:11.990 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 35
+08-30 19:12:12.032 D/HelloReaderService(29624): playSound requested for soundId: 4 -> streamId: 36
+08-30 19:12:12.032 D/HelloReaderService(29624): Speaking: helloreader
+08-30 19:12:12.120 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 38
+08-30 19:12:12.303 D/HelloReaderService(29624): User Present (Unlocked)
+08-30 19:12:12.303 D/HelloReaderService(29624): Speaking: ロック解除
+08-30 19:12:12.425 D/HelloReaderService(29624): playSound requested for soundId: 4 -> streamId: 39
+08-30 19:12:12.425 D/HelloReaderService(29624): Speaking: helloreader
+08-30 19:12:12.464 D/HelloReaderService(29624): Speaking: ホーム画面。戻る
+08-30 19:12:12.516 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 40
+08-30 19:12:12.517 D/HelloReaderService(29624): Speaking: 戻る
+08-30 19:12:12.702 D/HelloReaderService(29624): playSound requested for soundId: 4 -> streamId: 41
+08-30 19:12:12.702 D/HelloReaderService(29624): Speaking: ロック画面
+08-30 19:12:14.556 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 42
+08-30 19:12:15.355 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 43
+08-30 19:12:15.921 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 44
+08-30 19:12:16.592 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 46
+08-30 19:12:17.292 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 47
+08-30 19:12:17.787 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 48
+08-30 19:12:18.209 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 49
+08-30 19:12:21.162 D/HelloReaderService(29624): handleGestureAction: 3
+08-30 19:12:21.177 D/HelloReaderService(29624): playSound requested for soundId: 2 -> streamId: 50
+08-30 19:12:21.177 D/HelloReaderService(29624): Speaking: これ以上 前へ に要素はないにょろ
+08-30 19:12:22.135 D/HelloReaderService(29624): handleGestureAction: 4
+08-30 19:12:22.152 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 51
+08-30 19:12:22.152 D/HelloReaderService(29624): Speaking: ホーム
+08-30 19:12:22.639 D/HelloReaderService(29624): handleGestureAction: 4
+08-30 19:12:22.661 D/HelloReaderService(29624): Speaking: 最近
+08-30 19:12:22.661 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 52
+08-30 19:12:23.456 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 54
+08-30 19:12:23.981 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 55
+08-30 19:12:24.531 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 56
+08-30 19:12:25.327 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 58
+08-30 19:12:26.137 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 59
+08-30 19:12:27.092 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 60
+08-30 19:12:27.276 D/HelloReaderService(29624): Speaking: Wi-Fiはレベル2です。
+08-30 19:12:27.856 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 61
+08-30 19:12:28.813 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 62
+08-30 19:12:29.540 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 63
+08-30 19:12:29.925 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 64
+08-30 19:12:31.144 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 65
+08-30 19:12:31.941 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 66
+08-30 19:12:33.075 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 67
+08-30 19:12:33.636 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 68
+08-30 19:12:33.905 D/HelloReaderService(29624): Speaking: docomo、レベル 1。
+08-30 19:12:34.015 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 70
+08-30 19:12:34.672 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 71
+08-30 19:12:35.524 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 72
+08-30 19:12:36.073 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 74
+08-30 19:12:36.558 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 75
+08-30 19:12:36.962 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 76
+08-30 19:12:37.363 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 77
+08-30 19:12:37.741 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 78
+08-30 19:12:38.900 D/HelloReaderService(29624): Speaking: ホーム画面。戻る
+08-30 19:12:38.983 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 79
+08-30 19:12:38.983 D/HelloReaderService(29624): Speaking: 戻る
+08-30 19:12:39.464 D/HelloReaderService(29624): Speaking: ホーム画面。戻る
+08-30 19:12:39.578 D/HelloReaderService(29624): Speaking: ホーム画面
+08-30 19:12:39.582 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 80
+08-30 19:12:39.586 D/HelloReaderService(29624): Screen Turned OFF
+08-30 19:12:39.590 D/HelloReaderService(29624): playSound requested for soundId: 4 -> streamId: 81
+08-30 19:12:39.811 D/HelloReaderService(29624): Speaking: 53%
+08-30 19:12:40.364 D/HelloReaderService(29624): playSound requested for soundId: 4 -> streamId: 82
+08-30 19:12:40.861 D/HelloReaderService(29624): Screen Turned ON
+08-30 19:12:41.411 D/HelloReaderService(29624): LockScreen Details: ロック画面。8月30日 日曜日 19時12分。指紋センサーは画面の下部中央にあります
+08-30 19:12:41.411 D/HelloReaderService(29624): Speaking: ロック画面。8月30日 日曜日 19時12分。指紋センサーは画面の下部中央にあります
+08-30 19:12:41.422 D/HelloReaderService(29624): Speaking: ロック画面
+08-30 19:12:41.778 D/HelloReaderService(29624): Speaking: 顔を認識できません
+08-30 19:12:44.251 D/HelloReaderService(29624): Speaking: Wi-Fiはレベル3です。
+08-30 19:12:44.555 D/HelloReaderService(29624): Speaking: 顔を認識できません
+08-30 19:12:44.758 D/HelloReaderService(29624): Speaking: 指紋認証をお使いください
+08-30 19:12:47.553 D/HelloReaderService(29624): Speaking: 指紋認証をお使いください
+08-30 19:12:48.341 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 83
+08-30 19:12:48.344 D/HelloReaderService(29624): Speaking: 上に移動
+08-30 19:12:48.351 D/HelloReaderService(29624): Speaking: ロック画面: ロック画面をカスタマイズするには、ダブルタップして長押しします。
+08-30 19:12:48.351 D/HelloReaderService(29624): 上に移動
+08-30 19:12:48.354 D/HelloReaderService(29624): Speaking: 上に移動
+08-30 19:12:48.357 D/HelloReaderService(29624): Speaking: ロック画面: ロック画面をカスタマイズするには、ダブルタップして長押しします。
+08-30 19:12:48.357 D/HelloReaderService(29624): 上に移動
+08-30 19:12:48.362 D/HelloReaderService(29624): Speaking: 上に移動
+08-30 19:12:49.314 D/HelloReaderService(29624): playSound requested for soundId: 4 -> streamId: 84
+08-30 19:12:49.314 D/HelloReaderService(29624): Speaking: helloreader
+08-30 19:12:49.393 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 85
+08-30 19:12:49.580 D/HelloReaderService(29624): User Present (Unlocked)
+08-30 19:12:49.580 D/HelloReaderService(29624): Speaking: ロック解除
+08-30 19:12:49.695 D/HelloReaderService(29624): playSound requested for soundId: 4 -> streamId: 86
+08-30 19:12:49.695 D/HelloReaderService(29624): Speaking: アプリのアイコン
+08-30 19:12:49.722 D/HelloReaderService(29624): Speaking: ホーム画面。戻る
+08-30 19:12:49.776 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 87
+08-30 19:12:49.776 D/HelloReaderService(29624): Speaking: 戻る
+08-30 19:12:49.999 D/HelloReaderService(29624): playSound requested for soundId: 4 -> streamId: 89
+08-30 19:12:49.999 D/HelloReaderService(29624): Speaking: ロック画面
+08-30 19:12:50.286 D/HelloReaderService(29624): Speaking: Wi-Fiはレベル2です。
+08-30 19:12:52.438 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 90
+08-30 19:12:54.417 D/HelloReaderService(29624): Speaking: docomo、レベル 1。
+08-30 19:12:56.511 D/HelloReaderService(29624): Speaking: Wi-Fiはレベル3です。
+08-30 19:12:58.885 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 91
+08-30 19:12:59.682 D/HelloReaderService(29624): Speaking: Wi-Fiはレベル2です。
+08-30 19:12:59.713 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 93
+08-30 19:13:00.096 D/HelloReaderService(29624): Speaking: 19:12
+08-30 19:13:00.196 D/HelloReaderService(29624): Speaking: 19:13
+08-30 19:13:00.628 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 94
+08-30 19:13:01.549 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 95
+08-30 19:13:02.055 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 96
+08-30 19:13:02.055 D/HelloReaderService(29624): Speaking: ホーム
+08-30 19:13:02.386 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 97
+08-30 19:13:02.386 D/HelloReaderService(29624): Speaking: 最近
+08-30 19:13:04.398 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 98
+08-30 19:13:04.399 D/HelloReaderService(29624): Speaking: 戻る
+08-30 19:13:05.852 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 99
+08-30 19:13:05.852 D/HelloReaderService(29624): Speaking: ホーム
+08-30 19:13:07.223 D/HelloReaderService(29624): Speaking: docomo、レベル 2。
+08-30 19:13:07.438 D/HelloReaderService(29624): playSound requested for soundId: 1 -> streamId: 100
+08-30 19:13:07.482 E/AccessibilityService( 3364): bindInput must be paired with unbindInput.
+08-30 19:13:07.514 D/HelloReaderService(29624): Speaking: ホーム画面。戻る
+08-30 19:13:07.549 D/HelloReaderService(29624): playSound requested for soundId: 4 -> streamId: 101
+08-30 19:13:07.549 D/HelloReaderService(29624): Speaking: ホーム画面: 1/4
+08-30 19:13:07.566 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 102
+08-30 19:13:07.567 D/HelloReaderService(29624): Speaking: 戻る
+08-30 19:13:07.603 D/HelloReaderService(29624): Speaking: ホーム画面。戻る
+08-30 19:13:08.240 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 103
+08-30 19:13:08.240 D/HelloReaderService(29624): Speaking: 8月30日(日)
+08-30 19:13:09.954 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 104
+08-30 19:13:09.954 D/HelloReaderService(29624): Speaking: Chrome
+08-30 19:13:10.108 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 106
+08-30 19:13:10.108 D/HelloReaderService(29624): Speaking: ホーム
+08-30 19:13:10.949 D/HelloReaderService(29624): Speaking: docomo、レベル 1。
+08-30 19:13:11.355 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 107
+08-30 19:13:11.355 D/HelloReaderService(29624): Speaking: メッセージ
+08-30 19:13:11.457 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 108
+08-30 19:13:11.457 D/HelloReaderService(29624): Speaking: ホーム
+08-30 19:13:12.139 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 109
+08-30 19:13:12.139 D/HelloReaderService(29624): Speaking: フォト
+08-30 19:13:12.351 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 110
+08-30 19:13:12.352 D/HelloReaderService(29624): Speaking: Gemini
+08-30 19:13:12.442 D/HelloReaderService(29624): Speaking: Gemini Live と動画を共有する
+08-30 19:13:12.451 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 111
+08-30 19:13:15.193 D/HelloReaderService(29624): Speaking: Wi-Fiはレベル3です。
+08-30 19:13:15.887 D/HelloReaderService(29624): Speaking: スナップショット
+08-30 19:13:18.330 D/HelloReaderService(29624): Speaking: Wi-Fiはレベル2です。
+08-30 19:13:20.460 D/HelloReaderService(29624): handleGestureAction: 4
+08-30 19:13:20.496 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 112
+08-30 19:13:20.496 D/HelloReaderService(29624): Speaking: 戻る
+08-30 19:13:21.236 D/HelloReaderService(29624): handleGestureAction: 4
+08-30 19:13:21.263 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 113
+08-30 19:13:21.263 D/HelloReaderService(29624): Speaking: ホーム
+08-30 19:13:22.001 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 114
+08-30 19:13:22.001 D/HelloReaderService(29624): Speaking: Gemini
+08-30 19:13:22.086 D/HelloReaderService(29624): Speaking: ホーム
+08-30 19:13:22.805 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 115
+08-30 19:13:22.933 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 116
+08-30 19:13:22.934 D/HelloReaderService(29624): Speaking: 19°
+08-30 19:13:24.143 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 117
+08-30 19:13:25.050 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 118
+08-30 19:13:25.160 D/HelloReaderService(29624): Speaking: docomo、レベル 2。
+08-30 19:13:25.250 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 119
+08-30 19:13:25.251 D/HelloReaderService(29624): Speaking: ホーム
+08-30 19:13:26.085 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 121
+08-30 19:13:30.145 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 122
+08-30 19:13:30.146 D/HelloReaderService(29624): Speaking: Gemini に相談
+08-30 19:13:32.366 D/HelloReaderService(29624): playSound requested for soundId: 1 -> streamId: 123
+08-30 19:13:32.415 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 125
+08-30 19:13:32.415 D/HelloReaderService(29624): Speaking: スナップショット
+08-30 19:13:35.545 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 126
+08-30 19:13:35.545 D/HelloReaderService(29624): Speaking: ホーム
+08-30 19:13:36.011 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 127
+08-30 19:13:36.857 D/HelloReaderService(29624): Speaking: Wi-Fiはレベル3です。
+08-30 19:13:37.127 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 128
+08-30 19:13:37.127 D/HelloReaderService(29624): Speaking: ホーム
+08-30 19:13:37.373 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 129
+08-30 19:13:37.374 D/HelloReaderService(29624): Speaking: マップ
+08-30 19:13:39.341 D/HelloReaderService(29624): playSound requested for soundId: 1 -> streamId: 130
+08-30 19:13:39.377 D/HelloReaderService(29624): Speaking: スナップショット
+08-30 19:13:43.112 D/HelloReaderService(29624): Speaking: Wi-Fiはレベル2です。
+08-30 19:13:43.187 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 131
+08-30 19:13:43.187 D/HelloReaderService(29624): Speaking: メッセージ
+08-30 19:13:44.291 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 132
+08-30 19:13:44.291 D/HelloReaderService(29624): Speaking: ホーム
+08-30 19:13:45.594 D/HelloReaderService(29624): playSound requested for soundId: 1 -> streamId: 133
+08-30 19:13:45.662 D/HelloReaderService(29624): Speaking: スナップショット
+08-30 19:13:46.931 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 134
+08-30 19:13:46.931 D/HelloReaderService(29624): Speaking: フォト
+08-30 19:13:47.037 D/HelloReaderService(29624): playSound requested for soundId: 3 -> streamId: 135
+08-30 19:13:47.037 D/HelloReaderService(29624): Speaking: ホーム
+08-30 19:13:48.179 D/HelloReaderService(29624): playSound requested for soundId: 1 -> streamId: 137
+08-30 19:13:48.240 D/HelloReaderService(29624): Speaking: スナップショット

@@ -1,0 +1,43 @@
+﻿--------- beginning of main
+08-30 10:10:03.481 D/HelloReaderService(17632): Speaking: ロック画面。8月30日 日曜日 10時10分。指紋センサーは画面の下部中央にあります
+08-30 10:10:03.601 D/HelloReaderService(17632): LockScreen Details: ロック画面。8月30日 日曜日 10時10分。指紋センサーは画面の下部中央にあります
+08-30 10:10:03.480 D/HelloReaderService(17632): LockScreen Details: ロック画面。8月30日 日曜日 10時10分。指紋センサーは画面の下部中央にあります
+08-30 10:11:01.161 D/HelloReaderService(17632): LockScreen Details: ロック画面。8月30日 日曜日 10時11分。指紋センサーは画面の下部中央にあります
+08-30 10:11:01.162 D/HelloReaderService(17632): Speaking: ロック画面。8月30日 日曜日 10時11分。指紋センサーは画面の下部中央にあります
+08-30 10:11:01.307 D/HelloReaderService(17632): LockScreen Details: ロック画面。8月30日 日曜日 10時11分。指紋センサーは画面の下部中央にあります
+08-30 10:12:01.158 D/HelloReaderService(17632): LockScreen Details: ロック画面。8月30日 日曜日 10時12分。指紋センサーは画面の下部中央にあります
+08-30 10:12:01.159 D/HelloReaderService(17632): Speaking: ロック画面。8月30日 日曜日 10時12分。指紋センサーは画面の下部中央にあります
+08-30 10:12:01.253 D/HelloReaderService(17632): LockScreen Details: ロック画面。8月30日 日曜日 10時12分。指紋センサーは画面の下部中央にあります
+08-30 10:12:57.895 D/HelloReaderService(18324): Hello Reader Accessibility Service Connected!
+08-30 10:12:58.999 D/HelloReaderService(18324): Speaking: Hello Readerが起動したにょろ
+08-30 10:12:59.022 D/HelloReaderService(18324): Speaking: helloreader
+08-30 10:13:19.913 D/HelloReaderService(18324): Screen Turned ON
+08-30 10:13:20.458 D/HelloReaderService(18324): LockScreen Details: ロック画面。8月30日 日曜日 10時13分。指紋センサーは画面の下部中央にあります
+08-30 10:13:20.458 D/HelloReaderService(18324): Speaking: ロック画面。8月30日 日曜日 10時13分。指紋センサーは画面の下部中央にあります
+08-30 10:13:20.463 D/HelloReaderService(18324): Speaking: 顔認証を利用できません
+08-30 10:13:23.080 D/HelloReaderService(18324): Speaking: 顔認証を利用できません
+08-30 10:13:23.282 D/HelloReaderService(18324): Speaking: 開くには上にスワイプします
+08-30 10:13:25.391 D/HelloReaderService(18324): handleGestureAction: 25
+08-30 10:13:26.585 D/HelloReaderService(18324): Speaking: 開くには上にスワイプします
+08-30 10:13:26.784 D/HelloReaderService(18324): Speaking: 80% • 充電完了
+08-30 10:13:29.956 D/HelloReaderService(18324): Speaking: ロック画面
+08-30 10:13:30.114 D/HelloReaderService(18324): Speaking: 80% • 充電完了
+08-30 10:13:30.295 D/HelloReaderService(18324): Speaking: 開くには上にスワイプします
+08-30 10:13:32.597 D/HelloReaderService(18324): Speaking: Wi-Fiはレベル3です。
+08-30 10:13:33.596 D/HelloReaderService(18324): Speaking: 開くには上にスワイプします
+08-30 10:13:33.791 D/HelloReaderService(18324): Speaking: 80% • 充電完了
+08-30 10:13:35.184 D/HelloReaderService(18324): handleGestureAction: 4
+08-30 10:13:35.400 D/HelloReaderService(18324): Speaking: 画像
+08-30 10:13:35.786 D/HelloReaderService(18324): Speaking: Wi-Fiはレベル2です。
+08-30 10:13:36.159 D/HelloReaderService(18324): handleGestureAction: 4
+08-30 10:13:36.188 D/HelloReaderService(18324): Speaking: WhatsApp
+08-30 10:13:37.092 D/HelloReaderService(18324): Speaking: 80% • 充電完了
+08-30 10:13:37.297 D/HelloReaderService(18324): Speaking: 開くには上にスワイプします
+08-30 10:13:37.403 D/HelloReaderService(18324): handleGestureAction: 4
+08-30 10:13:37.434 D/HelloReaderService(18324): Speaking: •
+08-30 10:13:37.472 D/HelloReaderService(18324): Speaking: 開くには上にスワイプします
+08-30 10:13:37.488 D/HelloReaderService(18324): Speaking: •
+08-30 10:13:37.591 D/HelloReaderService(18324): Speaking: 開くには上にスワイプします
+08-30 10:13:40.591 D/HelloReaderService(18324): Speaking: 開くには上にスワイプします
+08-30 10:13:40.794 D/HelloReaderService(18324): Speaking: 80% • 充電完了
+08-30 10:13:41.480 D/HelloReaderService(18324): handleGestureAction: 25

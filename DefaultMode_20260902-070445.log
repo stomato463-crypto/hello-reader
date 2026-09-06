@@ -1,0 +1,131 @@
+﻿--------- beginning of main
+09-02 07:03:00.110 D/HelloReaderService( 2244): Speaking Main: 7:02
+09-02 07:03:00.203 D/HelloReaderService( 2244): Speaking Main: 7:03
+09-02 07:03:01.093 D/HelloReaderService( 2244): Speaking Main: スナップショット
+09-02 07:04:00.115 D/HelloReaderService( 2244): Speaking Main: 7:03
+09-02 07:04:00.211 D/HelloReaderService( 2244): Speaking Main: 7:04
+09-02 07:04:01.095 D/HelloReaderService( 2244): Speaking Main: スナップショット
+09-02 07:04:03.113 D/HelloReaderService( 2244): Speaking Main: docomo、レベル 3。
+09-02 07:04:12.078 D/HelloReaderService( 2244): Speaking Main: docomo、レベル 2。
+09-02 07:04:27.184 D/HelloReaderService( 2244): Speaking Main: [電話番号匿名化]18
+09-02 07:04:27.305 D/HelloReaderService( 2244): Speaking Main: ホーム画面。全般台風情報、台風第24号
+09-02 07:04:28.716 D/HelloReaderService( 5254): Hello Reader Accessibility Service Connected!
+09-02 07:04:28.719 D/HelloReaderService( 5254): SoundPool Initialized (Hybrid Custom & AOSP Sounds). Activate: 1, Deactivate: 2, Focus: 3, ViewEntered: 4, Scroll: 5
+09-02 07:04:28.928 D/HelloReaderService( 5254): Sub-Voice: 2つの独立した日本語Voiceを発見しました (Main: ja-jp-x-star04-local, Sub: ja-jp-x-star11-local)
+09-02 07:04:28.929 D/HelloReaderService( 5254): Speaking Main: Hello Readerが起動しました [SubVoice Hint: サブボイス案内が有効です]
+09-02 07:04:28.938 D/HelloReaderService( 5254): playSound requested for soundId: 4 -> streamId: 1
+09-02 07:04:28.938 D/HelloReaderService( 5254): Speaking Main: helloreader
+09-02 07:04:28.948 D/HelloReaderService( 5254): Speaking Main: Hello Reader 設定へようこそ
+09-02 07:04:28.952 D/HelloReaderService( 5254): Speaking Main: チェックなし
+09-02 07:04:28.955 D/HelloReaderService( 5254): Speaking Main: フォネティックコードとモールス信号機能。現在は オフ です。
+09-02 07:04:28.958 D/HelloReaderService( 5254): Speaking Main: Hello Reader を使用するには、電話帳照会権限の許可とアクセシビリティサービスの有効化が必要です。
+09-02 07:04:28.964 D/HelloReaderService( 5254): Speaking Main: Androidアクセシビリティ設定を開くボタン
+09-02 07:04:28.974 D/HelloReaderService( 5254): Speaking Main: 権限の許可ダイアログを再表示するボタン
+09-02 07:04:28.979 D/HelloReaderService( 5254): Speaking Main: フォネティック＆モールス振動機能 (標準:OFF)
+09-02 07:04:28.989 D/HelloReaderService( 5254): Sound loaded successfully! sampleId: 1
+09-02 07:04:28.989 D/HelloReaderService( 5254): Sound loaded successfully! sampleId: 2
+09-02 07:04:28.989 D/HelloReaderService( 5254): Sound loaded successfully! sampleId: 4
+09-02 07:04:28.989 D/HelloReaderService( 5254): Sound loaded successfully! sampleId: 5
+09-02 07:04:28.991 D/HelloReaderService( 5254): Sound loaded successfully! sampleId: 3
+09-02 07:04:33.329 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 2
+09-02 07:04:33.331 D/HelloReaderService( 5254): Speaking Main: Hello Reader 設定へようこそ
+09-02 07:04:35.051 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 3
+09-02 07:04:35.140 D/HelloReaderService( 5254): Speaking Main: フォネティック＆モールス振動機能 (標準:OFF)
+09-02 07:04:35.649 D/HelloReaderService( 5254): playSound requested for soundId: 4 -> streamId: 4
+09-02 07:04:35.742 D/HelloReaderService( 5254): Speaking Main: メディア
+09-02 07:04:35.763 D/HelloReaderService( 5254): Speaking Main: バイブレーション
+09-02 07:04:36.392 D/HelloReaderService( 5254): Speaking Main: docomo、レベル 1。
+09-02 07:04:37.475 D/HelloReaderService( 5254): handleGestureAction: 4
+09-02 07:04:37.593 D/HelloReaderService( 5254): Speaking Main: チェックなし
+09-02 07:04:37.651 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 5
+09-02 07:04:35.649 D/HelloReaderService( 5254): Speaking Main: 音声の設定
+09-02 07:04:38.150 D/HelloReaderService( 5254): handleGestureAction: 4
+09-02 07:04:38.176 D/HelloReaderService( 5254): Speaking Main: 戻る
+09-02 07:04:38.231 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 6
+09-02 07:04:43.420 D/HelloReaderService( 5254): handleGestureAction: 4
+09-02 07:04:43.473 D/HelloReaderService( 5254): Speaking Main: ホーム
+09-02 07:04:43.528 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 7
+09-02 07:04:46.671 D/HelloReaderService( 5254): Speaking Main: バイブレーション
+09-02 07:04:49.171 D/HelloReaderService( 5254): Speaking Main: docomo、レベル 2。
+09-02 07:04:50.045 D/HelloReaderService( 5254): handleGestureAction: 4
+09-02 07:04:50.152 D/HelloReaderService( 5254): Speaking Main: 最近
+09-02 07:04:50.208 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 8
+09-02 07:04:50.967 D/HelloReaderService( 5254): handleGestureAction: 4
+09-02 07:04:50.992 D/HelloReaderService( 5254): playSound requested for soundId: 2 -> streamId: 9
+09-02 07:04:50.993 D/HelloReaderService( 5254): Speaking Main: これ以上 次へ に進めません
+09-02 07:04:51.962 D/HelloReaderService( 5254): handleGestureAction: 4
+09-02 07:04:51.991 D/HelloReaderService( 5254): playSound requested for soundId: 2 -> streamId: 10
+09-02 07:04:52.476 D/HelloReaderService( 5254): playSound requested for soundId: 4 -> streamId: 11
+09-02 07:04:52.478 D/HelloReaderService( 5254): Speaking Main: 音声の設定
+09-02 07:04:52.668 D/HelloReaderService( 5254): Speaking Main: バイブレーション
+09-02 07:04:52.887 D/HelloReaderService( 5254): Speaking Main: メディア
+09-02 07:04:53.043 D/HelloReaderService( 5254): Speaking Main: docomo、レベル 1。
+09-02 07:04:53.265 D/HelloReaderService( 5254): handleGestureAction: 4
+09-02 07:04:53.375 D/HelloReaderService( 5254): Speaking Main: 着信音、タップすると、着信音のモードを変更できます [SubVoice Hint: ボタン]
+09-02 07:04:53.428 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 12
+09-02 07:04:54.305 D/HelloReaderService( 5254): handleGestureAction: 4
+09-02 07:04:54.404 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 13
+09-02 07:04:55.592 D/HelloReaderService( 5254): Speaking Main: メディア
+09-02 07:04:56.070 D/HelloReaderService( 5254): handleGestureAction: 4
+09-02 07:04:56.151 D/HelloReaderService( 5254): Speaking Main: 音声の設定 [SubVoice Hint: ボタン]
+09-02 07:04:56.205 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 14
+09-02 07:04:56.748 D/HelloReaderService( 5254): handleGestureAction: 4
+09-02 07:04:56.788 D/HelloReaderService( 5254): playSound requested for soundId: 2 -> streamId: 15
+09-02 07:04:56.789 D/HelloReaderService( 5254): Speaking Main: これ以上 次へ に進めません
+09-02 07:04:57.719 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 16
+09-02 07:04:57.721 D/HelloReaderService( 5254): Speaking Main: Hello Reader 設定へようこそ
+09-02 07:05:00.101 D/HelloReaderService( 5254): Speaking Main: 7:04
+09-02 07:05:00.164 D/HelloReaderService( 5254): handleGestureAction: 4
+09-02 07:05:00.183 D/HelloReaderService( 5254): Speaking Main: Hello Reader 設定へようこそ
+09-02 07:05:00.230 D/HelloReaderService( 5254): Speaking Main: 7:05
+09-02 07:05:00.293 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 17
+09-02 07:05:00.976 D/HelloReaderService( 5254): handleGestureAction: 4
+09-02 07:05:01.010 D/HelloReaderService( 5254): Speaking Main: Hello Reader を使用するには、電話帳照会権限の許可とアクセシビリティサービスの有効化が必要です。
+09-02 07:05:01.065 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 18
+09-02 07:05:02.118 D/HelloReaderService( 5254): handleGestureAction: 13
+09-02 07:05:02.136 D/HelloReaderService( 5254): Speaking Main: ホーム画面。権限の許可ダイアログを再表示するボタン
+09-02 07:05:02.202 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 19
+09-02 07:05:02.241 D/HelloReaderService( 5254): Speaking Main: ホーム画面。戻る
+09-02 07:05:02.259 D/HelloReaderService( 5254): Speaking Main: バイブレーション
+09-02 07:05:02.325 D/HelloReaderService( 5254): playSound requested for soundId: 4 -> streamId: 20
+09-02 07:05:02.326 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 21
+09-02 07:05:02.326 D/HelloReaderService( 5254): Speaking Main: 戻る
+09-02 07:05:02.385 D/HelloReaderService( 5254): Speaking Main: ホーム画面。全般台風情報、台風第24号
+09-02 07:05:02.521 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 22
+09-02 07:05:02.523 D/HelloReaderService( 5254): Speaking Main: スナップショット
+09-02 07:05:04.377 D/HelloReaderService( 5254): handleGestureAction: 4
+09-02 07:05:04.493 D/HelloReaderService( 5254): Speaking Main: 1/1 ページ
+09-02 07:05:04.548 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 23
+09-02 07:05:04.923 D/HelloReaderService( 5254): handleGestureAction: 4
+09-02 07:05:05.076 D/HelloReaderService( 5254): Speaking Main: 設定
+09-02 07:05:05.132 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 24
+09-02 07:05:05.470 D/HelloReaderService( 5254): handleGestureAction: 4
+09-02 07:05:05.529 D/HelloReaderService( 5254): Speaking Main: マップ
+09-02 07:05:05.585 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 25
+09-02 07:05:06.022 D/HelloReaderService( 5254): handleGestureAction: 4
+09-02 07:05:06.076 D/HelloReaderService( 5254): Speaking Main: 現在の天気
+09-02 07:05:06.134 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 26
+09-02 07:05:06.638 D/HelloReaderService( 5254): handleGestureAction: 4
+09-02 07:05:06.698 D/HelloReaderService( 5254): Speaking Main: Gemini
+09-02 07:05:06.750 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 27
+09-02 07:05:07.048 D/HelloReaderService( 5254): handleGestureAction: 4
+09-02 07:05:07.094 D/HelloReaderService( 5254): Speaking Main: Play ストア
+09-02 07:05:07.147 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 28
+09-02 07:05:07.557 D/HelloReaderService( 5254): handleGestureAction: 4
+09-02 07:05:07.613 D/HelloReaderService( 5254): Speaking Main: Gmail
+09-02 07:05:07.665 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 29
+09-02 07:05:07.667 D/HelloReaderService( 5254): Speaking Main: Wi-Fiはレベル2です。
+09-02 07:05:10.016 D/HelloReaderService( 5254): handleGestureAction: 13
+09-02 07:05:10.059 D/HelloReaderService( 5254): Speaking Main: ホーム画面。全般台風情報、台風第24号
+09-02 07:05:10.112 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 30
+09-02 07:05:10.113 D/HelloReaderService( 5254): Speaking Main: スナップショット
+09-02 07:05:10.791 D/HelloReaderService( 5254): handleGestureAction: 4
+09-02 07:05:10.841 D/HelloReaderService( 5254): Speaking Main: 1/1 ページ
+09-02 07:05:10.847 D/HelloReaderService( 5254): Speaking Main: Wi-Fiはレベル3です。
+09-02 07:05:10.969 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 31
+09-02 07:05:11.277 D/HelloReaderService( 5254): handleGestureAction: 4
+09-02 07:05:11.342 D/HelloReaderService( 5254): Speaking Main: 設定
+09-02 07:05:11.396 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 32
+09-02 07:05:11.649 D/HelloReaderService( 5254): handleGestureAction: 4
+09-02 07:05:11.711 D/HelloReaderService( 5254): Speaking Main: マップ
+09-02 07:05:11.765 D/HelloReaderService( 5254): playSound requested for soundId: 3 -> streamId: 33

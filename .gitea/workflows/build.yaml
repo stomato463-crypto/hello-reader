@@ -36,7 +36,7 @@ jobs:
         run: |
           $shortHash = (git rev-parse --short=8 HEAD).Trim()
           $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
-          $apkName = "debug-${shortHash}-${timestamp}.apk"
+          $apkName = "debug-" + $shortHash + "-" + $timestamp + ".apk"
           $outputDir = "app/build/outputs/apk/debug"
           $sourceApk = Join-Path $outputDir "app-debug.apk"
           $targetApk = Join-Path $outputDir $apkName
@@ -59,7 +59,7 @@ jobs:
         shell: powershell
 
       - name: Upload Verified APK Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: app-debug-apk
           path: app/build/outputs/apk/debug/debug-*.apk
@@ -76,7 +76,7 @@ jobs:
           fetch-depth: 0
 
       - name: Download Verified APK Artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: app-debug-apk
           path: app/build/outputs/apk/debug
@@ -95,7 +95,7 @@ jobs:
           # 2. 自動タグの生成 (例: v0.0.1-alpha-20260907-44373b7)
           $shortHash = (git rev-parse --short=8 HEAD).Trim()
           $dateStr = Get-Date -Format "yyyyMMdd"
-          $tagName = "v0.0.1-alpha-${dateStr}-${shortHash}"
+          $tagName = "v0.0.1-alpha-" + $dateStr + "-" + $shortHash
           
           Write-Host "Creating and Pushing Tag: $tagName" -ForegroundColor Green
           git tag -f $tagName

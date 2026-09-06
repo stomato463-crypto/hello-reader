@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="md_theme_light_background">#FEF7FF</color>
+    <color name="md_theme_light_onBackground">#1D1B20</color>
+    <color name="md_theme_light_onPrimary">#FFFFFF</color>
+    <color name="md_theme_light_onPrimaryContainer">#21005D</color>
+    <color name="md_theme_light_onSecondary">#FFFFFF</color>
+    <color name="md_theme_light_onSurface">#1D1B20</color>
+    <color name="md_theme_light_primary">#6750A4</color>
+    <color name="md_theme_light_primaryContainer">#EADDFF</color>
+    <color name="md_theme_light_secondary">#625B71</color>
+    <color name="md_theme_light_surface">#FEF7FF</color>
+    <string name="app_name">helloreader</string>
+    <style name="Theme.Helloreader" parent="Theme.Material3.DayNight.NoActionBar">
+        
+        <item name="colorPrimary">@color/md_theme_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_light_onPrimaryContainer</item>
+
+        
+        <item name="colorSecondary">@color/md_theme_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_light_onSecondary</item>
+
+        
+        <item name="android:statusBarColor">?attr/colorPrimaryContainer</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>

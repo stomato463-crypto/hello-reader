@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.stomato.helloreader.app-mergeDebugResources-47:/values-v16/values-v16.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\owner\\.gradle\\caches\\9.5.0\\transforms\\ffed44447cc9513ff2f2df331f5ffd7d\\transformed\\appcompat-1.6.1\\res\\values-v16\\values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "223"
+                    }
+                }
+            ]
+        }
+    ]
+}

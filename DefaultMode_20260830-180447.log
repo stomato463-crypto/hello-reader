@@ -1,0 +1,991 @@
+﻿--------- beginning of main
+08-30 18:04:34.197 D/HelloReaderService( 2086): Hello Reader Accessibility Service Connected!
+08-30 18:04:34.219 D/HelloReaderService( 2086): SoundPool Initialized. Activate: 1, Deactivate: 2, Focus: 3, ViewEntered: 4
+08-30 18:04:35.710 D/HelloReaderService( 2086): Speaking: Hello Readerが起動したにょろ
+08-30 18:04:35.713 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 1
+08-30 18:04:35.713 D/HelloReaderService( 2086): Speaking: helloreader
+08-30 18:04:35.715 D/HelloReaderService( 2086): Sound loaded successfully! sampleId: 2
+08-30 18:04:35.715 D/HelloReaderService( 2086): Sound loaded successfully! sampleId: 1
+08-30 18:04:35.715 D/HelloReaderService( 2086): Sound loaded successfully! sampleId: 4
+08-30 18:04:35.716 D/HelloReaderService( 2086): Sound loaded successfully! sampleId: 3
+08-30 18:04:49.692 D/HelloReaderService( 2086): Screen Turned ON
+08-30 18:04:50.100 D/HelloReaderService( 2086): LockScreen Details: ロック画面。8月30日 日曜日 18時04分。指紋センサーは画面の下部中央にあります
+08-30 18:04:50.100 D/HelloReaderService( 2086): Speaking: ロック画面。8月30日 日曜日 18時04分。指紋センサーは画面の下部中央にあります
+08-30 18:04:50.101 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 2
+08-30 18:04:50.118 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 3
+08-30 18:04:50.134 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 4
+08-30 18:04:50.218 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 5
+08-30 18:04:50.218 D/HelloReaderService( 2086): Speaking: ロック画面
+08-30 18:04:50.319 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 6
+08-30 18:04:51.843 D/HelloReaderService( 2086): handleGestureAction: 4
+08-30 18:04:51.851 D/HelloReaderService( 2086): Speaking: これ以上 次へ に要素はないにょろ
+08-30 18:04:53.680 D/HelloReaderService( 2086): handleGestureAction: 4
+08-30 18:04:53.685 D/HelloReaderService( 2086): Speaking: これ以上 次へ に要素はないにょろ
+08-30 18:04:55.104 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 7
+08-30 18:04:55.785 D/HelloReaderService( 2086): handleGestureAction: 3
+08-30 18:04:56.872 D/HelloReaderService( 2086): handleGestureAction: 4
+08-30 18:04:56.878 D/HelloReaderService( 2086): Speaking: これ以上 次へ に要素はないにょろ
+08-30 18:04:57.660 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 8
+08-30 18:04:57.672 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:04:57.683 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 9
+08-30 18:04:57.683 D/HelloReaderService( 2086): Speaking: ロック画面: ロック画面をカスタマイズするには、ダブルタップして長押しします。
+08-30 18:04:57.683 D/HelloReaderService( 2086): 上に移動
+08-30 18:04:57.684 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 10
+08-30 18:04:57.689 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 11
+08-30 18:04:57.689 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:04:57.692 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 12
+08-30 18:04:57.692 D/HelloReaderService( 2086): 上に移動
+08-30 18:04:57.696 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 13
+08-30 18:04:57.696 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:04:57.700 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 14
+08-30 18:04:57.700 D/HelloReaderService( 2086): Speaking: ロック画面: ロック画面をカスタマイズするには、ダブルタップして長押しします。
+08-30 18:04:57.700 D/HelloReaderService( 2086): 上に移動
+08-30 18:04:57.703 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 15
+08-30 18:04:57.704 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:04:57.707 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 16
+08-30 18:04:57.707 D/HelloReaderService( 2086): Speaking: ロック画面: ロック画面をカスタマイズするには、ダブルタップして長押しします。
+08-30 18:04:57.707 D/HelloReaderService( 2086): 上に移動
+08-30 18:04:57.710 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 17
+08-30 18:04:57.710 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:04:57.712 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 18
+08-30 18:04:57.712 D/HelloReaderService( 2086): Speaking: ロック画面: ロック画面をカスタマイズするには、ダブルタップして長押しします。
+08-30 18:04:57.712 D/HelloReaderService( 2086): 上に移動
+08-30 18:04:57.714 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 19
+08-30 18:04:57.715 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:04:57.717 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 20
+08-30 18:04:57.717 D/HelloReaderService( 2086): Speaking: ロック画面: ロック画面をカスタマイズするには、ダブルタップして長押しします。
+08-30 18:04:57.717 D/HelloReaderService( 2086): 上に移動
+08-30 18:04:57.719 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 21
+08-30 18:04:57.720 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:04:57.722 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 22
+08-30 18:04:57.725 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 23
+08-30 18:04:57.692 D/HelloReaderService( 2086): Speaking: ロック画面: ロック画面をカスタマイズするには、ダブルタップして長押しします。
+08-30 18:04:57.727 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 24
+08-30 18:04:57.730 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 25
+08-30 18:04:57.732 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 28
+08-30 18:04:57.749 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 29
+08-30 18:04:57.762 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 30
+08-30 18:04:57.763 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 31
+08-30 18:04:57.785 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 32
+08-30 18:04:57.790 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 33
+08-30 18:04:57.791 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 34
+08-30 18:04:57.792 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 35
+08-30 18:04:57.795 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 36
+08-30 18:04:57.801 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 37
+08-30 18:04:57.803 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 38
+08-30 18:04:57.812 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 39
+08-30 18:04:57.824 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 40
+08-30 18:04:57.824 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 41
+08-30 18:04:57.900 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 42
+08-30 18:04:57.997 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 43
+08-30 18:04:57.999 D/HelloReaderService( 2086): Speaking: センサーにしっかりと押し当ててください
+08-30 18:04:58.048 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 44
+08-30 18:04:58.096 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 45
+08-30 18:04:58.199 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 46
+08-30 18:04:58.302 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 47
+08-30 18:04:58.400 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 48
+08-30 18:04:58.498 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 49
+08-30 18:04:58.599 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 51
+08-30 18:04:58.697 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 52
+08-30 18:04:58.802 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 53
+08-30 18:04:58.900 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 56
+08-30 18:04:58.998 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 58
+08-30 18:04:59.129 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 59
+08-30 18:04:59.200 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 60
+08-30 18:04:59.511 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 63
+08-30 18:04:59.515 D/HelloReaderService( 2086): Speaking: 右に移動
+08-30 18:04:59.527 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 64
+08-30 18:04:59.538 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 65
+08-30 18:04:59.541 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 66
+08-30 18:04:59.552 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 67
+08-30 18:04:59.554 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 68
+08-30 18:04:59.566 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 70
+08-30 18:04:59.564 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 69
+08-30 18:04:59.590 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 71
+08-30 18:04:59.593 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 72
+08-30 18:04:59.599 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 73
+08-30 18:04:59.605 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 74
+08-30 18:04:59.616 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 75
+08-30 18:04:59.619 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 76
+08-30 18:04:59.630 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 77
+08-30 18:04:59.632 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 78
+08-30 18:04:59.650 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 79
+08-30 18:04:59.652 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 80
+08-30 18:04:59.666 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 81
+08-30 18:04:59.668 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 82
+08-30 18:04:59.679 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 83
+08-30 18:04:59.682 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 84
+08-30 18:04:59.698 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 85
+08-30 18:04:59.701 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 86
+08-30 18:04:59.713 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 87
+08-30 18:04:59.716 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 88
+08-30 18:04:59.730 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 89
+08-30 18:04:59.733 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 90
+08-30 18:04:59.746 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 91
+08-30 18:04:59.751 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 92
+08-30 18:04:59.767 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 93
+08-30 18:04:59.770 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 94
+08-30 18:04:59.781 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 95
+08-30 18:04:59.784 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 96
+08-30 18:04:59.798 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 97
+08-30 18:04:59.801 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 98
+08-30 18:04:59.816 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 99
+08-30 18:04:59.819 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 100
+08-30 18:04:59.832 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 101
+08-30 18:04:59.835 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 102
+08-30 18:04:59.846 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 103
+08-30 18:04:59.849 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 104
+08-30 18:04:59.864 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 105
+08-30 18:04:59.868 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 106
+08-30 18:04:59.880 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 107
+08-30 18:04:59.884 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 108
+08-30 18:04:59.896 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 109
+08-30 18:04:59.899 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 110
+08-30 18:04:59.920 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 111
+08-30 18:04:59.924 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 112
+08-30 18:04:59.930 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 113
+08-30 18:04:59.933 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 114
+08-30 18:04:59.947 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 115
+08-30 18:04:59.950 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 116
+08-30 18:04:59.965 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 117
+08-30 18:04:59.968 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 118
+08-30 18:04:59.981 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 119
+08-30 18:04:59.987 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 120
+08-30 18:05:00.004 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 121
+08-30 18:05:00.013 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 122
+08-30 18:05:00.032 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 123
+08-30 18:05:00.034 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 124
+08-30 18:05:00.036 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 125
+08-30 18:05:00.039 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 126
+08-30 18:05:00.045 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 127
+08-30 18:05:00.047 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 128
+08-30 18:05:00.062 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 129
+08-30 18:05:00.063 D/HelloReaderService( 2086): Speaking: 18:05
+08-30 18:05:00.071 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 130
+08-30 18:05:00.071 D/HelloReaderService( 2086): Speaking: 右に移動
+08-30 18:05:00.074 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 131
+08-30 18:05:00.108 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 132
+08-30 18:05:00.111 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 133
+08-30 18:05:00.113 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 134
+08-30 18:05:00.122 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 135
+08-30 18:05:00.126 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 137
+08-30 18:05:00.123 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 136
+08-30 18:05:00.131 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 138
+08-30 18:05:00.134 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 139
+08-30 18:05:00.158 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 140
+08-30 18:05:00.161 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 141
+08-30 18:05:00.166 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 142
+08-30 18:05:00.179 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 143
+08-30 18:05:00.181 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 144
+08-30 18:05:00.200 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 145
+08-30 18:05:00.204 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 146
+08-30 18:05:00.213 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 147
+08-30 18:05:00.215 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 148
+08-30 18:05:00.231 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 149
+08-30 18:05:00.234 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 150
+08-30 18:05:00.246 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 151
+08-30 18:05:00.248 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 152
+08-30 18:05:00.263 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 153
+08-30 18:05:00.266 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 154
+08-30 18:05:00.279 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 155
+08-30 18:05:00.282 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 156
+08-30 18:05:00.298 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 157
+08-30 18:05:00.302 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 158
+08-30 18:05:00.312 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 159
+08-30 18:05:00.315 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 160
+08-30 18:05:00.329 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 161
+08-30 18:05:00.332 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 162
+08-30 18:05:00.346 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 163
+08-30 18:05:00.349 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 164
+08-30 18:05:00.362 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 165
+08-30 18:05:00.365 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 166
+08-30 18:05:00.379 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 167
+08-30 18:05:00.383 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 168
+08-30 18:05:00.397 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 169
+08-30 18:05:00.401 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 170
+08-30 18:05:00.413 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 171
+08-30 18:05:00.417 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 172
+08-30 18:05:00.430 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 173
+08-30 18:05:00.434 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 174
+08-30 18:05:00.447 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 175
+08-30 18:05:00.453 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 176
+08-30 18:05:00.464 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 177
+08-30 18:05:00.467 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 178
+08-30 18:05:00.483 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 179
+08-30 18:05:00.489 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 180
+08-30 18:05:00.516 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 181
+08-30 18:05:00.521 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 182
+08-30 18:05:00.565 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 183
+08-30 18:05:00.571 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 184
+08-30 18:05:00.615 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 185
+08-30 18:05:00.619 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 186
+08-30 18:05:00.651 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 187
+08-30 18:05:00.655 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 188
+08-30 18:05:00.665 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 189
+08-30 18:05:00.669 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 190
+08-30 18:05:00.714 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 191
+08-30 18:05:00.719 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 192
+08-30 18:05:00.764 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 193
+08-30 18:05:00.768 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 194
+08-30 18:05:00.860 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 195
+08-30 18:05:00.868 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 196
+08-30 18:05:00.878 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 197
+08-30 18:05:00.882 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 198
+08-30 18:05:00.889 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 199
+08-30 18:05:00.898 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 200
+08-30 18:05:00.902 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 201
+08-30 18:05:00.907 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 202
+08-30 18:05:00.918 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 203
+08-30 18:05:00.922 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 204
+08-30 18:05:00.926 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 205
+08-30 18:05:00.931 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 206
+08-30 18:05:00.934 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 207
+08-30 18:05:00.938 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 208
+08-30 18:05:00.943 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 209
+08-30 18:05:00.946 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 210
+08-30 18:05:00.950 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 211
+08-30 18:05:00.954 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 212
+08-30 18:05:00.954 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 213
+08-30 18:05:00.955 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 214
+08-30 18:05:01.080 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 215
+08-30 18:05:01.187 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 216
+08-30 18:05:01.964 D/HelloReaderService( 2086): handleGestureAction: 4
+08-30 18:05:01.968 D/HelloReaderService( 2086): Speaking: これ以上 次へ に要素はないにょろ
+08-30 18:05:02.269 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 217
+08-30 18:05:02.269 D/HelloReaderService( 2086): Speaking: Wi-Fiはレベル3です。
+08-30 18:05:02.834 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 220
+08-30 18:05:02.836 D/HelloReaderService( 2086): Speaking: センサーにしっかりと押し当ててください
+08-30 18:05:02.927 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 222
+08-30 18:05:03.027 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 223
+08-30 18:05:03.132 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 224
+08-30 18:05:03.157 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 227
+08-30 18:05:03.158 D/HelloReaderService( 2086): Speaking: ロック画面: ロック画面をカスタマイズするには、ダブルタップして長押しします。
+08-30 18:05:03.158 D/HelloReaderService( 2086): 右に移動
+08-30 18:05:03.161 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 228
+08-30 18:05:03.169 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 229
+08-30 18:05:03.169 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:03.175 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 231
+08-30 18:05:03.176 D/HelloReaderService( 2086): Speaking: ロック画面: ロック画面をカスタマイズするには、ダブルタップして長押しします。
+08-30 18:05:03.176 D/HelloReaderService( 2086): 右に移動
+08-30 18:05:03.211 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 232
+08-30 18:05:03.216 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:03.243 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 233
+08-30 18:05:03.283 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 234
+08-30 18:05:03.287 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 235
+08-30 18:05:03.293 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 237
+08-30 18:05:03.290 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 236
+08-30 18:05:03.293 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 238
+08-30 18:05:03.293 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 239
+08-30 18:05:03.297 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 240
+08-30 18:05:03.299 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 241
+08-30 18:05:03.301 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 242
+08-30 18:05:03.330 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 243
+08-30 18:05:03.331 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 244
+08-30 18:05:03.331 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 245
+08-30 18:05:03.345 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 246
+08-30 18:05:03.350 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 247
+08-30 18:05:03.352 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 248
+08-30 18:05:03.356 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 249
+08-30 18:05:03.361 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 250
+08-30 18:05:03.362 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 251
+08-30 18:05:03.377 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 252
+08-30 18:05:03.378 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 253
+08-30 18:05:03.394 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 254
+08-30 18:05:03.396 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 255
+08-30 18:05:03.412 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 256
+08-30 18:05:03.415 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 257
+08-30 18:05:03.427 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 258
+08-30 18:05:03.429 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 259
+08-30 18:05:03.429 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 260
+08-30 18:05:03.446 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 261
+08-30 18:05:03.448 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 262
+08-30 18:05:03.462 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 263
+08-30 18:05:03.464 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 264
+08-30 18:05:03.479 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 265
+08-30 18:05:03.480 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 266
+08-30 18:05:03.496 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 267
+08-30 18:05:03.500 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 268
+08-30 18:05:03.504 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 269
+08-30 18:05:03.504 D/HelloReaderService( 2086): Speaking: センサーにしっかりと押し当ててください
+08-30 18:05:03.513 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 270
+08-30 18:05:03.513 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:03.516 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 271
+08-30 18:05:03.538 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 272
+08-30 18:05:03.546 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 273
+08-30 18:05:03.547 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 274
+08-30 18:05:03.549 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 275
+08-30 18:05:03.555 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 276
+08-30 18:05:03.564 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 277
+08-30 18:05:03.569 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 278
+08-30 18:05:03.584 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 279
+08-30 18:05:03.594 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 280
+08-30 18:05:03.596 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 281
+08-30 18:05:03.601 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 282
+08-30 18:05:03.614 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 283
+08-30 18:05:03.617 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 284
+08-30 18:05:03.627 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 285
+08-30 18:05:03.629 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 286
+08-30 18:05:03.630 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 287
+08-30 18:05:03.633 D/HelloReaderService( 2086): Speaking: センサーにしっかりと押し当ててください
+08-30 18:05:03.661 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 288
+08-30 18:05:03.661 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:03.673 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 289
+08-30 18:05:03.678 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 290
+08-30 18:05:03.683 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 291
+08-30 18:05:03.693 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 292
+08-30 18:05:03.696 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 293
+08-30 18:05:03.701 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 294
+08-30 18:05:03.704 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 295
+08-30 18:05:03.714 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 296
+08-30 18:05:03.721 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 297
+08-30 18:05:03.730 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 298
+08-30 18:05:03.737 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 299
+08-30 18:05:03.739 D/HelloReaderService( 2086): Speaking: センサーにしっかりと押し当ててください
+08-30 18:05:03.738 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 300
+08-30 18:05:03.748 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 301
+08-30 18:05:03.748 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:03.750 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 302
+08-30 18:05:03.765 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 303
+08-30 18:05:03.778 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 304
+08-30 18:05:03.785 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 305
+08-30 18:05:03.787 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 306
+08-30 18:05:03.801 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 307
+08-30 18:05:03.805 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 308
+08-30 18:05:03.811 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 309
+08-30 18:05:03.813 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 310
+08-30 18:05:03.829 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 311
+08-30 18:05:03.831 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 312
+08-30 18:05:03.831 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 313
+08-30 18:05:03.833 D/HelloReaderService( 2086): Speaking: センサーにしっかりと押し当ててください
+08-30 18:05:03.846 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 314
+08-30 18:05:03.846 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:03.849 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 315
+08-30 18:05:03.862 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 316
+08-30 18:05:03.864 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 317
+08-30 18:05:03.883 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 318
+08-30 18:05:03.887 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 319
+08-30 18:05:03.896 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 320
+08-30 18:05:03.897 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 321
+08-30 18:05:03.911 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 322
+08-30 18:05:03.912 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 323
+08-30 18:05:03.927 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 324
+08-30 18:05:03.928 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 325
+08-30 18:05:03.928 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 326
+08-30 18:05:03.929 D/HelloReaderService( 2086): Speaking: センサーにしっかりと押し当ててください
+08-30 18:05:03.947 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 327
+08-30 18:05:03.947 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:03.949 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 328
+08-30 18:05:03.959 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 329
+08-30 18:05:03.961 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 330
+08-30 18:05:03.980 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 331
+08-30 18:05:03.982 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 332
+08-30 18:05:03.997 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 333
+08-30 18:05:03.999 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 334
+08-30 18:05:04.009 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 335
+08-30 18:05:04.010 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 336
+08-30 18:05:04.027 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 337
+08-30 18:05:04.027 D/HelloReaderService( 2086): Speaking: 右に移動
+08-30 18:05:04.031 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 338
+08-30 18:05:04.031 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:04.032 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 339
+08-30 18:05:04.035 D/HelloReaderService( 2086): Speaking: センサーにしっかりと押し当ててください
+08-30 18:05:04.053 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 340
+08-30 18:05:04.053 D/HelloReaderService( 2086): Speaking: 右に移動
+08-30 18:05:04.055 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 341
+08-30 18:05:04.055 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:04.061 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 342
+08-30 18:05:04.061 D/HelloReaderService( 2086): Speaking: 右に移動
+08-30 18:05:04.062 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 343
+08-30 18:05:04.063 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:04.079 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 344
+08-30 18:05:04.079 D/HelloReaderService( 2086): Speaking: 右に移動
+08-30 18:05:04.081 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 345
+08-30 18:05:04.096 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 346
+08-30 18:05:04.098 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 347
+08-30 18:05:04.112 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 348
+08-30 18:05:04.113 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 349
+08-30 18:05:04.134 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 350
+08-30 18:05:04.137 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 351
+08-30 18:05:04.137 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 352
+08-30 18:05:04.138 D/HelloReaderService( 2086): Speaking: センサーにしっかりと押し当ててください
+08-30 18:05:04.146 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 353
+08-30 18:05:04.146 D/HelloReaderService( 2086): Speaking: 右に移動
+08-30 18:05:04.149 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 354
+08-30 18:05:04.166 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 355
+08-30 18:05:04.170 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 356
+08-30 18:05:04.181 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 357
+08-30 18:05:04.182 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 358
+08-30 18:05:04.194 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 359
+08-30 18:05:04.197 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 360
+08-30 18:05:04.214 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 361
+08-30 18:05:04.217 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 362
+08-30 18:05:04.226 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 363
+08-30 18:05:04.228 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 364
+08-30 18:05:04.229 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 365
+08-30 18:05:04.230 D/HelloReaderService( 2086): Speaking: センサーにしっかりと押し当ててください
+08-30 18:05:04.245 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 366
+08-30 18:05:04.245 D/HelloReaderService( 2086): Speaking: 右に移動
+08-30 18:05:04.253 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 367
+08-30 18:05:04.261 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 368
+08-30 18:05:04.263 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 369
+08-30 18:05:04.279 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 370
+08-30 18:05:04.281 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 371
+08-30 18:05:04.294 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 372
+08-30 18:05:04.296 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 373
+08-30 18:05:04.310 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 374
+08-30 18:05:04.312 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 375
+08-30 18:05:04.327 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 376
+08-30 18:05:04.329 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 377
+08-30 18:05:04.329 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 378
+08-30 18:05:04.330 D/HelloReaderService( 2086): Speaking: センサーにしっかりと押し当ててください
+08-30 18:05:04.362 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 379
+08-30 18:05:04.362 D/HelloReaderService( 2086): Speaking: 右に移動
+08-30 18:05:04.365 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 380
+08-30 18:05:04.369 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 381
+08-30 18:05:04.374 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 382
+08-30 18:05:04.379 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 383
+08-30 18:05:04.380 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 384
+08-30 18:05:04.394 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 385
+08-30 18:05:04.395 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 386
+08-30 18:05:04.415 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 387
+08-30 18:05:04.418 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 388
+08-30 18:05:04.426 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 389
+08-30 18:05:04.429 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 390
+08-30 18:05:04.430 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 391
+08-30 18:05:04.431 D/HelloReaderService( 2086): Speaking: センサーにしっかりと押し当ててください
+08-30 18:05:04.453 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 392
+08-30 18:05:04.453 D/HelloReaderService( 2086): Speaking: 右に移動
+08-30 18:05:04.458 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 393
+08-30 18:05:04.460 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 394
+08-30 18:05:04.466 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 395
+08-30 18:05:04.476 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 396
+08-30 18:05:04.496 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 398
+08-30 18:05:04.497 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 399
+08-30 18:05:04.510 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 400
+08-30 18:05:04.511 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 401
+08-30 18:05:04.526 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 402
+08-30 18:05:04.528 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 403
+08-30 18:05:04.529 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 404
+08-30 18:05:04.530 D/HelloReaderService( 2086): Speaking: センサーにしっかりと押し当ててください
+08-30 18:05:04.548 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 405
+08-30 18:05:04.549 D/HelloReaderService( 2086): Speaking: 右に移動
+08-30 18:05:04.553 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 406
+08-30 18:05:04.576 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 407
+08-30 18:05:04.576 D/HelloReaderService( 2086): Speaking: 下に移動
+08-30 18:05:04.580 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 408
+08-30 18:05:04.580 D/HelloReaderService( 2086): Speaking: 右に移動
+08-30 18:05:04.584 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 409
+08-30 18:05:04.584 D/HelloReaderService( 2086): Speaking: 下に移動
+08-30 18:05:04.586 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 410
+08-30 18:05:04.586 D/HelloReaderService( 2086): Speaking: 右に移動
+08-30 18:05:04.600 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 411
+08-30 18:05:04.600 D/HelloReaderService( 2086): Speaking: 下に移動
+08-30 18:05:04.611 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 412
+08-30 18:05:04.611 D/HelloReaderService( 2086): Speaking: 右に移動
+08-30 18:05:04.615 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 413
+08-30 18:05:04.615 D/HelloReaderService( 2086): Speaking: 下に移動
+08-30 18:05:04.620 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 414
+08-30 18:05:04.628 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 415
+08-30 18:05:04.629 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 416
+08-30 18:05:04.645 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 417
+08-30 18:05:04.648 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 418
+08-30 18:05:04.660 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 419
+08-30 18:05:04.661 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 420
+08-30 18:05:04.678 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 421
+08-30 18:05:04.682 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 422
+08-30 18:05:04.693 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 423
+08-30 18:05:04.695 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 424
+08-30 18:05:04.714 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 425
+08-30 18:05:04.718 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 426
+08-30 18:05:04.726 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 427
+08-30 18:05:04.728 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 428
+08-30 18:05:04.745 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 429
+08-30 18:05:04.747 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 430
+08-30 18:05:04.763 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 431
+08-30 18:05:04.766 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 432
+08-30 18:05:04.780 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 433
+08-30 18:05:04.783 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 434
+08-30 18:05:04.793 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 435
+08-30 18:05:04.795 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 436
+08-30 18:05:04.817 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 437
+08-30 18:05:04.821 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 438
+08-30 18:05:04.827 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 439
+08-30 18:05:04.829 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 440
+08-30 18:05:04.851 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 441
+08-30 18:05:04.855 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 442
+08-30 18:05:04.869 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 443
+08-30 18:05:04.872 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 444
+08-30 18:05:04.879 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 445
+08-30 18:05:04.888 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 446
+08-30 18:05:04.897 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 447
+08-30 18:05:04.902 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 448
+08-30 18:05:04.910 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 449
+08-30 18:05:04.912 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 450
+08-30 18:05:04.928 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 451
+08-30 18:05:04.934 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 452
+08-30 18:05:04.944 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 453
+08-30 18:05:04.946 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 454
+08-30 18:05:04.960 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 455
+08-30 18:05:04.961 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 456
+08-30 18:05:04.978 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 457
+08-30 18:05:04.980 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 458
+08-30 18:05:04.994 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 459
+08-30 18:05:04.996 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 460
+08-30 18:05:05.010 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 461
+08-30 18:05:05.012 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 462
+08-30 18:05:05.027 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 463
+08-30 18:05:05.029 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 464
+08-30 18:05:05.045 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 465
+08-30 18:05:05.049 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 466
+08-30 18:05:05.063 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 467
+08-30 18:05:05.066 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 468
+08-30 18:05:05.083 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 469
+08-30 18:05:05.085 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 470
+08-30 18:05:05.096 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 471
+08-30 18:05:05.099 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 472
+08-30 18:05:05.116 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 473
+08-30 18:05:05.119 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 474
+08-30 18:05:05.131 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 475
+08-30 18:05:05.136 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 476
+08-30 18:05:05.146 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 477
+08-30 18:05:05.149 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 478
+08-30 18:05:05.165 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 479
+08-30 18:05:05.174 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 480
+08-30 18:05:05.181 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 481
+08-30 18:05:05.184 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 482
+08-30 18:05:05.197 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 483
+08-30 18:05:05.200 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 484
+08-30 18:05:05.216 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 485
+08-30 18:05:05.219 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 486
+08-30 18:05:05.229 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 487
+08-30 18:05:05.232 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 488
+08-30 18:05:05.247 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 489
+08-30 18:05:05.251 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 490
+08-30 18:05:05.264 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 491
+08-30 18:05:05.271 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 492
+08-30 18:05:05.281 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 493
+08-30 18:05:05.284 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 494
+08-30 18:05:05.298 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 495
+08-30 18:05:05.302 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 496
+08-30 18:05:05.313 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 497
+08-30 18:05:05.317 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 498
+08-30 18:05:05.334 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 499
+08-30 18:05:05.337 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 500
+08-30 18:05:05.346 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 501
+08-30 18:05:05.350 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 502
+08-30 18:05:05.362 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 503
+08-30 18:05:05.364 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 504
+08-30 18:05:05.381 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 505
+08-30 18:05:05.384 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 506
+08-30 18:05:05.396 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 507
+08-30 18:05:05.398 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 508
+08-30 18:05:05.413 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 509
+08-30 18:05:05.417 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 510
+08-30 18:05:05.436 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 511
+08-30 18:05:05.439 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 512
+08-30 18:05:05.446 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 513
+08-30 18:05:05.449 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 514
+08-30 18:05:05.463 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 515
+08-30 18:05:05.467 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 516
+08-30 18:05:05.498 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 517
+08-30 18:05:05.504 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 518
+08-30 18:05:05.512 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 519
+08-30 18:05:05.515 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 520
+08-30 18:05:05.529 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 521
+08-30 18:05:05.531 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 522
+08-30 18:05:05.541 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 523
+08-30 18:05:05.547 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 524
+08-30 18:05:05.553 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 525
+08-30 18:05:05.554 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 526
+08-30 18:05:06.378 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 527
+08-30 18:05:06.382 D/HelloReaderService( 2086): Speaking: ロック画面: ロック画面をカスタマイズするには、ダブルタップして長押しします。
+08-30 18:05:06.382 D/HelloReaderService( 2086): 下に移動
+08-30 18:05:06.385 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 528
+08-30 18:05:06.385 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 529
+08-30 18:05:06.477 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 530
+08-30 18:05:06.480 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:06.482 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 531
+08-30 18:05:06.508 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 532
+08-30 18:05:06.512 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 533
+08-30 18:05:06.513 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 534
+08-30 18:05:06.520 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 535
+08-30 18:05:06.526 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 536
+08-30 18:05:06.528 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 537
+08-30 18:05:06.542 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 538
+08-30 18:05:06.543 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 539
+08-30 18:05:06.562 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 540
+08-30 18:05:06.564 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 541
+08-30 18:05:06.583 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 542
+08-30 18:05:06.584 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 543
+08-30 18:05:06.592 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 544
+08-30 18:05:06.594 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 545
+08-30 18:05:06.613 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 546
+08-30 18:05:06.615 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 547
+08-30 18:05:06.629 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 548
+08-30 18:05:06.631 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 549
+08-30 18:05:06.645 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 550
+08-30 18:05:06.646 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 551
+08-30 18:05:06.664 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 552
+08-30 18:05:06.667 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 553
+08-30 18:05:06.668 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 554
+08-30 18:05:06.678 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 555
+08-30 18:05:06.683 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 556
+08-30 18:05:06.693 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 557
+08-30 18:05:06.695 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 558
+08-30 18:05:06.713 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 559
+08-30 18:05:06.716 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 560
+08-30 18:05:06.731 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 561
+08-30 18:05:06.733 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 562
+08-30 18:05:06.748 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 563
+08-30 18:05:06.750 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 564
+08-30 18:05:06.766 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 565
+08-30 18:05:06.768 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 566
+08-30 18:05:06.769 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 567
+08-30 18:05:06.779 D/HelloReaderService( 2086): Speaking: 指紋を認識できません
+08-30 18:05:06.782 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 568
+08-30 18:05:06.784 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:06.789 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 569
+08-30 18:05:06.819 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 570
+08-30 18:05:06.821 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 571
+08-30 18:05:06.827 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 572
+08-30 18:05:06.827 D/HelloReaderService( 2086): Speaking: 指紋を認識できません
+08-30 18:05:06.834 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 573
+08-30 18:05:06.836 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 574
+08-30 18:05:06.840 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 575
+08-30 18:05:06.840 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:06.851 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 576
+08-30 18:05:06.852 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 577
+08-30 18:05:06.853 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 578
+08-30 18:05:06.856 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 579
+08-30 18:05:06.861 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 580
+08-30 18:05:06.877 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 581
+08-30 18:05:06.879 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 582
+08-30 18:05:06.880 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 583
+08-30 18:05:06.882 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 584
+08-30 18:05:06.886 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 585
+08-30 18:05:06.898 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 586
+08-30 18:05:06.900 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 587
+08-30 18:05:06.913 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 588
+08-30 18:05:06.915 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 589
+08-30 18:05:06.925 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 590
+08-30 18:05:06.927 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 591
+08-30 18:05:06.941 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 592
+08-30 18:05:06.944 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 593
+08-30 18:05:06.960 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 594
+08-30 18:05:06.961 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 595
+08-30 18:05:06.962 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 596
+08-30 18:05:06.963 D/HelloReaderService( 2086): Speaking: 指紋を認識できません
+08-30 18:05:06.977 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 597
+08-30 18:05:06.981 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:06.988 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 598
+08-30 18:05:06.992 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 599
+08-30 18:05:06.996 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 600
+08-30 18:05:07.015 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 601
+08-30 18:05:07.016 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 602
+08-30 18:05:07.030 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 603
+08-30 18:05:07.031 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 604
+08-30 18:05:07.045 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 605
+08-30 18:05:07.048 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 606
+08-30 18:05:07.059 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 607
+08-30 18:05:07.063 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 608
+08-30 18:05:07.070 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 609
+08-30 18:05:07.074 D/HelloReaderService( 2086): Speaking: 指紋を認識できません
+08-30 18:05:07.079 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 610
+08-30 18:05:07.079 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:07.092 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 611
+08-30 18:05:07.101 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 612
+08-30 18:05:07.109 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 613
+08-30 18:05:07.124 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 615
+08-30 18:05:07.129 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 616
+08-30 18:05:07.131 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 617
+08-30 18:05:07.121 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 614
+08-30 18:05:07.150 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 618
+08-30 18:05:07.153 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 619
+08-30 18:05:07.179 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 620
+08-30 18:05:07.181 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 621
+08-30 18:05:07.182 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 622
+08-30 18:05:07.183 D/HelloReaderService( 2086): Speaking: 指紋を認識できません
+08-30 18:05:07.188 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 623
+08-30 18:05:07.188 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:07.190 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 624
+08-30 18:05:07.194 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 625
+08-30 18:05:07.198 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 626
+08-30 18:05:07.218 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 627
+08-30 18:05:07.219 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 628
+08-30 18:05:07.226 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 629
+08-30 18:05:07.230 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 630
+08-30 18:05:07.251 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 631
+08-30 18:05:07.252 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 632
+08-30 18:05:07.262 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 633
+08-30 18:05:07.264 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 634
+08-30 18:05:07.264 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 635
+08-30 18:05:07.266 D/HelloReaderService( 2086): Speaking: 指紋を認識できません
+08-30 18:05:07.286 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 636
+08-30 18:05:07.286 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:07.295 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 637
+08-30 18:05:07.297 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 638
+08-30 18:05:07.302 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 639
+08-30 18:05:07.322 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 640
+08-30 18:05:07.326 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 641
+08-30 18:05:07.366 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 642
+08-30 18:05:07.368 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 643
+08-30 18:05:07.382 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 644
+08-30 18:05:07.383 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 645
+08-30 18:05:07.385 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 646
+08-30 18:05:07.387 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 647
+08-30 18:05:07.387 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 648
+08-30 18:05:07.388 D/HelloReaderService( 2086): Speaking: 指紋を認識できません
+08-30 18:05:07.395 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 649
+08-30 18:05:07.395 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:07.399 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 650
+08-30 18:05:07.401 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 651
+08-30 18:05:07.404 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 652
+08-30 18:05:07.421 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 653
+08-30 18:05:07.433 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 654
+08-30 18:05:07.435 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 655
+08-30 18:05:07.436 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 656
+08-30 18:05:07.449 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 657
+08-30 18:05:07.453 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 658
+08-30 18:05:07.470 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 659
+08-30 18:05:07.471 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 660
+08-30 18:05:07.472 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 661
+08-30 18:05:07.476 D/HelloReaderService( 2086): Speaking: 指紋を認識できません
+08-30 18:05:07.495 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 662
+08-30 18:05:07.496 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:07.502 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 663
+08-30 18:05:07.503 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 664
+08-30 18:05:07.506 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 665
+08-30 18:05:07.515 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 666
+08-30 18:05:07.526 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 667
+08-30 18:05:07.530 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 668
+08-30 18:05:07.532 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 669
+08-30 18:05:07.545 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 670
+08-30 18:05:07.547 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 671
+08-30 18:05:07.562 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 672
+08-30 18:05:07.567 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 673
+08-30 18:05:07.568 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 674
+08-30 18:05:07.570 D/HelloReaderService( 2086): Speaking: 指紋を認識できません
+08-30 18:05:07.578 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 675
+08-30 18:05:07.578 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:07.582 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 676
+08-30 18:05:07.596 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 677
+08-30 18:05:07.611 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 678
+08-30 18:05:07.614 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 679
+08-30 18:05:07.618 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 680
+08-30 18:05:07.626 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 681
+08-30 18:05:07.628 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 682
+08-30 18:05:07.646 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 683
+08-30 18:05:07.652 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 684
+08-30 18:05:07.659 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 685
+08-30 18:05:07.661 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 686
+08-30 18:05:07.661 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 687
+08-30 18:05:07.662 D/HelloReaderService( 2086): Speaking: 指紋を認識できません
+08-30 18:05:07.680 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 688
+08-30 18:05:07.680 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:07.687 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 689
+08-30 18:05:07.696 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 690
+08-30 18:05:07.714 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 691
+08-30 18:05:07.719 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 692
+08-30 18:05:07.721 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 693
+08-30 18:05:07.732 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 694
+08-30 18:05:07.736 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 695
+08-30 18:05:07.744 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 696
+08-30 18:05:07.747 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 697
+08-30 18:05:07.759 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 698
+08-30 18:05:07.760 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 699
+08-30 18:05:07.761 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 700
+08-30 18:05:07.762 D/HelloReaderService( 2086): Speaking: 指紋を認識できません
+08-30 18:05:07.780 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 701
+08-30 18:05:07.780 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:07.791 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 702
+08-30 18:05:07.794 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 703
+08-30 18:05:07.795 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 704
+08-30 18:05:07.813 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 705
+08-30 18:05:07.821 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 706
+08-30 18:05:07.826 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 707
+08-30 18:05:07.830 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 708
+08-30 18:05:07.848 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 709
+08-30 18:05:07.853 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 710
+08-30 18:05:07.859 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 711
+08-30 18:05:07.861 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 712
+08-30 18:05:07.861 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 713
+08-30 18:05:07.863 D/HelloReaderService( 2086): Speaking: 指紋を認識できません
+08-30 18:05:07.882 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 714
+08-30 18:05:07.883 D/HelloReaderService( 2086): Speaking: 上に移動
+08-30 18:05:07.901 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 715
+08-30 18:05:07.903 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 716
+08-30 18:05:07.905 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 717
+08-30 18:05:07.910 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 718
+08-30 18:05:07.915 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 719
+08-30 18:05:07.925 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 720
+08-30 18:05:07.927 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 721
+08-30 18:05:07.957 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 722
+08-30 18:05:07.959 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 723
+08-30 18:05:07.960 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 724
+08-30 18:05:07.962 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 725
+08-30 18:05:07.975 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 726
+08-30 18:05:07.978 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 727
+08-30 18:05:07.992 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 728
+08-30 18:05:07.993 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 729
+08-30 18:05:08.010 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 730
+08-30 18:05:08.017 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 731
+08-30 18:05:08.040 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 732
+08-30 18:05:08.056 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 733
+08-30 18:05:08.073 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 734
+08-30 18:05:08.076 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 735
+08-30 18:05:08.082 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 736
+08-30 18:05:08.084 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 737
+08-30 18:05:08.085 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 738
+08-30 18:05:08.087 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 739
+08-30 18:05:08.126 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 740
+08-30 18:05:08.127 D/HelloReaderService( 2086): Speaking: 指紋を認識できません
+08-30 18:05:08.225 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 741
+08-30 18:05:08.329 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 742
+08-30 18:05:08.331 D/HelloReaderService( 2086): Speaking: センサーにしっかりと押し当ててください
+08-30 18:05:08.343 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 743
+08-30 18:05:08.345 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 744
+08-30 18:05:08.349 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 745
+08-30 18:05:08.429 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 746
+08-30 18:05:08.516 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 747
+08-30 18:05:08.526 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 748
+08-30 18:05:08.582 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 749
+08-30 18:05:08.592 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 750
+08-30 18:05:08.607 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 751
+08-30 18:05:08.625 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 752
+08-30 18:05:08.642 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 753
+08-30 18:05:08.660 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 754
+08-30 18:05:08.676 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 755
+08-30 18:05:08.701 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 756
+08-30 18:05:08.708 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 757
+08-30 18:05:08.724 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 758
+08-30 18:05:08.743 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 759
+08-30 18:05:08.759 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 760
+08-30 18:05:08.776 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 761
+08-30 18:05:08.791 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 762
+08-30 18:05:08.817 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 763
+08-30 18:05:08.825 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 764
+08-30 18:05:08.828 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 765
+08-30 18:05:08.828 D/HelloReaderService( 2086): Speaking: helloreader
+08-30 18:05:08.830 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 766
+08-30 18:05:08.851 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 767
+08-30 18:05:08.867 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 768
+08-30 18:05:08.874 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 769
+08-30 18:05:08.936 D/HelloReaderService( 2086): User Present (Unlocked)
+08-30 18:05:08.936 D/HelloReaderService( 2086): Speaking: ロック解除
+08-30 18:05:09.025 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 770
+08-30 18:05:09.033 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 771
+08-30 18:05:09.080 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 772
+08-30 18:05:09.117 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 773
+08-30 18:05:09.145 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 774
+08-30 18:05:09.167 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 775
+08-30 18:05:09.167 D/HelloReaderService( 2086): Speaking: アプリのアイコン
+08-30 18:05:09.170 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 776
+08-30 18:05:09.176 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 777
+08-30 18:05:09.187 D/HelloReaderService( 2086): Speaking: ホーム画面。戻る
+08-30 18:05:09.192 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 778
+08-30 18:05:09.249 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 779
+08-30 18:05:09.249 D/HelloReaderService( 2086): Speaking: 戻る
+08-30 18:05:09.293 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 780
+08-30 18:05:09.390 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 781
+08-30 18:05:09.390 D/HelloReaderService( 2086): Speaking: ロック画面
+08-30 18:05:09.984 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 782
+08-30 18:05:10.085 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 783
+08-30 18:05:10.185 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 784
+08-30 18:05:10.306 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 785
+08-30 18:05:10.341 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 787
+08-30 18:05:10.375 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 788
+08-30 18:05:10.406 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 789
+08-30 18:05:10.504 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 790
+08-30 18:05:10.523 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 792
+08-30 18:05:10.569 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 793
+08-30 18:05:10.671 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 794
+08-30 18:05:10.769 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 796
+08-30 18:05:10.915 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 797
+08-30 18:05:10.997 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 798
+08-30 18:05:11.015 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 799
+08-30 18:05:11.096 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 800
+08-30 18:05:11.119 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 801
+08-30 18:05:11.217 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 802
+08-30 18:05:11.230 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 803
+08-30 18:05:11.324 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 805
+08-30 18:05:11.333 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 806
+08-30 18:05:11.416 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 809
+08-30 18:05:11.431 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 810
+08-30 18:05:12.560 D/HelloReaderService( 2086): handleGestureAction: 4
+08-30 18:05:12.592 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 812
+08-30 18:05:12.592 D/HelloReaderService( 2086): Speaking: ホーム
+08-30 18:05:12.646 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 813
+08-30 18:05:13.281 D/HelloReaderService( 2086): handleGestureAction: 4
+08-30 18:05:13.292 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 814
+08-30 18:05:13.292 D/HelloReaderService( 2086): Speaking: 最近
+08-30 18:05:13.349 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 815
+08-30 18:05:13.951 D/HelloReaderService( 2086): handleGestureAction: 4
+08-30 18:05:13.959 D/HelloReaderService( 2086): playSound requested for soundId: 2 -> streamId: 816
+08-30 18:05:13.959 D/HelloReaderService( 2086): Speaking: これ以上 次へ に要素はないにょろ
+08-30 18:05:14.496 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 817
+08-30 18:05:14.497 D/HelloReaderService( 2086): Speaking: Wi-Fiはレベル3です。
+08-30 18:05:14.504 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 818
+08-30 18:05:14.843 D/HelloReaderService( 2086): handleGestureAction: 4
+08-30 18:05:14.851 D/HelloReaderService( 2086): playSound requested for soundId: 2 -> streamId: 819
+08-30 18:05:14.851 D/HelloReaderService( 2086): Speaking: これ以上 次へ に要素はないにょろ
+08-30 18:05:16.448 D/HelloReaderService( 2086): handleGestureAction: 3
+08-30 18:05:17.168 D/HelloReaderService( 2086): handleGestureAction: 3
+08-30 18:05:17.965 D/HelloReaderService( 2086): handleGestureAction: 3
+08-30 18:05:18.410 D/HelloReaderService( 2086): handleGestureAction: 4
+08-30 18:05:18.420 D/HelloReaderService( 2086): playSound requested for soundId: 2 -> streamId: 820
+08-30 18:05:18.420 D/HelloReaderService( 2086): Speaking: これ以上 次へ に要素はないにょろ
+08-30 18:05:18.723 D/HelloReaderService( 2086): handleGestureAction: 3
+08-30 18:05:19.702 D/HelloReaderService( 2086): handleGestureAction: 3
+08-30 18:05:20.249 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 821
+08-30 18:05:20.960 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 822
+08-30 18:05:20.969 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 823
+08-30 18:05:20.980 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 824
+08-30 18:05:21.034 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 825
+08-30 18:05:21.068 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 826
+08-30 18:05:21.134 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 827
+08-30 18:05:21.167 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 828
+08-30 18:05:21.235 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 829
+08-30 18:05:21.269 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 830
+08-30 18:05:21.335 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 831
+08-30 18:05:21.399 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 832
+08-30 18:05:21.435 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 834
+08-30 18:05:21.500 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 835
+08-30 18:05:21.535 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 836
+08-30 18:05:21.600 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 837
+08-30 18:05:21.634 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 840
+08-30 18:05:21.707 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 841
+08-30 18:05:21.707 D/HelloReaderService( 2086): Speaking: Telegram の通知:
+08-30 18:05:21.736 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 842
+08-30 18:05:23.807 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 844
+08-30 18:05:27.247 D/HelloReaderService( 2086): handleGestureAction: 8
+08-30 18:05:27.785 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 845
+08-30 18:05:28.208 D/HelloReaderService( 2086): handleGestureAction: 28
+08-30 18:05:30.944 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 846
+08-30 18:05:31.041 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 847
+08-30 18:05:31.131 D/HelloReaderService( 2086): handleGestureAction: 4
+08-30 18:05:31.143 D/HelloReaderService( 2086): playSound requested for soundId: 2 -> streamId: 848
+08-30 18:05:31.143 D/HelloReaderService( 2086): Speaking: これ以上 次へ に要素はないにょろ
+08-30 18:05:31.145 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 850
+08-30 18:05:31.244 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 851
+08-30 18:05:31.347 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 852
+08-30 18:05:31.421 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 853
+08-30 18:05:31.433 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 854
+08-30 18:05:31.433 D/HelloReaderService( 2086): Speaking: ロック画面
+08-30 18:05:31.534 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 855
+08-30 18:05:31.638 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 856
+08-30 18:05:31.740 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 857
+08-30 18:05:32.300 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 858
+08-30 18:05:34.234 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 859
+08-30 18:05:36.203 D/HelloReaderService( 2086): handleGestureAction: 25
+08-30 18:05:36.203 D/HelloReaderService( 2086): 2-Finger Swipe Up: Lockscreen PIN Entry
+08-30 18:05:36.204 D/HelloReaderService( 2086): Speaking: PINコード入力画面
+08-30 18:05:37.009 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 860
+08-30 18:05:37.328 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 862
+08-30 18:05:39.167 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 863
+08-30 18:05:39.545 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 864
+08-30 18:05:40.891 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 865
+08-30 18:05:41.111 D/HelloReaderService( 2086): playSound requested for soundId: 4 -> streamId: 866
+08-30 18:05:41.111 D/HelloReaderService( 2086): Speaking: docomo、レベル 2。
+08-30 18:05:43.141 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 869
+08-30 18:05:43.278 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 871
+08-30 18:05:43.686 D/HelloReaderService( 2086): playSound requested for soundId: 3 -> streamId: 872

@@ -1,0 +1,145 @@
+﻿--------- beginning of main
+08-31 04:47:44.354 D/HelloReaderService(21490): Speaking: 63% • 5:45までに充電完了
+08-31 04:47:44.356 D/HelloReaderService(21490): Speaking: 電池充電中: 64パーセント
+08-31 04:47:44.561 D/HelloReaderService(21490): Speaking: 64% • 5:45までに充電完了
+08-31 04:48:37.591 D/HelloReaderService(21490): Speaking: 電池充電中: 65パーセント
+08-31 04:48:37.743 D/HelloReaderService(21490): Speaking: 64% • 5:45までに充電完了
+08-31 04:48:37.836 D/HelloReaderService(21490): Speaking: 65% • 5:45までに充電完了
+08-31 04:48:46.087 D/HelloReaderService(23339): Hello Reader Accessibility Service Connected!
+08-31 04:48:46.100 D/HelloReaderService(23339): SoundPool Initialized (Hybrid Custom & AOSP Sounds). Activate: 1, Deactivate: 2, Focus: 3, ViewEntered: 4, Scroll: 5
+08-31 04:48:46.428 D/HelloReaderService(23339): Sound loaded successfully! sampleId: 1
+08-31 04:48:46.428 D/HelloReaderService(23339): Sound loaded successfully! sampleId: 2
+08-31 04:48:46.428 D/HelloReaderService(23339): Sound loaded successfully! sampleId: 4
+08-31 04:48:47.632 D/HelloReaderService(23339): Speaking: Hello Readerが起動しました
+08-31 04:48:47.637 D/HelloReaderService(23339): Sound loaded successfully! sampleId: 5
+08-31 04:48:47.637 D/HelloReaderService(23339): Sound loaded successfully! sampleId: 3
+08-31 04:48:47.640 D/HelloReaderService(23339): playSound requested for soundId: 4 -> streamId: 1
+08-31 04:48:47.641 D/HelloReaderService(23339): Speaking: helloreader
+08-31 04:49:32.047 D/HelloReaderService(23339): Screen Turned ON
+08-31 04:49:32.470 D/HelloReaderService(23339): LockScreen Details: ロック画面。8月31日 月曜日 4時49分。指紋センサーは画面の下部中央にあります
+08-31 04:49:32.471 D/HelloReaderService(23339): Speaking: ロック画面。8月31日 月曜日 4時49分。指紋センサーは画面の下部中央にあります
+08-31 04:49:32.533 D/HelloReaderService(23339): Speaking: 65% • 5:45までに充電完了
+08-31 04:49:34.346 D/HelloReaderService(23339): playSound requested for soundId: 4 -> streamId: 2
+08-31 04:49:34.347 D/HelloReaderService(23339): Speaking: helloreader
+08-31 04:49:34.624 D/HelloReaderService(23339): User Present (Unlocked)
+08-31 04:49:34.624 D/HelloReaderService(23339): Speaking: ロック解除
+08-31 04:49:34.729 D/HelloReaderService(23339): playSound requested for soundId: 4 -> streamId: 3
+08-31 04:49:34.729 D/HelloReaderService(23339): Speaking: アプリのアイコン
+08-31 04:49:34.765 D/HelloReaderService(23339): Speaking: ホーム画面
+08-31 04:49:34.835 D/HelloReaderService(23339): Speaking: 電池充電中: 66パーセント
+08-31 04:49:34.928 D/HelloReaderService(23339): Speaking: ホーム画面
+08-31 04:49:35.033 D/HelloReaderService(23339): playSound requested for soundId: 4 -> streamId: 4
+08-31 04:49:35.033 D/HelloReaderService(23339): Speaking: 通知シェード
+08-31 04:49:35.541 D/HelloReaderService(23339): Speaking: docomo、レベル 1。
+08-31 04:49:36.466 D/HelloReaderService(23339): handleGestureAction: 4
+08-31 04:49:36.491 D/HelloReaderService(23339): Speaking: Hello Android!
+08-31 04:49:36.546 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 5
+08-31 04:49:38.362 D/HelloReaderService(23339): Speaking: Wi-Fiはレベル2です。
+08-31 04:49:41.889 D/HelloReaderService(23339): handleGestureAction: 4
+08-31 04:49:41.914 D/HelloReaderService(23339): Speaking: 戻る
+08-31 04:49:41.970 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 6
+08-31 04:49:41.989 D/HelloReaderService(23339): Speaking: docomo、レベル 2。
+08-31 04:49:42.692 D/HelloReaderService(23339): handleGestureAction: 4
+08-31 04:49:42.723 D/HelloReaderService(23339): Speaking: ホーム
+08-31 04:49:42.786 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 7
+08-31 04:49:43.690 D/HelloReaderService(23339): handleGestureAction: 4
+08-31 04:49:43.725 D/HelloReaderService(23339): Speaking: 最近
+08-31 04:49:43.779 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 8
+08-31 04:49:44.905 D/HelloReaderService(23339): handleGestureAction: 3
+08-31 04:49:44.939 D/HelloReaderService(23339): Speaking: ホーム
+08-31 04:49:44.997 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 9
+08-31 04:49:45.476 D/HelloReaderService(23339): playSound requested for soundId: 1 -> streamId: 10
+08-31 04:49:45.567 D/HelloReaderService(23339): Speaking: ホーム画面。戻る
+08-31 04:49:45.613 D/HelloReaderService(23339): Speaking: ホーム画面。8月31日(月)
+08-31 04:49:45.615 D/HelloReaderService(23339): playSound requested for soundId: 4 -> streamId: 11
+08-31 04:49:45.735 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 12
+08-31 04:49:45.736 D/HelloReaderService(23339): Speaking: 8月31日(月)
+08-31 04:49:45.866 D/HelloReaderService(23339): Speaking: ホーム画面。8月31日(月)
+08-31 04:49:48.299 D/HelloReaderService(23339): handleGestureAction: 4
+08-31 04:49:48.555 D/HelloReaderService(23339): Speaking: 19°C
+08-31 04:49:48.615 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 13
+08-31 04:49:48.978 D/HelloReaderService(23339): handleGestureAction: 4
+08-31 04:49:49.021 D/HelloReaderService(23339): Speaking: 設定
+08-31 04:49:49.085 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 14
+08-31 04:49:49.634 D/HelloReaderService(23339): handleGestureAction: 4
+08-31 04:49:49.720 D/HelloReaderService(23339): Speaking: マップ
+08-31 04:49:49.777 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 15
+08-31 04:49:50.604 D/HelloReaderService(23339): handleGestureAction: 4
+08-31 04:49:50.652 D/HelloReaderService(23339): Speaking: 現在の天気
+08-31 04:49:50.709 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 16
+08-31 04:49:51.289 D/HelloReaderService(23339): handleGestureAction: 4
+08-31 04:49:51.339 D/HelloReaderService(23339): Speaking: Gemini
+08-31 04:49:51.394 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 17
+08-31 04:49:52.245 D/HelloReaderService(23339): handleGestureAction: 4
+08-31 04:49:52.303 D/HelloReaderService(23339): Speaking: Play ストア
+08-31 04:49:52.372 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 18
+08-31 04:49:53.241 D/HelloReaderService(23339): handleGestureAction: 4
+08-31 04:49:53.285 D/HelloReaderService(23339): Speaking: Gmail
+08-31 04:49:53.340 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 19
+08-31 04:49:54.049 D/HelloReaderService(23339): handleGestureAction: 4
+08-31 04:49:54.169 D/HelloReaderService(23339): Speaking: フォト
+08-31 04:49:54.223 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 20
+08-31 04:49:55.925 D/HelloReaderService(23339): playSound requested for soundId: 1 -> streamId: 21
+08-31 04:49:55.991 D/HelloReaderService(23339): Speaking: ホーム画面。8月31日(月)
+08-31 04:49:56.058 D/HelloReaderService(23339): Speaking: ホーム画面
+08-31 04:49:56.061 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 22
+08-31 04:49:56.150 D/HelloReaderService(23339): playSound requested for soundId: 4 -> streamId: 23
+08-31 04:49:56.150 D/HelloReaderService(23339): Speaking: フォト
+08-31 04:49:56.437 D/HelloReaderService(23339): playSound requested for soundId: 4 -> streamId: 24
+08-31 04:49:56.437 D/HelloReaderService(23339): Speaking: アプリのアイコン
+08-31 04:49:56.765 D/HelloReaderService(23339): Speaking: Google フォト
+08-31 04:49:57.162 D/HelloReaderService(23339): playSound requested for soundId: 4 -> streamId: 25
+08-31 04:49:59.188 D/HelloReaderService(23339): handleGestureAction: 4
+08-31 04:49:59.335 D/HelloReaderService(23339): Speaking: クリエイティブ、新しいコンテンツ ボタン
+08-31 04:49:59.395 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 27
+08-31 04:49:59.881 D/HelloReaderService(23339): Speaking: docomo、レベル 1。
+08-31 04:50:00.088 D/HelloReaderService(23339): Speaking: 4:49
+08-31 04:50:01.370 D/HelloReaderService(23339): handleGestureAction: 3
+08-31 04:50:01.409 D/HelloReaderService(23339): playSound requested for soundId: 2 -> streamId: 28
+08-31 04:50:01.409 D/HelloReaderService(23339): Speaking: これ以上 前へ に進めません
+08-31 04:50:02.545 D/HelloReaderService(23339): handleGestureAction: 3
+08-31 04:50:02.601 D/HelloReaderService(23339): playSound requested for soundId: 2 -> streamId: 29
+08-31 04:50:03.798 D/HelloReaderService(23339): Speaking: docomo、レベル 2。
+08-31 04:50:03.875 D/HelloReaderService(23339): handleGestureAction: 3
+08-31 04:50:03.905 D/HelloReaderService(23339): playSound requested for soundId: 2 -> streamId: 30
+08-31 04:50:03.905 D/HelloReaderService(23339): Speaking: これ以上 前へ に進めません
+08-31 04:50:05.905 D/HelloReaderService(23339): handleGestureAction: 4
+08-31 04:50:05.999 D/HelloReaderService(23339): Speaking: 更新情報 ボタン
+08-31 04:50:06.054 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 31
+08-31 04:50:06.940 D/HelloReaderService(23339): handleGestureAction: 4
+08-31 04:50:06.975 D/HelloReaderService(23339): Speaking: ログインしたアカウント: XXXXXXXX
+08-31 04:50:06.975 D/HelloReaderService(23339): Google One アカウント。
+08-31 04:50:06.975 D/HelloReaderService(23339): アカウントと設定。
+08-31 04:50:07.040 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 32
+08-31 04:50:07.835 D/HelloReaderService(23339): handleGestureAction: 4
+08-31 04:50:07.925 D/HelloReaderService(23339): Speaking: フォト ボタン
+08-31 04:50:07.983 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 33
+08-31 04:50:09.162 D/HelloReaderService(23339): handleGestureAction: 4
+08-31 04:50:09.247 D/HelloReaderService(23339): Speaking: コレクション ボタン
+08-31 04:50:09.296 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 34
+08-31 04:50:10.130 D/HelloReaderService(23339): Speaking: docomo、レベル 1。
+08-31 04:50:10.138 D/HelloReaderService(23339): handleGestureAction: 4
+08-31 04:50:10.208 D/HelloReaderService(23339): Speaking: 作成 ボタン
+08-31 04:50:10.261 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 35
+08-31 04:50:10.965 D/HelloReaderService(23339): handleGestureAction: 4
+08-31 04:50:11.007 D/HelloReaderService(23339): Speaking: 検索 ボタン
+08-31 04:50:11.071 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 36
+08-31 04:50:11.732 D/HelloReaderService(23339): handleGestureAction: 4
+08-31 04:50:11.765 D/HelloReaderService(23339): Speaking: 戻る
+08-31 04:50:11.866 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 38
+08-31 04:50:12.480 D/HelloReaderService(23339): handleGestureAction: 4
+08-31 04:50:12.573 D/HelloReaderService(23339): Speaking: ホーム
+08-31 04:50:12.641 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 39
+08-31 04:50:14.131 D/HelloReaderService(23339): handleGestureAction: 3
+08-31 04:50:14.171 D/HelloReaderService(23339): Speaking: 戻る
+08-31 04:50:14.234 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 40
+08-31 04:50:15.239 D/HelloReaderService(23339): handleGestureAction: 4
+08-31 04:50:15.324 D/HelloReaderService(23339): Speaking: ホーム
+08-31 04:50:15.381 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 41
+08-31 04:50:16.065 D/HelloReaderService(23339): playSound requested for soundId: 1 -> streamId: 42
+08-31 04:50:16.144 D/HelloReaderService(23339): Speaking: ホーム画面。8月31日(月)
+08-31 04:50:16.146 D/HelloReaderService(23339): playSound requested for soundId: 4 -> streamId: 43
+08-31 04:50:16.282 D/HelloReaderService(23339): playSound requested for soundId: 3 -> streamId: 44
+08-31 04:50:16.282 D/HelloReaderService(23339): Speaking: 8月31日(月)
+08-31 04:50:16.347 D/HelloReaderService(23339): Speaking: ホーム画面。8月31日(月)
+08-31 04:50:18.940 D/HelloReaderService(23339): Speaking: Wi-Fiはレベル3です。

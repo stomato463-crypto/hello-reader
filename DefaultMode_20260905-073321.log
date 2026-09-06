@@ -1,0 +1,108 @@
+﻿--------- beginning of main
+09-05 07:32:01.125 D/HelloReaderService(25507): Speaking Main: スナップショット
+09-05 07:32:01.235 D/HelloReaderService(25507): Speaking Main: スナップショット
+09-05 07:32:03.207 D/HelloReaderService(25507): playSound requested for soundId: 4 -> streamId: 61
+09-05 07:32:03.209 D/HelloReaderService(25507): Speaking Main: 通知シェード
+09-05 07:32:35.963 D/HelloReaderService(25507): playSound requested for soundId: 4 -> streamId: 62
+09-05 07:32:35.976 D/HelloReaderService(25507): Speaking Main: git add app/src/main/java/com/stomato/helloreader/HelloReaderService.kt -v
+09-05 07:32:35.976 D/HelloReaderService(25507): git commit -v -m "fix: align speakHomeScreenItems with TalkBack standard to prevent focus jumps on Pixel Launcher"
+09-05 07:32:35.976 D/HelloReaderService(25507): git push -v origin dev-straightforward-crab-aqua
+09-05 07:32:36.372 D/HelloReaderService(25507): Speaking Main: Pixel 10 76%バッテリーの充電完了まであと約7:37までに充電完了です 充電 7:37までに充電完了 76% Pixel 10
+09-05 07:32:36.592 D/HelloReaderService(25507): Speaking Main: ホーム画面。全般台風情報、台風第24号 気象庁
+09-05 07:33:01.102 D/HelloReaderService(25507): Speaking Main: スナップショット
+09-05 07:33:01.222 D/HelloReaderService(25507): Speaking Main: スナップショット
+09-05 07:33:17.450 D/HelloReaderService(26244): Hello Reader Accessibility Service Connected!
+09-05 07:33:17.454 D/HelloReaderService(26244): SoundPool Initialized (Hybrid Custom & AOSP Sounds). Activate: 1, Deactivate: 2, Focus: 3, ViewEntered: 4, Scroll: 5
+09-05 07:33:17.588 D/HelloReaderService(26244): Sub-Voice: 安定動作ピッチ変調モード (MainPitch: 1.0, SubPitch: 0.82) を有効化しました
+09-05 07:33:17.589 D/HelloReaderService(26244): Speaking Main: Hello Readerが起動しました [SubVoice Hint: サブボイス案内が有効です]
+09-05 07:33:17.665 D/HelloReaderService(26244): Speaking Main: Hello Reader 設定 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 フォネティックコードとモールス信号機能。現在は オフ です。 ⚡ フォネティック＆モールス振動 タブ1。初期設定画面を開きます 初期設定 タブ2。全アプリ対応プロファイル画面を開きます 全アプリ対応 タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 07:33:17.701 D/HelloReaderService(26244): Speaking Main: Hello Reader 設定 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 フォネティックコードとモールス信号機能。現在は オフ です。 ⚡ フォネティック＆モールス振動 タブ1。初期設定画面を開きます 初期設定 タブ2。全アプリ対応プロファイル画面を開きます 全アプリ対応 タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 07:33:17.707 D/HelloReaderService(26244): Speaking Main: 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化
+09-05 07:33:17.710 D/HelloReaderService(26244): Speaking Main: ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する [SubVoice Hint: ダブルタップで実行できます]
+09-05 07:33:17.749 D/HelloReaderService(26244): Speaking Main: Hello Reader 設定 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 フォネティックコードとモールス信号機能。現在は オフ です。 ⚡ フォネティック＆モールス振動 タブ1。初期設定画面を開きます 初期設定 タブ2。全アプリ対応プロファイル画面を開きます 全アプリ対応 タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 07:33:17.755 D/HelloReaderService(26244): Speaking Main: タブ2。全アプリ対応プロファイル画面を開きます 全アプリ対応 [SubVoice Hint: ダブルタップで実行できます]
+09-05 07:33:17.760 D/HelloReaderService(26244): Speaking Main: タブ3。カスタムラベル辞書画面を開きます カスタムラベル [SubVoice Hint: ダブルタップで実行できます]
+09-05 07:33:17.762 D/HelloReaderService(26244): Speaking Main: 📋 初期セットアップ手順
+09-05 07:33:17.764 D/HelloReaderService(26244): Speaking Main: Hello Reader 設定
+09-05 07:33:17.767 D/HelloReaderService(26244): Speaking Main: ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 [SubVoice Hint: ダブルタップで実行できます]
+09-05 07:33:17.774 D/HelloReaderService(26244): Speaking Main: ボタン [SubVoice Hint: ダブルタップで実行できます チェックなし]
+09-05 07:33:17.777 D/HelloReaderService(26244): Speaking Main: フォネティックコードとモールス信号機能。現在は オフ です。 ⚡ フォネティック＆モールス振動
+09-05 07:33:17.790 D/HelloReaderService(26244): Speaking Main: タブ1。初期設定画面を開きます 初期設定 タブ2。全アプリ対応プロファイル画面を開きます 全アプリ対応 タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 07:33:17.791 D/HelloReaderService(26244): Speaking Main: ⚡ フォネティック＆モールス振動
+09-05 07:33:17.819 D/HelloReaderService(26244): Speaking Main: Hello Reader 設定 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 フォネティックコードとモールス信号機能。現在は オフ です。 ⚡ フォネティック＆モールス振動 タブ1。初期設定画面を開きます 初期設定 タブ2。全アプリ対応プロファイル画面を開きます 全アプリ対応 タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 07:33:17.834 D/HelloReaderService(26244): Speaking Main: タブ1。初期設定画面を開きます 初期設定 タブ2。全アプリ対応プロファイル画面を開きます 全アプリ対応 タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 07:33:17.837 D/HelloReaderService(26244): Speaking Main: ⚡ フォネティック＆モールス振動
+09-05 07:33:17.837 D/HelloReaderService(26244): Sound loaded successfully! sampleId: 1
+09-05 07:33:17.837 D/HelloReaderService(26244): Sound loaded successfully! sampleId: 2
+09-05 07:33:17.838 D/HelloReaderService(26244): playSound requested for soundId: 4 -> streamId: 1
+09-05 07:33:17.839 D/HelloReaderService(26244): Speaking Main: helloreader
+09-05 07:33:17.839 D/HelloReaderService(26244): Sound loaded successfully! sampleId: 4
+09-05 07:33:17.842 D/HelloReaderService(26244): Sound loaded successfully! sampleId: 3
+09-05 07:33:17.842 D/HelloReaderService(26244): Sound loaded successfully! sampleId: 5
+09-05 07:33:17.875 D/HelloReaderService(26244): Speaking Main: Hello Reader 設定 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 フォネティックコードとモールス信号機能。現在は オフ です。 ⚡ フォネティック＆モールス振動 タブ1。初期設定画面を開きます 初期設定 タブ2。全アプリ対応プロファイル画面を開きます 全アプリ対応 タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 07:33:17.772 D/HelloReaderService(26244): Speaking Main: タブ1。初期設定画面を開きます 初期設定
+09-05 07:33:46.773 D/HelloReaderService(26244): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:33:46.773 D/HelloReaderService(26244): handleGestureAction executing for gestureId: 4
+09-05 07:33:46.773 D/HelloReaderService(26244): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:33:46.777 D/HelloReaderService(26244): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:33:46.993 D/HelloReaderService(26244): navigateFocus index=0/25, success=true, text=Hello Reader 設定 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 フォネティックコードとモールス信号機能。現在は オフ です。 ⚡ フォネティック＆モールス振動
+09-05 07:33:46.994 D/HelloReaderService(26244): Speaking Main: Hello Reader 設定 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 フォネティックコードとモールス信号機能。現在は オフ です。 ⚡ フォネティック＆モールス振動
+09-05 07:33:47.046 D/HelloReaderService(26244): playSound requested for soundId: 3 -> streamId: 2
+09-05 07:33:47.049 D/HelloReaderService(26244): Speaking Main: Hello Reader 設定 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 フォネティックコードとモールス信号機能。現在は オフ です。 ⚡ フォネティック＆モールス振動
+09-05 07:33:47.337 D/HelloReaderService(26244): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:33:47.337 D/HelloReaderService(26244): handleGestureAction executing for gestureId: 4
+09-05 07:33:47.337 D/HelloReaderService(26244): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:33:47.339 D/HelloReaderService(26244): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:33:47.458 D/HelloReaderService(26244): navigateFocus index=1/25, success=true, text=null
+09-05 07:33:47.458 D/HelloReaderService(26244): Speaking Main: 次へ の要素へ移動
+09-05 07:33:47.517 D/HelloReaderService(26244): playSound requested for soundId: 3 -> streamId: 3
+09-05 07:33:49.206 D/HelloReaderService(26244): onGesture API 30+ received: gestureId=13, displayId=0
+09-05 07:33:49.206 D/HelloReaderService(26244): handleGestureAction executing for gestureId: 13
+09-05 07:33:49.231 D/HelloReaderService(26244): Speaking Main: ホーム画面
+09-05 07:33:49.377 D/HelloReaderService(26244): Speaking Main: ホーム画面
+09-05 07:33:49.380 D/HelloReaderService(26244): playSound requested for soundId: 4 -> streamId: 4
+09-05 07:33:51.495 D/HelloReaderService(26244): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:33:51.495 D/HelloReaderService(26244): handleGestureAction executing for gestureId: 4
+09-05 07:33:51.495 D/HelloReaderService(26244): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:33:51.496 D/HelloReaderService(26244): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:33:52.131 D/HelloReaderService(26244): navigateFocus index=6/49, success=true, text=null
+09-05 07:33:52.131 D/HelloReaderService(26244): Speaking Main: 次へ の要素へ移動
+09-05 07:33:52.189 D/HelloReaderService(26244): playSound requested for soundId: 3 -> streamId: 5
+09-05 07:33:53.495 D/HelloReaderService(26244): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:33:53.495 D/HelloReaderService(26244): handleGestureAction executing for gestureId: 4
+09-05 07:33:53.495 D/HelloReaderService(26244): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:33:53.499 D/HelloReaderService(26244): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:33:53.697 D/HelloReaderService(26244): navigateFocus index=6/49, success=true, text=null
+09-05 07:33:53.698 D/HelloReaderService(26244): Speaking Main: 次へ の要素へ移動
+09-05 07:33:53.754 D/HelloReaderService(26244): playSound requested for soundId: 3 -> streamId: 6
+09-05 07:33:55.047 D/HelloReaderService(26244): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 07:33:55.047 D/HelloReaderService(26244): handleGestureAction executing for gestureId: 3
+09-05 07:33:55.047 D/HelloReaderService(26244): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 07:33:55.050 D/HelloReaderService(26244): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:33:55.242 D/HelloReaderService(26244): navigateFocus index=4/49, success=true, text=スナップショット 1/1 ページ 設定 マップ 現在の天気 Gemini Play ストア Gmail フォト YouTube 電話 メッセージ Chrome カメラ アヤメキーボード LINE 読み上げモード Lookout Signal Lite WhatsApp ＋メッセージ ドコモメール dアカウント設定 Amazon ショッピング バンドル Seeing AI Be My Eyes ユニボイスブラインド Messenger バッテリー Pixel 10 76%バッテリーの充電完了まであと約7:37までに充電完了です 充電 Windows にリンク Authenticator Athan JW Library Fajr 03:42 Dhuhr 11:38 Asr 16:12 Maghrib 18:03 Isha 19:27 Plan your day with Athan. Tap to view your daily goals [PHONE NUMBER MASKED]63 Ramadan in 156 days Let's get ready Ramadan illustration Envision AI Chat Health Element X 詐欺対策 NERV防災 Discord Bitwarden BBN聖書放送 FIFA Audio Description Crafting Kingdom Visa Sailing Telegram VLC Soundscape Bing Spotify GitHub
+09-05 07:33:55.243 D/HelloReaderService(26244): Speaking Main: スナップショット 1/1 ページ 設定 マップ 現在の天気 Gemini Play ストア Gmail フォト YouTube 電話 メッセージ Chrome カメラ アヤメキーボード LINE 読み上げモード Lookout Signal Lite WhatsApp ＋メッセージ ドコモメール dアカウント設定 Amazon ショッピング バンドル Seeing AI Be My Eyes ユニボイスブラインド Messenger バッテリー Pixel 10 76%バッテリーの充電完了まであと約7:37までに充電完了です 充電 Windows にリンク Authenticator Athan JW Library Fajr 03:42 Dhuhr 11:38 Asr 16:12 Maghrib 18:03 Isha 19:27 Plan your day with Athan. Tap to view your daily goals [電話番号匿名化]63 Ramadan in 156 days Let's get ready Ramadan illustration Envision AI Chat Health Element X 詐欺対策 NERV防災 Discord Bitwarden BBN聖書放送 FIFA Audio Description Crafting Kingdom Visa Sailing Telegram VLC Soundscape Bing Spotify GitHub
+09-05 07:33:55.290 D/HelloReaderService(26244): playSound requested for soundId: 3 -> streamId: 7
+09-05 07:33:55.293 D/HelloReaderService(26244): Speaking Main: スナップショット 1/1 ページ 設定 マップ 現在の天気 Gemini Play ストア Gmail フォト YouTube 電話 メッセージ Chrome カメラ アヤメキーボード LINE 読み上げモード Lookout Signal Lite WhatsApp ＋メッセージ ドコモメール dアカウント設定 Amazon ショッピング バンドル Seeing AI Be My Eyes ユニボイスブラインド Messenger バッテリー Pixel 10 76%バッテリーの充電完了まであと約7:37までに充電完了です 充電 Windows にリンク Authenticator Athan JW Library Fajr 03:42 Dhuhr 11:38 Asr 16:12 Maghrib 18:03 Isha 19:27 Plan your day with Athan. Tap to view your daily goals [電話番号匿名化]63 Ramadan in 156 days Let's get ready Ramadan illustration Envision AI Chat Health Element X 詐欺対策 NERV防災 Discord Bitwarden BBN聖書放送 FIFA Audio Description Crafting Kingdom Visa Sailing Telegram VLC Soundscape Bing Spotify GitHub
+09-05 07:33:57.667 D/HelloReaderService(26244): onGesture API 30+ received: gestureId=3, displayId=0
+09-05 07:33:57.667 D/HelloReaderService(26244): handleGestureAction executing for gestureId: 3
+09-05 07:33:57.667 D/HelloReaderService(26244): Swipe Left Matched -> navigateFocus BACKWARD
+09-05 07:33:57.675 D/HelloReaderService(26244): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:33:58.052 D/HelloReaderService(26244): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:33:58.446 D/HelloReaderService(26244): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:33:58.821 D/HelloReaderService(26244): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 07:33:58.821 D/HelloReaderService(26244): handleGestureAction executing for gestureId: 4
+09-05 07:33:58.821 D/HelloReaderService(26244): Swipe Right Matched -> navigateFocus FORWARD
+09-05 07:33:58.823 D/HelloReaderService(26244): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 07:33:59.013 D/HelloReaderService(26244): navigateFocus index=1/49, success=true, text=スナップショット 1/1 ページ 設定 マップ 現在の天気 Gemini Play ストア Gmail フォト YouTube 電話 メッセージ Chrome カメラ アヤメキーボード LINE 読み上げモード Lookout Signal Lite WhatsApp ＋メッセージ ドコモメール dアカウント設定 Amazon ショッピング バンドル Seeing AI Be My Eyes ユニボイスブラインド Messenger バッテリー Windows にリンク Authenticator Athan JW Library [PHONE NUMBER MASKED]63 Ramadan in 156 days Envision AI Chat Health Element X 詐欺対策 NERV防災 Discord Bitwarden BBN聖書放送 FIFA Audio Description Crafting Kingdom Visa Sailing Telegram VLC Soundscape Bing Spotify GitHub ホーム 最近のアイテムはありません Google
+09-05 07:33:59.013 D/HelloReaderService(26244): Speaking Main: スナップショット 1/1 ページ 設定 マップ 現在の天気 Gemini Play ストア Gmail フォト YouTube 電話 メッセージ Chrome カメラ アヤメキーボード LINE 読み上げモード Lookout Signal Lite WhatsApp ＋メッセージ ドコモメール dアカウント設定 Amazon ショッピング バンドル Seeing AI Be My Eyes ユニボイスブラインド Messenger バッテリー Windows にリンク Authenticator Athan JW Library [電話番号匿名化]63 Ramadan in 156 days Envision AI Chat Health Element X 詐欺対策 NERV防災 Discord Bitwarden BBN聖書放送 FIFA Audio Description Crafting Kingdom Visa Sailing Telegram VLC Soundscape Bing Spotify GitHub ホーム 最近のアイテムはありません Google
+09-05 07:33:59.018 D/HelloReaderService(26244): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:33:59.130 D/HelloReaderService(26244): playSound requested for soundId: 3 -> streamId: 8
+09-05 07:33:59.133 D/HelloReaderService(26244): Speaking Main: スナップショット 1/1 ページ 設定 マップ 現在の天気 Gemini Play ストア Gmail フォト YouTube 電話 メッセージ Chrome カメラ アヤメキーボード LINE 読み上げモード Lookout Signal Lite WhatsApp ＋メッセージ ドコモメール dアカウント設定 Amazon ショッピング バンドル Seeing AI Be My Eyes ユニボイスブラインド Messenger バッテリー Windows にリンク Authenticator Athan JW Library [電話番号匿名化]63 Ramadan in 156 days Envision AI Chat Health Element X 詐欺対策 NERV防災 Discord Bitwarden BBN聖書放送 FIFA Audio Description Crafting Kingdom Visa Sailing Telegram VLC Soundscape Bing Spotify GitHub ホーム 最近のアイテムはありません Google
+09-05 07:33:59.334 D/HelloReaderService(26244): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:33:59.719 D/HelloReaderService(26244): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:34:00.058 D/HelloReaderService(26244): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:34:00.299 D/HelloReaderService(26244): Speaking Main: Pixel 10 77%バッテリーの充電完了まであと約7:37までに充電完了です 充電 7:37までに充電完了 77% Pixel 10
+09-05 07:34:00.360 D/HelloReaderService(26244): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:34:00.666 D/HelloReaderService(26244): Speaking Main: ホーム画面
+09-05 07:34:00.863 D/HelloReaderService(26244): navigateFocus called: directionName=前へ, isKeyguardLocked=false
+09-05 07:34:01.194 D/HelloReaderService(26244): Speaking Main: スナップショット

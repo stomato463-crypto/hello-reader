@@ -1,0 +1,89 @@
+﻿--------- beginning of main
+09-05 11:00:00.540 D/HelloReaderService(26159): playSound requested for soundId: 1 -> streamId: 40
+09-05 11:00:00.541 D/HelloReaderService(26159): Speaking Main: 11時ちょうどです [SubVoice Hint: バッテリー残量80パーセント]
+09-05 11:00:49.448 D/HelloReaderService(27021): Hello Reader Accessibility Service Connected!
+09-05 11:00:49.467 D/HelloReaderService(27021): SoundPool Initialized (Hybrid Custom & AOSP Sounds). Activate: 1, Deactivate: 2, Focus: 3, ViewEntered: 4, Scroll: 5
+09-05 11:00:51.087 D/HelloReaderService(27021): Sub-Voice: 安定動作ピッチ変調モード (MainPitch: 1.0, SubPitch: 0.82) を有効化しました
+09-05 11:00:51.241 D/HelloReaderService(27021): Speaking Main: Hello Readerが起動しました [SubVoice Hint: サブボイス案内が有効です]
+09-05 11:00:51.446 D/HelloReaderService(27021): Sound loaded successfully! sampleId: 2
+09-05 11:00:51.446 D/HelloReaderService(27021): Sound loaded successfully! sampleId: 1
+09-05 11:00:51.448 D/HelloReaderService(27021): Sound loaded successfully! sampleId: 4
+09-05 11:00:51.581 D/HelloReaderService(27021): Sound loaded successfully! sampleId: 3
+09-05 11:00:51.834 D/HelloReaderService(27021): Sound loaded successfully! sampleId: 5
+09-05 11:01:47.078 D/HelloReaderService(27021): Speaking Main: 通知: Messenger。石川 有生さんからのメッセージ: 【お知らせ】  しばらく、Zoom礼拝と日曜のZoomお茶会をお休みしておりましたが、9月から再開します。  ◯Zoomお茶会 ・明日9/6から再開 ・YouTubeのオンライン礼拝後21時過ぎから ・オンライン礼拝の概要欄にリンクあり ・お茶会なので極めて真面目な聖書の話をしています  ◯Zoom礼拝 ・9/9から再開 ・第2・4水曜の10-12時 ・前日にZoomの案内を送ります ・対話式の礼拝会  よろしくお願いします！
+09-05 11:02:43.045 D/HelloReaderService(27021): Screen Turned ON
+09-05 11:02:43.643 D/HelloReaderService(27021): LockScreen Details: ロック画面。9月5日 土曜日 11時02分。指紋センサーは画面の下部中央にあります
+09-05 11:02:43.643 D/HelloReaderService(27021): Speaking Main: ロック画面。9月5日 土曜日 11時02分。指紋センサーは画面の下部中央にあります
+09-05 11:02:44.542 D/HelloReaderService(27021): playSound requested for soundId: 3 -> streamId: 1
+09-05 11:02:44.544 D/HelloReaderService(27021): Speaking Main: デバイスはロックされています キー
+09-05 11:02:44.595 D/HelloReaderService(27021): playSound requested for soundId: 4 -> streamId: 2
+09-05 11:02:44.596 D/HelloReaderService(27021): Speaking Main: helloreader
+09-05 11:02:44.602 D/HelloReaderService(27021): playSound requested for soundId: 3 -> streamId: 3
+09-05 11:02:44.765 D/HelloReaderService(27021): Speaking Main: Hello Reader 設定 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オン です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 タブ1。初期設定画面を開きます 初期設定 タブ2。全アプリ対応プロファイル画面を開きます 全アプリ対応 タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 11:02:44.813 D/HelloReaderService(27021): Speaking Main: フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動
+09-05 11:02:45.028 D/HelloReaderService(27021): Speaking Main: Hello Reader 設定 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オン です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動
+09-05 11:02:45.056 D/HelloReaderService(27021): Speaking Main: 戻る
+09-05 11:02:45.085 D/HelloReaderService(27021): playSound requested for soundId: 3 -> streamId: 4
+09-05 11:02:45.086 D/HelloReaderService(27021): Speaking Main: ⚡ フォネティック＆モールス振動
+09-05 11:02:45.108 D/HelloReaderService(27021): playSound requested for soundId: 4 -> streamId: 5
+09-05 11:02:45.111 D/HelloReaderService(27021): Speaking Main: アプリのアイコン
+09-05 11:02:45.124 D/HelloReaderService(27021): User Present (Unlocked)
+09-05 11:02:45.125 D/HelloReaderService(27021): Speaking Main: ロック解除
+09-05 11:02:45.144 D/HelloReaderService(27021): playSound requested for soundId: 3 -> streamId: 6
+09-05 11:02:45.150 D/HelloReaderService(27021): Speaking Main: ホーム画面
+09-05 11:02:45.162 D/HelloReaderService(27021): playSound requested for soundId: 4 -> streamId: 7
+09-05 11:02:45.250 D/HelloReaderService(27021): Speaking Main: 通知シェード
+09-05 11:02:47.534 D/HelloReaderService(27021): Speaking Main: Hello Reader 設定 📋 初期セットアップ手順 ボタン1。必要なアクセス権限を許可するダイアログを開きます 1. 必要な権限を許可する ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します 2. アクセシビリティを有効化 ⚙️ 支援モジュール設定 スマート時報・チャイム機能。現在は オン です。 ⏰ 毎時0分の時報・チャイム 毎時0分に優しく時刻をお知らせします 点字ディスプレイ連携。現在は オフ です。 ⠃⠗⠇ 点字ディスプレイ連携 BrailleSense 6 Mini / 7 等の点字出力サポート 触覚フィードバック。現在は オン です。 📳 触覚フィードバック (振動) フォーカス移動やボタンタップ時の振動案内 フォネティックコードとモールス信号機能。現在は オン です。 ⚡ フォネティック＆モールス振動 発火タイミング設定: TTS音声の後にモールス振動 タブ1。初期設定画面を開きます 初期設定 タブ2。全アプリ対応プロファイル画面を開きます 全アプリ対応 タブ3。カスタムラベル辞書画面を開きます カスタムラベル
+09-05 11:02:49.493 D/HelloReaderService(27021): playSound requested for soundId: 3 -> streamId: 8
+09-05 11:02:49.495 D/HelloReaderService(27021): Speaking Main: ⏰ 毎時0分の時報・チャイム
+09-05 11:02:50.897 D/HelloReaderService(27021): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 11:02:50.897 D/HelloReaderService(27021): handleGestureAction executing for gestureId: 4
+09-05 11:02:50.903 D/HelloReaderService(27021): Swipe Right Matched -> navigateFocus FORWARD
+09-05 11:02:50.904 D/HelloReaderService(27021): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 11:02:51.107 D/HelloReaderService(27021): navigateFocus success=true, text=ボタン
+09-05 11:02:51.107 D/HelloReaderService(27021): Speaking Main: ボタン [SubVoice Hint: チェックあり]
+09-05 11:02:51.164 D/HelloReaderService(27021): playSound requested for soundId: 3 -> streamId: 9
+09-05 11:02:52.473 D/HelloReaderService(27021): onGesture API 30+ received: gestureId=13, displayId=0
+09-05 11:02:52.473 D/HelloReaderService(27021): handleGestureAction executing for gestureId: 13
+09-05 11:02:52.487 D/HelloReaderService(27021): Speaking Main: ホーム画面
+09-05 11:02:52.690 D/HelloReaderService(27021): playSound requested for soundId: 4 -> streamId: 10
+09-05 11:02:52.718 D/HelloReaderService(27021): playSound requested for soundId: 5 -> streamId: 11
+09-05 11:02:52.719 D/HelloReaderService(27021): Speaking Main: 1項目中 1項目を表示中
+09-05 11:02:53.925 D/HelloReaderService(27021): playSound requested for soundId: 3 -> streamId: 12
+09-05 11:02:53.928 D/HelloReaderService(27021): Speaking Main: 晴れ 23° [SubVoice Hint: ダブルタップで実行できます]
+09-05 11:02:55.485 D/HelloReaderService(27021): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 11:02:55.490 D/HelloReaderService(27021): Swipe Right Matched -> navigateFocus FORWARD
+09-05 11:02:55.490 D/HelloReaderService(27021): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 11:02:55.485 D/HelloReaderService(27021): handleGestureAction executing for gestureId: 4
+09-05 11:02:55.990 D/HelloReaderService(27021): navigateFocus success=true, text=0。ゼロ
+09-05 11:02:55.991 D/HelloReaderService(27021): Speaking Main: 0。ゼロ
+09-05 11:02:56.040 D/HelloReaderService(27021): playSound requested for soundId: 3 -> streamId: 13
+09-05 11:02:56.820 D/HelloReaderService(27021): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 11:02:56.820 D/HelloReaderService(27021): handleGestureAction executing for gestureId: 4
+09-05 11:02:56.825 D/HelloReaderService(27021): Swipe Right Matched -> navigateFocus FORWARD
+09-05 11:02:56.826 D/HelloReaderService(27021): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 11:02:57.073 D/HelloReaderService(27021): navigateFocus success=true, text=Gemini
+09-05 11:02:57.074 D/HelloReaderService(27021): Speaking Main: Gemini
+09-05 11:02:57.133 D/HelloReaderService(27021): playSound requested for soundId: 3 -> streamId: 14
+09-05 11:02:58.559 D/HelloReaderService(27021): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 11:02:58.560 D/HelloReaderService(27021): handleGestureAction executing for gestureId: 4
+09-05 11:02:58.561 D/HelloReaderService(27021): Swipe Right Matched -> navigateFocus FORWARD
+09-05 11:02:58.562 D/HelloReaderService(27021): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 11:02:58.807 D/HelloReaderService(27021): navigateFocus success=true, text=Gemini に相談 Gemini
+09-05 11:02:58.807 D/HelloReaderService(27021): Speaking Main: Gemini に相談 Gemini [SubVoice Hint: ダブルタップで実行できます]
+09-05 11:02:58.861 D/HelloReaderService(27021): playSound requested for soundId: 3 -> streamId: 15
+09-05 11:03:00.724 D/HelloReaderService(27021): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 11:03:00.724 D/HelloReaderService(27021): handleGestureAction executing for gestureId: 4
+09-05 11:03:00.735 D/HelloReaderService(27021): Swipe Right Matched -> navigateFocus FORWARD
+09-05 11:03:00.736 D/HelloReaderService(27021): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 11:03:00.958 D/HelloReaderService(27021): navigateFocus success=true, text=23°
+09-05 11:03:00.959 D/HelloReaderService(27021): Speaking Main: 23°
+09-05 11:03:01.012 D/HelloReaderService(27021): playSound requested for soundId: 3 -> streamId: 16
+09-05 11:03:01.076 D/HelloReaderService(27021): Speaking Main: スナップショット
+09-05 11:03:02.756 D/HelloReaderService(27021): onGesture API 30+ received: gestureId=4, displayId=0
+09-05 11:03:02.756 D/HelloReaderService(27021): handleGestureAction executing for gestureId: 4
+09-05 11:03:02.757 D/HelloReaderService(27021): Swipe Right Matched -> navigateFocus FORWARD
+09-05 11:03:02.758 D/HelloReaderService(27021): navigateFocus called: directionName=次へ, isKeyguardLocked=false
+09-05 11:03:03.020 D/HelloReaderService(27021): navigateFocus success=true, text=最近のアイテムはありません
+09-05 11:03:03.020 D/HelloReaderService(27021): Speaking Main: 最近のアイテムはありません
+09-05 11:03:03.077 D/HelloReaderService(27021): playSound requested for soundId: 3 -> streamId: 17
