@@ -83,7 +83,7 @@ adb shell am start -n com.stomato.helloreader/.MainActivity
 - **プロジェクト全体**: [The Clear BSD License](LICENSE) (Copyright (c) 2026 stomato463-crypto)
 - **引用音源・リソース**: [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) (Google AOSP TalkBack Resources / Google LLC)
 
-### 免責事項 (NO WARRANTY / Debian Style)
+### 免責事項 (NO WARRANTY)
 
 > **Hello Reader comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law.**
 >
