@@ -1,5 +1,7 @@
 # Hello Reader 📱✨
 
+> **Hello Reader comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law.**
+
 **Hello Reader** は、視覚障害者および盲ろう当事者のアクセシビリティ向上を目的とした、Google AOSP TalkBack 100%互換の次世代 Android アクセシビリティ・スクリーンリーダーサービスです。
 
 ---
@@ -77,7 +79,13 @@ adb shell am start -n com.stomato.helloreader/.MainActivity
 
 ---
 
-## 📄 ライセンス
+## 📄 ライセンス ＆ 免責事項 (License & Disclaimer)
 
 - **プロジェクト全体**: [The Clear BSD License](LICENSE) (Copyright (c) 2026 stomato463-crypto)
 - **引用音源・リソース**: [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) (Google AOSP TalkBack Resources / Google LLC)
+
+### 免責事項 (NO WARRANTY / Debian Style)
+
+> **Hello Reader comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law.**
+>
+> `Hello Reader` は、適用される法律が認める限りにおいて**絶対にいかなる保証も伴わずに**提供されるオープンソースソフトウェアです。本ソフトウェアの使用によって生じた直接的・間接的な損害について、開発者および貢献者は一切の賠償責任を負いません。
