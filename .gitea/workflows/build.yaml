@@ -81,7 +81,11 @@ jobs:
           name: app-debug-apk
           path: app/build/outputs/apk/debug
 
+<<<<<<< HEAD
       - name: Push to GitHub.com main branch and Create GitHub Release
+=======
+      - name: Configure GitHub Remote
+>>>>>>> 75cc46e (refactor(ci): split sync steps directly in workflow to keep repository clean)
         run: |
           $env:GIT_SSH_COMMAND = "ssh -o StrictHostKeyChecking=no"
           if (git remote | Select-String -Pattern "^github$") {
@@ -89,6 +93,7 @@ jobs:
           } else {
               git remote add github git@github.com:stomato463-crypto/hello-reader.git
           }
+<<<<<<< HEAD
           # 1. GitHub.com の main ブランチへコードをプッシュ
           git push -f github github-main:main
 
@@ -102,6 +107,32 @@ jobs:
           git push -f github $tagName
 
           # 3. GitHub CLI (gh) を使って、GitHub Release と自動リリースノートを生成！
+=======
+        shell: powershell
+
+      - name: Push Code to GitHub.com main Branch
+        run: |
+          $env:GIT_SSH_COMMAND = "ssh -o StrictHostKeyChecking=no"
+          git push -f github github-main:main
+        shell: powershell
+
+      - name: Tag and Push Tag to GitHub.com
+        run: |
+          $env:GIT_SSH_COMMAND = "ssh -o StrictHostKeyChecking=no"
+          $shortHash = (git rev-parse --short=8 HEAD).Trim()
+          $dateStr = Get-Date -Format "yyyyMMdd"
+          $tagName = "v0.0.1-alpha-" + $dateStr + "-" + $shortHash
+          Write-Host "Creating and Pushing Tag: $tagName" -ForegroundColor Green
+          git tag -f $tagName
+          git push -f github $tagName
+        shell: powershell
+
+      - name: Create GitHub Release via GH CLI
+        run: |
+          $shortHash = (git rev-parse --short=8 HEAD).Trim()
+          $dateStr = Get-Date -Format "yyyyMMdd"
+          $tagName = "v0.0.1-alpha-" + $dateStr + "-" + $shortHash
+>>>>>>> 75cc46e (refactor(ci): split sync steps directly in workflow to keep repository clean)
           if (Get-Command gh -ErrorAction SilentlyContinue) {
               $apkFile = Get-ChildItem "app/build/outputs/apk/debug/debug-*.apk" | Select-Object -First 1
               if ($apkFile) {
