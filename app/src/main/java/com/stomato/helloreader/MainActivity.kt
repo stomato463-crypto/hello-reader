@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.speech.tts.TextToSpeech
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -27,6 +28,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.stomato.helloreader.ui.theme.HelloreaderTheme
+import androidx.compose.ui.text.font.FontWeight
 import java.util.Locale
 
 import androidx.compose.ui.platform.LocalContext
@@ -298,9 +300,29 @@ fun PermissionSetupScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(52.dp)
+                        .padding(bottom = 8.dp)
                         .semantics { contentDescription = "ボタン2。Androidのアクセシビリティ設定画面を開き、Hello Readerサービスを有効化します" }
                 ) {
                     Text("2. アクセシビリティを有効化", fontSize = 16.sp)
+                }
+
+                var showBrailleDialog by remember { mutableStateOf(false) }
+
+                Button(
+                    onClick = { showBrailleDialog = true },
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(52.dp)
+                        .semantics { contentDescription = "ボタン3。ブレールメモやブレイルセンスなどの点字ディスプレイを検索・ペアリング接続する画面を開きます" }
+                ) {
+                    Text("3. 点字ディスプレイを検索・ペアリング (BMS / BS6)", fontSize = 15.sp)
+                }
+
+                if (showBrailleDialog) {
+                    BrailleDeviceScanDialog(
+                        onDismiss = { showBrailleDialog = false }
+                    )
                 }
             }
         }
@@ -797,4 +819,107 @@ fun CustomLabelsScreen() {
             }
         }
     }
+}
+
+@Composable
+fun BrailleDeviceScanDialog(onDismiss: () -> Unit) {
+    val context = LocalContext.current
+    val brailleBtManager = remember {
+        com.stomato.helloreader.braille.BrailleBluetoothManager(
+            context = context,
+            onDataReceived = { },
+            onConnectionStateChanged = { _, _ -> }
+        )
+    }
+    var pairedDevices by remember { mutableStateOf(brailleBtManager.getPairedDevices()) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = "📟 点字ディスプレイ検索・接続",
+                fontSize = 20.sp,
+                modifier = Modifier.semantics { heading() }
+            )
+        },
+        text = {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
+            ) {
+                Text(
+                    text = "ブレールメモ (KGS BMS/BM) や ブレイルセンス (HIMS) などの点字ディスプレイを選択してペアリング接続します。",
+                    fontSize = 13.sp,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(bottom = 12.dp)
+                )
+
+                Text(
+                    text = "【ペアリング済み点字端末】 (${pairedDevices.size}件)",
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+
+                if (pairedDevices.isEmpty()) {
+                    Text(
+                        text = "ペアリング済みのBluetooth点字端末が見つかりません。下のボタンから新しい端末を検索・追加してください。",
+                        fontSize = 12.sp,
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                } else {
+                    pairedDevices.forEach { device ->
+                        OutlinedButton(
+                            onClick = {
+                                Toast.makeText(context, "${device.name ?: "点字端末"} に接続を試みます...", Toast.LENGTH_SHORT).show()
+                                brailleBtManager.connectToDevice(device)
+                                onDismiss()
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 4.dp)
+                                .semantics { contentDescription = "点字端末 ${device.name ?: "不明な機器"} にワンタップで接続します" }
+                        ) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text("📟 ${device.name ?: "不明な点字端末"}", fontSize = 14.sp)
+                                Text("接続", fontSize = 12.sp, color = MaterialTheme.colorScheme.primary)
+                            }
+                        }
+                    }
+                }
+
+                HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
+
+                Button(
+                    onClick = {
+                        try {
+                            val intent = Intent(Settings.ACTION_BLUETOOTH_SETTINGS).apply {
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            }
+                            context.startActivity(intent)
+                        } catch (e: Exception) {
+                            Toast.makeText(context, "Bluetooth設定を開けませんでした", Toast.LENGTH_SHORT).show()
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp)
+                        .semantics { contentDescription = "Android標準のBluetooth新しい機器をペアリング画面を開きます" }
+                ) {
+                    Text("🔍 新しいBluetooth端末を検索・追加", fontSize = 14.sp)
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text("閉じる")
+            }
+        }
+    )
 }
