@@ -17,6 +17,7 @@ import android.os.BatteryManager
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.provider.Settings
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import android.telecom.TelecomManager
@@ -365,6 +366,15 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     Log.d(TAG, "User Present (Unlocked)")
                     lastUnlockTime = System.currentTimeMillis()
                     speak("ロック解除")
+                    // ロック解除直後にIME/タッチ探索バインド競合で音声イベントが止まるのを防ぐためサービス設定をリフレッシュ！
+                    mainHandler.postDelayed({
+                        try {
+                            val curInfo = serviceInfo
+                            if (curInfo != null) {
+                                serviceInfo = curInfo
+                            }
+                        } catch (e: Exception) { }
+                    }, 300)
                 }
             }
         }
