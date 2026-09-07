@@ -2328,6 +2328,30 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         } catch (e: Exception) { }
     }
 
+    /**
+     * 🌸 なでしこv3風メモロジック
+     * システムプロセス: helloreaderservice
+     * もし、nullエラー（NullPointerException）ならば、TalkBack (com.google.android.marvin.talkback) 緊急起動案内を開く
+     * 違えばスキップ
+     */
+    fun checkEmergencyAudioRecovery(error: Throwable?) {
+        val processName = "helloreaderservice"
+        if (error is NullPointerException || error?.cause is NullPointerException) {
+            Log.e(TAG, "[$processName] Nullエラーを検出！TalkBack (マーヴィン・トークバック com.google.android.marvin.talkback) 緊急復帰案内を起動します")
+            try {
+                val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                startActivity(intent)
+                speak("音声読み上げのトラブルを検知したため、緊急復帰案内を開始しました。画面が見えなくなったり操作に迷った時は、スマートフォンの音量ボタンの上と下を同時に約3秒間長押ししてください。いつでも標準のTalkBackに切り替えられます。")
+            } catch (e: Exception) {
+                Log.e(TAG, "[$processName] 緊急復帰処理エラー: ${e.message}")
+            }
+        } else {
+            Log.d(TAG, "[$processName] Nullエラーではないため復帰処理はスキップします")
+        }
+    }
+
     override fun onDestroy() {
         Log.d(TAG, "HelloReaderService onDestroy called")
         cleanupResources()
