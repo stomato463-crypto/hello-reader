@@ -18,6 +18,14 @@ class BrailleManager(private val context: Context) {
     private var activeDriver: BrailleDriver = BrailleSenseDriver(cellCount = 20)
     private val executor = Executors.newSingleThreadExecutor()
 
+    val activeDriverName: String
+        get() = activeDriver.driverName
+
+    fun setDriver(driver: BrailleDriver) {
+        activeDriver = driver
+        Log.i(TAG, "Active braille driver switched to: ${driver.driverName} (${driver.cellCount} cells)")
+    }
+
     val bluetoothManager: BrailleBluetoothManager by lazy {
         BrailleBluetoothManager(
             context = context,
@@ -25,7 +33,22 @@ class BrailleManager(private val context: Context) {
             onConnectionStateChanged = { connected, deviceName ->
                 Log.d(TAG, "Braille connection changed: connected=$connected, device=$deviceName")
                 if (connected) {
-                    displayText("点字端末に接続しました")
+                    val name = deviceName ?: ""
+                    // デバイス名から自動判別 (KGS ブレールメモスマート vs HIMS ブレイルセンス)
+                    if (name.contains("BMS", ignoreCase = true) ||
+                        name.contains("BM", ignoreCase = true) ||
+                        name.contains("BrailleMemo", ignoreCase = true) ||
+                        name.contains("KGS", ignoreCase = true)
+                    ) {
+                        val cells = if (name.contains("40")) 40 else 16
+                        setDriver(BrailleMemoDriver(cellCount = cells))
+                    } else if (name.contains("Sense", ignoreCase = true) ||
+                        name.contains("HIMS", ignoreCase = true)
+                    ) {
+                        val cells = if (name.contains("32")) 32 else 20
+                        setDriver(BrailleSenseDriver(cellCount = cells))
+                    }
+                    displayText("${activeDriver.driverName}に接続しました")
                 }
             }
         )
