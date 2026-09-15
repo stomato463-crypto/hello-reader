@@ -15,6 +15,8 @@ import android.media.AudioAttributes
 import android.media.SoundPool
 import android.os.BatteryManager
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.provider.Settings
@@ -510,6 +512,9 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 }
             }
         }
+
+        // 8. 緊急復帰ウォッチドッグ (独立プロセス :watchdog) の起動 ＆ 心拍送信ループ開始
+        startWatchdog()
     }
 
     override fun onInit(status: Int) {
@@ -2317,6 +2322,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     }
 
     private fun cleanupResources() {
+        stopWatchdog()
         try {
             unregisterReceiver(screenReceiver)
             unregisterReceiver(phoneStateReceiver)
@@ -2338,6 +2344,47 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         } catch (e: Exception) { }
     }
 
+    // 🌸 Watchdog (緊急復帰監視サービス) 用心拍タイマー
+    private val watchdogHeartbeatHandler = Handler(Looper.getMainLooper())
+    private val watchdogHeartbeatRunnable = object : Runnable {
+        override fun run() {
+            try {
+                val intent = Intent(this@HelloReaderService, HelloReaderWatchdogService::class.java).apply {
+                    action = HelloReaderWatchdogService.ACTION_HEARTBEAT
+                }
+                startService(intent)
+            } catch (e: Exception) {
+                Log.e(TAG, "Watchdog heartbeat send error: ${e.message}")
+            }
+            watchdogHeartbeatHandler.postDelayed(this, 10_000L) // 10秒ごとに心拍送信
+        }
+    }
+
+    private fun startWatchdog() {
+        try {
+            val intent = Intent(this, HelloReaderWatchdogService::class.java).apply {
+                action = HelloReaderWatchdogService.ACTION_START_WATCHDOG
+            }
+            startService(intent)
+            watchdogHeartbeatHandler.removeCallbacks(watchdogHeartbeatRunnable)
+            watchdogHeartbeatHandler.postDelayed(watchdogHeartbeatRunnable, 10_000L)
+            Log.d(TAG, "Watchdog service started and heartbeat loop initiated")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to start Watchdog service: ${e.message}")
+        }
+    }
+
+    private fun stopWatchdog() {
+        try {
+            watchdogHeartbeatHandler.removeCallbacks(watchdogHeartbeatRunnable)
+            val intent = Intent(this, HelloReaderWatchdogService::class.java).apply {
+                action = HelloReaderWatchdogService.ACTION_STOP_WATCHDOG
+            }
+            startService(intent)
+            Log.d(TAG, "Watchdog service stopped")
+        } catch (e: Exception) { }
+    }
+
     /**
      * 🌸 なでしこv3風メモロジック
      * システムプロセス: helloreaderservice
@@ -2353,7 +2400,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }
                 startActivity(intent)
-                speak("音声読み上げのトラブルを検知したため、緊急復帰案内を開始しました。画面が見えなくなったり操作に迷った時は、スマートフォンの音量ボタンの上と下を同時に約3秒間長押ししてください。いつでも標準のTalkBackに切り替えられます。")
+                speak(HelloReaderWatchdogService.EMERGENCY_SPEECH_TEXT)
             } catch (e: Exception) {
                 Log.e(TAG, "[$processName] 緊急復帰処理エラー: ${e.message}")
             }
