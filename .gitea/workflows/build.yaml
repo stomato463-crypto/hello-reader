@@ -29,7 +29,9 @@ jobs:
         shell: powershell
 
       - name: Build Debug APK Verification (Sparta Check)
-        run: .\gradlew.bat clean assembleDebug
+        run: |
+          .\gradlew.bat clean assembleDebug --no-daemon
+          .\gradlew.bat --stop
         shell: powershell
 
       - name: Rename and Copy APK according to AGENTS.md policy
