@@ -1,5 +1,7 @@
 package com.stomato.helloreader
 
+import android.app.ActivityManager
+import android.app.KeyguardManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -47,13 +49,36 @@ class HelloReaderWatchdogService : Service(), TextToSpeech.OnInitListener {
 
             val elapsed = System.currentTimeMillis() - lastHeartbeatTime
             if (elapsed >= TIMEOUT_MS) {
-                Log.e(TAG, "[$TIMEOUT_MS ms] メインサービスからの心拍が途絶えました。完全フリーズと判断し緊急復帰処理を開始します。")
-                triggerEmergencyRecovery()
-                isMonitoring = false // 連打防止のため監視を一時停止
+                if (isKeyguardLockedAndMainProcessAlive()) {
+                    Log.d(TAG, "[$TIMEOUT_MS ms] 心拍途絶を検知しましたが、画面ロック中でメインプロセスが生存しているため緊急復帰案内を抑止します。")
+                    handler.postDelayed(this, CHECK_INTERVAL_MS)
+                } else {
+                    Log.e(TAG, "[$TIMEOUT_MS ms] メインサービスからの心拍が途絶えました。完全フリーズと判断し緊急復帰処理を開始します。")
+                    triggerEmergencyRecovery()
+                    isMonitoring = false // 連打防止のため監視を一時停止
+                }
             } else {
                 handler.postDelayed(this, CHECK_INTERVAL_MS)
             }
         }
+    }
+
+    /**
+     * 🌸 画面ロック状態かつメインプロセス生存の判定
+     * もし、画面ロック状態かつ HelloReaderService（メインプロセス）が生存しているならば、
+     * 画面ロック状態での誤発動を防止するため true を返します。
+     */
+    private fun isKeyguardLockedAndMainProcessAlive(): Boolean {
+        val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as? KeyguardManager
+        val isLocked = keyguardManager?.isKeyguardLocked == true
+
+        if (!isLocked) {
+            return false
+        }
+
+        val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as? ActivityManager
+        val runningProcesses = activityManager?.runningAppProcesses
+        return runningProcesses?.any { it.processName == packageName } == true
     }
 
     override fun onCreate() {
