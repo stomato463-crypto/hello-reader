@@ -2409,6 +2409,42 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
     }
 
+    /**
+     * 🌸 モールス信号・フォネティック読み上げ制御 (なでしこ3仕様書 src/Morse_code_conditions.nako3 準拠)
+     * 【ガード1】画面にアプリアイコンが並んでいる場合はモールス不要（TTS読み上げのみで終了）
+     * 【ガード2】0.5秒後のフォネティック詳細読みを発声中もモールス不要（TTS読み上げのみで終了）
+     * 【本処理】キーボード表示中かつ半角英数字の時だけモールス信号フィードバックを実行！
+     */
+    fun processMorseCodeConditions(
+        node: AccessibilityNodeInfo?,
+        spokenText: String,
+        isAppIconList: Boolean = false,
+        isPhoneticSpeaking: Boolean = false
+    ) {
+        // 【ガード1】アプリアイコン並び時（ホーム画面/ランチャー判定）
+        if (isAppIconList) {
+            speak(spokenText)
+            return
+        }
+
+        // 【ガード2】0.5秒後のフォネティック詳細読み発声中
+        if (isPhoneticSpeaking) {
+            speak(spokenText)
+            return
+        }
+
+        // 【本処理】キーボードエリア表示中かつ文字入力モードが「半角英数字」
+        val char = spokenText.trim().uppercase(Locale.JAPANESE).singleOrNull()
+        val morsePattern = if (char != null) MORSE_MAP[char] else null
+
+        if (morsePattern != null && ::hapticFeedbackManager.isInitialized) {
+            speak(spokenText)
+            hapticFeedbackManager.performMorsePattern(morsePattern)
+        } else {
+            speak(spokenText)
+        }
+    }
+
     override fun onDestroy() {
         Log.d(TAG, "HelloReaderService onDestroy called")
         cleanupResources()
