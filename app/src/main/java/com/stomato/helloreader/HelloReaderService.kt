@@ -2411,25 +2411,36 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
     /**
      * 🌸 モールス信号・フォネティック読み上げ制御 (なでしこ3仕様書 src/Morse_code_conditions.nako3 準拠)
-     * もし、アプリアイコンが並んでいるならば（ホーム画面/ランチャー判定）、読み上げだけ。
-     * 違えば、もしキーボードエリア（IME）が表示中かつ文字入力モードが「半角英数字」ならば、モールス符号振動＋TTS読み上げを実行。
+     * 【ガード1】画面にアプリアイコンが並んでいる場合はモールス不要（TTS読み上げのみで終了）
+     * 【ガード2】0.5秒後のフォネティック詳細読みを発声中もモールス不要（TTS読み上げのみで終了）
+     * 【本処理】キーボード表示中かつ半角英数字の時だけモールス信号フィードバックを実行！
      */
-    fun processMorseCodeConditions(node: AccessibilityNodeInfo?, spokenText: String, isAppIconList: Boolean = false) {
+    fun processMorseCodeConditions(
+        node: AccessibilityNodeInfo?,
+        spokenText: String,
+        isAppIconList: Boolean = false,
+        isPhoneticSpeaking: Boolean = false
+    ) {
+        // 【ガード1】アプリアイコン並び時（ホーム画面/ランチャー判定）
         if (isAppIconList) {
-            // アプリアイコンが並んでいる場合は、音声読み上げ（TTS）のみ実行
             speak(spokenText)
             return
         }
 
+        // 【ガード2】0.5秒後のフォネティック詳細読み発声中
+        if (isPhoneticSpeaking) {
+            speak(spokenText)
+            return
+        }
+
+        // 【本処理】キーボードエリア表示中かつ文字入力モードが「半角英数字」
         val char = spokenText.trim().uppercase(Locale.JAPANESE).singleOrNull()
         val morsePattern = if (char != null) MORSE_MAP[char] else null
 
         if (morsePattern != null && ::hapticFeedbackManager.isInitialized) {
-            // キーボード入力中かつ半角英数字モード時のモールス符号振動実行
             speak(spokenText)
             hapticFeedbackManager.performMorsePattern(morsePattern)
         } else {
-            // それ以外は通常の音声読み上げのみ
             speak(spokenText)
         }
     }
