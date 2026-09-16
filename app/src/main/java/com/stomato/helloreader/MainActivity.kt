@@ -567,7 +567,7 @@ fun SupportScreen() {
                         .semantics { heading() }
                 )
                 Text(
-                    text = "問い合わせ・ご意見は下記のボタンを押して表示されるメール作成画面の本文に入力して送信してください。",
+                    text = "問い合わせ・ご意見は下記のボタンを押して表示されるメール作成画面の本文に入力して送信してください。返信は、順次開発者より行います。",
                     fontSize = 14.sp,
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
                     modifier = Modifier.padding(bottom = 16.dp)
