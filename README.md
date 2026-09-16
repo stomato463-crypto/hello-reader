@@ -1,7 +1,17 @@
 # Hello Reader 📱✨
 
 > **Hello Reader comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law.**
+This accessibility service is under development and is not yet complete.
+Implementation changes and updates may occur at the developer's discretion to improve quality.
 
+## 🔒 プライバシー ＆ セキュリティ方針 (Watchdogの安全性)
+
+- **個人情報の収集・外部送信は一切行いません**
+  本アプリは完全なローカル（端末内）で動作し、画面の読み上げ内容、電話帳データ、操作ログ等を外部サーバーへ送信・収集することは一切ありません。
+- **Watchdog（監視プロセス）の目的と安全性**
+  独立常駐している Watchdog サービス（`:watchdog`）は、メインサービスが完全フリーズして音声読み上げが途絶えた場合に、緊急復帰案内（TalkBack切替案内やモールス信号振動）を行うためだけに動いています。データ収集目的では一切ありませんので安心してご利用いただけます。
+
+---
 **Hello Reader** は、視覚障害者および盲ろう当事者のアクセシビリティ向上を目的とした、Google AOSP TalkBack 100%互換の次世代 Android アクセシビリティ・スクリーンリーダーサービスです。
 
 ---
@@ -28,6 +38,22 @@
    - スクロール時や端到達時の `SoundPool` 音連射バグを100%完治。クリアで快適な音響フィードバックを実現。
 
 ---
+
+## 💡 開発者向け特徴
+
+- **日本語プログラミング言語「なでしこ」を設計図に採用**
+  複雑な読み上げ条件や緊急復帰ロジックの設計図として、定評がある日本語プログラミング言語「なでしこ」形式の仕様書（`.nako3`）を採用。直感的な日本語（「もし〜違えば〜ここまで」）でロジックを整理・管理しています。
+- **Kotlin FIRST による安全＆高速な実装**
+  Android標準のアクセシビリティガイドラインに準拠し、Nullエラー（NullPointerException）を徹底的に回避するKotlinネイティブコードで構築しています。
+- **独立プロセス（:watchdog）による音声トラブル自動復帰**
+  メインプロセスとは別に独立したウォッチドッグサービスを常駐させ、万が一のフリーズ時にも自動でTalkBack起動案内やモールス信号振動による復帰案内を行います。
+
+### 💡 なでしこユーザーの皆様へ
+
+当プロジェクトの仕様書（`.nako3`）は、Androidアプリの設計図として作成されています。
+中身にはAndroid標準ガイドラインに準拠したモジュール名、関数名、ロジックが含まれており、なでしこ単体で実行するためのスクリプトではないため、そのまま実行するとエラーになります。
+
+実際の動作プログラムは、Android開発者ガイドラインに従って `app/src/main/` 配下に Kotlin コードとして配置・実装されています。
 
 ## 🚀 ビルド ＆ インストール方法
 
