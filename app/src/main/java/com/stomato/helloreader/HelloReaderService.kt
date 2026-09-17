@@ -829,7 +829,46 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             playMorseVibration(ch)
         }
 
+        val isBrailleHapticEnabled = prefs.getBoolean("pref_braille_haptic_enabled", true)
+        // 【ガード条件】画面にソフトウェアキーボード(IME)が表示されており、入力モード(半角英語・ローマ字・かな)の時だけ点字パルス振動を実行！
+        if (isBrailleHapticEnabled && isImeKeyboardActive()) {
+            hapticFeedbackManager.performBrailleText(ch.toString())
+        }
+
         speak(spoken)
+    }
+
+    /**
+     * 画面上にソフトウェアキーボード（IME）が表示されており、
+     * 入力モード（半角英数・ローマ字・かなキーボード等）であるかを判定するガード処理
+     */
+    private fun isImeKeyboardActive(): Boolean {
+        try {
+            // 1. IMEウィンドウ (TYPE_INPUT_METHOD) が画面上に存在するかチェック
+            val activeWindows = windows
+            if (!activeWindows.isNullOrEmpty()) {
+                for (w in activeWindows) {
+                    if (w.type == AccessibilityWindowInfo.TYPE_INPUT_METHOD) {
+                        return true
+                    }
+                }
+            }
+
+            // 2. 現在フォーカス中のノードが入力フィールド (isEditable / EditText / SoftKeyboard) かチェック
+            val currentFocus = rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
+                ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
+            if (currentFocus != null) {
+                if (currentFocus.isEditable ||
+                    currentFocus.className?.toString()?.contains("EditText", ignoreCase = true) == true ||
+                    currentFocus.className?.toString()?.contains("Keyboard", ignoreCase = true) == true
+                ) {
+                    return true
+                }
+            }
+            return false
+        } catch (e: Exception) {
+            return false
+        }
     }
 
     /**
@@ -2406,6 +2445,42 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             }
         } else {
             Log.d(TAG, "[$processName] Nullエラーではないため復帰処理はスキップします")
+        }
+    }
+
+    /**
+     * 🌸 モールス信号・フォネティック読み上げ制御 (なでしこ3仕様書 src/Morse_code_conditions.nako3 準拠)
+     * 【ガード1】画面にアプリアイコンが並んでいる場合はモールス不要（TTS読み上げのみで終了）
+     * 【ガード2】0.5秒後のフォネティック詳細読みを発声中もモールス不要（TTS読み上げのみで終了）
+     * 【本処理】キーボード表示中かつ半角英数字の時だけモールス信号フィードバックを実行！
+     */
+    fun processMorseCodeConditions(
+        node: AccessibilityNodeInfo?,
+        spokenText: String,
+        isAppIconList: Boolean = false,
+        isPhoneticSpeaking: Boolean = false
+    ) {
+        // 【ガード1】アプリアイコン並び時（ホーム画面/ランチャー判定）
+        if (isAppIconList) {
+            speak(spokenText)
+            return
+        }
+
+        // 【ガード2】0.5秒後のフォネティック詳細読み発声中
+        if (isPhoneticSpeaking) {
+            speak(spokenText)
+            return
+        }
+
+        // 【本処理】キーボードエリア表示中かつ文字入力モードが「半角英数字」
+        val char = spokenText.trim().uppercase(Locale.JAPANESE).singleOrNull()
+        val morsePattern = if (char != null) MORSE_MAP[char] else null
+
+        if (morsePattern != null && ::hapticFeedbackManager.isInitialized) {
+            speak(spokenText)
+            hapticFeedbackManager.performMorsePattern(morsePattern)
+        } else {
+            speak(spokenText)
         }
     }
 
