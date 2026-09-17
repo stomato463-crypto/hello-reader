@@ -121,7 +121,15 @@ object JapaneseBrailleTranslator {
         'w' to byteArrayOf((DOT_2.toInt() or DOT_4.toInt() or DOT_5.toInt() or DOT_6.toInt()).toByte()),
         'x' to byteArrayOf((DOT_1.toInt() or DOT_3.toInt() or DOT_4.toInt() or DOT_6.toInt()).toByte()),
         'y' to byteArrayOf((DOT_1.toInt() or DOT_3.toInt() or DOT_4.toInt() or DOT_5.toInt() or DOT_6.toInt()).toByte()),
-        'z' to byteArrayOf((DOT_1.toInt() or DOT_3.toInt() or DOT_5.toInt() or DOT_6.toInt()).toByte())
+        'z' to byteArrayOf((DOT_1.toInt() or DOT_3.toInt() or DOT_5.toInt() or DOT_6.toInt()).toByte()),
+
+        // エスペラント固有文字 (ĉ, ĝ, ĥ, ĵ, ŝ, ŭ)
+        'ĉ' to byteArrayOf((DOT_1.toInt() or DOT_4.toInt() or DOT_6.toInt()).toByte()),
+        'ĝ' to byteArrayOf((DOT_1.toInt() or DOT_2.toInt() or DOT_4.toInt() or DOT_5.toInt() or DOT_6.toInt()).toByte()),
+        'ĥ' to byteArrayOf((DOT_1.toInt() or DOT_2.toInt() or DOT_5.toInt() or DOT_6.toInt()).toByte()),
+        'ĵ' to byteArrayOf((DOT_2.toInt() or DOT_4.toInt() or DOT_5.toInt() or DOT_6.toInt()).toByte()),
+        'ŝ' to byteArrayOf((DOT_2.toInt() or DOT_3.toInt() or DOT_4.toInt() or DOT_6.toInt()).toByte()),
+        'ŭ' to byteArrayOf((DOT_3.toInt() or DOT_4.toInt() or DOT_6.toInt()).toByte())
     )
 
     // 数字 (1-9, 0 は a-j と同じドット構成で数符を伴う)
@@ -171,8 +179,8 @@ object JapaneseBrailleTranslator {
                     output.add(digitDots)
                 }
 
-                // アルファベット (A-Z, a-z)
-                ch in 'a'..'z' || ch in 'A'..'Z' -> {
+                // アルファベット (A-Z, a-z, エスペラント文字)
+                ch in 'a'..'z' || ch in 'A'..'Z' || ALPHABET_MAP.containsKey(ch.lowercaseChar()) -> {
                     if (!inLatinMode) {
                         output.add(PREFIX_LATIN)
                         inLatinMode = true
