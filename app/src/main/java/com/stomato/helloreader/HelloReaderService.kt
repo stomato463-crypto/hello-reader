@@ -829,7 +829,46 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             playMorseVibration(ch)
         }
 
+        val isBrailleHapticEnabled = prefs.getBoolean("pref_braille_haptic_enabled", true)
+        // 【ガード条件】画面にソフトウェアキーボード(IME)が表示されており、入力モード(半角英語・ローマ字・かな)の時だけ点字パルス振動を実行！
+        if (isBrailleHapticEnabled && isImeKeyboardActive()) {
+            hapticFeedbackManager.performBrailleText(ch.toString())
+        }
+
         speak(spoken)
+    }
+
+    /**
+     * 画面上にソフトウェアキーボード（IME）が表示されており、
+     * 入力モード（半角英数・ローマ字・かなキーボード等）であるかを判定するガード処理
+     */
+    private fun isImeKeyboardActive(): Boolean {
+        try {
+            // 1. IMEウィンドウ (TYPE_INPUT_METHOD) が画面上に存在するかチェック
+            val activeWindows = windows
+            if (!activeWindows.isNullOrEmpty()) {
+                for (w in activeWindows) {
+                    if (w.type == AccessibilityWindowInfo.TYPE_INPUT_METHOD) {
+                        return true
+                    }
+                }
+            }
+
+            // 2. 現在フォーカス中のノードが入力フィールド (isEditable / EditText / SoftKeyboard) かチェック
+            val currentFocus = rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
+                ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
+            if (currentFocus != null) {
+                if (currentFocus.isEditable ||
+                    currentFocus.className?.toString()?.contains("EditText", ignoreCase = true) == true ||
+                    currentFocus.className?.toString()?.contains("Keyboard", ignoreCase = true) == true
+                ) {
+                    return true
+                }
+            }
+            return false
+        } catch (e: Exception) {
+            return false
+        }
     }
 
     /**

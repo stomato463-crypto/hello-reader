@@ -242,6 +242,9 @@ fun PermissionSetupScreen(
     var isHapticEnabled by remember {
         mutableStateOf(prefs.getBoolean("pref_haptic_feedback_enabled", true))
     }
+    var isBrailleHapticEnabled by remember {
+        mutableStateOf(prefs.getBoolean("pref_braille_haptic_enabled", true))
+    }
 
     Column(
         modifier = Modifier
@@ -415,13 +418,47 @@ fun PermissionSetupScreen(
             }
         }
 
-        // 3. フォネティック＆モールス設定カード
+        // 3. キーボード詳細入力支援（点字触覚＆モールス振動）設定カード
         ElevatedCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = "⌨️ キーボード詳細入力支援",
+                    fontSize = 18.sp,
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier
+                        .padding(bottom = 12.dp)
+                        .semantics { heading() }
+                )
+
+                // 点字触覚パルス振動機能
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp)
+                        .semantics { contentDescription = "キーボード表示時の点字触覚フィードバック。現在は ${if (isBrailleHapticEnabled) "オン" else "オフ"} です。" },
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(text = "⠃⠗⠇ 点字触覚パルス振動 (IME表示時)", fontSize = 15.sp)
+                        Text(text = "キーボード表示中（半角英数・ローマ字・かな）に文字の6点点字パルスを振動出力します", fontSize = 12.sp, color = MaterialTheme.colorScheme.secondary)
+                    }
+                    Switch(
+                        checked = isBrailleHapticEnabled,
+                        onCheckedChange = { checked ->
+                            isBrailleHapticEnabled = checked
+                            prefs.edit().putBoolean("pref_braille_haptic_enabled", checked).apply()
+                        }
+                    )
+                }
+
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+
+                // モールス信号機能
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -429,12 +466,10 @@ fun PermissionSetupScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(
-                        text = "⚡ フォネティック＆モールス振動",
-                        fontSize = 16.sp,
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.semantics { heading() }
-                    )
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(text = "⚡ フォネティック＆モールス振動", fontSize = 15.sp)
+                        Text(text = "入力エリアでのモールス符号振動", fontSize = 12.sp, color = MaterialTheme.colorScheme.secondary)
+                    }
                     Switch(
                         checked = isPhoneticEnabled,
                         onCheckedChange = { checked ->
@@ -567,7 +602,7 @@ fun SupportScreen() {
                         .semantics { heading() }
                 )
                 Text(
-                    text = "問い合わせ・ご意見は下記のボタンを押して表示されるメール作成画面の本文に入力して送信してください。",
+                    text = "問い合わせ・ご意見は下記のボタンを押して表示されるメール作成画面の本文に入力して送信してください。返信は、順次開発者より行います。",
                     fontSize = 14.sp,
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
                     modifier = Modifier.padding(bottom = 16.dp)
