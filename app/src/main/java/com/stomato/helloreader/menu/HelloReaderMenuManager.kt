@@ -150,6 +150,8 @@ class HelloReaderMenuManager(private val service: HelloReaderService) {
         val container = LinearLayout(service).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(32, 32, 32, 32)
+            isFocusable = false
+            importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
             background = GradientDrawable().apply {
                 setColor(Color.parseColor("#EE1E1E1E"))
                 cornerRadius = 24f
