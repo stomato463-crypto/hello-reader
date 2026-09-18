@@ -131,7 +131,11 @@ class HelloReaderMenuManager(private val service: HelloReaderService) {
         val displayItems = getMenuItemList(isLocked, hasCustomActions, isScreenCurtainOn)
         val titles = displayItems.map { it.title }.toTypedArray()
 
-        val builder = AlertDialog.Builder(service)
+        val themeContext = android.view.ContextThemeWrapper(
+            service,
+            android.R.style.Theme_DeviceDefault_Settings
+        )
+        val builder = AlertDialog.Builder(themeContext)
         builder.setTitle("Hello Reader メニュー")
         builder.setItems(titles) { _, which ->
             val selectedItem = displayItems.getOrNull(which)
@@ -146,7 +150,11 @@ class HelloReaderMenuManager(private val service: HelloReaderService) {
         }
 
         val dialog = builder.create()
-        dialog.window?.setType(WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY)
+        dialog.window?.let { window ->
+            window.setType(WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            window.attributes.dimAmount = 0.5f
+        }
 
         isMenuShowing = true
         activeDialog = dialog
