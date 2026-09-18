@@ -159,6 +159,18 @@ class HelloReaderMenuManager(private val service: HelloReaderService) {
         isMenuShowing = true
         activeDialog = dialog
         dialog.show()
+
+        // ダイアログ表示直後にアクセシビリティフォーカスをダイアログ内に移動し背景の読み上げを防止
+        android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+            try {
+                val decorView = dialog.window?.decorView
+                decorView?.sendAccessibilityEvent(android.view.accessibility.AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED)
+                decorView?.performAccessibilityAction(
+                    android.view.accessibility.AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS,
+                    null
+                )
+            } catch (e: Exception) { }
+        }, 150)
     }
 
     /**
