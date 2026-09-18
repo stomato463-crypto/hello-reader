@@ -44,8 +44,9 @@ class HelloReaderMenuManager(private val service: HelloReaderService) {
         service.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
     companion object {
-        const val GESTURE_SWIPE_DOWN_AND_RIGHT = 17
-        const val GESTURE_SWIPE_UP_AND_RIGHT = 21
+        const val GESTURE_SWIPE_UP_AND_RIGHT = 16
+        const val GESTURE_SWIPE_DOWN_AND_RIGHT = 21
+        const val GESTURE_SWIPE_UP_AND_LEFT = 17
     }
 
     fun isShowing(): Boolean = isMenuShowing
@@ -54,7 +55,13 @@ class HelloReaderMenuManager(private val service: HelloReaderService) {
      * ジェスチャーIDでメニュー起動判定処理
      */
     fun onGesturePerformed(gestureId: Int): Boolean {
-        if (gestureId != GESTURE_SWIPE_DOWN_AND_RIGHT && gestureId != GESTURE_SWIPE_UP_AND_RIGHT) {
+        // 直角ジェスチャー（16, 17, 21）の判定
+        if (gestureId != GESTURE_SWIPE_UP_AND_RIGHT &&
+            gestureId != GESTURE_SWIPE_DOWN_AND_RIGHT &&
+            gestureId != GESTURE_SWIPE_UP_AND_LEFT &&
+            gestureId != AccessibilityService.GESTURE_SWIPE_UP_AND_RIGHT &&
+            gestureId != AccessibilityService.GESTURE_SWIPE_DOWN_AND_RIGHT
+        ) {
             return false
         }
 
