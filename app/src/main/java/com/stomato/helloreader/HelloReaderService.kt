@@ -638,6 +638,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private fun handleGestureAction(gestureId: Int): Boolean {
         Log.d(TAG, "handleGestureAction executing for gestureId: $gestureId")
         logEvent("ジェスチャー検知: ID=$gestureId")
+
+        // グローバルコンテキストメニュー起動判定
+        if (::menuManager.isInitialized && menuManager.onGesturePerformed(gestureId)) {
+            return true
+        }
+
         interruptSpeaking()
         return when (gestureId) {
             // 2本指シングルタップ: 即時消音 (TalkBack標準)
@@ -2491,13 +2497,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     // ==============================================================================
     // Hello Reader グローバルコンテキストメニュー連携用ヘルパーメソッド
     // ==============================================================================
-
-    override fun onGesture(gestureId: Int): Boolean {
-        if (::menuManager.isInitialized && menuManager.onGesturePerformed(gestureId)) {
-            return true
-        }
-        return super.onGesture(gestureId)
-    }
 
     fun interruptSpeech() {
         tts?.stop()
