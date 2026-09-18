@@ -192,8 +192,9 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private lateinit var brailleManager: BrailleManager
     private lateinit var hapticFeedbackManager: HapticFeedbackManager
     private lateinit var timeSignalManager: TimeSignalManager
+    private lateinit var menuManager: com.stomato.helloreader.menu.HelloReaderMenuManager
+    private var isScreenCurtainOn: Boolean = false
 
-    // 読み上げコントロール（ローター）設定
     enum class ReadingGranularity(val label: String) {
         DEFAULT("デフォルト"),
         CHARACTERS("文字"),
@@ -384,6 +385,9 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
     override fun onServiceConnected() {
         super.onServiceConnected()
+        // 8. グローバルコンテキストメニューマネージャーの初期化
+        menuManager = com.stomato.helloreader.menu.HelloReaderMenuManager(this)
+
         Log.d(TAG, "Hello Reader Accessibility Service Connected!")
 
         // 1. AOSP TalkBack (API 35, 36, 37+ Multi-Channel) 準拠の動的サービス設定
@@ -2484,9 +2488,160 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
     }
 
+    // ==============================================================================
+    // Hello Reader グローバルコンテキストメニュー連携用ヘルパーメソッド
+    // ==============================================================================
+
+    override fun onGesture(gestureId: Int): Boolean {
+        if (::menuManager.isInitialized && menuManager.onGesturePerformed(gestureId)) {
+            return true
+        }
+        return super.onGesture(gestureId)
+    }
+
+    fun interruptSpeech() {
+        tts?.stop()
+    }
+
+    fun playFocusSound() {
+        playSound(soundFocusId)
+    }
+
+    fun speakText(text: String) {
+        speak(text)
+    }
+
+    fun hasCustomActionsOnCurrentFocus(): Boolean {
+        val node = lastFocusedNode ?: return false
+        val actions = node.actionList
+        return actions != null && actions.size > 0
+    }
+
+    fun isScreenCurtainActive(): Boolean = isScreenCurtainOn
+
+    fun getLastUtteranceText(): String = lastSpokenText
+
+    fun copyToClipboard(text: String) {
+        try {
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager
+            val clip = android.content.ClipData.newPlainText("Hello Reader", text)
+            clipboard?.setPrimaryClip(clip)
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to copy to clipboard", e)
+        }
+    }
+
+    fun spellPhoneticText(text: String) {
+        val sb = StringBuilder()
+        for (c in text) {
+            val upperC = c.uppercaseChar()
+            val phonetic = PHONETIC_MAP[upperC]
+            if (phonetic != null) {
+                sb.append("$c（$phonetic） ")
+            } else {
+                sb.append("$c ")
+            }
+        }
+        speak("詳細読み上げ：$sb")
+    }
+
+    fun startContinuousReadingFromTop() {
+        readAllTextFromTop()
+    }
+
+    fun startContinuousReadingFromCurrent() {
+        val node = lastFocusedNode ?: getActiveRootNode()
+        if (node != null) {
+            val text = collectAllChildTexts(node)
+            if (!text.isNullOrBlank()) {
+                playSound(soundActivateId)
+                speak("現在位置からの読み上げを開始します。$text")
+                return
+            }
+        }
+        speak("読み上げ可能なテキストがありません")
+    }
+
+    fun showCustomActionsDialog() {
+        speak("カスタムアクションメニューを表示します")
+    }
+
+    fun showScreenSearchDialog() {
+        speak("画面検索を起動します")
+    }
+
+    fun toggleAudioDuckingSetting(): Boolean {
+        val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
+        val current = prefs.getBoolean("pref_audio_ducking_enabled", true)
+        val next = !current
+        prefs.edit().putBoolean("pref_audio_ducking_enabled", next).apply()
+        return next
+    }
+
+    fun toggleSoundFeedbackSetting(): Boolean {
+        val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
+        val current = prefs.getBoolean("pref_sound_feedback_enabled", true)
+        val next = !current
+        prefs.edit().putBoolean("pref_sound_feedback_enabled", next).apply()
+        return next
+    }
+
+    fun toggleVibrationFeedbackSetting(): Boolean {
+        val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
+        val current = prefs.getBoolean("pref_vibration_feedback_enabled", true)
+        val next = !current
+        prefs.edit().putBoolean("pref_vibration_feedback_enabled", next).apply()
+        return next
+    }
+
+    fun toggleBrailleDisplaySetting(): Boolean {
+        val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
+        val current = prefs.getBoolean("pref_braille_display_enabled", true)
+        val next = !current
+        prefs.edit().putBoolean("pref_braille_display_enabled", next).apply()
+        return next
+    }
+
+    fun toggleMorseFeedbackSetting(): Boolean {
+        val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
+        val current = prefs.getBoolean("pref_phonetic_morse_enabled", false)
+        val next = !current
+        prefs.edit().putBoolean("pref_phonetic_morse_enabled", next).apply()
+        return next
+    }
+
+    fun toggleBrailleHapticSetting(): Boolean {
+        val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
+        val current = prefs.getBoolean("pref_braille_haptic_enabled", true)
+        val next = !current
+        prefs.edit().putBoolean("pref_braille_haptic_enabled", next).apply()
+        return next
+    }
+
+    fun enableScreenCurtain() {
+        isScreenCurtainOn = true
+    }
+
+    fun disableScreenCurtain() {
+        isScreenCurtainOn = false
+    }
+
+    fun openVerbositySettings() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+    }
+
+    fun openBrailleDisplaySettings() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+    }
+
     override fun onDestroy() {
         Log.d(TAG, "HelloReaderService onDestroy called")
         cleanupResources()
         super.onDestroy()
     }
 }
+
