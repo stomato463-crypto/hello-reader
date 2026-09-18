@@ -216,8 +216,9 @@ class HelloReaderMenuManager(private val service: HelloReaderService) {
 
             container.postDelayed({
                 try {
-                    container.sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED)
-                    titleView.performAccessibilityAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null)
+                    val firstChild = if (listView.childCount > 0) listView.getChildAt(0) else titleView
+                    firstChild?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+                    firstChild?.performAccessibilityAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null)
                 } catch (e: Exception) { }
             }, 100)
         } catch (e: Exception) {
