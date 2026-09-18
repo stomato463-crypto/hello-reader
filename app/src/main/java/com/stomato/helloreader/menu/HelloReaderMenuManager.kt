@@ -1,13 +1,22 @@
 package com.stomato.helloreader.menu
 
-import android.accessibilityservice.AccessibilityService
-import android.app.AlertDialog
 import android.app.KeyguardManager
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import android.graphics.Color
+import android.graphics.PixelFormat
+import android.graphics.drawable.GradientDrawable
 import android.provider.Settings
+import android.view.Gravity
+import android.view.MotionEvent
+import android.view.View
 import android.view.WindowManager
+import android.view.accessibility.AccessibilityEvent
+import android.view.accessibility.AccessibilityNodeInfo
+import android.widget.ArrayAdapter
+import android.widget.LinearLayout
+import android.widget.ListView
+import android.widget.TextView
 import com.stomato.helloreader.HelloReaderService
 import com.stomato.helloreader.MainActivity
 
@@ -24,45 +33,44 @@ data class MenuItem(
 
 /**
  * Hello Reader グローバルコンテキストメニューマネージャー
+ * AOSP Accessibility Overlay 直付けウィンドウ方式
  * 仕様書: src/HelloReader_Menu.nako3 準拠
  */
 class HelloReaderMenuManager(private val service: HelloReaderService) {
 
     private var isMenuShowing: Boolean = false
-    private var activeDialog: AlertDialog? = null
+    private var overlayView: View? = null
+    private val windowManager: WindowManager =
+        service.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
     companion object {
-        // TalkBack標準直角ジェスチャーID
         const val GESTURE_SWIPE_DOWN_AND_RIGHT = 17
         const val GESTURE_SWIPE_UP_AND_RIGHT = 21
     }
+
+    fun isShowing(): Boolean = isMenuShowing
 
     /**
      * ジェスチャーIDでメニュー起動判定処理
      */
     fun onGesturePerformed(gestureId: Int): Boolean {
-        // 【ガード1】直角ジェスチャー（下→右 または 上→右）以外は無視して終了
         if (gestureId != GESTURE_SWIPE_DOWN_AND_RIGHT && gestureId != GESTURE_SWIPE_UP_AND_RIGHT) {
             return false
         }
 
-        // 【ガード2】現在すでにメニューが表示されている場合は重複表示を防止
         if (isMenuShowing) {
             return false
         }
 
-        // 音声出力を即時中断してフォーカス音を再生
         service.interruptSpeech()
         service.playFocusSound()
-
-        // メニュー構築と表示
         service.speakText("Hello Reader メニュー")
-        showMenuDialog()
+        showMenuOverlay()
         return true
     }
 
     /**
-     * メニュー項目一覧定義（TalkBack context_menu.xml 準拠 ＋ hello-reader独自機能）
+     * メニュー項目一覧定義
      */
     fun getMenuItemList(
         isLocked: Boolean,
@@ -108,69 +116,105 @@ class HelloReaderMenuManager(private val service: HelloReaderService) {
         list.add(MenuItem("braille_display_settings", 25, "点字ディスプレイの設定", "点字ディスプレイ設定起動", false))
         list.add(MenuItem("helloreader_settings", 23, "Hello Reader の設定", "メイン設定画面起動", false))
 
-        // ロック画面での情報保護ガード：ロック中は allowLocked == true の項目のみ抽出
         val filteredList = if (isLocked) {
             list.filter { it.allowLocked }
         } else {
             list
         }
 
-        // 順序（order）で昇順ソート
         return filteredList.sortedBy { it.order }
     }
 
     /**
-     * メニューダイアログ表示処理
+     * WindowManager直付け方式でのメニュー表示処理 (AOSP TalkBack overlay 方式)
      */
-    private fun showMenuDialog() {
+    private fun showMenuOverlay() {
+        dismissMenu()
+
         val keyguardManager = service.getSystemService(Context.KEYGUARD_SERVICE) as? KeyguardManager
         val isLocked = keyguardManager?.isKeyguardLocked ?: false
         val hasCustomActions = service.hasCustomActionsOnCurrentFocus()
         val isScreenCurtainOn = service.isScreenCurtainActive()
 
         val displayItems = getMenuItemList(isLocked, hasCustomActions, isScreenCurtainOn)
-        val titles = displayItems.map { it.title }.toTypedArray()
+        val titles = displayItems.map { it.title }
 
-        val themeContext = android.view.ContextThemeWrapper(
-            service,
-            android.R.style.Theme_DeviceDefault_Settings
-        )
-        val builder = AlertDialog.Builder(themeContext)
-        builder.setTitle("Hello Reader メニュー")
-        builder.setItems(titles) { _, which ->
-            val selectedItem = displayItems.getOrNull(which)
-            if (selectedItem != null) {
-                executeMenuAction(selectedItem.id)
+        val container = LinearLayout(service).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(32, 32, 32, 32)
+            background = GradientDrawable().apply {
+                setColor(Color.parseColor("#EE1E1E1E"))
+                cornerRadius = 24f
+                setStroke(3, Color.parseColor("#44FFFFFF"))
+            }
+        }
+
+        val titleView = TextView(service).apply {
+            text = "Hello Reader メニュー"
+            textSize = 20f
+            setTextColor(Color.WHITE)
+            setPadding(16, 16, 16, 24)
+            gravity = Gravity.CENTER
+        }
+        container.addView(titleView)
+
+        val listView = ListView(service).apply {
+            adapter = ArrayAdapter(
+                service,
+                android.R.layout.simple_list_item_1,
+                titles
+            )
+            setBackgroundColor(Color.TRANSPARENT)
+        }
+        container.addView(listView, LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ))
+
+        listView.setOnItemClickListener { _, _, position, _ ->
+            val item = displayItems.getOrNull(position)
+            if (item != null) {
+                executeMenuAction(item.id)
             } else {
                 dismissMenu()
             }
         }
-        builder.setOnCancelListener {
-            dismissMenu()
+
+        container.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_OUTSIDE) {
+                dismissMenu()
+                true
+            } else {
+                false
+            }
         }
 
-        val dialog = builder.create()
-        dialog.window?.let { window ->
-            window.setType(WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY)
-            window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-            window.attributes.dimAmount = 0.5f
+        val params = WindowManager.LayoutParams(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
+            PixelFormat.TRANSLUCENT
+        ).apply {
+            gravity = Gravity.CENTER
+            x = 0
+            y = 0
         }
 
-        isMenuShowing = true
-        activeDialog = dialog
-        dialog.show()
+        try {
+            windowManager.addView(container, params)
+            overlayView = container
+            isMenuShowing = true
 
-        // ダイアログ表示直後にアクセシビリティフォーカスをダイアログ内に移動し背景の読み上げを防止
-        android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
-            try {
-                val decorView = dialog.window?.decorView
-                decorView?.sendAccessibilityEvent(android.view.accessibility.AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED)
-                decorView?.performAccessibilityAction(
-                    android.view.accessibility.AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS,
-                    null
-                )
-            } catch (e: Exception) { }
-        }, 150)
+            container.postDelayed({
+                try {
+                    container.sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED)
+                    titleView.performAccessibilityAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null)
+                } catch (e: Exception) { }
+            }, 100)
+        } catch (e: Exception) {
+            isMenuShowing = false
+        }
     }
 
     /**
@@ -309,9 +353,11 @@ class HelloReaderMenuManager(private val service: HelloReaderService) {
      * メニューを閉じる処理
      */
     fun dismissMenu() {
-        if (isMenuShowing) {
-            activeDialog?.dismiss()
-            activeDialog = null
+        if (isMenuShowing && overlayView != null) {
+            try {
+                windowManager.removeView(overlayView)
+            } catch (e: Exception) { }
+            overlayView = null
             isMenuShowing = false
         }
     }

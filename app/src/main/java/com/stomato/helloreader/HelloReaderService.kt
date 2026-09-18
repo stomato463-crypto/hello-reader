@@ -741,8 +741,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 true
             }
             GESTURE_SWIPE_DOWN_AND_RIGHT, GESTURE_SWIPE_UP_AND_RIGHT -> {
-                speak("Hello Reader メニュー")
-                openHelloReaderMenu()
                 true
             }
             else -> {
