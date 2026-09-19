@@ -225,6 +225,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     /**
      * 画面上にソフトキーボード(IME)が表示されているか、入力モード中かを判定
      * (なでしこ3仕様書: Conditions for activating braille feedback.nako3 準拠)
+     * Gboard, ayameキーボード, すみれIME, しめじ(Simeji), ATOK等すべてのIMEアプリを全自動判別
      */
     private fun isKeyboardOrImeActive(): Boolean {
         try {
@@ -237,10 +238,16 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 if (hasImeWindow) return true
             }
 
-            // 2. 現在のフォーカスノードが入力欄 (EditText / isEditable / Keyboard) かチェック
+            // 2. システムに登録・有効化されている全IMEアプリのパッケージ名一覧を取得
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? android.view.inputmethod.InputMethodManager
+            val enabledImePackages = imm?.enabledInputMethodList?.map { it.packageName }?.toSet() ?: emptySet()
+
+            // 3. 現在フォーカスされているノードを取得
             val focusedNode = rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
                 ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
+
             if (focusedNode != null) {
+                // (a) 入力欄 (isEditable) または EditText / Keyboard クラスのチェック
                 if (focusedNode.isEditable) return true
                 val className = focusedNode.className?.toString() ?: ""
                 if (className.contains("EditText", ignoreCase = true) ||
@@ -248,6 +255,27 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     className.contains("InputMethod", ignoreCase = true)
                 ) {
                     return true
+                }
+
+                // (b) フォーカスノードのパッケージ名が IME アプリ一覧に含まれているか
+                val pkgName = focusedNode.packageName?.toString() ?: ""
+                if (pkgName.isNotBlank()) {
+                    if (enabledImePackages.contains(pkgName)) return true
+
+                    // 予備キーワード判定 (gboard, ayame, sumire, simeji, atok, inputmethod, keyboard, ime, wnn 等)
+                    val lowerPkg = pkgName.lowercase(Locale.ROOT)
+                    if (lowerPkg.contains("inputmethod") ||
+                        lowerPkg.contains("keyboard") ||
+                        lowerPkg.contains("ime") ||
+                        lowerPkg.contains("gboard") ||
+                        lowerPkg.contains("ayame") ||
+                        lowerPkg.contains("sumire") ||
+                        lowerPkg.contains("simeji") ||
+                        lowerPkg.contains("atok") ||
+                        lowerPkg.contains("wnn")
+                    ) {
+                        return true
+                    }
                 }
             }
         } catch (e: Exception) {
