@@ -385,10 +385,11 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
             val isBrailleHapticEnabled = prefs.getBoolean("pref_braille_haptic_enabled", true)
 
-            // なでしこ3仕様: 画面上にキーボード・IMEが表示されている条件を満たす場合のみ発動
+            // なでしこ3仕様: 画面上にキーボード・IMEが表示されているか、ローターが文字モードの場合に発動
             val isKeyboardActive = isKeyboardOrImeActive()
+            val isCharacterGranularity = granularities[currentGranularityIndex] == ReadingGranularity.CHARACTERS
 
-            if (isBrailleHapticEnabled && isKeyboardActive && ::hapticFeedbackManager.isInitialized) {
+            if (isBrailleHapticEnabled && (isKeyboardActive || isCharacterGranularity) && ::hapticFeedbackManager.isInitialized) {
                 lastBrailleText = trimmedText
                 lastBrailleTime = currentTime
                 hapticFeedbackManager.performBrailleText(trimmedText)
@@ -2479,6 +2480,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         logEvent("${sanitizeForLog(mainText)}${if (hintText != null) " ($hintText)" else ""}")
 
         val currentTts = tts ?: return
+        mainHandler.removeCallbacksAndMessages(null)
         
         // 1. サブヒントをペンディング変数にセット
         pendingSubVoiceHint = if (isSubVoiceEnabled && !hintText.isNullOrBlank()) hintText else null

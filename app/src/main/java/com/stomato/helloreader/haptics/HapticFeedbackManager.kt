@@ -151,15 +151,15 @@ class HapticFeedbackManager(private val context: Context) {
         for (dotIndex in 0 until 6) {
             val isPresent = ((intVal shr dotIndex) and 1) != 0
             if (isPresent) {
-                timingsList.add(20L)   // Dot ON: 20ms 振動
-                amplitudesList.add(220)
+                timingsList.add(35L)   // Dot ON: 35ms クリスプパルス振動
+                amplitudesList.add(255) // 最大振動強度
             } else {
-                timingsList.add(15L)   // Dot OFF: 15ms 休止
+                timingsList.add(25L)   // Dot OFF: 25ms 休止
                 amplitudesList.add(0)
             }
 
             if (dotIndex < 5) {
-                timingsList.add(20L)   // 点間パルス間隔 20ms
+                timingsList.add(25L)   // 点間パルス間隔 25ms
                 amplitudesList.add(0)
             }
         }
