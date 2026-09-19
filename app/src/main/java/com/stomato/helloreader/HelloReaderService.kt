@@ -262,7 +262,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 if (pkgName.isNotBlank()) {
                     if (enabledImePackages.contains(pkgName)) return true
 
-                    // 予備キーワード判定 (gboard, ayame, sumire, simeji, atok, inputmethod, keyboard, ime, wnn 等)
+                    // 予備キーワード判定 (gboard, ayame, sumire, simeji, atok, iwnn, wnn, japanesevkey 等)
                     val lowerPkg = pkgName.lowercase(Locale.ROOT)
                     if (lowerPkg.contains("inputmethod") ||
                         lowerPkg.contains("keyboard") ||
@@ -272,10 +272,47 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                         lowerPkg.contains("sumire") ||
                         lowerPkg.contains("simeji") ||
                         lowerPkg.contains("atok") ||
-                        lowerPkg.contains("wnn")
+                        lowerPkg.contains("iwnn") ||
+                        lowerPkg.contains("wnn") ||
+                        lowerPkg.contains("japanesevkey")
                     ) {
                         return true
                     }
+                }
+
+                // (c) ノードのテキスト・説明文にキーボード関連キーワードが含まれるか（例：「アヤメローマ字入力」「アヤメ英語」「キーボード切替」等）
+                val nodeText = (focusedNode.text?.toString() ?: "") + (focusedNode.contentDescription?.toString() ?: "")
+                if (nodeText.isNotBlank()) {
+                    val lowerText = nodeText.lowercase(Locale.ROOT)
+                    if (lowerText.contains("アヤメ") ||
+                        lowerText.contains("ayame") ||
+                        lowerText.contains("キーボード") ||
+                        lowerText.contains("かな") ||
+                        lowerText.contains("英数") ||
+                        lowerText.contains("ローマ字") ||
+                        lowerText.contains("フリック") ||
+                        lowerText.contains("ime")
+                    ) {
+                        return true
+                    }
+                }
+            }
+
+            // 4. ルートノード自体のパッケージ名チェック
+            val rootPkg = rootInActiveWindow?.packageName?.toString()?.lowercase(Locale.ROOT) ?: ""
+            if (rootPkg.isNotBlank()) {
+                if (enabledImePackages.contains(rootPkg)) return true
+                if (rootPkg.contains("ayame") ||
+                    rootPkg.contains("sumire") ||
+                    rootPkg.contains("simeji") ||
+                    rootPkg.contains("gboard") ||
+                    rootPkg.contains("atok") ||
+                    rootPkg.contains("iwnn") ||
+                    rootPkg.contains("wnn") ||
+                    rootPkg.contains("japanesevkey") ||
+                    rootPkg.contains("inputmethod")
+                ) {
+                    return true
                 }
             }
         } catch (e: Exception) {
