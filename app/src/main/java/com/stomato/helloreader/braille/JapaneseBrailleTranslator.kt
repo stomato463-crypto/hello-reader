@@ -152,6 +152,7 @@ object JapaneseBrailleTranslator {
     fun translate(text: String?): ByteArray {
         if (text.isNullOrEmpty()) return byteArrayOf()
 
+        val isSingleChar = text.length == 1
         val output = mutableListOf<Byte>()
         var inNumberMode = false
         var inLatinMode = false
@@ -170,7 +171,7 @@ object JapaneseBrailleTranslator {
 
                 // 数字 (0-9)
                 ch.isDigit() -> {
-                    if (!inNumberMode) {
+                    if (!inNumberMode && !isSingleChar) {
                         output.add(PREFIX_NUMBER)
                         inNumberMode = true
                         inLatinMode = false
@@ -181,7 +182,7 @@ object JapaneseBrailleTranslator {
 
                 // アルファベット (A-Z, a-z, エスペラント文字)
                 ch in 'a'..'z' || ch in 'A'..'Z' || ALPHABET_MAP.containsKey(ch.lowercaseChar()) -> {
-                    if (!inLatinMode) {
+                    if (!inLatinMode && !isSingleChar) {
                         output.add(PREFIX_LATIN)
                         inLatinMode = true
                         inNumberMode = false
