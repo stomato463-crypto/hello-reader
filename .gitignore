@@ -38,3 +38,11 @@ app/src/main/res/raw/complete.ogg
 /.natk
 
 /study
+*.back
+*.7z
+*.tar
+*.gz
+*.zst
+    *.zip
+    *.zpaq
+    
