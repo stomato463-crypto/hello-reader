@@ -334,6 +334,13 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             val trimmedText = text.trim()
             if (trimmedText.isBlank()) return
 
+            // 0. 発動モード制限: キーボード画面中(IME表示中)、またはローターが「文字」ナビゲーションモードの時限定！
+            val isCharacterGranularity = granularities[currentGranularityIndex] == ReadingGranularity.CHARACTERS
+            val isImeActive = isKeyboardOrImeActive()
+            if (!isImeActive && !isCharacterGranularity) {
+                return
+            }
+
             // 1. 暴走・過剰振動防止ガード: 20文字を超える長文テキストはスキップ
             if (trimmedText.length > 20) {
                 Log.d(TAG, "Braille haptic skipped for long text (length=${trimmedText.length})")
@@ -2481,8 +2488,26 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
 
         // 2.5 触覚点字パルス振動（ハプティクス）への出力配信（TTS完了＋0.5秒遅延後実行）
-        val brailleTextToVibrate = if (mainText.length == 1) mainText else if (!hintText.isNullOrBlank()) "$mainText $hintText" else mainText
-        pendingBrailleHapticText = brailleTextToVibrate
+        // 条件: 「キーボード画面(IME表示中)」または「ローターが文字モード中」で、かつ単一文字またはキー操作名の場合のみ発動！
+        val trimmedMain = mainText.trim()
+        val isSingleChar = trimmedMain.length == 1
+        val isKeyActionName = trimmedMain == "削除" ||
+                trimmedMain == "シフトキー" ||
+                trimmedMain == "スペース" ||
+                trimmedMain == "space" ||
+                trimmedMain == "エンター" ||
+                trimmedMain == "Enter" ||
+                trimmedMain == "左カーソル" ||
+                trimmedMain == "右カーソル" ||
+                trimmedMain == "記号"
+        val isCharacterGranularity = granularities[currentGranularityIndex] == ReadingGranularity.CHARACTERS
+        val isImeActive = isKeyboardOrImeActive()
+
+        if ((isImeActive || isCharacterGranularity) && (isSingleChar || isKeyActionName)) {
+            pendingBrailleHapticText = trimmedMain
+        } else {
+            pendingBrailleHapticText = null
+        }
 
         // 3. メインボイスの再生
         currentTts.setPitch(mainVoicePitch)
