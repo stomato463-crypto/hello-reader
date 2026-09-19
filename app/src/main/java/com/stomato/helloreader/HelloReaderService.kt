@@ -2022,7 +2022,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             }
             AccessibilityEvent.TYPE_VIEW_HOVER_ENTER -> {
                 try {
-                    // タッチガイド (Explore by Touch): 指の下にある要素に明示的にフォーカスを設定して音・音声・触覚振動で案内！
+                    // タッチガイド (Explore by Touch): 指の下にあるキー・要素を明示的にフォーカスして音声・二重サブボイス・点字振動で案内！
                     interruptSpeaking()
                     val node = event.source
                     if (node != null) {
@@ -2030,24 +2030,29 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                         lastFocusedNode = node
                         playSound(soundFocusId)
                         performHapticFeedback()
-                        var desc = parseNodeDescription(node)
-                        if (desc.isNullOrBlank()) {
-                            desc = getEventText(event)
-                        }
-                        if (!desc.isNullOrBlank()) {
-                            speak(desc)
+                        val pair = parseNodeDescriptionPair(node)
+                        if (pair != null) {
+                            speakWithSubVoice(pair.mainText, pair.hintText)
+                        } else {
+                            var desc = parseNodeDescription(node)
+                            if (desc.isNullOrBlank()) {
+                                desc = getEventText(event)
+                            }
+                            if (!desc.isNullOrBlank()) {
+                                speakWithSubVoice(desc, null)
+                            }
                         }
                     } else {
                         val fallbackText = getEventText(event)
                         if (!fallbackText.isNullOrBlank()) {
-                            speak(fallbackText)
+                            speakWithSubVoice(fallbackText, null)
                         }
                     }
                 } catch (e: Exception) {
                     Log.e(TAG, "TYPE_VIEW_HOVER_ENTER handling error", e)
                     val fallbackText = getEventText(event)
                     if (!fallbackText.isNullOrBlank()) {
-                        speak(fallbackText)
+                        speakWithSubVoice(fallbackText, null)
                     }
                 }
             }
@@ -2267,15 +2272,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             }
 
             if (mainTextStr.length == 1) {
-                val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
-                val isPhoneticMorseEnabled = prefs.getBoolean("pref_phonetic_morse_enabled", false)
-
                 val ch = mainTextStr[0]
                 val uppercaseCh = ch.uppercaseChar()
 
-                if (isPhoneticMorseEnabled && PHONETIC_MAP.containsKey(uppercaseCh)) {
+                if (PHONETIC_MAP.containsKey(uppercaseCh)) {
                     val phoneticName = PHONETIC_MAP[uppercaseCh]
-                    mainSb.append(ch).append("。").append(phoneticName)
+                    return NodeTextPair(ch.toString(), phoneticName)
                 } else {
                     mainSb.append(rawMainText)
                 }
