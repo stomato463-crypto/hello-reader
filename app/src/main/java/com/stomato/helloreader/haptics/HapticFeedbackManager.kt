@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
+import android.util.Log
 
 /**
  * 盲ろう者・視覚障害者向け 触覚（ハプティクス）フィードバックマネージャー
