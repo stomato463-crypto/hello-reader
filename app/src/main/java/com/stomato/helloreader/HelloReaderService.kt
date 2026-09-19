@@ -321,20 +321,40 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         return false
     }
 
+    private var lastBrailleText: String = ""
+    private var lastBrailleTime: Long = 0L
+
     /**
      * 盲ろう者向け点字ハプティクス（6点点字パルス振動）の実行
      * (なでしこ3仕様書: Conditions for activating braille feedback.nako3 準拠)
      */
     private fun performBrailleHapticFeedback(text: String) {
         try {
+            val trimmedText = text.trim()
+            if (trimmedText.isBlank()) return
+
+            // 暴走・過剰振動防止ガード: キーボード全体の全文字一覧など20文字を超える長文は点字振動をスキップ
+            if (trimmedText.length > 20) {
+                Log.d(TAG, "Braille haptic skipped for long text (length=${trimmedText.length})")
+                return
+            }
+
+            val currentTime = System.currentTimeMillis()
+            // 直前と同じテキストで500ms以内の連呼は重複防止のためスキップ
+            if (trimmedText == lastBrailleText && (currentTime - lastBrailleTime) < 500) {
+                return
+            }
+
             val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
             val isBrailleHapticEnabled = prefs.getBoolean("pref_braille_haptic_enabled", true)
-            
+
             // なでしこ3仕様: 画面上にキーボード・IMEが表示されている条件を満たす場合のみ発動
             val isKeyboardActive = isKeyboardOrImeActive()
 
-            if (isBrailleHapticEnabled && isKeyboardActive && ::hapticFeedbackManager.isInitialized && text.isNotBlank()) {
-                hapticFeedbackManager.performBrailleText(text)
+            if (isBrailleHapticEnabled && isKeyboardActive && ::hapticFeedbackManager.isInitialized) {
+                lastBrailleText = trimmedText
+                lastBrailleTime = currentTime
+                hapticFeedbackManager.performBrailleText(trimmedText)
             }
         } catch (e: Exception) {
             Log.e(TAG, "Failed to perform braille haptic feedback", e)
