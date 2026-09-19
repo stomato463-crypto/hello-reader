@@ -690,6 +690,17 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         startWatchdog()
     }
 
+    @Volatile
+    private var pendingBrailleHapticText: String? = null
+
+    private fun triggerBrailleHapticDelayed() {
+        val targetText = pendingBrailleHapticText
+        if (!targetText.isNullOrBlank()) {
+            pendingBrailleHapticText = null
+            performBrailleHapticFeedback(targetText)
+        }
+    }
+
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
             val result = tts?.setLanguage(Locale.JAPANESE)
@@ -702,13 +713,29 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 tts?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
                     override fun onStart(utteranceId: String?) {}
                     override fun onDone(utteranceId: String?) {
-                        if (utteranceId == "HelloReaderMainTTS" && !pendingSubVoiceHint.isNullOrBlank()) {
-                            val hint = pendingSubVoiceHint
-                            pendingSubVoiceHint = null
-                            mainHandler.post {
-                                val currentTts = tts ?: return@post
-                                currentTts.setPitch(subVoicePitch)
-                                currentTts.speak(hint, TextToSpeech.QUEUE_ADD, null, "HelloReaderSubTTS")
+                        when (utteranceId) {
+                            "HelloReaderMainTTS" -> {
+                                if (!pendingSubVoiceHint.isNullOrBlank()) {
+                                    val hint = pendingSubVoiceHint
+                                    pendingSubVoiceHint = null
+                                    // タイムライン仕様: メイン音声から0.5秒(500ms)待ってサブボイスを発声
+                                    mainHandler.postDelayed({
+                                        val currentTts = tts ?: return@postDelayed
+                                        currentTts.setPitch(subVoicePitch)
+                                        currentTts.speak(hint, TextToSpeech.QUEUE_ADD, null, "HelloReaderSubTTS")
+                                    }, 500)
+                                } else {
+                                    // サブボイスなしの場合、0.5秒(500ms)待って点字パルス振動を実行
+                                    mainHandler.postDelayed({
+                                        triggerBrailleHapticDelayed()
+                                    }, 500)
+                                }
+                            }
+                            "HelloReaderSubTTS" -> {
+                                // タイムライン仕様: サブボイス完了から0.5秒(500ms)待って点字パルス振動を実行
+                                mainHandler.postDelayed({
+                                    triggerBrailleHapticDelayed()
+                                }, 500)
                             }
                         }
                     }
@@ -990,7 +1017,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val ch = text[charNavigationIndex]
         val uppercaseCh = ch.uppercaseChar()
         val phonetic = PHONETIC_MAP[uppercaseCh]
-        val spoken = if (phonetic != null) "$ch、$phonetic" else ch.toString()
 
         playSound(soundFocusId)
         performHapticFeedback()
@@ -1006,12 +1032,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             playMorseVibration(ch)
         }
 
-        val isBrailleHapticEnabled = prefs.getBoolean("pref_braille_haptic_enabled", true)
-        if (isBrailleHapticEnabled) {
-            performBrailleHapticFeedback(ch.toString())
-        }
-
-        speak(spoken)
+        speakWithSubVoice(ch.toString(), phonetic, force = true)
     }
 
     /**
@@ -2459,9 +2480,9 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             brailleManager.displayText(brailleSpoken)
         }
 
-        // 2.5 触覚点字パルス振動（ハプティクス）への出力配信
-        val brailleTextToVibrate = if (!hintText.isNullOrBlank()) "$mainText $hintText" else mainText
-        performBrailleHapticFeedback(brailleTextToVibrate)
+        // 2.5 触覚点字パルス振動（ハプティクス）への出力配信（TTS完了＋0.5秒遅延後実行）
+        val brailleTextToVibrate = if (mainText.length == 1) mainText else if (!hintText.isNullOrBlank()) "$mainText $hintText" else mainText
+        pendingBrailleHapticText = brailleTextToVibrate
 
         // 3. メインボイスの再生
         currentTts.setPitch(mainVoicePitch)
