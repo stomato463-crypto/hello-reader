@@ -223,6 +223,21 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     }
 
     /**
+     * 盲ろう者向け点字ハプティクス（6点点字パルス振動）の実行
+     */
+    private fun performBrailleHapticFeedback(text: String) {
+        try {
+            val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
+            val isBrailleHapticEnabled = prefs.getBoolean("pref_braille_haptic_enabled", true)
+            if (isBrailleHapticEnabled && ::hapticFeedbackManager.isInitialized && text.isNotBlank()) {
+                hapticFeedbackManager.performBrailleText(text)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to perform braille haptic feedback", e)
+        }
+    }
+
+    /**
      * 現在時刻と日付のアナウンス
      */
     private fun speakCurrentTimeAndDate() {
@@ -2290,6 +2305,10 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             val brailleSpoken = if (!hintText.isNullOrBlank()) "$mainText $hintText" else mainText
             brailleManager.displayText(brailleSpoken)
         }
+
+        // 2.5 触覚点字パルス振動（ハプティクス）への出力配信
+        val brailleTextToVibrate = if (!hintText.isNullOrBlank()) "$mainText $hintText" else mainText
+        performBrailleHapticFeedback(brailleTextToVibrate)
 
         // 3. メインボイスの再生
         currentTts.setPitch(mainVoicePitch)

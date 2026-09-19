@@ -78,7 +78,7 @@ class HapticFeedbackManager(private val context: Context) {
 
     /**
      * 6点点字の1バイト表現（bit 0=Dot1, bit 1=Dot2, ..., bit 5=Dot6）に従って
-     * 6つのドットパルスを順次振動出力する（15ms 振動, 30ms 休止）
+     * 6つのドットパルスを順次振動出力する
      */
     fun performBrailleByte(dots: Byte) {
         val vib = vibrator ?: return
@@ -90,40 +90,70 @@ class HapticFeedbackManager(private val context: Context) {
         timingsList.add(0L)
         amplitudesList.add(0)
 
+        appendBrailleBytePattern(dots, timingsList, amplitudesList)
+
+        if (timingsList.size > 1) {
+            vibrate(timings = timingsList.toLongArray(), amplitudes = amplitudesList.toIntArray())
+        }
+    }
+
+    /**
+     * 文字列を点字翻訳して単一の連続触覚パルス振動を出力
+     */
+    fun performBrailleText(text: String) {
+        val vib = vibrator ?: return
+        if (!vib.hasVibrator() || text.isBlank()) return
+
+        val brailleBytes = com.stomato.helloreader.braille.JapaneseBrailleTranslator.translate(text)
+        if (brailleBytes.isEmpty()) return
+
+        val timingsList = mutableListOf<Long>()
+        val amplitudesList = mutableListOf<Int>()
+
+        timingsList.add(0L)
+        amplitudesList.add(0)
+
+        for (i in brailleBytes.indices) {
+            appendBrailleBytePattern(brailleBytes[i], timingsList, amplitudesList)
+            if (i < brailleBytes.size - 1) {
+                // セル間（文字間）休止: 80ms
+                timingsList.add(80L)
+                amplitudesList.add(0)
+            }
+        }
+
+        if (timingsList.size > 1) {
+            vibrate(timings = timingsList.toLongArray(), amplitudes = amplitudesList.toIntArray())
+        }
+    }
+
+    private fun appendBrailleBytePattern(
+        dots: Byte,
+        timingsList: MutableList<Long>,
+        amplitudesList: MutableList<Int>
+    ) {
         val intVal = dots.toInt() and 0x3F // 6点点字のドット(1~6)を抽出
         if (intVal == 0) {
-            // 空白文字: 休止
-            vibrate(timings = longArrayOf(0, 0, 60), amplitudes = intArrayOf(0, 0, 0))
+            // 空白文字: 100ms 休止
+            timingsList.add(100L)
+            amplitudesList.add(0)
             return
         }
 
         for (dotIndex in 0 until 6) {
             val isPresent = ((intVal shr dotIndex) and 1) != 0
             if (isPresent) {
-                timingsList.add(15L)  // Dot ON: 15ms 振動
+                timingsList.add(20L)   // Dot ON: 20ms 振動
                 amplitudesList.add(220)
             } else {
-                timingsList.add(0L)   // Dot OFF: 振動なし
+                timingsList.add(15L)   // Dot OFF: 15ms 休止
                 amplitudesList.add(0)
             }
 
             if (dotIndex < 5) {
-                timingsList.add(30L)  // 点間パルス間隔 30ms
+                timingsList.add(20L)   // 点間パルス間隔 20ms
                 amplitudesList.add(0)
             }
-        }
-
-        vibrate(timings = timingsList.toLongArray(), amplitudes = amplitudesList.toIntArray())
-    }
-
-    /**
-     * 文字列を点字翻訳して触覚パルス振動を出力
-     */
-    fun performBrailleText(text: String) {
-        if (text.isBlank()) return
-        val brailleBytes = com.stomato.helloreader.braille.JapaneseBrailleTranslator.translate(text)
-        for (b in brailleBytes) {
-            performBrailleByte(b)
         }
     }
 
