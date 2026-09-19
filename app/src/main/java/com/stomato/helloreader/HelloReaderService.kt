@@ -977,9 +977,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
 
         val isBrailleHapticEnabled = prefs.getBoolean("pref_braille_haptic_enabled", true)
-        // 【ガード条件】画面にソフトウェアキーボード(IME)が表示されており、入力モード(半角英語・ローマ字・かな)の時だけ点字パルス振動を実行！
-        if (isBrailleHapticEnabled && isImeKeyboardActive()) {
-            hapticFeedbackManager.performBrailleText(ch.toString())
+        if (isBrailleHapticEnabled) {
+            performBrailleHapticFeedback(ch.toString())
         }
 
         speak(spoken)

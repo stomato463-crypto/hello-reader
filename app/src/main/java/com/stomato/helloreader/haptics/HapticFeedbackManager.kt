@@ -104,7 +104,14 @@ class HapticFeedbackManager(private val context: Context) {
         val vib = vibrator ?: return
         if (!vib.hasVibrator() || text.isBlank()) return
 
-        val brailleBytes = com.stomato.helloreader.braille.JapaneseBrailleTranslator.translate(text)
+        val trimmedText = text.trim()
+        // 最終防衛ガード: 20文字を超える長文（キーボード全文字一覧など）の過剰・暴走振動を防止
+        if (trimmedText.length > 20) {
+            Log.d("HapticFeedbackManager", "Braille haptic skipped for long text (length=${trimmedText.length})")
+            return
+        }
+
+        val brailleBytes = com.stomato.helloreader.braille.JapaneseBrailleTranslator.translate(trimmedText)
         if (brailleBytes.isEmpty()) return
 
         val timingsList = mutableListOf<Long>()
