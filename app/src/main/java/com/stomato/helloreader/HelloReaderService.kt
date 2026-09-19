@@ -327,20 +327,50 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     /**
      * 盲ろう者向け点字ハプティクス（6点点字パルス振動）の実行
      * (なでしこ3仕様書: Conditions for activating braille feedback.nako3 準拠)
+     * キーボード上の文字キー(a, b, あ, か等)および入力キー(削除, スペース等)に限定して発動
      */
     private fun performBrailleHapticFeedback(text: String) {
         try {
             val trimmedText = text.trim()
             if (trimmedText.isBlank()) return
 
-            // 暴走・過剰振動防止ガード: キーボード全体の全文字一覧など20文字を超える長文は点字振動をスキップ
+            // 1. 暴走・過剰振動防止ガード: 20文字を超える長文テキストはスキップ
             if (trimmedText.length > 20) {
                 Log.d(TAG, "Braille haptic skipped for long text (length=${trimmedText.length})")
                 return
             }
 
+            // 2. 画面システムナビゲーション単語（「戻る」「ホーム画面」「通知シェード」等）の点字パルス振動除外
+            if (trimmedText == "戻る" ||
+                trimmedText == "ホーム画面" ||
+                trimmedText == "通知シェード" ||
+                trimmedText == "Google" ||
+                trimmedText.contains("設定") ||
+                trimmedText.contains("表示中") ||
+                trimmedText.contains("通知")
+            ) {
+                return
+            }
+
+            // 3. 対象テキストが単一キー文字 (length == 1) または入力用キー機能名かチェック
+            val isSingleCharacter = trimmedText.length == 1
+            val isKeyActionName = trimmedText == "削除" ||
+                    trimmedText == "シフトキー" ||
+                    trimmedText == "スペース" ||
+                    trimmedText == "space" ||
+                    trimmedText == "エンター" ||
+                    trimmedText == "Enter" ||
+                    trimmedText == "左カーソル" ||
+                    trimmedText == "右カーソル" ||
+                    trimmedText == "記号" ||
+                    trimmedText == "読み上げ"
+
+            if (!isSingleCharacter && !isKeyActionName) {
+                return
+            }
+
             val currentTime = System.currentTimeMillis()
-            // 直前と同じテキストで500ms以内の連呼は重複防止のためスキップ
+            // 4. 直前と同じテキストで500ms以内の連呼は重複防止のためスキップ
             if (trimmedText == lastBrailleText && (currentTime - lastBrailleTime) < 500) {
                 return
             }
