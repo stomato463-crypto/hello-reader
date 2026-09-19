@@ -223,13 +223,52 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     }
 
     /**
+     * 画面上にソフトキーボード(IME)が表示されているか、入力モード中かを判定
+     * (なでしこ3仕様書: Conditions for activating braille feedback.nako3 準拠)
+     */
+    private fun isKeyboardOrImeActive(): Boolean {
+        try {
+            // 1. アクティブなウィンドウ一覧から IME ウインドウ (TYPE_INPUT_METHOD) の存在を検出
+            val currentWindows = windows
+            if (!currentWindows.isNullOrEmpty()) {
+                val hasImeWindow = currentWindows.any { window ->
+                    window.type == AccessibilityWindowInfo.TYPE_INPUT_METHOD
+                }
+                if (hasImeWindow) return true
+            }
+
+            // 2. 現在のフォーカスノードが入力欄 (EditText / isEditable / Keyboard) かチェック
+            val focusedNode = rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
+                ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
+            if (focusedNode != null) {
+                if (focusedNode.isEditable) return true
+                val className = focusedNode.className?.toString() ?: ""
+                if (className.contains("EditText", ignoreCase = true) ||
+                    className.contains("Keyboard", ignoreCase = true) ||
+                    className.contains("InputMethod", ignoreCase = true)
+                ) {
+                    return true
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error checking keyboard or IME state", e)
+        }
+        return false
+    }
+
+    /**
      * 盲ろう者向け点字ハプティクス（6点点字パルス振動）の実行
+     * (なでしこ3仕様書: Conditions for activating braille feedback.nako3 準拠)
      */
     private fun performBrailleHapticFeedback(text: String) {
         try {
             val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
             val isBrailleHapticEnabled = prefs.getBoolean("pref_braille_haptic_enabled", true)
-            if (isBrailleHapticEnabled && ::hapticFeedbackManager.isInitialized && text.isNotBlank()) {
+            
+            // なでしこ3仕様: 画面上にキーボード・IMEが表示されている条件を満たす場合のみ発動
+            val isKeyboardActive = isKeyboardOrImeActive()
+
+            if (isBrailleHapticEnabled && isKeyboardActive && ::hapticFeedbackManager.isInitialized && text.isNotBlank()) {
                 hapticFeedbackManager.performBrailleText(text)
             }
         } catch (e: Exception) {
