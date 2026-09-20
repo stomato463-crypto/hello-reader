@@ -61,6 +61,9 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             '5' to "ファイブ", '6' to "シックス", '7' to "セブン", '8' to "エイト", '9' to "ナイン"
         )
 
+        private var traditionalPhoneticMap: Map<String, String>? = null
+        private var standardPhoneticMap: Map<String, String>? = null
+
         // モールス符号辞書 ( . : 短点 50ms, - : 長点 150ms )
         private val MORSE_MAP = mapOf(
             'A' to ".-", 'B' to "-...", 'C' to "-.-.", 'D' to "-..", 'E' to ".",
@@ -1016,8 +1019,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
 
         val ch = text[charNavigationIndex]
-        val uppercaseCh = ch.uppercaseChar()
-        val phonetic = PHONETIC_MAP[uppercaseCh]
+        val phonetic = getPhoneticName(ch)
 
         playSound(soundFocusId)
         performHapticFeedback()
@@ -2269,10 +2271,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
             if (mainTextStr.length == 1) {
                 val ch = mainTextStr[0]
-                val uppercaseCh = ch.uppercaseChar()
-
-                if (PHONETIC_MAP.containsKey(uppercaseCh)) {
-                    val phoneticName = PHONETIC_MAP[uppercaseCh]
+                val phoneticName = getPhoneticName(ch)
+                if (phoneticName != null) {
                     return NodeTextPair(ch.toString(), phoneticName)
                 } else {
                     mainSb.append(rawMainText)
@@ -2531,7 +2531,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         if (isMorseEnabled && isEditBox) {
             val timing = prefs.getString("pref_phonetic_morse_timing", "AFTER_TTS") ?: "AFTER_TTS"
-            val targetChar = mainText.firstOrNull { PHONETIC_MAP.containsKey(it.uppercaseChar()) }
+            val targetChar = mainText.firstOrNull { getPhoneticName(it) != null }
             if (targetChar != null) {
                 when (timing) {
                     "BEFORE_TTS" -> {
@@ -2751,11 +2751,48 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
     }
 
+    private fun loadJsonPhoneticMap(filename: String): Map<String, String> {
+        val map = mutableMapOf<String, String>()
+        try {
+            val jsonString = assets.open(filename).bufferedReader().use { it.readText() }
+            val jsonObject = org.json.JSONObject(jsonString)
+            val keys = jsonObject.keys()
+            while (keys.hasNext()) {
+                val key = keys.next()
+                map[key] = jsonObject.getString(key)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to load phonetic JSON: $filename", e)
+        }
+        return map
+    }
+
+    fun getPhoneticName(ch: Char): String? {
+        val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
+        val mode = prefs.getString("pref_phonetic_dictionary_mode", "TRADITIONAL") ?: "TRADITIONAL"
+
+        if (traditionalPhoneticMap == null) {
+            traditionalPhoneticMap = loadJsonPhoneticMap("japanese_phonetic_alphabet_traditional.json")
+        }
+        if (standardPhoneticMap == null) {
+            standardPhoneticMap = loadJsonPhoneticMap("japanese_Phonetic_alphabet.json")
+        }
+
+        val activeMap = if (mode == "STANDARD") standardPhoneticMap else traditionalPhoneticMap
+        val strKey = ch.toString()
+
+        if (activeMap != null && activeMap.containsKey(strKey)) {
+            return activeMap[strKey]
+        }
+
+        val upper = ch.uppercaseChar()
+        return PHONETIC_MAP[upper]
+    }
+
     fun spellPhoneticText(text: String) {
         val sb = StringBuilder()
         for (c in text) {
-            val upperC = c.uppercaseChar()
-            val phonetic = PHONETIC_MAP[upperC]
+            val phonetic = getPhoneticName(c)
             if (phonetic != null) {
                 sb.append("$c（$phonetic） ")
             } else {
