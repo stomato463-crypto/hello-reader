@@ -696,6 +696,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
     @Volatile
     private var pendingBrailleHapticText: String? = null
+    private val brailleHandler = android.os.Handler(android.os.Looper.getMainLooper())
+    private val brailleRunnable = Runnable { triggerBrailleHapticDelayed() }
 
     private fun triggerBrailleHapticDelayed() {
         val targetText = pendingBrailleHapticText
@@ -729,17 +731,15 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                                         currentTts.speak(hint, TextToSpeech.QUEUE_ADD, null, "HelloReaderSubTTS")
                                     }, 500)
                                 } else {
-                                    // サブボイスなしの場合、0.5秒(500ms)待って点字パルス振動を実行
-                                    mainHandler.postDelayed({
-                                        triggerBrailleHapticDelayed()
-                                    }, 500)
+                                    // サブボイスなしの場合、専用Handlerで0.5秒(500ms)待って点字パルス振動を実行
+                                    brailleHandler.removeCallbacks(brailleRunnable)
+                                    brailleHandler.postDelayed(brailleRunnable, 500)
                                 }
                             }
                             "HelloReaderSubTTS" -> {
-                                // タイムライン仕様: サブボイス完了から0.5秒(500ms)待って点字パルス振動を実行
-                                mainHandler.postDelayed({
-                                    triggerBrailleHapticDelayed()
-                                }, 500)
+                                // タイムライン仕様: サブボイス完了から専用Handlerで0.5秒(500ms)待って点字パルス振動を実行
+                                brailleHandler.removeCallbacks(brailleRunnable)
+                                brailleHandler.postDelayed(brailleRunnable, 500)
                             }
                         }
                     }
@@ -2475,7 +2475,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         logEvent("${sanitizeForLog(mainText)}${if (hintText != null) " ($hintText)" else ""}")
 
         val currentTts = tts ?: return
-        mainHandler.removeCallbacksAndMessages(null)
+        brailleHandler.removeCallbacks(brailleRunnable)
         
         // 1. サブヒントをペンディング変数にセット
         pendingSubVoiceHint = if (isSubVoiceEnabled && !hintText.isNullOrBlank()) hintText else null
