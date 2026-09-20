@@ -518,31 +518,31 @@ fun PermissionSetupScreen(
                         )
                         Text(text = "モールス振動の後にTTS音声", fontSize = 13.sp)
                     }
+                }
 
-                    HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
-                    Text(text = "通話票辞書の選択:", fontSize = 14.sp, style = MaterialTheme.typography.labelLarge)
+                HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
+                Text(text = "通話票辞書の選択 (詳細読み上げ):", fontSize = 14.sp, style = MaterialTheme.typography.labelLarge)
 
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        RadioButton(
-                            selected = (phoneticDictMode == "TRADITIONAL"),
-                            onClick = {
-                                phoneticDictMode = "TRADITIONAL"
-                                prefs.edit().putString("pref_phonetic_dictionary_mode", "TRADITIONAL").apply()
-                            }
-                        )
-                        Text(text = "伝統通話表（和文・伝統、例: うえののウ） [デフォルト]", fontSize = 13.sp)
-                    }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    RadioButton(
+                        selected = (phoneticDictMode == "TRADITIONAL"),
+                        onClick = {
+                            phoneticDictMode = "TRADITIONAL"
+                            prefs.edit().putString("pref_phonetic_dictionary_mode", "TRADITIONAL").apply()
+                        }
+                    )
+                    Text(text = "伝統通話表（和文・伝統、例: うえののウ） [デフォルト]", fontSize = 13.sp)
+                }
 
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        RadioButton(
-                            selected = (phoneticDictMode == "STANDARD"),
-                            onClick = {
-                                phoneticDictMode = "STANDARD"
-                                prefs.edit().putString("pref_phonetic_dictionary_mode", "STANDARD").apply()
-                            }
-                        )
-                        Text(text = "標準通話表（朝日・現代、例: あさひのア）", fontSize = 13.sp)
-                    }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    RadioButton(
+                        selected = (phoneticDictMode == "STANDARD"),
+                        onClick = {
+                            phoneticDictMode = "STANDARD"
+                            prefs.edit().putString("pref_phonetic_dictionary_mode", "STANDARD").apply()
+                        }
+                    )
+                    Text(text = "標準通話表（朝日・現代、例: あさひのア）", fontSize = 13.sp)
                 }
             }
         }
