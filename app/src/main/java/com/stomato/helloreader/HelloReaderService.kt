@@ -334,13 +334,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             val trimmedText = text.trim()
             if (trimmedText.isBlank()) return
 
-            // 0. 発動モード制限: キーボード画面中(IME表示中)、またはローターが「文字」ナビゲーションモードの時限定！
-            val isCharacterGranularity = granularities[currentGranularityIndex] == ReadingGranularity.CHARACTERS
-            val isImeActive = isKeyboardOrImeActive()
-            if (!isImeActive && !isCharacterGranularity) {
-                return
-            }
-
             // 1. 暴走・過剰振動防止ガード: 20文字を超える長文テキストはスキップ
             if (trimmedText.length > 20) {
                 Log.d(TAG, "Braille haptic skipped for long text (length=${trimmedText.length})")
@@ -359,7 +352,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 return
             }
 
-            // 3. 対象テキストが単一キー文字 (length == 1) または入力用キー機能名かチェック
+            // 3. 対象テキストが単一文字 (length == 1) または入力用キー機能名かチェック
             val isSingleCharacter = trimmedText.length == 1
             val isKeyActionName = trimmedText == "削除" ||
                     trimmedText == "シフトキー" ||
@@ -377,15 +370,15 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             }
 
             val currentTime = System.currentTimeMillis()
-            // 4. 直前と同じテキストで500ms以内の連呼は重複防止のためスキップ
-            if (trimmedText == lastBrailleText && (currentTime - lastBrailleTime) < 500) {
+            // 4. 直前と同じテキストで300ms以内の連呼は重複防止のためスキップ
+            if (trimmedText == lastBrailleText && (currentTime - lastBrailleTime) < 300) {
                 return
             }
 
             val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
             val isBrailleHapticEnabled = prefs.getBoolean("pref_braille_haptic_enabled", true)
 
-            if (isBrailleHapticEnabled && (isImeActive || isCharacterGranularity) && ::hapticFeedbackManager.isInitialized) {
+            if (isBrailleHapticEnabled && ::hapticFeedbackManager.isInitialized) {
                 lastBrailleText = trimmedText
                 lastBrailleTime = currentTime
                 hapticFeedbackManager.performBrailleText(trimmedText)
@@ -730,17 +723,9 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                                         currentTts.setPitch(subVoicePitch)
                                         currentTts.speak(hint, TextToSpeech.QUEUE_ADD, null, "HelloReaderSubTTS")
                                     }, 500)
-                                } else {
-                                    // サブボイスなしの場合、専用Handlerで0.5秒(500ms)待って点字パルス振動を実行
-                                    brailleHandler.removeCallbacks(brailleRunnable)
-                                    brailleHandler.postDelayed(brailleRunnable, 500)
                                 }
                             }
-                            "HelloReaderSubTTS" -> {
-                                // タイムライン仕様: サブボイス完了から専用Handlerで0.5秒(500ms)待って点字パルス振動を実行
-                                brailleHandler.removeCallbacks(brailleRunnable)
-                                brailleHandler.postDelayed(brailleRunnable, 500)
-                            }
+                            "HelloReaderSubTTS" -> {}
                         }
                     }
                     @Deprecated("Deprecated in Java")
@@ -2486,8 +2471,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             brailleManager.displayText(brailleSpoken)
         }
 
-        // 2.5 触覚点字パルス振動（ハプティクス）への出力配信（TTS完了＋0.5秒遅延後実行）
-        // 条件: 「キーボード画面(IME表示中)」または「ローターが文字モード中」で、かつ単一文字またはキー操作名の場合のみ発動！
+        // 2.5 触覚点字パルス振動（ハプティクス）への出力配信（即時実行！）
+        // 単一文字（1文字）または入力キー名の場合、遅延なしで直ちに体表点字振動を発動
         val trimmedMain = mainText.trim()
         val isSingleChar = trimmedMain.length == 1
         val isKeyActionName = trimmedMain == "削除" ||
@@ -2498,14 +2483,11 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 trimmedMain == "Enter" ||
                 trimmedMain == "左カーソル" ||
                 trimmedMain == "右カーソル" ||
-                trimmedMain == "記号"
-        val isCharacterGranularity = granularities[currentGranularityIndex] == ReadingGranularity.CHARACTERS
-        val isImeActive = isKeyboardOrImeActive()
+                trimmedMain == "記号" ||
+                trimmedMain == "読み上げ"
 
-        if ((isImeActive || isCharacterGranularity) && (isSingleChar || isKeyActionName)) {
-            pendingBrailleHapticText = trimmedMain
-        } else {
-            pendingBrailleHapticText = null
+        if (isSingleChar || isKeyActionName) {
+            performBrailleHapticFeedback(trimmedMain)
         }
 
         // 3. メインボイスの再生
