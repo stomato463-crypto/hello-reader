@@ -2067,7 +2067,18 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     if (isKeyguardLocked()) {
                         speak("ピンコード ${text.length}桁目入力済み")
                     } else {
-                        speak(text)
+                        val trimmed = text.trim()
+                        if (trimmed.length == 1) {
+                            val ch = trimmed[0]
+                            val phonetic = getPhoneticName(ch)
+                            if (phonetic != null) {
+                                speakWithSubVoice(trimmed, phonetic, force = true)
+                            } else {
+                                speak(text)
+                            }
+                        } else {
+                            speak(text)
+                        }
                     }
                 } else if (isKeyguardLocked()) {
                     speak("文字が入力されました")
