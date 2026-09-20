@@ -2768,6 +2768,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     }
 
     fun getPhoneticName(ch: Char): String? {
+        // 1. 半角英数字 (A-Z, a-z, 0-9) の場合は、英語 NATO フォネティックコードを優先適用 (TalkBack準拠)
+        if (ch in 'A'..'Z' || ch in 'a'..'z' || ch in '0'..'9') {
+            return PHONETIC_MAP[ch.uppercaseChar()]
+        }
+
+        // 2. 日本語文字（ひらがな・カタカナ・和文記号等）の場合は、設定された和文通話表（伝統/標準）を参照
         val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
         val mode = prefs.getString("pref_phonetic_dictionary_mode", "TRADITIONAL") ?: "TRADITIONAL"
 
