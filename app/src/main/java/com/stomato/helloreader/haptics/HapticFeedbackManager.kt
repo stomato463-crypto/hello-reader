@@ -154,41 +154,37 @@ class HapticFeedbackManager(private val context: Context) {
             return
         }
 
-        // 左列ブロック (1, 2, 3の点)
-        val leftDotsCount = Integer.bitCount(intVal and 0x07)
-        when (leftDotsCount) {
-            1 -> {
-                timingsList.add(130L)  // 短点 130ms
-                amplitudesList.add(240)
-            }
-            2, 3 -> {
-                timingsList.add(280L)  // 長点 280ms
+        // 1. 左列ブロック (1, 2, 3の点)
+        var hasLeftDot = false
+        for (dotIndex in 0 until 3) {
+            val isPresent = ((intVal shr dotIndex) and 1) != 0
+            if (isPresent) {
+                if (hasLeftDot) {
+                    timingsList.add(60L)  // 同一列内の点間間隔: 60ms
+                    amplitudesList.add(0)
+                }
+                timingsList.add(130L)      // 短点振動: 130ms
                 amplitudesList.add(255)
-            }
-            else -> {
-                timingsList.add(100L)  // 無音
-                amplitudesList.add(0)
+                hasLeftDot = true
             }
         }
 
-        // ブロック間の区切り (左列 → 右列) : 180ms
+        // 2. ブロック間の区切り (左列 → 右列 のインターバル) : 180ms
         timingsList.add(180L)
         amplitudesList.add(0)
 
-        // 右列ブロック (4, 5, 6の点)
-        val rightDotsCount = Integer.bitCount((intVal and 0x38) shr 3)
-        when (rightDotsCount) {
-            1 -> {
-                timingsList.add(130L)  // 短点 130ms
-                amplitudesList.add(240)
-            }
-            2, 3 -> {
-                timingsList.add(280L)  // 長点 280ms
+        // 3. 右列ブロック (4, 5, 6の点)
+        var hasRightDot = false
+        for (dotIndex in 3 until 6) {
+            val isPresent = ((intVal shr dotIndex) and 1) != 0
+            if (isPresent) {
+                if (hasRightDot) {
+                    timingsList.add(60L)  // 同一列内の点間間隔: 60ms
+                    amplitudesList.add(0)
+                }
+                timingsList.add(130L)      // 短点振動: 130ms
                 amplitudesList.add(255)
-            }
-            else -> {
-                timingsList.add(100L)  // 無音
-                amplitudesList.add(0)
+                hasRightDot = true
             }
         }
     }

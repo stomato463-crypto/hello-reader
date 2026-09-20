@@ -2458,12 +2458,11 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val currentTime = System.currentTimeMillis()
         val lastTime = recentSpokenTexts[fullTextKey]
 
-        // 同一テキストが短時間 (800ms以内) に手動ナビゲーションとアクセシビリティイベントで2重発火するのを完全シャットアウト！
-        if (lastTime != null && (currentTime - lastTime) < 800) {
-            return
-        }
+        // 単一文字・キーボード操作・スワイプ移動時は短時間の250msデバウンスで即時追従！
+        val isSingleCharOrKey = mainText.trim().length == 1 || isKeyboardOrImeActive()
+        val debounceWindow = if (isSingleCharOrKey || force) 250L else 800L
 
-        if (!force && lastTime != null && (currentTime - lastTime) < 1500) {
+        if (lastTime != null && (currentTime - lastTime) < debounceWindow) {
             return
         }
 
