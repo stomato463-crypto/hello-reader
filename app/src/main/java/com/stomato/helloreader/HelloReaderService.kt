@@ -2466,7 +2466,14 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private fun speakWithSubVoice(mainText: String, hintText: String? = null, force: Boolean = false) {
         if (!isTtsReady || mainText.isBlank()) return
 
-        val fullTextKey = if (!hintText.isNullOrBlank()) "$mainText|$hintText" else mainText
+        // キーボード全体枠（q w e r t y... 等の長文）がフォーカスされた場合は、一括音読せず「キーボード」と案内 (TalkBack準拠)
+        val trimmed = mainText.trim()
+        val isKeyboardContainerLongText = trimmed.length > 15 &&
+                (trimmed.contains("q w e r t y") || trimmed.contains("あ か さ た な") || trimmed.contains("シフトキー z x c v"))
+        val actualMainText = if (isKeyboardContainerLongText) "キーボード" else mainText
+        val actualHintText = if (isKeyboardContainerLongText) "ダブルタップで入力領域を操作できます" else hintText
+
+        val fullTextKey = if (!actualHintText.isNullOrBlank()) "$actualMainText|$actualHintText" else actualMainText
         val currentTime = System.currentTimeMillis()
         val lastTime = recentSpokenTexts[fullTextKey]
 
@@ -2483,24 +2490,24 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             recentSpokenTexts.remove(recentSpokenTexts.keys.first())
         }
 
-        Log.d(TAG, "Speaking Main: ${sanitizeForLog(mainText)}${if (hintText != null) " [SubVoice Hint: $hintText]" else ""}")
-        logEvent("${sanitizeForLog(mainText)}${if (hintText != null) " ($hintText)" else ""}")
+        Log.d(TAG, "Speaking Main: ${sanitizeForLog(actualMainText)}${if (actualHintText != null) " [SubVoice Hint: $actualHintText]" else ""}")
+        logEvent("${sanitizeForLog(actualMainText)}${if (actualHintText != null) " ($actualHintText)" else ""}")
 
         val currentTts = tts ?: return
         brailleHandler.removeCallbacks(brailleRunnable)
         
         // 1. サブヒントをペンディング変数にセット
-        pendingSubVoiceHint = if (isSubVoiceEnabled && !hintText.isNullOrBlank()) hintText else null
+        pendingSubVoiceHint = if (isSubVoiceEnabled && !actualHintText.isNullOrBlank()) actualHintText else null
 
         // 2. 点字ディスプレイへの出力配信
         if (::brailleManager.isInitialized) {
-            val brailleSpoken = if (!hintText.isNullOrBlank()) "$mainText $hintText" else mainText
+            val brailleSpoken = if (!actualHintText.isNullOrBlank()) "$actualMainText $actualHintText" else actualMainText
             brailleManager.displayText(brailleSpoken)
         }
 
         // 2.5 触覚点字パルス振動（ハプティクス）への出力配信（統一タイムライン: 音声完了から0.5秒後実行）
         // 単一文字（1文字）または入力キー名の場合に点字テキストを保持し、0.5秒後タイマーをセット
-        val trimmedMain = mainText.trim()
+        val trimmedMain = actualMainText.trim()
         val isSingleChar = trimmedMain.length == 1
         val isKeyActionName = trimmedMain == "削除" ||
                 trimmedMain == "シフトキー" ||
@@ -2517,7 +2524,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             pendingBrailleHapticText = trimmedMain
             // バックアップ・セーフティタイマー: タッチ探索(Explore by Touch)時や
             // TTSのonDoneがOS側で受領されない場合でも、音声から正確に約0.7秒後(音声200ms+0.5s)に体表点字振動を発動
-            val backupDelay = if (!hintText.isNullOrBlank()) 1200L else 700L
+            val backupDelay = if (!actualHintText.isNullOrBlank()) 1200L else 700L
             brailleHandler.removeCallbacks(brailleRunnable)
             brailleHandler.postDelayed(brailleRunnable, backupDelay)
         } else {
@@ -2527,7 +2534,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         // 3. メインボイスの再生
         currentTts.setPitch(mainVoicePitch)
-        currentTts.speak(mainText, TextToSpeech.QUEUE_FLUSH, null, "HelloReaderMainTTS")
+        currentTts.speak(actualMainText, TextToSpeech.QUEUE_FLUSH, null, "HelloReaderMainTTS")
 
         // 4. 智浩さんの「なでしこ v3 風」仕様 (Morse code conditions.md 精密版) の実行！
         // もし、フォーカスがエディットボックス (EditText / 入力欄) ならば、文字の読み上げのあとに、モールス信号フィードバックを実行！
@@ -2779,12 +2786,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     }
 
     fun getPhoneticName(ch: Char): String? {
-        // 1. 半角英数字 (A-Z, a-z, 0-9) の場合は、英語 NATO フォネティックコードを優先適用 (TalkBack準拠)
-        if (ch in 'A'..'Z' || ch in 'a'..'z' || ch in '0'..'9') {
-            return PHONETIC_MAP[ch.uppercaseChar()]
-        }
-
-        // 2. 日本語文字（ひらがな・カタカナ・和文記号等）の場合は、設定された和文通話表（伝統/標準）を参照
         val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
         val mode = prefs.getString("pref_phonetic_dictionary_mode", "TRADITIONAL") ?: "TRADITIONAL"
 
@@ -2798,10 +2799,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val activeMap = if (mode == "STANDARD") standardPhoneticMap else traditionalPhoneticMap
         val strKey = ch.toString()
 
+        // 1. 設定された和文通話表（伝統「うえののウ」/標準「あさひのア」）を最優先で参照
         if (activeMap != null && activeMap.containsKey(strKey)) {
             return activeMap[strKey]
         }
 
+        // 2. 和文通話表にキーが存在しない英数字の場合のみ NATO マップへフォールバック
         val upper = ch.uppercaseChar()
         return PHONETIC_MAP[upper]
     }
