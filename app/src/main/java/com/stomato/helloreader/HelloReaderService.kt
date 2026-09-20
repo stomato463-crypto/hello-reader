@@ -717,15 +717,27 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                                 if (!pendingSubVoiceHint.isNullOrBlank()) {
                                     val hint = pendingSubVoiceHint
                                     pendingSubVoiceHint = null
-                                    // タイムライン仕様: メイン音声から0.5秒(500ms)待ってサブボイスを発声
+                                    // タイムライン仕様: メイン音声完了から0.5秒(500ms)待ってサブボイスを発声
                                     mainHandler.postDelayed({
                                         val currentTts = tts ?: return@postDelayed
                                         currentTts.setPitch(subVoicePitch)
                                         currentTts.speak(hint, TextToSpeech.QUEUE_ADD, null, "HelloReaderSubTTS")
                                     }, 500)
+                                } else {
+                                    // サブボイスなしの場合: メイン音声完了から0.5秒(500ms)待って点字パルス振動を実行
+                                    if (pendingBrailleHapticText != null) {
+                                        brailleHandler.removeCallbacks(brailleRunnable)
+                                        brailleHandler.postDelayed(brailleRunnable, 500L)
+                                    }
                                 }
                             }
-                            "HelloReaderSubTTS" -> {}
+                            "HelloReaderSubTTS" -> {
+                                // サブボイスありの場合: サブボイス完了から0.5秒(500ms)待って点字パルス振動を実行
+                                if (pendingBrailleHapticText != null) {
+                                    brailleHandler.removeCallbacks(brailleRunnable)
+                                    brailleHandler.postDelayed(brailleRunnable, 500L)
+                                }
+                            }
                         }
                     }
                     @Deprecated("Deprecated in Java")
@@ -2429,6 +2441,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
      */
     private fun interruptSpeaking() {
         pendingSubVoiceHint = null
+        pendingBrailleHapticText = null
+        brailleHandler.removeCallbacks(brailleRunnable)
         mainHandler.removeCallbacksAndMessages(null)
         tts?.stop()
     }
@@ -2471,8 +2485,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             brailleManager.displayText(brailleSpoken)
         }
 
-        // 2.5 触覚点字パルス振動（ハプティクス）への出力配信（即時実行！）
-        // 単一文字（1文字）または入力キー名の場合、遅延なしで直ちに体表点字振動を発動
+        // 2.5 触覚点字パルス振動（ハプティクス）への出力配信（統一タイムライン: 音声完了から0.5秒後実行）
+        // 単一文字（1文字）または入力キー名の場合に点字テキストを保持し、0.5秒後タイマーをセット
         val trimmedMain = mainText.trim()
         val isSingleChar = trimmedMain.length == 1
         val isKeyActionName = trimmedMain == "削除" ||
@@ -2487,7 +2501,15 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 trimmedMain == "読み上げ"
 
         if (isSingleChar || isKeyActionName) {
-            performBrailleHapticFeedback(trimmedMain)
+            pendingBrailleHapticText = trimmedMain
+            // バックアップ・セーフティタイマー: TTSのonDoneがOS側で受領されない場合でも
+            // 音声開始から1.0秒後(メイン音声推定300ms + 0.5秒)に確実に体表点字振動を発動
+            val backupDelay = if (!hintText.isNullOrBlank()) 1800L else 1000L
+            brailleHandler.removeCallbacks(brailleRunnable)
+            brailleHandler.postDelayed(brailleRunnable, backupDelay)
+        } else {
+            pendingBrailleHapticText = null
+            brailleHandler.removeCallbacks(brailleRunnable)
         }
 
         // 3. メインボイスの再生
