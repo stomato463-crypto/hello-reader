@@ -2023,18 +2023,20 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                         node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
                         lastFocusedNode = node
                         playSound(soundFocusId)
-                        performHapticFeedback()
                         val pair = parseNodeDescriptionPair(node)
+                        val targetText = pair?.mainText ?: parseNodeDescription(node) ?: getEventText(event) ?: ""
+                        val trimmedTarget = targetText.trim()
+                        val isSingleChar = trimmedTarget.length == 1
+                        val isKeyAction = trimmedTarget == "削除" || trimmedTarget == "スペース" || trimmedTarget == "space" || trimmedTarget == "エンター" || trimmedTarget == "Enter" || trimmedTarget == "シフトキー" || trimmedTarget == "記号" || trimmedTarget == "読み上げ"
+                        
+                        // 点字パルス振動対象（1文字・キー操作名）以外の場合のみ、即時0msフォーカス振動を発動
+                        if (!isSingleChar && !isKeyAction) {
+                            performHapticFeedback()
+                        }
                         if (pair != null) {
                             speakWithSubVoice(pair.mainText, pair.hintText)
-                        } else {
-                            var desc = parseNodeDescription(node)
-                            if (desc.isNullOrBlank()) {
-                                desc = getEventText(event)
-                            }
-                            if (!desc.isNullOrBlank()) {
-                                speakWithSubVoice(desc, null)
-                            }
+                        } else if (!targetText.isNullOrBlank()) {
+                            speakWithSubVoice(targetText, null)
                         }
                     } else {
                         val fallbackText = getEventText(event)
@@ -2502,9 +2504,9 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         if (isSingleChar || isKeyActionName) {
             pendingBrailleHapticText = trimmedMain
-            // バックアップ・セーフティタイマー: TTSのonDoneがOS側で受領されない場合でも
-            // 音声開始から1.0秒後(メイン音声推定300ms + 0.5秒)に確実に体表点字振動を発動
-            val backupDelay = if (!hintText.isNullOrBlank()) 1800L else 1000L
+            // バックアップ・セーフティタイマー: タッチ探索(Explore by Touch)時や
+            // TTSのonDoneがOS側で受領されない場合でも、音声から正確に約0.7秒後(音声200ms+0.5s)に体表点字振動を発動
+            val backupDelay = if (!hintText.isNullOrBlank()) 1200L else 700L
             brailleHandler.removeCallbacks(brailleRunnable)
             brailleHandler.postDelayed(brailleRunnable, backupDelay)
         } else {
