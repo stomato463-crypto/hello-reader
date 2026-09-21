@@ -30,6 +30,10 @@ if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
 }
 
+# 3.5 古いサービスプロセスを停止（メモリ上のキャッシュをクリア）
+Write-Host "HelloReader サービスを再起動中にょろ..." -ForegroundColor Yellow
+adb -s $deviceId shell am force-stop com.stomato.helloreader
+
 # 4. HelloReaderService アクセシビリティサービスを自動有効化
 Write-Host "HelloReader アクセシビリティサービスを自動有効化中にょろ..." -ForegroundColor Yellow
 adb -s $deviceId shell settings put secure enabled_accessibility_services com.stomato.helloreader/.HelloReaderService

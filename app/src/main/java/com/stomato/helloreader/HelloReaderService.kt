@@ -2302,16 +2302,27 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             if (parts.size >= 2 && parts[0].length == 1) {
                 val singleChar = parts[0][0]
                 val rawPhonetic = parts.subList(1, parts.size).joinToString(" ")
+
+                val isEnglishKeyboard = isEnglishLanguageActive(rawMainText)
                 val resolvedPhonetic = getPhoneticName(singleChar, rawMainText) ?: rawPhonetic
-                val spokenMainChar = romajiToKanaCharMap[singleChar] ?: singleChar.toString()
+                val spokenMainChar = if (isEnglishKeyboard) {
+                    singleChar.toString()
+                } else {
+                    romajiToKanaCharMap[singleChar] ?: singleChar.toString()
+                }
                 return NodeTextPair(spokenMainChar, resolvedPhonetic)
             }
 
             // キーボード側が通話表を提供していない（単一文字）場合のみ Hello-Reader 辞書（伝統/標準/NATO）へフォールバック！
             if (mainTextStr.length == 1) {
                 val ch = mainTextStr[0]
+                val isEnglishKeyboard = isEnglishLanguageActive(rawMainText)
                 val phoneticName = getPhoneticName(ch, rawMainText)
-                val spokenMainChar = romajiToKanaCharMap[ch] ?: ch.toString()
+                val spokenMainChar = if (isEnglishKeyboard) {
+                    ch.toString()
+                } else {
+                    romajiToKanaCharMap[ch] ?: ch.toString()
+                }
                 if (phoneticName != null) {
                     return NodeTextPair(spokenMainChar, phoneticName)
                 } else {
@@ -2820,6 +2831,42 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     }
 
     /**
+     * TalkBack (ProcessorPhoneticLetters) 100%完全合致: アクティブIMEおよびノードの言語が英語か判定
+     */
+    private fun isEnglishLanguageActive(nodeText: CharSequence? = null): Boolean {
+        var nodeLanguage: String? = null
+        if (nodeText is Spannable) {
+            val localeSpans = nodeText.getSpans(0, nodeText.length, LocaleSpan::class.java)
+            if (localeSpans != null && localeSpans.isNotEmpty()) {
+                val loc = localeSpans[0]?.locale
+                if (loc != null) {
+                    nodeLanguage = loc.language
+                }
+            }
+        }
+
+        val currentImeLanguage: String? = try {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            val subtype = imm?.currentInputMethodSubtype
+            if (subtype != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    val tag = subtype.languageTag
+                    if (!tag.isNullOrBlank()) tag else subtype.locale?.toString()
+                } else {
+                    subtype.locale?.toString()
+                }
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
+        }
+
+        return (nodeLanguage?.startsWith("en", ignoreCase = true) == true) ||
+                (currentImeLanguage?.startsWith("en", ignoreCase = true) == true)
+    }
+
+    /**
      * TalkBack (ProcessorPhoneticLetters) 100%完全合致アルゴリズム + 日本語ローマ字かなマップ:
      * GboardノードのLocaleSpan、アクティブIMEの言語サブタイプ(InputMethodSubtype)、
      * およびUnicode文字種を判定して、キーボード言語に応じた通話表（和文伝統/和文標準/英語NATO）を動的選択する。
@@ -2838,6 +2885,14 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val activeMap = if (mode == "STANDARD") standardPhoneticMap else traditionalPhoneticMap
         val strKey = ch.toString()
 
+        val isEnglishExplicit = isEnglishLanguageActive(nodeText)
+
+        // 1. 英語キーボード動作時: 英数字 (A-Z, a-z, 0-9) の場合英語 NATO フォネティックを優先 (a -> アルファ / ALPHA)
+        if (isEnglishExplicit && (ch in 'A'..'Z' || ch in 'a'..'z' || ch in '0'..'9')) {
+            val upper = ch.uppercaseChar()
+            return PHONETIC_MAP[upper]
+        }
+
         // ローマ字かな母音マップ ('a','i','u','e','o')
         val romajiVowelToKanaMap = mapOf(
             'a' to "あ", 'i' to "い", 'u' to "う", 'e' to "え", 'o' to "お",
@@ -2845,7 +2900,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         )
         val kanaEquivalent = romajiVowelToKanaMap[ch]
 
-        // 1. 和文通話表（伝統「あさひのア」/標準「あさひのア」）に完全合致する日本語文字（かな・母音ブリッジ・数字等）を最優先参照！
+        // 2. 日本語キーボード動作時: 和文通話表（伝統「あさひのア」/標準「あさひのア」）を最優先参照！
         if (activeMap != null) {
             if (activeMap.containsKey(strKey)) {
                 return activeMap[strKey]
@@ -2855,7 +2910,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             }
         }
 
-        // 2. 英数字 (A-Z, a-z, 0-9) およびその他の文字は NATO フォネティックコード (S -> シエラ, A -> アルファ等) を返却
+        // 3. 該当がない場合のフォールバック: 英語 NATO マップ
         val upper = ch.uppercaseChar()
         return PHONETIC_MAP[upper]
     }
