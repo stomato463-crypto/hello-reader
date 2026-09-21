@@ -2284,9 +2284,17 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 return NodeTextPair(mainTextStr, hint)
             }
 
+            // 複合キーテキスト (例: "あ ALPHA", "a Alpha", "あ あさひのア") の判定と分離 (なでしこタイムライン完全準拠)
+            val parts = mainTextStr.split("\\s+".toRegex())
+            if (parts.size >= 2 && parts[0].length == 1) {
+                val singleChar = parts[0][0]
+                val customPhonetic = getPhoneticName(singleChar, rawMainText) ?: parts.subList(1, parts.size).joinToString(" ")
+                return NodeTextPair(parts[0], customPhonetic)
+            }
+
             if (mainTextStr.length == 1) {
                 val ch = mainTextStr[0]
-                val phoneticName = getPhoneticName(ch)
+                val phoneticName = getPhoneticName(ch, rawMainText)
                 if (phoneticName != null) {
                     return NodeTextPair(ch.toString(), phoneticName)
                 } else {
