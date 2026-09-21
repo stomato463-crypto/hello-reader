@@ -723,12 +723,13 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                                 if (!pendingSubVoiceHint.isNullOrBlank()) {
                                     val hint = pendingSubVoiceHint
                                     pendingSubVoiceHint = null
-                                    // タイムライン仕様: メイン音声完了から0.5秒(500ms)待ってサブボイスを発声
+                                    // なでしこ0.5秒ルール: メイン文字音声完了から正確に0.5秒(500ms)待ってから通話表(サブボイス)を発声
+                                    mainHandler.removeCallbacksAndMessages(null)
                                     mainHandler.postDelayed({
                                         val currentTts = tts ?: return@postDelayed
                                         currentTts.setPitch(subVoicePitch)
-                                        currentTts.speak(hint, TextToSpeech.QUEUE_ADD, null, "HelloReaderSubTTS")
-                                    }, 500)
+                                        currentTts.speak(hint, TextToSpeech.QUEUE_FLUSH, null, "HelloReaderSubTTS")
+                                    }, 500L)
                                 } else {
                                     // サブボイスなしの場合: メイン音声完了から0.5秒(500ms)待って点字パルス振動を実行
                                     if (pendingBrailleHapticText != null) {
@@ -2498,8 +2499,9 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         val currentTts = tts ?: return
         brailleHandler.removeCallbacks(brailleRunnable)
+        mainHandler.removeCallbacksAndMessages(null)
         
-        // 1. サブヒントをペンディング変数にセット
+        // 1. サブヒントをペンディング変数にセット (なでしこ0.5秒ルール適用)
         pendingSubVoiceHint = if (isSubVoiceEnabled && !actualHintText.isNullOrBlank()) actualHintText else null
 
         // 2. 点字ディスプレイへの出力配信
