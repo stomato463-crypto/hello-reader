@@ -2601,27 +2601,36 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         // 2.5 触覚点字パルス振動（ハプティクス）への出力配信（統一タイムライン: 音声完了から0.5秒後実行）
         // 単一文字（1文字）または入力キー名の場合に点字テキストを保持し、0.5秒後タイマーをセット
         val trimmedMain = actualMainText.trim()
-        val isSingleChar = trimmedMain.length == 1
-        val isKeyActionName = trimmedMain == "削除" ||
-                trimmedMain == "シフトキー" ||
-                trimmedMain == "スペース" ||
-                trimmedMain == "space" ||
-                trimmedMain == "エンター" ||
-                trimmedMain == "Enter" ||
-                trimmedMain == "左カーソル" ||
-                trimmedMain == "右カーソル" ||
-                trimmedMain == "記号" ||
-                trimmedMain == "読み上げ"
+        val extractedChar = if (trimmedMain.length == 1) {
+            trimmedMain
+        } else if (trimmedMain.isNotEmpty() && isImeKeyboardActive()) {
+            // Gboard探索時: 複合キー名(例: "a アルファ")から先頭の1文字またはキーアクション名を抽出
+            val firstToken = trimmedMain.split("\\s+".toRegex()).firstOrNull() ?: ""
+            if (firstToken.length == 1) firstToken else trimmedMain
+        } else {
+            trimmedMain
+        }
+
+        val isSingleChar = extractedChar.length == 1
+        val isKeyActionName = extractedChar == "削除" ||
+                extractedChar == "シフトキー" ||
+                extractedChar == "スペース" ||
+                extractedChar == "space" ||
+                extractedChar == "エンター" ||
+                extractedChar == "Enter" ||
+                extractedChar == "左カーソル" ||
+                extractedChar == "右カーソル" ||
+                extractedChar == "記号" ||
+                extractedChar == "読み上げ"
 
         if (isSingleChar || isKeyActionName) {
-            pendingBrailleHapticText = trimmedMain
+            pendingBrailleHapticText = extractedChar
             // なでしこ3仕様書 (Japanese_Phonetic_Braille_Feedback.nako3) 100%完全合致:
             // メイン文字 ➔ 0.5秒 ➔ 通話表 ➔ 0.5秒 ➔ 体表点字振動 の統一タイムラインを守るため
-            // 通話表ヒントが無い場合のみ700msのバックアップタイマーをセット
+            // 通話表ヒントが無い場合でも500ms(0.5秒)後タイマーを確実にセットして点字パルス振動を保証！
             brailleHandler.removeCallbacks(brailleRunnable)
-            if (actualHintText.isNullOrBlank()) {
-                brailleHandler.postDelayed(brailleRunnable, 700L)
-            }
+            val delayMs = if (actualHintText.isNullOrBlank()) 500L else 1000L
+            brailleHandler.postDelayed(brailleRunnable, delayMs)
         } else {
             pendingBrailleHapticText = null
             brailleHandler.removeCallbacks(brailleRunnable)
