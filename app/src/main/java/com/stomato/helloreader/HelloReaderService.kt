@@ -706,6 +706,16 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
     }
 
+    private fun performBrailleHapticFeedback(text: String) {
+        try {
+            if (::hapticFeedbackManager.isInitialized) {
+                hapticFeedbackManager.performBrailleText(text)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to perform braille haptic feedback", e)
+        }
+    }
+
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
             val result = tts?.setLanguage(Locale.JAPANESE)
@@ -723,8 +733,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                                 if (!pendingSubVoiceHint.isNullOrBlank()) {
                                     val hint = pendingSubVoiceHint
                                     pendingSubVoiceHint = null
-                                    // なでしこ0.5秒ルール: メイン文字音声完了から正確に0.5秒(500ms)待ってから通話表(サブボイス)を発声
-                                    mainHandler.removeCallbacksAndMessages(null)
+                                    // なでしこ0.5秒ルール (仕様書 Line 37-41 準拠): メイン文字完了から正確に0.5秒(500ms)待って通話表を発声
                                     mainHandler.postDelayed({
                                         val currentTts = tts ?: return@postDelayed
                                         currentTts.setPitch(subVoicePitch)
@@ -732,7 +741,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                                         currentTts.speak(hint, TextToSpeech.QUEUE_FLUSH, subBundle, "HelloReaderSubTTS")
                                     }, 500L)
                                 } else {
-                                    // サブボイスなしの場合: メイン音声完了から0.5秒(500ms)待って点字パルス振動を実行
+                                    // 通話表なしの場合: メイン音声完了から0.5秒(500ms)待って点字パルス振動を実行 (仕様書 Line 43-47)
                                     if (pendingBrailleHapticText != null) {
                                         brailleHandler.removeCallbacks(brailleRunnable)
                                         brailleHandler.postDelayed(brailleRunnable, 500L)
@@ -740,7 +749,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                                 }
                             }
                             "HelloReaderSubTTS" -> {
-                                // サブボイスありの場合: サブボイス完了から0.5秒(500ms)待って点字パルス振動を実行
+                                // 通話表ありの場合: 通話表完了から0.5秒(500ms)待って点字パルス振動を実行 (仕様書 Line 43-47 準拠)
                                 if (pendingBrailleHapticText != null) {
                                     brailleHandler.removeCallbacks(brailleRunnable)
                                     brailleHandler.postDelayed(brailleRunnable, 500L)
@@ -2607,13 +2616,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         if (isSingleChar || isKeyActionName) {
             pendingBrailleHapticText = trimmedMain
-            // なでしこタイムライン完全遵守: サブボイス案内がある場合はバックアップタイマーで被らせず、
-            // 必ず HelloReaderSubTTS 完了から0.5秒後のonDoneで点字振動を発動する！
+            // なでしこ3仕様書 (Japanese_Phonetic_Braille_Feedback.nako3) 100%完全合致:
+            // メイン文字 ➔ 0.5秒 ➔ 通話表 ➔ 0.5秒 ➔ 体表点字振動 の統一タイムラインを守るため
+            // 通話表ヒントが無い場合のみ700msのバックアップタイマーをセット
+            brailleHandler.removeCallbacks(brailleRunnable)
             if (actualHintText.isNullOrBlank()) {
-                brailleHandler.removeCallbacks(brailleRunnable)
                 brailleHandler.postDelayed(brailleRunnable, 700L)
-            } else {
-                brailleHandler.removeCallbacks(brailleRunnable)
             }
         } else {
             pendingBrailleHapticText = null
