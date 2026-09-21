@@ -2284,14 +2284,16 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 return NodeTextPair(mainTextStr, hint)
             }
 
-            // 複合キーテキスト (例: "あ ALPHA", "a Alpha", "あ あさひのア") の判定と分離 (なでしこタイムライン完全準拠)
+            // 複合キーテキスト (例: "a ALPHA", "あ あさひのア") の判定と分離 (智浩さんひらめき仕様)
+            // キーボード側が自前で通話表（ALPHA, あさひのア 等）を持っている場合はそれを最優先採用！
             val parts = mainTextStr.split("\\s+".toRegex())
             if (parts.size >= 2 && parts[0].length == 1) {
                 val singleChar = parts[0][0]
-                val customPhonetic = getPhoneticName(singleChar, rawMainText) ?: parts.subList(1, parts.size).joinToString(" ")
-                return NodeTextPair(parts[0], customPhonetic)
+                val keyboardPhonetic = parts.subList(1, parts.size).joinToString(" ")
+                return NodeTextPair(parts[0], keyboardPhonetic)
             }
 
+            // キーボード側が通話表を提供していない（単一文字）場合のみ Hello-Reader 辞書（伝統/標準/NATO）へフォールバック！
             if (mainTextStr.length == 1) {
                 val ch = mainTextStr[0]
                 val phoneticName = getPhoneticName(ch, rawMainText)
