@@ -2158,6 +2158,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             AccessibilityEvent.TYPE_ANNOUNCEMENT -> {
                 val text = getEventText(event)
                 if (!text.isNullOrBlank()) {
+                    isEnglishLanguageActive(text) // アヤメIME等の「英数モード」「ひらがなモード」アナウンスをリアルタイム検出！
                     speak(text)
                 }
             }
@@ -2882,10 +2883,10 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
      */
     private fun isEnglishLanguageActive(nodeText: CharSequence? = null): Boolean {
         val textStr = nodeText?.toString() ?: ""
-        if (textStr.contains("アヤメ英語") || textStr.contains("英語") || textStr.contains("英数") || textStr.contains("アルファベット") || textStr.contains("English") || textStr.contains("QWERTY") || textStr.equals("abc", ignoreCase = true) || textStr.equals("en", ignoreCase = true)) {
+        if (textStr.contains("アヤメ英語") || textStr.contains("英語") || textStr.contains("英数") || textStr.contains("アルファベット") || textStr.contains("English") || textStr.contains("QWERTY") || textStr.contains("Alphabet") || textStr.equals("abc", ignoreCase = true) || textStr.equals("en", ignoreCase = true)) {
             lastDetectedImeLanguageMode = "en"
             return true
-        } else if (textStr.contains("アヤメかな") || textStr.contains("アヤメローマ字") || textStr.contains("日本語") || textStr.contains("かな") || textStr.contains("フリック") || textStr.contains("12キー") || textStr.contains("ローマ字") || textStr.contains("Japanese") || textStr == "あ") {
+        } else if (textStr.contains("アヤメかな") || textStr.contains("アヤメローマ字") || textStr.contains("アヤメ日本語") || textStr.contains("ひらがな") || textStr.contains("日本語") || textStr.contains("かな") || textStr.contains("フリック") || textStr.contains("12キー") || textStr.contains("ローマ字") || textStr.contains("テンキー") || textStr.contains("Japanese") || textStr == "あ") {
             lastDetectedImeLanguageMode = "ja"
             return false
         }
