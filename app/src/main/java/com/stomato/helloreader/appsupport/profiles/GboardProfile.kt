@@ -57,3 +57,4 @@ class GboardProfile : AppProfile {
         return null
     }
 }
+

@@ -1048,6 +1048,15 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
      */
     private fun isImeKeyboardActive(): Boolean {
         try {
+            val activePkg = rootInActiveWindow?.packageName?.toString() ?: ""
+            if (activePkg.contains("inputmethod", ignoreCase = true) ||
+                activePkg.contains("keyboard", ignoreCase = true) ||
+                activePkg.contains("ime", ignoreCase = true) ||
+                activePkg == "com.google.android.inputmethod.latin"
+            ) {
+                return true
+            }
+
             // 1. IMEウィンドウ (TYPE_INPUT_METHOD) が画面上に存在するかチェック
             val activeWindows = windows
             if (!activeWindows.isNullOrEmpty()) {
@@ -2046,21 +2055,21 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                             performHapticFeedback()
                         }
                         if (pair != null) {
-                            speakWithSubVoice(pair.mainText, pair.hintText)
+                            speakWithSubVoice(pair.mainText, pair.hintText, force = true)
                         } else if (!targetText.isNullOrBlank()) {
-                            speakWithSubVoice(targetText, null)
+                            speakWithSubVoice(targetText, null, force = true)
                         }
                     } else {
                         val fallbackText = getEventText(event)
                         if (!fallbackText.isNullOrBlank()) {
-                            speakWithSubVoice(fallbackText, null)
+                            speakWithSubVoice(fallbackText, null, force = true)
                         }
                     }
                 } catch (e: Exception) {
                     Log.e(TAG, "TYPE_VIEW_HOVER_ENTER handling error", e)
                     val fallbackText = getEventText(event)
                     if (!fallbackText.isNullOrBlank()) {
-                        speakWithSubVoice(fallbackText, null)
+                        speakWithSubVoice(fallbackText, null, force = true)
                     }
                 }
             }
@@ -2208,13 +2217,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         // App Support: 1. カスタムラベルのチェック (名無しボタン救済)
         var rawMainText: String? = customLabelManager.getCustomLabel(packageName, viewId)
 
-        // App Support: 2. アプリ特有プロファイルによる最優先補正
-        val appProfile = appProfileManager.getProfileForPackage(packageName)
-        val customizedPair = appProfile.customizeNodeDescription(node, rawMainText, null)
-        if (customizedPair != null) {
-            return NodeTextPair(customizedPair.first, customizedPair.second)
-        }
-
         if (rawMainText.isNullOrBlank()) {
             rawMainText = when {
                 !compat.contentDescription.isNullOrBlank() -> compat.contentDescription.toString()
@@ -2228,6 +2230,13 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         if (rawMainText.isNullOrBlank()) {
             rawMainText = collectAllChildTexts(node)
+        }
+
+        // App Support: 2. アプリ特有プロファイル (GboardProfile等) による最優先補正
+        val appProfile = appProfileManager.getProfileForPackage(packageName)
+        val customizedPair = appProfile.customizeNodeDescription(node, rawMainText, null)
+        if (customizedPair != null) {
+            return NodeTextPair(customizedPair.first, customizedPair.second)
         }
 
         // App Support: View ID からの汎用アイコン・ボタン名全自動レスキュー
@@ -2561,7 +2570,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val lastTime = recentSpokenTexts[fullTextKey]
 
         // 単一文字・キーボード操作・スワイプ移動時は短時間の250msデバウンスで即時追従！
-        val isSingleCharOrKey = mainText.trim().length == 1 || isKeyboardOrImeActive()
+        val isSingleCharOrKey = actualMainText.trim().length == 1 || mainText.trim().length == 1 || isImeKeyboardActive()
         val debounceWindow = if (isSingleCharOrKey || force) 250L else 800L
 
         if (lastTime != null && (currentTime - lastTime) < debounceWindow) {
