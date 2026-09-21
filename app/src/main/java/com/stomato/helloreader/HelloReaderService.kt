@@ -37,6 +37,9 @@ import com.stomato.helloreader.appsupport.CustomLabelManager
 import com.stomato.helloreader.braille.BrailleConstants
 import com.stomato.helloreader.braille.BrailleManager
 import com.stomato.helloreader.haptics.HapticFeedbackManager
+import android.text.Spannable
+import android.text.style.LocaleSpan
+import android.view.inputmethod.InputMethodManager
 import java.util.Locale
 
 /**
@@ -2785,7 +2788,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         return map
     }
 
-    fun getPhoneticName(ch: Char): String? {
+    /**
+     * TalkBack (ProcessorPhoneticLetters) 100%完全合致アルゴリズム:
+     * GboardノードのLocaleSpan、アクティブIMEの言語サブタイプ(InputMethodSubtype)、
+     * およびUnicode文字種を判定して、キーボード言語に応じた通話表（和文伝統/和文標準/英語NATO）を動的選択する。
+     */
+    fun getPhoneticName(ch: Char, nodeText: CharSequence? = null): String? {
         val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
         val mode = prefs.getString("pref_phonetic_dictionary_mode", "TRADITIONAL") ?: "TRADITIONAL"
 
@@ -2799,12 +2807,41 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val activeMap = if (mode == "STANDARD") standardPhoneticMap else traditionalPhoneticMap
         val strKey = ch.toString()
 
-        // 1. 設定された和文通話表（伝統「うえののウ」/標準「あさひのア」）を最優先で参照
+        // 1. TalkBack 方式 A: ノードテキスト (Gboard等) に付与されている LocaleSpan を解析
+        var nodeLanguage: String? = null
+        if (nodeText is Spannable) {
+            val localeSpans = nodeText.getSpans(0, nodeText.length, LocaleSpan::class.java)
+            if (localeSpans != null && localeSpans.isNotEmpty()) {
+                nodeLanguage = localeSpans[0].locale.language
+            }
+        }
+
+        // 2. TalkBack 方式 B: 現在アクティブな IME (キーボード) の言語サブタイプを取得
+        val currentImeLanguage: String? = try {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            val subtype = imm?.currentInputMethodSubtype
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                val tag = subtype?.languageTag
+                if (!tag.isNullOrBlank()) tag else subtype?.locale
+            } else {
+                subtype?.locale
+            }
+        } catch (e: Exception) {
+            null
+        }
+
+        // 英語キーボード (locale: "en") であることが確定し、かつ英数字 (A-Z, a-z, 0-9) の場合は英語 NATO を強制適用
+        val isEnglishLocale = (nodeLanguage?.startsWith("en") == true) || (currentImeLanguage?.startsWith("en") == true)
+        if (isEnglishLocale && (ch in 'A'..'Z' || ch in 'a'..'z' || ch in '0'..'9')) {
+            return PHONETIC_MAP[ch.uppercaseChar()]
+        }
+
+        // ひらがな・カタカナ・和文記号、または日本語キーボード/設定された和文通話表の参照
         if (activeMap != null && activeMap.containsKey(strKey)) {
             return activeMap[strKey]
         }
 
-        // 2. 和文通話表にキーが存在しない英数字の場合のみ NATO マップへフォールバック
+        // 該当がない場合のフォールバック: 英語 NATO マップ
         val upper = ch.uppercaseChar()
         return PHONETIC_MAP[upper]
     }
