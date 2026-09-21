@@ -728,7 +728,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                                     mainHandler.postDelayed({
                                         val currentTts = tts ?: return@postDelayed
                                         currentTts.setPitch(subVoicePitch)
-                                        currentTts.speak(hint, TextToSpeech.QUEUE_FLUSH, null, "HelloReaderSubTTS")
+                                        val subBundle = android.os.Bundle()
+                                        currentTts.speak(hint, TextToSpeech.QUEUE_FLUSH, subBundle, "HelloReaderSubTTS")
                                     }, 500L)
                                 } else {
                                     // サブボイスなしの場合: メイン音声完了から0.5秒(500ms)待って点字パルス振動を実行
@@ -2551,11 +2552,14 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         if (isSingleChar || isKeyActionName) {
             pendingBrailleHapticText = trimmedMain
-            // バックアップ・セーフティタイマー: タッチ探索(Explore by Touch)時や
-            // TTSのonDoneがOS側で受領されない場合でも、音声から正確に約0.7秒後(音声200ms+0.5s)に体表点字振動を発動
-            val backupDelay = if (!actualHintText.isNullOrBlank()) 1200L else 700L
-            brailleHandler.removeCallbacks(brailleRunnable)
-            brailleHandler.postDelayed(brailleRunnable, backupDelay)
+            // なでしこタイムライン完全遵守: サブボイス案内がある場合はバックアップタイマーで被らせず、
+            // 必ず HelloReaderSubTTS 完了から0.5秒後のonDoneで点字振動を発動する！
+            if (actualHintText.isNullOrBlank()) {
+                brailleHandler.removeCallbacks(brailleRunnable)
+                brailleHandler.postDelayed(brailleRunnable, 700L)
+            } else {
+                brailleHandler.removeCallbacks(brailleRunnable)
+            }
         } else {
             pendingBrailleHapticText = null
             brailleHandler.removeCallbacks(brailleRunnable)
@@ -2563,7 +2567,8 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         // 3. メインボイスの再生
         currentTts.setPitch(mainVoicePitch)
-        currentTts.speak(actualMainText, TextToSpeech.QUEUE_FLUSH, null, "HelloReaderMainTTS")
+        val mainBundle = android.os.Bundle()
+        currentTts.speak(actualMainText, TextToSpeech.QUEUE_FLUSH, mainBundle, "HelloReaderMainTTS")
 
         // 4. 智浩さんの「なでしこ v3 風」仕様 (Morse code conditions.md 精密版) の実行！
         // もし、フォーカスがエディットボックス (EditText / 入力欄) ならば、文字の読み上げのあとに、モールス信号フィードバックを実行！
@@ -2831,57 +2836,16 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
 
         val activeMap = if (mode == "STANDARD") standardPhoneticMap else traditionalPhoneticMap
-
-        // ローマ字・英数キー ('a', 'i', 'u', 'e', 'o'...) を日本語通話表の 'あ', 'い', 'う', 'え', 'お' へ動的ブリッジマッピング
-        val romajiMap = mapOf(
-            'a' to "あ", 'i' to "い", 'u' to "う", 'e' to "え", 'o' to "お",
-            'A' to "あ", 'I' to "い", 'U' to "う", 'E' to "え", 'O' to "お",
-            'k' to "か", 's' to "さ", 't' to "た", 'n' to "な", 'h' to "は",
-            'm' to "ま", 'y' to "や", 'r' to "ら", 'w' to "わ",
-            'K' to "か", 'S' to "さ", 'T' to "た", 'N' to "な", 'H' to "は",
-            'M' to "ま", 'Y' to "や", 'R' to "ら", 'W' to "わ"
-        )
-
         val strKey = ch.toString()
-        val kanaEquivalent = romajiMap[ch]
 
-        // 1. TalkBack 方式 A: ノードテキスト (Gboard等) に付与されている LocaleSpan を解析
-        var nodeLanguage: String? = null
-        if (nodeText is Spannable) {
-            val localeSpans = nodeText.getSpans(0, nodeText.length, LocaleSpan::class.java)
-            if (localeSpans != null && localeSpans.isNotEmpty()) {
-                val loc = localeSpans[0]?.locale
-                if (loc != null) {
-                    nodeLanguage = loc.language
-                }
-            }
-        }
+        // ローマ字かな母音マップ ('a','i','u','e','o')
+        val romajiVowelToKanaMap = mapOf(
+            'a' to "あ", 'i' to "い", 'u' to "う", 'e' to "え", 'o' to "お",
+            'A' to "あ", 'I' to "い", 'U' to "う", 'E' to "え", 'O' to "お"
+        )
+        val kanaEquivalent = romajiVowelToKanaMap[ch]
 
-        // 2. TalkBack 方式 B: 現在アクティブな IME (キーボード) の言語サブタイプを取得
-        val currentImeLanguage: String? = try {
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            val subtype = imm?.currentInputMethodSubtype
-            if (subtype != null) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    val tag = subtype.languageTag
-                    if (!tag.isNullOrBlank()) tag else subtype.locale?.toString()
-                } else {
-                    subtype.locale?.toString()
-                }
-            } else {
-                null
-            }
-        } catch (e: Exception) {
-            null
-        }
-
-        // 英語キーボード (locale: "en") であることが確定している場合のみ英語 NATO を優先適用
-        val isEnglishLocale = (nodeLanguage?.startsWith("en") == true) || (currentImeLanguage?.startsWith("en") == true)
-        if (isEnglishLocale && (ch in 'A'..'Z' || ch in 'a'..'z' || ch in '0'..'9')) {
-            return PHONETIC_MAP[ch.uppercaseChar()]
-        }
-
-        // 日本語環境・日本語キーボードでは、和文通話表（伝統「あさひのア」/標準「あさひのア」）を最優先参照！
+        // 1. 和文通話表（伝統「あさひのア」/標準「あさひのア」）に完全合致する日本語文字（かな・母音ブリッジ・数字等）を最優先参照！
         if (activeMap != null) {
             if (activeMap.containsKey(strKey)) {
                 return activeMap[strKey]
@@ -2891,7 +2855,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             }
         }
 
-        // 該当がない場合のフォールバック: 英語 NATO マップ
+        // 2. 英数字 (A-Z, a-z, 0-9) およびその他の文字は NATO フォネティックコード (S -> シエラ, A -> アルファ等) を返却
         val upper = ch.uppercaseChar()
         return PHONETIC_MAP[upper]
     }
