@@ -2883,7 +2883,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
      */
     private fun isEnglishLanguageActive(nodeText: CharSequence? = null): Boolean {
         val textStr = nodeText?.toString() ?: ""
-        if (textStr.contains("アヤメ英語") || textStr.contains("英語") || textStr.contains("英数") || textStr.contains("アルファベット") || textStr.contains("English") || textStr.contains("QWERTY") || textStr.contains("Alphabet") || textStr.equals("abc", ignoreCase = true) || textStr.equals("en", ignoreCase = true)) {
+        if (textStr.contains("アヤメ英語") || textStr.contains("英語") || textStr.contains("英数") || textStr.contains("アルファベット") || textStr.contains("English") || textStr.contains("QWERTY") || textStr.contains("Alphabet") || textStr.contains("ALPHA") || textStr.contains("Alpha") || textStr.contains("BRAVO") || textStr.contains("SIERRA") || textStr.equals("abc", ignoreCase = true) || textStr.equals("en", ignoreCase = true)) {
             lastDetectedImeLanguageMode = "en"
             return true
         } else if (textStr.contains("アヤメかな") || textStr.contains("アヤメローマ字") || textStr.contains("アヤメ日本語") || textStr.contains("ひらがな") || textStr.contains("日本語") || textStr.contains("かな") || textStr.contains("フリック") || textStr.contains("12キー") || textStr.contains("ローマ字") || textStr.contains("テンキー") || textStr.contains("Japanese") || textStr == "あ") {
