@@ -2812,7 +2812,10 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         if (nodeText is Spannable) {
             val localeSpans = nodeText.getSpans(0, nodeText.length, LocaleSpan::class.java)
             if (localeSpans != null && localeSpans.isNotEmpty()) {
-                nodeLanguage = localeSpans[0].locale.language
+                val loc = localeSpans[0]?.locale
+                if (loc != null) {
+                    nodeLanguage = loc.language
+                }
             }
         }
 
@@ -2820,11 +2823,15 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val currentImeLanguage: String? = try {
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             val subtype = imm?.currentInputMethodSubtype
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                val tag = subtype?.languageTag
-                if (!tag.isNullOrBlank()) tag else subtype?.locale
+            if (subtype != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    val tag = subtype.languageTag
+                    if (!tag.isNullOrBlank()) tag else subtype.locale?.toString()
+                } else {
+                    subtype.locale?.toString()
+                }
             } else {
-                subtype?.locale
+                null
             }
         } catch (e: Exception) {
             null
