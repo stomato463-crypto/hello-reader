@@ -2500,6 +2500,32 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         tts?.stop()
     }
 
+    private data class PhoneticPair(val mainText: String, val hintText: String?)
+
+    private fun resolveCharPhonetics(ch: Char, rawPhonetic: String? = null): PhoneticPair {
+        val isEnglishKeyboard = isEnglishLanguageActive()
+        val isKana = ch in '\u3040'..'\u309F' || ch in '\u30A0'..'\u30FF'
+
+        if (isKana) {
+            val phonetic = getPhoneticName(ch)
+            return PhoneticPair(ch.toString(), phonetic)
+        }
+
+        val romajiVowelToKanaMap = mapOf(
+            'a' to "あ", 'i' to "い", 'u' to "う", 'e' to "え", 'o' to "お",
+            'A' to "あ", 'I' to "い", 'U' to "う", 'E' to "え", 'O' to "お"
+        )
+        val kanaEquivalent = romajiVowelToKanaMap[ch]
+
+        if (kanaEquivalent != null && !isEnglishKeyboard) {
+            val phonetic = getPhoneticName(ch) ?: rawPhonetic
+            return PhoneticPair(kanaEquivalent, phonetic)
+        }
+
+        val phonetic = PHONETIC_MAP[ch.uppercaseChar()] ?: rawPhonetic
+        return PhoneticPair(ch.toString(), phonetic)
+    }
+
     /**
      * メイン表示名と操作ヒントを異なるトーン/Voice（二重音声サブボイス）で連続音読
      */
@@ -2510,8 +2536,25 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         val trimmed = mainText.trim()
         val isKeyboardContainerLongText = trimmed.length > 15 &&
                 (trimmed.contains("q w e r t y") || trimmed.contains("あ か さ た な") || trimmed.contains("シフトキー z x c v"))
-        val actualMainText = if (isKeyboardContainerLongText) "キーボード" else mainText
-        val actualHintText = if (isKeyboardContainerLongText) "ダブルタップで入力領域を操作できます" else hintText
+        
+        var actualMainText = if (isKeyboardContainerLongText) "キーボード" else mainText
+        var actualHintText = if (isKeyboardContainerLongText) "ダブルタップで入力領域を操作できます" else hintText
+
+        if (!isKeyboardContainerLongText) {
+            val parts = trimmed.split("\\s+".toRegex())
+            if (parts.size >= 2 && parts[0].length == 1) {
+                val singleChar = parts[0][0]
+                val rawPhonetic = parts.subList(1, parts.size).joinToString(" ")
+                val resolved = resolveCharPhonetics(singleChar, rawPhonetic)
+                actualMainText = resolved.mainText
+                actualHintText = resolved.hintText
+            } else if (trimmed.length == 1) {
+                val singleChar = trimmed[0]
+                val resolved = resolveCharPhonetics(singleChar, hintText)
+                actualMainText = resolved.mainText
+                actualHintText = resolved.hintText
+            }
+        }
 
         val fullTextKey = if (!actualHintText.isNullOrBlank()) "$actualMainText|$actualHintText" else actualMainText
         val currentTime = System.currentTimeMillis()
@@ -2830,10 +2873,23 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         return map
     }
 
+    @Volatile
+    private var lastDetectedImeLanguageMode: String? = null
+
     /**
-     * TalkBack (ProcessorPhoneticLetters) 100%完全合致: アクティブIMEおよびノードの言語が英語か判定
+     * TalkBack (ProcessorPhoneticLetters) 100%完全合致 + サードパーティIME (アヤメ英語等) 動的対応:
+     * アクティブIMEおよびノードの言語、切り替えボタンのテキストを検出して英語モードか判定
      */
     private fun isEnglishLanguageActive(nodeText: CharSequence? = null): Boolean {
+        val textStr = nodeText?.toString() ?: ""
+        if (textStr.contains("アヤメ英語") || textStr.contains("英語") || textStr.contains("英数") || textStr.contains("アルファベット") || textStr.contains("English") || textStr.contains("QWERTY")) {
+            lastDetectedImeLanguageMode = "en"
+            return true
+        } else if (textStr.contains("アヤメかな") || textStr.contains("アヤメローマ字") || textStr.contains("日本語") || textStr.contains("かな") || textStr.contains("フリック") || textStr.contains("12キー") || textStr.contains("ローマ字") || textStr.contains("Japanese")) {
+            lastDetectedImeLanguageMode = "ja"
+            return false
+        }
+
         var nodeLanguage: String? = null
         if (nodeText is Spannable) {
             val localeSpans = nodeText.getSpans(0, nodeText.length, LocaleSpan::class.java)
@@ -2862,8 +2918,15 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             null
         }
 
-        return (nodeLanguage?.startsWith("en", ignoreCase = true) == true) ||
-                (currentImeLanguage?.startsWith("en", ignoreCase = true) == true)
+        if (nodeLanguage?.startsWith("en", ignoreCase = true) == true || currentImeLanguage?.startsWith("en", ignoreCase = true) == true) {
+            return true
+        }
+
+        if (nodeLanguage?.startsWith("ja", ignoreCase = true) == true || currentImeLanguage?.startsWith("ja", ignoreCase = true) == true) {
+            return false
+        }
+
+        return lastDetectedImeLanguageMode == "en"
     }
 
     /**
