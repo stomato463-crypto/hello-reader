@@ -2001,22 +2001,28 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     }
                     playSound(soundFocusId)
                     performHapticFeedback()
-                    var desc: String? = null
                     val node = event.source
                     if (node != null) {
-                        desc = parseNodeDescription(node)
-                    }
-                    if (desc.isNullOrBlank()) {
-                        desc = getEventText(event)
-                    }
-                    if (!desc.isNullOrBlank()) {
-                        speak(desc)
+                        val pair = parseNodeDescriptionPair(node)
+                        if (pair != null) {
+                            speakWithSubVoice(pair.mainText, pair.hintText)
+                        } else {
+                            val desc = parseNodeDescription(node) ?: getEventText(event)
+                            if (!desc.isNullOrBlank()) {
+                                speakWithSubVoice(desc, null)
+                            }
+                        }
+                    } else {
+                        val fallbackText = getEventText(event)
+                        if (!fallbackText.isNullOrBlank()) {
+                            speakWithSubVoice(fallbackText, null)
+                        }
                     }
                 } catch (e: Exception) {
                     Log.e(TAG, "TYPE_VIEW_FOCUSED handling error", e)
                     val fallbackText = getEventText(event)
                     if (!fallbackText.isNullOrBlank()) {
-                        speak(fallbackText)
+                        speakWithSubVoice(fallbackText, null)
                     }
                 }
             }
@@ -2284,23 +2290,31 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 return NodeTextPair(mainTextStr, hint)
             }
 
-            // 複合キーテキスト (例: "a ALPHA", "あ あさひのア") の判定と分離 (智浩さんひらめき仕様)
-            // キーボード側が自前で通話表（ALPHA, あさひのア 等）を持っている場合はそれを最優先採用！
+            // ローマ字・アルファベットキー ('a','i','u','e','o') のメイン文字を日本語かな ('あ','い','う','え','お') へ優先変換
+            val romajiToKanaCharMap = mapOf(
+                'a' to "あ", 'i' to "い", 'u' to "う", 'e' to "え", 'o' to "お",
+                'A' to "あ", 'I' to "い", 'U' to "う", 'E' to "え", 'O' to "お"
+            )
+
+            // 複合キーテキスト (例: "a ALPHA", "a あさひのア") の判定と分離
             val parts = mainTextStr.split("\\s+".toRegex())
             if (parts.size >= 2 && parts[0].length == 1) {
                 val singleChar = parts[0][0]
-                val keyboardPhonetic = parts.subList(1, parts.size).joinToString(" ")
-                return NodeTextPair(parts[0], keyboardPhonetic)
+                val rawPhonetic = parts.subList(1, parts.size).joinToString(" ")
+                val resolvedPhonetic = getPhoneticName(singleChar, rawMainText) ?: rawPhonetic
+                val spokenMainChar = romajiToKanaCharMap[singleChar] ?: singleChar.toString()
+                return NodeTextPair(spokenMainChar, resolvedPhonetic)
             }
 
             // キーボード側が通話表を提供していない（単一文字）場合のみ Hello-Reader 辞書（伝統/標準/NATO）へフォールバック！
             if (mainTextStr.length == 1) {
                 val ch = mainTextStr[0]
                 val phoneticName = getPhoneticName(ch, rawMainText)
+                val spokenMainChar = romajiToKanaCharMap[ch] ?: ch.toString()
                 if (phoneticName != null) {
-                    return NodeTextPair(ch.toString(), phoneticName)
+                    return NodeTextPair(spokenMainChar, phoneticName)
                 } else {
-                    mainSb.append(rawMainText)
+                    mainSb.append(spokenMainChar)
                 }
             } else {
                 mainSb.append(rawMainText)
@@ -2801,7 +2815,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     }
 
     /**
-     * TalkBack (ProcessorPhoneticLetters) 100%完全合致アルゴリズム:
+     * TalkBack (ProcessorPhoneticLetters) 100%完全合致アルゴリズム + 日本語ローマ字かなマップ:
      * GboardノードのLocaleSpan、アクティブIMEの言語サブタイプ(InputMethodSubtype)、
      * およびUnicode文字種を判定して、キーボード言語に応じた通話表（和文伝統/和文標準/英語NATO）を動的選択する。
      */
@@ -2817,7 +2831,19 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
 
         val activeMap = if (mode == "STANDARD") standardPhoneticMap else traditionalPhoneticMap
+
+        // ローマ字・英数キー ('a', 'i', 'u', 'e', 'o'...) を日本語通話表の 'あ', 'い', 'う', 'え', 'お' へ動的ブリッジマッピング
+        val romajiMap = mapOf(
+            'a' to "あ", 'i' to "い", 'u' to "う", 'e' to "え", 'o' to "お",
+            'A' to "あ", 'I' to "い", 'U' to "う", 'E' to "え", 'O' to "お",
+            'k' to "か", 's' to "さ", 't' to "た", 'n' to "な", 'h' to "は",
+            'm' to "ま", 'y' to "や", 'r' to "ら", 'w' to "わ",
+            'K' to "か", 'S' to "さ", 'T' to "た", 'N' to "な", 'H' to "は",
+            'M' to "ま", 'Y' to "や", 'R' to "ら", 'W' to "わ"
+        )
+
         val strKey = ch.toString()
+        val kanaEquivalent = romajiMap[ch]
 
         // 1. TalkBack 方式 A: ノードテキスト (Gboard等) に付与されている LocaleSpan を解析
         var nodeLanguage: String? = null
@@ -2849,15 +2875,20 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             null
         }
 
-        // 英語キーボード (locale: "en") であることが確定し、かつ英数字 (A-Z, a-z, 0-9) の場合は英語 NATO を強制適用
+        // 英語キーボード (locale: "en") であることが確定している場合のみ英語 NATO を優先適用
         val isEnglishLocale = (nodeLanguage?.startsWith("en") == true) || (currentImeLanguage?.startsWith("en") == true)
         if (isEnglishLocale && (ch in 'A'..'Z' || ch in 'a'..'z' || ch in '0'..'9')) {
             return PHONETIC_MAP[ch.uppercaseChar()]
         }
 
-        // ひらがな・カタカナ・和文記号、または日本語キーボード/設定された和文通話表の参照
-        if (activeMap != null && activeMap.containsKey(strKey)) {
-            return activeMap[strKey]
+        // 日本語環境・日本語キーボードでは、和文通話表（伝統「あさひのア」/標準「あさひのア」）を最優先参照！
+        if (activeMap != null) {
+            if (activeMap.containsKey(strKey)) {
+                return activeMap[strKey]
+            }
+            if (kanaEquivalent != null && activeMap.containsKey(kanaEquivalent)) {
+                return activeMap[kanaEquivalent]
+            }
         }
 
         // 該当がない場合のフォールバック: 英語 NATO マップ
