@@ -46,3 +46,4 @@ app/src/main/res/raw/complete.ogg
     *.zip
     *.zpaq
     
+/ayame
