@@ -706,16 +706,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
     }
 
-    private fun performBrailleHapticFeedback(text: String) {
-        try {
-            if (::hapticFeedbackManager.isInitialized) {
-                hapticFeedbackManager.performBrailleText(text)
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to perform braille haptic feedback", e)
-        }
-    }
-
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
             val result = tts?.setLanguage(Locale.JAPANESE)
