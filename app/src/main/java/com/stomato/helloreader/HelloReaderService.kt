@@ -2625,12 +2625,12 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         if (isSingleChar || isKeyActionName) {
             pendingBrailleHapticText = extractedChar
-            // なでしこ3仕様書 (Japanese_Phonetic_Braille_Feedback.nako3) 100%完全合致:
-            // メイン文字 ➔ 0.5秒 ➔ 通話表 ➔ 0.5秒 ➔ 体表点字振動 の統一タイムラインを守るため
-            // 通話表ヒントが無い場合でも500ms(0.5秒)後タイマーを確実にセットして点字パルス振動を保証！
+            // なでしco3仕様書 (Japanese_Phonetic_Braille_Feedback.nako3) 100%完全合致:
+            // メイン文字発声完了 ➔ 0.5秒 ➔ 通話表発声完了 ➔ 0.5秒 ➔ 体表点字振動 の厳格なタイムラインを守るため
+            // ここではテキストの保持のみを行い、点字パルス振動は UtteranceProgressListener (onDone) から正確に0.5秒後に実行する！
+            // (万が一 TTS 音声完了イベントが届かない場合のバックアップセーフティのみ2.0秒後にセット)
             brailleHandler.removeCallbacks(brailleRunnable)
-            val delayMs = if (actualHintText.isNullOrBlank()) 500L else 1000L
-            brailleHandler.postDelayed(brailleRunnable, delayMs)
+            brailleHandler.postDelayed(brailleRunnable, 2000L)
         } else {
             pendingBrailleHapticText = null
             brailleHandler.removeCallbacks(brailleRunnable)
