@@ -2882,10 +2882,10 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
      */
     private fun isEnglishLanguageActive(nodeText: CharSequence? = null): Boolean {
         val textStr = nodeText?.toString() ?: ""
-        if (textStr.contains("アヤメ英語") || textStr.contains("英語") || textStr.contains("英数") || textStr.contains("アルファベット") || textStr.contains("English") || textStr.contains("QWERTY")) {
+        if (textStr.contains("アヤメ英語") || textStr.contains("英語") || textStr.contains("英数") || textStr.contains("アルファベット") || textStr.contains("English") || textStr.contains("QWERTY") || textStr.equals("abc", ignoreCase = true) || textStr.equals("en", ignoreCase = true)) {
             lastDetectedImeLanguageMode = "en"
             return true
-        } else if (textStr.contains("アヤメかな") || textStr.contains("アヤメローマ字") || textStr.contains("日本語") || textStr.contains("かな") || textStr.contains("フリック") || textStr.contains("12キー") || textStr.contains("ローマ字") || textStr.contains("Japanese")) {
+        } else if (textStr.contains("アヤメかな") || textStr.contains("アヤメローマ字") || textStr.contains("日本語") || textStr.contains("かな") || textStr.contains("フリック") || textStr.contains("12キー") || textStr.contains("ローマ字") || textStr.contains("Japanese") || textStr == "あ") {
             lastDetectedImeLanguageMode = "ja"
             return false
         }
@@ -2899,6 +2899,21 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     nodeLanguage = loc.language
                 }
             }
+        }
+
+        if (nodeLanguage?.startsWith("en", ignoreCase = true) == true) {
+            return true
+        }
+        if (nodeLanguage?.startsWith("ja", ignoreCase = true) == true) {
+            return false
+        }
+
+        // IMEモード切替ボタンによる最新検出フラグを最優先（GboardのInputMethodSubtype固定 ja_JP 対策）
+        if (lastDetectedImeLanguageMode == "en") {
+            return true
+        }
+        if (lastDetectedImeLanguageMode == "ja") {
+            return false
         }
 
         val currentImeLanguage: String? = try {
@@ -2918,15 +2933,15 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             null
         }
 
-        if (nodeLanguage?.startsWith("en", ignoreCase = true) == true || currentImeLanguage?.startsWith("en", ignoreCase = true) == true) {
+        if (currentImeLanguage?.startsWith("en", ignoreCase = true) == true) {
             return true
         }
 
-        if (nodeLanguage?.startsWith("ja", ignoreCase = true) == true || currentImeLanguage?.startsWith("ja", ignoreCase = true) == true) {
+        if (currentImeLanguage?.startsWith("ja", ignoreCase = true) == true) {
             return false
         }
 
-        return lastDetectedImeLanguageMode == "en"
+        return false
     }
 
     /**
