@@ -2601,12 +2601,21 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         )
 
         if (isEnglishKeyboard) {
-            // 英語キーボードモード時: ラテン文字 ('a'..'z', 'A'..'Z') は絶対に日本語かな変換を行わない！
-            // Gboard提供の rawPhonetic (例: "ALPHA") を最優先し、なければ PHONETIC_MAP (NATO) を適用
-            val phonetic = rawPhonetic ?: PHONETIC_MAP[ch.uppercaseChar()]
+            // 英語キーボードモード時:
+            // 数字キーは英語数字フォネティック (rawPhonetic ?: "ワン", "ツー"等) を適用
+            // ラテン文字 ('a'..'z', 'A'..'Z') は絶対に日本語かな変換を行わず、Gboard提供の rawPhonetic (例: "ALPHA") または NATO を適用
+            val phonetic = rawPhonetic ?: JapanesePhoneticTable.getEnglishDigitPhonetic(ch) ?: PHONETIC_MAP[ch.uppercaseChar()]
             return PhoneticPair(ch.toString(), phonetic)
         } else {
-            // 日本語キーボードモード時: ローマ字母音を日本語かなへ変換し、和文通話表（伝統/標準）を適用
+            // 日本語キーボードモード時:
+            // 1. 数字 ('0'..'9', '０'..'９', '〇'..'九') の場合は無線局運用規則 別表第5号 通話表 ("数字のひと", "数字のふた"等) を最優先
+            if (JapanesePhoneticTable.isDigit(ch)) {
+                val digitPhonetic = JapanesePhoneticTable.getJapaneseDigitPhonetic(ch)
+                    ?: rawPhonetic
+                    ?: getPhoneticName(ch)
+                return PhoneticPair(ch.toString(), digitPhonetic)
+            }
+            // 2. ローマ字母音を日本語かなへ変換し、和文通話表（伝統/標準）を適用
             val kanaEquivalent = romajiVowelToKanaMap[ch]
             if (kanaEquivalent != null) {
                 val phonetic = getPhoneticName(ch) ?: rawPhonetic
@@ -3180,6 +3189,14 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         if (isEnglishExplicit && (ch in 'A'..'Z' || ch in 'a'..'z' || ch in '0'..'9')) {
             val upper = ch.uppercaseChar()
             return PHONETIC_MAP[upper]
+        }
+
+        // 2. 日本語キーボード動作時: 数字の場合は JapanesePhoneticTable (無線局運用規則 別表第5号 通話表: "数字のひと", "数字のふた"等) を優先
+        if (JapanesePhoneticTable.isDigit(ch)) {
+            val digitPhonetic = JapanesePhoneticTable.getJapaneseDigitPhonetic(ch)
+            if (digitPhonetic != null) {
+                return digitPhonetic
+            }
         }
 
         // ローマ字かな母音マップ ('a','i','u','e','o')
