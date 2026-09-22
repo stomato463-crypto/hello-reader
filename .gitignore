@@ -1,4 +1,8 @@
-# 環境固有・秘密情報
+# ==============================================================================
+# Hello Reader - .gitignore (プロ仕様・環境＆セキュリティ防衛設定)
+# ==============================================================================
+
+# 1. 環境固有・秘密情報（絶対コミット禁止）
 local.properties
 *.keystore
 *.jks
@@ -6,44 +10,56 @@ local.properties
 .gitea/.runner
 *.lock
 
-# ビルド成果物・一時ファイル
+# 2. ビルド成果物・一時ファイル
 *.apk
 *.aar
 build/
 **/build/
 /app/build
 /build
+/app/release
 
-# ログ・一時ファイル
+# 3. ログ・一時ファイル
 *.log
 *.txt
 *.py
+*.back
+.DS_Store
 
-# IDE・ツール用の設定・キャッシュ
+# 4. バックアップ・圧縮アーカイブファイル（USB保管用など）
+*.tar
+*.gz
+*.zst
+*.7z
+*.zip
+*.zpaq
+
+# 5. IDE・開発ツール用の設定・キャッシュ
 /.gradle
 /.idea
 /.kotlin
 *.iml
-.DS_Store
-/talkback
-tools/build_talkback.ps1
-tools/TalkBack_Logcat.ps1
-
-/hello-reader-sound
-run-gitea-log.ps1
-app/src/main/res/raw/typo.ogg
-app/src/main/res/raw/complete.ogg
-/tools/run-gitea.ps1
-/tools/run-runner.ps1
 /.natk
 
-/study
-*.back
-*.7z
-*.tar
-*.gz
-*.zst
-    *.zip
-    *.zpaq
-    
+# 6. 外部プロジェクト・ツール・サウンドリソース除外
+/talkback
 /ayame
+/hello-reader-sound
+/study
+tools/build_talkback.ps1
+tools/TalkBack_Logcat.ps1
+run-gitea-log.ps1
+/tools/run-gitea.ps1
+/tools/run-runner.ps1
+app/src/main/res/raw/typo.ogg
+app/src/main/res/raw/complete.ogg
+
+# 7. チームワークマルチエージェントの一時作業フォルダ
+.agents/explorer_*
+.agents/kotlin_worker_*
+.agents/nako3_worker_*
+.agents/orchestrator_*
+.agents/reviewer_*
+.agents/sentinel_*
+.agents/victory_auditor_*
+.agents/ORIGINAL_REQUEST.md
