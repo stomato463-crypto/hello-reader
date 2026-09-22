@@ -1,4 +1,4 @@
-/ 日本語通話票（和文フォネティックコード）統合・体表点字フィードバック仕様書 (nadesiko3) /
+/* 日本語通話票（和文フォネティックコード）統合・体表点字フィードバック仕様書 (nadesiko3) */
 // イシュー＃3「体表点字方式による点字フィードバックシステムの復刻」最新コメント（日本語対応通話票マージ）に基づく仕様書
 システムモジュールは、「com.stomato.helloreader.HelloReaderService」。
 触覚フィードバックモジュールは、「com.stomato.helloreader.haptics.HapticFeedbackManager」。

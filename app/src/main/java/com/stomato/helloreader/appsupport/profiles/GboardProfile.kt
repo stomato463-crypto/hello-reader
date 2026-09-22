@@ -11,16 +11,6 @@ class GboardProfile : AppProfile {
 
     override val targetPackageName: String = "com.google.android.inputmethod.latin"
 
-    private val natoPhoneticMap = mapOf(
-        'A' to "アルファ", 'B' to "ブラボー", 'C' to "チャーリー", 'D' to "デルタ",
-        'E' to "エコー", 'F' to "フォックストロット", 'G' to "ゴルフ", 'H' to "ホテル",
-        'I' to "インド", 'J' to "ジュリエット", 'K' to "キロ", 'L' to "リマ",
-        'M' to "マイク", 'N' to "ノーベンバー", 'O' to "オスカー", 'P' to "パパ",
-        'Q' to "ケベック", 'R' to "ロメオ", 'S' to "シエラ", 'T' to "タンゴ",
-        'U' to "ユニフォーム", 'V' to "ビクター", 'W' to "ウイスキー", 'X' to "エックスレイ",
-        'Y' to "ヤンキー", 'Z' to "ズールー"
-    )
-
     override fun customizeNodeDescription(
         node: AccessibilityNodeInfo,
         rawMainText: String?,
@@ -30,23 +20,18 @@ class GboardProfile : AppProfile {
         if (text.isBlank()) return null
 
         // 1. Gboard 複合キーノード (例: "a ALPHA", "b BRAVO", "s SIERRA") の分離解読
+        // 単一文字の場合は null ヒントで返し、HelloReaderService.resolveCharPhonetics で
+        // 言語モード（日本語かな / 英語アルファベット）に応じた高精度フォネティック解決を行う
         val parts = text.split("\\s+".toRegex())
         if (parts.size >= 2 && parts[0].length == 1) {
             val singleChar = parts[0][0]
-            val rawPhonetic = parts.subList(1, parts.size).joinToString(" ")
-            val upperChar = singleChar.uppercaseChar()
-            val phonetic = natoPhoneticMap[upperChar] ?: rawPhonetic
-            return Pair(singleChar.toString(), phonetic)
+            return Pair(singleChar.toString(), null)
         }
 
         // 2. Gboard 単一文字キー ('a', 'b', 's' 等)
         if (text.length == 1) {
-            val ch = text[0]
-            val upperChar = ch.uppercaseChar()
-            val phonetic = natoPhoneticMap[upperChar]
-            if (phonetic != null) {
-                return Pair(ch.toString(), phonetic)
-            }
+            val singleChar = text[0]
+            return Pair(singleChar.toString(), null)
         }
 
         // 3. Gboard モード切替・地球儀キー・特殊キーの救済
