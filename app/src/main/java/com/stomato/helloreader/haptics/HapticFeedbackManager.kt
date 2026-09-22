@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
+import android.util.Log
 
 /**
  * 盲ろう者・視覚障害者向け 触覚（ハプティクス）フィードバックマネージャー
@@ -78,7 +79,7 @@ class HapticFeedbackManager(private val context: Context) {
 
     /**
      * 6点点字の1バイト表現（bit 0=Dot1, bit 1=Dot2, ..., bit 5=Dot6）に従って
-     * 6つのドットパルスを順次振動出力する（15ms 振動, 30ms 休止）
+     * 6つのドットパルスを順次振動出力する
      */
     fun performBrailleByte(dots: Byte) {
         val vib = vibrator ?: return
@@ -90,40 +91,131 @@ class HapticFeedbackManager(private val context: Context) {
         timingsList.add(0L)
         amplitudesList.add(0)
 
+        appendBrailleBytePattern(dots, timingsList, amplitudesList)
+
+        if (timingsList.size > 1) {
+            vibrate(timings = timingsList.toLongArray(), amplitudes = amplitudesList.toIntArray())
+        }
+    }
+
+    /**
+     * 文字列を点字翻訳して単一の連続触覚パルス振動を出力
+     */
+    /**
+     * 文字列を点字翻訳して「体表点字方式」（イシュー#3仕様）による点字振動を出力
+     * - 短点（短い振動パルス）: 130ms
+     * - 長点（長い振動パルス）: 280ms
+     * - ブロック間の区切り（左列→右列の間隔）: 180ms
+     * - 1文字全体の長さ: 0.8秒〜1.2秒（着信音1フレーズのリズム）
+     */
+    fun performBrailleText(text: String) {
+        val vib = vibrator ?: return
+        if (!vib.hasVibrator() || text.isBlank()) return
+
+        val trimmedText = text.trim()
+        // 最終防衛ガード: 20文字を超える長文の過剰・暴走振動を防止
+        if (trimmedText.length > 20) {
+            Log.d("HapticFeedbackManager", "Braille haptic skipped for long text (length=${trimmedText.length})")
+            return
+        }
+
+        val brailleBytes = com.stomato.helloreader.braille.JapaneseBrailleTranslator.translate(trimmedText)
+        if (brailleBytes.isEmpty()) return
+
+        val timingsList = mutableListOf<Long>()
+        val amplitudesList = mutableListOf<Int>()
+
+        timingsList.add(0L)
+        amplitudesList.add(0)
+
+        for (i in brailleBytes.indices) {
+            appendBodySurfaceBrailleBytePattern(brailleBytes[i], timingsList, amplitudesList)
+            if (i < brailleBytes.size - 1) {
+                // セル間（文字間）休止: 200ms
+                timingsList.add(200L)
+                amplitudesList.add(0)
+            }
+        }
+
+        if (timingsList.size > 1) {
+            vibrate(timings = timingsList.toLongArray(), amplitudes = amplitudesList.toIntArray())
+        }
+    }
+
+    private fun appendBodySurfaceBrailleBytePattern(
+        dots: Byte,
+        timingsList: MutableList<Long>,
+        amplitudesList: MutableList<Int>
+    ) {
+        val intVal = dots.toInt() and 0x3F
+        if (intVal == 0) {
+            timingsList.add(300L)
+            amplitudesList.add(0)
+            return
+        }
+
+        // 1. 左列ブロック (1, 2, 3の点)
+        var hasLeftDot = false
+        for (dotIndex in 0 until 3) {
+            val isPresent = ((intVal shr dotIndex) and 1) != 0
+            if (isPresent) {
+                if (hasLeftDot) {
+                    timingsList.add(60L)  // 同一列内の点間間隔: 60ms
+                    amplitudesList.add(0)
+                }
+                timingsList.add(130L)      // 短点振動: 130ms
+                amplitudesList.add(255)
+                hasLeftDot = true
+            }
+        }
+
+        // 2. ブロック間の区切り (左列 → 右列 のインターバル) : 180ms
+        timingsList.add(180L)
+        amplitudesList.add(0)
+
+        // 3. 右列ブロック (4, 5, 6の点)
+        var hasRightDot = false
+        for (dotIndex in 3 until 6) {
+            val isPresent = ((intVal shr dotIndex) and 1) != 0
+            if (isPresent) {
+                if (hasRightDot) {
+                    timingsList.add(60L)  // 同一列内の点間間隔: 60ms
+                    amplitudesList.add(0)
+                }
+                timingsList.add(130L)      // 短点振動: 130ms
+                amplitudesList.add(255)
+                hasRightDot = true
+            }
+        }
+    }
+
+    private fun appendBrailleBytePattern(
+        dots: Byte,
+        timingsList: MutableList<Long>,
+        amplitudesList: MutableList<Int>
+    ) {
         val intVal = dots.toInt() and 0x3F // 6点点字のドット(1~6)を抽出
         if (intVal == 0) {
-            // 空白文字: 休止
-            vibrate(timings = longArrayOf(0, 0, 60), amplitudes = intArrayOf(0, 0, 0))
+            // 空白文字: 100ms 休止
+            timingsList.add(100L)
+            amplitudesList.add(0)
             return
         }
 
         for (dotIndex in 0 until 6) {
             val isPresent = ((intVal shr dotIndex) and 1) != 0
             if (isPresent) {
-                timingsList.add(15L)  // Dot ON: 15ms 振動
-                amplitudesList.add(220)
+                timingsList.add(35L)   // Dot ON: 35ms クリスプパルス振動
+                amplitudesList.add(255) // 最大振動強度
             } else {
-                timingsList.add(0L)   // Dot OFF: 振動なし
+                timingsList.add(25L)   // Dot OFF: 25ms 休止
                 amplitudesList.add(0)
             }
 
             if (dotIndex < 5) {
-                timingsList.add(30L)  // 点間パルス間隔 30ms
+                timingsList.add(25L)   // 点間パルス間隔 25ms
                 amplitudesList.add(0)
             }
-        }
-
-        vibrate(timings = timingsList.toLongArray(), amplitudes = amplitudesList.toIntArray())
-    }
-
-    /**
-     * 文字列を点字翻訳して触覚パルス振動を出力
-     */
-    fun performBrailleText(text: String) {
-        if (text.isBlank()) return
-        val brailleBytes = com.stomato.helloreader.braille.JapaneseBrailleTranslator.translate(text)
-        for (b in brailleBytes) {
-            performBrailleByte(b)
         }
     }
 

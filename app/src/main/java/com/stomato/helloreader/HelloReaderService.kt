@@ -37,6 +37,9 @@ import com.stomato.helloreader.appsupport.CustomLabelManager
 import com.stomato.helloreader.braille.BrailleConstants
 import com.stomato.helloreader.braille.BrailleManager
 import com.stomato.helloreader.haptics.HapticFeedbackManager
+import android.text.Spannable
+import android.text.style.LocaleSpan
+import android.view.inputmethod.InputMethodManager
 import java.util.Locale
 
 /**
@@ -60,6 +63,9 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             '0' to "ゼロ", '1' to "ワン", '2' to "ツー", '3' to "スリー", '4' to "フォー",
             '5' to "ファイブ", '6' to "シックス", '7' to "セブン", '8' to "エイト", '9' to "ナイン"
         )
+
+        private var traditionalPhoneticMap: Map<String, String>? = null
+        private var standardPhoneticMap: Map<String, String>? = null
 
         // モールス符号辞書 ( . : 短点 50ms, - : 長点 150ms )
         private val MORSE_MAP = mapOf(
@@ -219,6 +225,163 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             }
         } catch (e: Exception) {
             Log.e(TAG, "Failed to perform haptic feedback", e)
+        }
+    }
+
+    /**
+     * 画面上にソフトキーボード(IME)が表示されているか、入力モード中かを判定
+     * (なでしこ3仕様書: Conditions for activating braille feedback.nako3 準拠)
+     * Gboard, ayameキーボード, すみれIME, しめじ(Simeji), ATOK等すべてのIMEアプリを全自動判別
+     */
+    private fun isKeyboardOrImeActive(): Boolean {
+        try {
+            // 1. アクティブなウィンドウ一覧から IME ウインドウ (TYPE_INPUT_METHOD) の存在を検出
+            val currentWindows = windows
+            if (!currentWindows.isNullOrEmpty()) {
+                val hasImeWindow = currentWindows.any { window ->
+                    window.type == AccessibilityWindowInfo.TYPE_INPUT_METHOD
+                }
+                if (hasImeWindow) return true
+            }
+
+            // 2. システムに登録・有効化されている全IMEアプリのパッケージ名一覧を取得
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? android.view.inputmethod.InputMethodManager
+            val enabledImePackages = imm?.enabledInputMethodList?.map { it.packageName }?.toSet() ?: emptySet()
+
+            // 3. 現在フォーカスされているノードを取得
+            val focusedNode = rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)
+                ?: rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
+
+            if (focusedNode != null) {
+                // (a) 入力欄 (isEditable) または EditText / Keyboard クラスのチェック
+                if (focusedNode.isEditable) return true
+                val className = focusedNode.className?.toString() ?: ""
+                if (className.contains("EditText", ignoreCase = true) ||
+                    className.contains("Keyboard", ignoreCase = true) ||
+                    className.contains("InputMethod", ignoreCase = true)
+                ) {
+                    return true
+                }
+
+                // (b) フォーカスノードのパッケージ名が IME アプリ一覧に含まれているか
+                val pkgName = focusedNode.packageName?.toString() ?: ""
+                if (pkgName.isNotBlank()) {
+                    if (enabledImePackages.contains(pkgName)) return true
+
+                    // 予備キーワード判定 (gboard, ayame, sumire, simeji, atok, iwnn, wnn, japanesevkey 等)
+                    val lowerPkg = pkgName.lowercase(Locale.ROOT)
+                    if (lowerPkg.contains("inputmethod") ||
+                        lowerPkg.contains("keyboard") ||
+                        lowerPkg.contains("ime") ||
+                        lowerPkg.contains("gboard") ||
+                        lowerPkg.contains("ayame") ||
+                        lowerPkg.contains("sumire") ||
+                        lowerPkg.contains("simeji") ||
+                        lowerPkg.contains("atok") ||
+                        lowerPkg.contains("iwnn") ||
+                        lowerPkg.contains("wnn") ||
+                        lowerPkg.contains("japanesevkey")
+                    ) {
+                        return true
+                    }
+                }
+
+                // (c) ノードのテキスト・説明文にキーボード関連キーワードが含まれるか（例：「アヤメローマ字入力」「アヤメ英語」「キーボード切替」等）
+                val nodeText = (focusedNode.text?.toString() ?: "") + (focusedNode.contentDescription?.toString() ?: "")
+                if (nodeText.isNotBlank()) {
+                    val lowerText = nodeText.lowercase(Locale.ROOT)
+                    if (lowerText.contains("アヤメ") ||
+                        lowerText.contains("ayame") ||
+                        lowerText.contains("キーボード") ||
+                        lowerText.contains("かな") ||
+                        lowerText.contains("英数") ||
+                        lowerText.contains("ローマ字") ||
+                        lowerText.contains("フリック") ||
+                        lowerText.contains("ime")
+                    ) {
+                        return true
+                    }
+                }
+            }
+
+            // 4. ルートノード自体のパッケージ名チェック
+            val rootPkg = rootInActiveWindow?.packageName?.toString()?.lowercase(Locale.ROOT) ?: ""
+            if (rootPkg.isNotBlank()) {
+                if (enabledImePackages.contains(rootPkg)) return true
+                if (rootPkg.contains("ayame") ||
+                    rootPkg.contains("sumire") ||
+                    rootPkg.contains("simeji") ||
+                    rootPkg.contains("gboard") ||
+                    rootPkg.contains("atok") ||
+                    rootPkg.contains("iwnn") ||
+                    rootPkg.contains("wnn") ||
+                    rootPkg.contains("japanesevkey") ||
+                    rootPkg.contains("inputmethod")
+                ) {
+                    return true
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error checking keyboard or IME state", e)
+        }
+        return false
+    }
+
+    private var lastBrailleText: String = ""
+    private var lastBrailleTime: Long = 0L
+
+    /**
+     * 盲ろう者向け点字ハプティクス（6点点字パルス振動）の実行
+     * (なでしこ3仕様書: Conditions for activating braille feedback.nako3 準拠)
+     * キーボード上の文字キー(a, b, あ, か等)および入力キー(削除, スペース等)に限定して発動
+     */
+    private fun performBrailleHapticFeedback(text: String) {
+        try {
+            val trimmedText = text.trim()
+            if (trimmedText.isBlank()) return
+
+            // 1. 暴走・過剰振動防止ガード: 20文字を超える長文テキストはスキップ
+            if (trimmedText.length > 20) {
+                Log.d(TAG, "Braille haptic skipped for long text (length=${trimmedText.length})")
+                return
+            }
+
+            // 2. 画面システムナビゲーション単語（「戻る」「ホーム画面」「通知シェード」等）の点字パルス振動除外
+            if (trimmedText == "戻る" ||
+                trimmedText == "ホーム画面" ||
+                trimmedText == "通知シェード" ||
+                trimmedText == "Google" ||
+                trimmedText.contains("設定") ||
+                trimmedText.contains("表示中") ||
+                trimmedText.contains("通知")
+            ) {
+                return
+            }
+
+            // 3. 対象テキストが単一文字 (length == 1) または入力用キー機能名かチェック
+            val isSingleCharacter = trimmedText.length == 1
+            val isKeyAction = isKeyActionName(trimmedText)
+
+            if (!isSingleCharacter && !isKeyAction) {
+                return
+            }
+
+            val currentTime = System.currentTimeMillis()
+            // 4. 直前と同じテキストで300ms以内の連呼は重複防止のためスキップ
+            if (trimmedText == lastBrailleText && (currentTime - lastBrailleTime) < 300) {
+                return
+            }
+
+            val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
+            val isBrailleHapticEnabled = prefs.getBoolean("pref_braille_haptic_enabled", true)
+
+            if (isBrailleHapticEnabled && ::hapticFeedbackManager.isInitialized) {
+                lastBrailleText = trimmedText
+                lastBrailleTime = currentTime
+                hapticFeedbackManager.performBrailleText(trimmedText)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to perform braille haptic feedback", e)
         }
     }
 
@@ -521,6 +684,41 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         startWatchdog()
     }
 
+    @Volatile
+    private var pendingBrailleHapticText: String? = null
+    @Volatile
+    private var activeHoverKeyText: String? = null
+    private val brailleHandler = android.os.Handler(android.os.Looper.getMainLooper())
+    private val brailleRunnable = Runnable { triggerBrailleHapticDelayed() }
+
+    private fun isKeyActionName(text: String): Boolean {
+        return text == "削除" ||
+                text == "1文字削除" ||
+                text == "シフトキー" ||
+                text == "スペース" ||
+                text == "space" ||
+                text == "Space" ||
+                text == "エンター" ||
+                text == "Enter" ||
+                text == "改行" ||
+                text == "確定" ||
+                text == "左カーソル" ||
+                text == "右カーソル" ||
+                text == "記号" ||
+                text == "読み上げ"
+    }
+
+    private fun triggerBrailleHapticDelayed() {
+        val targetText = pendingBrailleHapticText
+        if (!targetText.isNullOrBlank()) {
+            pendingBrailleHapticText = null
+            performBrailleHapticFeedback(targetText)
+            if (::brailleManager.isInitialized) {
+                brailleManager.displayText(targetText)
+            }
+        }
+    }
+
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
             val result = tts?.setLanguage(Locale.JAPANESE)
@@ -533,13 +731,32 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 tts?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
                     override fun onStart(utteranceId: String?) {}
                     override fun onDone(utteranceId: String?) {
-                        if (utteranceId == "HelloReaderMainTTS" && !pendingSubVoiceHint.isNullOrBlank()) {
-                            val hint = pendingSubVoiceHint
-                            pendingSubVoiceHint = null
-                            mainHandler.post {
-                                val currentTts = tts ?: return@post
-                                currentTts.setPitch(subVoicePitch)
-                                currentTts.speak(hint, TextToSpeech.QUEUE_ADD, null, "HelloReaderSubTTS")
+                        when (utteranceId) {
+                            "HelloReaderMainTTS" -> {
+                                if (!pendingSubVoiceHint.isNullOrBlank()) {
+                                    val hint = pendingSubVoiceHint
+                                    pendingSubVoiceHint = null
+                                    // なでしこ0.5秒ルール (仕様書 Line 37-41 準拠): メイン文字完了から正確に0.5秒(500ms)待って通話表を発声
+                                    mainHandler.postDelayed({
+                                        val currentTts = tts ?: return@postDelayed
+                                        currentTts.setPitch(subVoicePitch)
+                                        val subBundle = android.os.Bundle()
+                                        currentTts.speak(hint, TextToSpeech.QUEUE_FLUSH, subBundle, "HelloReaderSubTTS")
+                                    }, 500L)
+                                } else {
+                                    // 通話表なしの場合: メイン音声完了から0.5秒(500ms)待って点字パルス振動＆点字ディスプレイ出力をデュアル実行
+                                    if (pendingBrailleHapticText != null) {
+                                        brailleHandler.removeCallbacks(brailleRunnable)
+                                        brailleHandler.postDelayed(brailleRunnable, 500L)
+                                    }
+                                }
+                            }
+                            "HelloReaderSubTTS" -> {
+                                // 通話表ありの場合: 通話表完了から0.5秒(500ms)待って点字パルス振動＆点字ディスプレイ出力をデュアル実行
+                                if (pendingBrailleHapticText != null) {
+                                    brailleHandler.removeCallbacks(brailleRunnable)
+                                    brailleHandler.postDelayed(brailleRunnable, 500L)
+                                }
                             }
                         }
                     }
@@ -645,6 +862,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
 
         interruptSpeaking()
+        activeHoverKeyText = null
         return when (gestureId) {
             // 2本指シングルタップ: 即時消音 (TalkBack標準)
             43, GESTURE_2_FINGER_SINGLE_TAP -> {
@@ -819,9 +1037,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
 
         val ch = text[charNavigationIndex]
-        val uppercaseCh = ch.uppercaseChar()
-        val phonetic = PHONETIC_MAP[uppercaseCh]
-        val spoken = if (phonetic != null) "$ch、$phonetic" else ch.toString()
+        val phonetic = getPhoneticName(ch)
 
         playSound(soundFocusId)
         performHapticFeedback()
@@ -837,13 +1053,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             playMorseVibration(ch)
         }
 
-        val isBrailleHapticEnabled = prefs.getBoolean("pref_braille_haptic_enabled", true)
-        // 【ガード条件】画面にソフトウェアキーボード(IME)が表示されており、入力モード(半角英語・ローマ字・かな)の時だけ点字パルス振動を実行！
-        if (isBrailleHapticEnabled && isImeKeyboardActive()) {
-            hapticFeedbackManager.performBrailleText(ch.toString())
-        }
-
-        speak(spoken)
+        speakWithSubVoice(ch.toString(), phonetic, force = true)
     }
 
     /**
@@ -852,6 +1062,15 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
      */
     private fun isImeKeyboardActive(): Boolean {
         try {
+            val activePkg = rootInActiveWindow?.packageName?.toString() ?: ""
+            if (activePkg.contains("inputmethod", ignoreCase = true) ||
+                activePkg.contains("keyboard", ignoreCase = true) ||
+                activePkg.contains("ime", ignoreCase = true) ||
+                activePkg == "com.google.android.inputmethod.latin"
+            ) {
+                return true
+            }
+
             // 1. IMEウィンドウ (TYPE_INPUT_METHOD) が画面上に存在するかチェック
             val activeWindows = windows
             if (!activeWindows.isNullOrEmpty()) {
@@ -1803,57 +2022,101 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     if (event.source != null) {
                         lastFocusedNode = event.source
                     }
+                    val pkgName = event.packageName?.toString() ?: event.source?.packageName?.toString() ?: ""
+                    val isIme = isImeKeyboardActive() || pkgName == "com.google.android.inputmethod.latin"
                     playSound(soundFocusId)
-                    performHapticFeedback()
-                    var desc: String? = null
+                    if (!isIme) {
+                        performHapticFeedback()
+                    }
                     val node = event.source
                     if (node != null) {
-                        desc = parseNodeDescription(node)
-                    }
-                    if (desc.isNullOrBlank()) {
-                        desc = getEventText(event)
-                    }
-                    if (!desc.isNullOrBlank()) {
-                        speak(desc)
+                        val pair = parseNodeDescriptionPair(node)
+                        if (pair != null) {
+                            speakWithSubVoice(pair.mainText, pair.hintText)
+                        } else {
+                            val desc = parseNodeDescription(node) ?: getEventText(event)
+                            if (!desc.isNullOrBlank()) {
+                                speakWithSubVoice(desc, null)
+                            }
+                        }
+                    } else {
+                        val fallbackText = getEventText(event)
+                        if (!fallbackText.isNullOrBlank()) {
+                            speakWithSubVoice(fallbackText, null)
+                        }
                     }
                 } catch (e: Exception) {
                     Log.e(TAG, "TYPE_VIEW_FOCUSED handling error", e)
                     val fallbackText = getEventText(event)
                     if (!fallbackText.isNullOrBlank()) {
-                        speak(fallbackText)
+                        speakWithSubVoice(fallbackText, null)
                     }
                 }
             }
             AccessibilityEvent.TYPE_VIEW_HOVER_ENTER -> {
                 try {
-                    // タッチガイド (Explore by Touch): 指の下にある要素に明示的にフォーカスを設定して音・音声・触覚振動で案内！
-                    interruptSpeaking()
                     val node = event.source
+                    val pair = if (node != null) parseNodeDescriptionPair(node) else null
+                    val targetText = pair?.mainText
+                        ?: (if (node != null) parseNodeDescription(node) else null)
+                        ?: getEventText(event)
+                        ?: ""
+                    val trimmedTarget = targetText.trim()
+
+                    // Same-key check:
+                    // If target is not empty and identical to the currently active hover key,
+                    // return immediately! DO NOT call interruptSpeaking(), DO NOT clear pendingBrailleHapticText, DO NOT cancel brailleHandler.
+                    // This protects ongoing speech and braille timers against finger micro-movements on the same key.
+                    if (trimmedTarget.isNotEmpty() && trimmedTarget == activeHoverKeyText) {
+                        return
+                    }
+
+                    // New-key branch:
+                    activeHoverKeyText = if (trimmedTarget.isNotEmpty()) trimmedTarget else null
+                    interruptSpeaking()
+
+                    val pkgName = event.packageName?.toString() ?: node?.packageName?.toString() ?: ""
+                    val isIme = isImeKeyboardActive() || pkgName == "com.google.android.inputmethod.latin"
+
                     if (node != null) {
-                        node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
                         lastFocusedNode = node
-                        playSound(soundFocusId)
-                        performHapticFeedback()
-                        var desc = parseNodeDescription(node)
-                        if (desc.isNullOrBlank()) {
-                            desc = getEventText(event)
+                        // In IME keyboards (Gboard), DO NOT call node.performAction(ACTION_ACCESSIBILITY_FOCUS).
+                        // This eliminates duplicate focus events, double earcons, and premature 15ms non-braille vibrations.
+                        if (!isIme) {
+                            node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)
                         }
-                        if (!desc.isNullOrBlank()) {
-                            speak(desc)
+                        playSound(soundFocusId)
+
+                        val isSingleChar = trimmedTarget.length == 1
+                        val isKeyAction = isKeyActionName(trimmedTarget)
+                        // 非IMEかつ点字パルス振動対象（1文字・キー操作名）以外の場合のみ、即時0msフォーカス振動を発動
+                        if (!isIme && !isSingleChar && !isKeyAction) {
+                            performHapticFeedback()
+                        }
+
+                        if (pair != null) {
+                            speakWithSubVoice(pair.mainText, pair.hintText, force = true)
+                        } else if (trimmedTarget.isNotEmpty()) {
+                            speakWithSubVoice(targetText, null, force = true)
                         }
                     } else {
                         val fallbackText = getEventText(event)
                         if (!fallbackText.isNullOrBlank()) {
-                            speak(fallbackText)
+                            playSound(soundFocusId)
+                            speakWithSubVoice(fallbackText, null, force = true)
                         }
                     }
                 } catch (e: Exception) {
                     Log.e(TAG, "TYPE_VIEW_HOVER_ENTER handling error", e)
                     val fallbackText = getEventText(event)
                     if (!fallbackText.isNullOrBlank()) {
-                        speak(fallbackText)
+                        speakWithSubVoice(fallbackText, null, force = true)
                     }
                 }
+            }
+            AccessibilityEvent.TYPE_VIEW_HOVER_EXIT,
+            AccessibilityEvent.TYPE_TOUCH_EXPLORATION_GESTURE_END -> {
+                activeHoverKeyText = null
             }
             AccessibilityEvent.TYPE_VIEW_CLICKED -> {
                 playSound(soundActivateId)
@@ -1868,7 +2131,18 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                     if (isKeyguardLocked()) {
                         speak("ピンコード ${text.length}桁目入力済み")
                     } else {
-                        speak(text)
+                        val trimmed = text.trim()
+                        if (trimmed.length == 1) {
+                            val ch = trimmed[0]
+                            val phonetic = getPhoneticName(ch)
+                            if (phonetic != null) {
+                                speakWithSubVoice(trimmed, phonetic, force = true)
+                            } else {
+                                speak(text)
+                            }
+                        } else {
+                            speak(text)
+                        }
                     }
                 } else if (isKeyguardLocked()) {
                     speak("文字が入力されました")
@@ -1937,6 +2211,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             AccessibilityEvent.TYPE_ANNOUNCEMENT -> {
                 val text = getEventText(event)
                 if (!text.isNullOrBlank()) {
+                    isEnglishLanguageActive(text) // アヤメIME等の「英数モード」「ひらがなモード」アナウンスをリアルタイム検出！
                     speak(text)
                 }
             }
@@ -1987,13 +2262,6 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         // App Support: 1. カスタムラベルのチェック (名無しボタン救済)
         var rawMainText: String? = customLabelManager.getCustomLabel(packageName, viewId)
 
-        // App Support: 2. アプリ特有プロファイルによる最優先補正
-        val appProfile = appProfileManager.getProfileForPackage(packageName)
-        val customizedPair = appProfile.customizeNodeDescription(node, rawMainText, null)
-        if (customizedPair != null) {
-            return NodeTextPair(customizedPair.first, customizedPair.second)
-        }
-
         if (rawMainText.isNullOrBlank()) {
             rawMainText = when {
                 !compat.contentDescription.isNullOrBlank() -> compat.contentDescription.toString()
@@ -2007,6 +2275,13 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         if (rawMainText.isNullOrBlank()) {
             rawMainText = collectAllChildTexts(node)
+        }
+
+        // App Support: 2. アプリ特有プロファイル (GboardProfile等) による最優先補正
+        val appProfile = appProfileManager.getProfileForPackage(packageName)
+        val customizedPair = appProfile.customizeNodeDescription(node, rawMainText, null)
+        if (customizedPair != null) {
+            return NodeTextPair(customizedPair.first, customizedPair.second)
         }
 
         // App Support: View ID からの汎用アイコン・ボタン名全自動レスキュー
@@ -2070,18 +2345,42 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
                 return NodeTextPair(mainTextStr, hint)
             }
 
-            if (mainTextStr.length == 1) {
-                val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
-                val isPhoneticMorseEnabled = prefs.getBoolean("pref_phonetic_morse_enabled", false)
+            // ローマ字・アルファベットキー ('a','i','u','e','o') のメイン文字を日本語かな ('あ','い','う','え','お') へ優先変換
+            val romajiToKanaCharMap = mapOf(
+                'a' to "あ", 'i' to "い", 'u' to "う", 'e' to "え", 'o' to "お",
+                'A' to "あ", 'I' to "い", 'U' to "う", 'E' to "え", 'O' to "お"
+            )
 
-                val ch = mainTextStr[0]
-                val uppercaseCh = ch.uppercaseChar()
+            // 複合キーテキスト (例: "a ALPHA", "a あさひのア") の判定と分離
+            val parts = mainTextStr.split("\\s+".toRegex())
+            if (parts.size >= 2 && parts[0].length == 1) {
+                val singleChar = parts[0][0]
+                val rawPhonetic = parts.subList(1, parts.size).joinToString(" ")
 
-                if (isPhoneticMorseEnabled && PHONETIC_MAP.containsKey(uppercaseCh)) {
-                    val phoneticName = PHONETIC_MAP[uppercaseCh]
-                    mainSb.append(ch).append("。").append(phoneticName)
+                val isEnglishKeyboard = isEnglishLanguageActive(rawMainText)
+                val resolvedPhonetic = getPhoneticName(singleChar, rawMainText) ?: rawPhonetic
+                val spokenMainChar = if (isEnglishKeyboard) {
+                    singleChar.toString()
                 } else {
-                    mainSb.append(rawMainText)
+                    romajiToKanaCharMap[singleChar] ?: singleChar.toString()
+                }
+                return NodeTextPair(spokenMainChar, resolvedPhonetic)
+            }
+
+            // キーボード側が通話表を提供していない（単一文字）場合のみ Hello-Reader 辞書（伝統/標準/NATO）へフォールバック！
+            if (mainTextStr.length == 1) {
+                val ch = mainTextStr[0]
+                val isEnglishKeyboard = isEnglishLanguageActive(rawMainText)
+                val phoneticName = getPhoneticName(ch, rawMainText)
+                val spokenMainChar = if (isEnglishKeyboard) {
+                    ch.toString()
+                } else {
+                    romajiToKanaCharMap[ch] ?: ch.toString()
+                }
+                if (phoneticName != null) {
+                    return NodeTextPair(spokenMainChar, phoneticName)
+                } else {
+                    mainSb.append(spokenMainChar)
                 }
             } else {
                 mainSb.append(rawMainText)
@@ -2249,8 +2548,36 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
      */
     private fun interruptSpeaking() {
         pendingSubVoiceHint = null
+        pendingBrailleHapticText = null
+        brailleHandler.removeCallbacks(brailleRunnable)
         mainHandler.removeCallbacksAndMessages(null)
         tts?.stop()
+    }
+
+    private data class PhoneticPair(val mainText: String, val hintText: String?)
+
+    private fun resolveCharPhonetics(ch: Char, rawPhonetic: String? = null): PhoneticPair {
+        val isEnglishKeyboard = isEnglishLanguageActive()
+        val isKana = ch in '\u3040'..'\u309F' || ch in '\u30A0'..'\u30FF'
+
+        if (isKana) {
+            val phonetic = getPhoneticName(ch)
+            return PhoneticPair(ch.toString(), phonetic)
+        }
+
+        val romajiVowelToKanaMap = mapOf(
+            'a' to "あ", 'i' to "い", 'u' to "う", 'e' to "え", 'o' to "お",
+            'A' to "あ", 'I' to "い", 'U' to "う", 'E' to "え", 'O' to "お"
+        )
+        val kanaEquivalent = romajiVowelToKanaMap[ch]
+
+        if (kanaEquivalent != null && !isEnglishKeyboard) {
+            val phonetic = getPhoneticName(ch) ?: rawPhonetic
+            return PhoneticPair(kanaEquivalent, phonetic)
+        }
+
+        val phonetic = PHONETIC_MAP[ch.uppercaseChar()] ?: rawPhonetic
+        return PhoneticPair(ch.toString(), phonetic)
     }
 
     /**
@@ -2259,16 +2586,39 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
     private fun speakWithSubVoice(mainText: String, hintText: String? = null, force: Boolean = false) {
         if (!isTtsReady || mainText.isBlank()) return
 
-        val fullTextKey = if (!hintText.isNullOrBlank()) "$mainText|$hintText" else mainText
+        // キーボード全体枠（q w e r t y... 等の長文）がフォーカスされた場合は、一括音読せず「キーボード」と案内 (TalkBack準拠)
+        val trimmed = mainText.trim()
+        val isKeyboardContainerLongText = trimmed.length > 15 &&
+                (trimmed.contains("q w e r t y") || trimmed.contains("あ か さ た な") || trimmed.contains("シフトキー z x c v"))
+        
+        var actualMainText = if (isKeyboardContainerLongText) "キーボード" else mainText
+        var actualHintText = if (isKeyboardContainerLongText) "ダブルタップで入力領域を操作できます" else hintText
+
+        if (!isKeyboardContainerLongText) {
+            val parts = trimmed.split("\\s+".toRegex())
+            if (parts.size >= 2 && parts[0].length == 1) {
+                val singleChar = parts[0][0]
+                val rawPhonetic = parts.subList(1, parts.size).joinToString(" ")
+                val resolved = resolveCharPhonetics(singleChar, rawPhonetic)
+                actualMainText = resolved.mainText
+                actualHintText = resolved.hintText
+            } else if (trimmed.length == 1) {
+                val singleChar = trimmed[0]
+                val resolved = resolveCharPhonetics(singleChar, hintText)
+                actualMainText = resolved.mainText
+                actualHintText = resolved.hintText
+            }
+        }
+
+        val fullTextKey = if (!actualHintText.isNullOrBlank()) "$actualMainText|$actualHintText" else actualMainText
         val currentTime = System.currentTimeMillis()
         val lastTime = recentSpokenTexts[fullTextKey]
 
-        // 同一テキストが短時間 (800ms以内) に手動ナビゲーションとアクセシビリティイベントで2重発火するのを完全シャットアウト！
-        if (lastTime != null && (currentTime - lastTime) < 800) {
-            return
-        }
+        // 単一文字・キーボード操作・スワイプ移動時は短時間の250msデバウンスで即時追従！
+        val isSingleCharOrKey = actualMainText.trim().length == 1 || mainText.trim().length == 1 || isImeKeyboardActive()
+        val debounceWindow = if (isSingleCharOrKey || force) 250L else 800L
 
-        if (!force && lastTime != null && (currentTime - lastTime) < 1500) {
+        if (!force && lastTime != null && (currentTime - lastTime) < debounceWindow) {
             return
         }
 
@@ -2277,23 +2627,46 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
             recentSpokenTexts.remove(recentSpokenTexts.keys.first())
         }
 
-        Log.d(TAG, "Speaking Main: ${sanitizeForLog(mainText)}${if (hintText != null) " [SubVoice Hint: $hintText]" else ""}")
-        logEvent("${sanitizeForLog(mainText)}${if (hintText != null) " ($hintText)" else ""}")
+        Log.d(TAG, "Speaking Main: ${sanitizeForLog(actualMainText)}${if (actualHintText != null) " [SubVoice Hint: $actualHintText]" else ""}")
+        logEvent("${sanitizeForLog(actualMainText)}${if (actualHintText != null) " ($actualHintText)" else ""}")
 
         val currentTts = tts ?: return
+        brailleHandler.removeCallbacks(brailleRunnable)
+        mainHandler.removeCallbacksAndMessages(null)
         
-        // 1. サブヒントをペンディング変数にセット
-        pendingSubVoiceHint = if (isSubVoiceEnabled && !hintText.isNullOrBlank()) hintText else null
+        // 1. サブヒントをペンディング変数にセット (なでしこ0.5秒ルール適用)
+        pendingSubVoiceHint = if (isSubVoiceEnabled && !actualHintText.isNullOrBlank()) actualHintText else null
 
-        // 2. 点字ディスプレイへの出力配信
-        if (::brailleManager.isInitialized) {
-            val brailleSpoken = if (!hintText.isNullOrBlank()) "$mainText $hintText" else mainText
-            brailleManager.displayText(brailleSpoken)
+        // 2. 点字ディスプレイおよび触覚点字パルス振動への出力配信:
+        // なでしこ3仕様書 (Japanese_Phonetic_Braille_Feedback.nako3 および Gboard_Touch_Exploration_Braille.nako3) に準拠:
+        // T=0での即時点字出力は行わず、音声完了から0.5秒後(UtteranceProgressListener.onDone)に
+        // triggerBrailleHapticDelayed()にて6点点字パルス振動と点字ディスプレイ出力をデュアル実行する。
+        val trimmedMain = actualMainText.trim()
+        val extractedChar = if (trimmedMain.length == 1) {
+            trimmedMain
+        } else if (trimmedMain.isNotEmpty() && isImeKeyboardActive()) {
+            // Gboard探索時: 複合キー名(例: "a アルファ")から先頭の1文字またはキーアクション名を抽出
+            val firstToken = trimmedMain.split("\\s+".toRegex()).firstOrNull() ?: ""
+            if (firstToken.length == 1) firstToken else trimmedMain
+        } else {
+            trimmedMain
+        }
+
+        val isSingleChar = extractedChar.length == 1
+        val isKeyAction = isKeyActionName(extractedChar)
+
+        if (isSingleChar || isKeyAction) {
+            pendingBrailleHapticText = extractedChar
+            brailleHandler.removeCallbacks(brailleRunnable)
+        } else {
+            pendingBrailleHapticText = null
+            brailleHandler.removeCallbacks(brailleRunnable)
         }
 
         // 3. メインボイスの再生
         currentTts.setPitch(mainVoicePitch)
-        currentTts.speak(mainText, TextToSpeech.QUEUE_FLUSH, null, "HelloReaderMainTTS")
+        val mainBundle = android.os.Bundle()
+        currentTts.speak(actualMainText, TextToSpeech.QUEUE_FLUSH, mainBundle, "HelloReaderMainTTS")
 
         // 4. 智浩さんの「なでしこ v3 風」仕様 (Morse code conditions.md 精密版) の実行！
         // もし、フォーカスがエディットボックス (EditText / 入力欄) ならば、文字の読み上げのあとに、モールス信号フィードバックを実行！
@@ -2308,7 +2681,7 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
 
         if (isMorseEnabled && isEditBox) {
             val timing = prefs.getString("pref_phonetic_morse_timing", "AFTER_TTS") ?: "AFTER_TTS"
-            val targetChar = mainText.firstOrNull { PHONETIC_MAP.containsKey(it.uppercaseChar()) }
+            val targetChar = mainText.firstOrNull { getPhoneticName(it) != null }
             if (targetChar != null) {
                 when (timing) {
                     "BEFORE_TTS" -> {
@@ -2528,11 +2901,146 @@ class HelloReaderService : AccessibilityService(), TextToSpeech.OnInitListener {
         }
     }
 
+    private fun loadJsonPhoneticMap(filename: String): Map<String, String> {
+        val map = mutableMapOf<String, String>()
+        try {
+            val jsonString = assets.open(filename).bufferedReader().use { it.readText() }
+            val jsonObject = org.json.JSONObject(jsonString)
+            val keys = jsonObject.keys()
+            while (keys.hasNext()) {
+                val key = keys.next()
+                map[key] = jsonObject.getString(key)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to load phonetic JSON: $filename", e)
+        }
+        return map
+    }
+
+    @Volatile
+    private var lastDetectedImeLanguageMode: String? = null
+
+    /**
+     * TalkBack (ProcessorPhoneticLetters) 100%完全合致 + サードパーティIME (アヤメ英語等) 動的対応:
+     * アクティブIMEおよびノードの言語、切り替えボタンのテキストを検出して英語モードか判定
+     */
+    private fun isEnglishLanguageActive(nodeText: CharSequence? = null): Boolean {
+        val textStr = nodeText?.toString() ?: ""
+        if (textStr.contains("アヤメ英語") || textStr.contains("英語") || textStr.contains("英数") || textStr.contains("アルファベット") || textStr.contains("English") || textStr.contains("QWERTY") || textStr.contains("Alphabet") || textStr.equals("abc", ignoreCase = true) || textStr.equals("en", ignoreCase = true)) {
+            lastDetectedImeLanguageMode = "en"
+            return true
+        } else if (textStr.contains("アヤメかな") || textStr.contains("アヤメローマ字") || textStr.contains("アヤメ日本語") || textStr.contains("ひらがな") || textStr.contains("日本語") || textStr.contains("かな") || textStr.contains("フリック") || textStr.contains("12キー") || textStr.contains("ローマ字") || textStr.contains("テンキー") || textStr.contains("Japanese") || textStr == "あ") {
+            lastDetectedImeLanguageMode = "ja"
+            return false
+        }
+
+        var nodeLanguage: String? = null
+        if (nodeText is Spannable) {
+            val localeSpans = nodeText.getSpans(0, nodeText.length, LocaleSpan::class.java)
+            if (localeSpans != null && localeSpans.isNotEmpty()) {
+                val loc = localeSpans[0]?.locale
+                if (loc != null) {
+                    nodeLanguage = loc.language
+                }
+            }
+        }
+
+        if (nodeLanguage?.startsWith("en", ignoreCase = true) == true) {
+            return true
+        }
+        if (nodeLanguage?.startsWith("ja", ignoreCase = true) == true) {
+            return false
+        }
+
+        // IMEモード切替ボタンによる最新検出フラグを最優先（GboardのInputMethodSubtype固定 ja_JP 対策）
+        if (lastDetectedImeLanguageMode == "en") {
+            return true
+        }
+        if (lastDetectedImeLanguageMode == "ja") {
+            return false
+        }
+
+        val currentImeLanguage: String? = try {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            val subtype = imm?.currentInputMethodSubtype
+            if (subtype != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    val tag = subtype.languageTag
+                    if (!tag.isNullOrBlank()) tag else subtype.locale?.toString()
+                } else {
+                    subtype.locale?.toString()
+                }
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
+        }
+
+        if (currentImeLanguage?.startsWith("en", ignoreCase = true) == true) {
+            return true
+        }
+
+        if (currentImeLanguage?.startsWith("ja", ignoreCase = true) == true) {
+            return false
+        }
+
+        return false
+    }
+
+    /**
+     * TalkBack (ProcessorPhoneticLetters) 100%完全合致アルゴリズム + 日本語ローマ字かなマップ:
+     * GboardノードのLocaleSpan、アクティブIMEの言語サブタイプ(InputMethodSubtype)、
+     * およびUnicode文字種を判定して、キーボード言語に応じた通話表（和文伝統/和文標準/英語NATO）を動的選択する。
+     */
+    fun getPhoneticName(ch: Char, nodeText: CharSequence? = null): String? {
+        val prefs = getSharedPreferences("hello_reader_prefs", Context.MODE_PRIVATE)
+        val mode = prefs.getString("pref_phonetic_dictionary_mode", "TRADITIONAL") ?: "TRADITIONAL"
+
+        if (traditionalPhoneticMap == null) {
+            traditionalPhoneticMap = loadJsonPhoneticMap("japanese_phonetic_alphabet_traditional.json")
+        }
+        if (standardPhoneticMap == null) {
+            standardPhoneticMap = loadJsonPhoneticMap("japanese_Phonetic_alphabet.json")
+        }
+
+        val activeMap = if (mode == "STANDARD") standardPhoneticMap else traditionalPhoneticMap
+        val strKey = ch.toString()
+
+        val isEnglishExplicit = isEnglishLanguageActive(nodeText)
+
+        // 1. 英語キーボード動作時: 英数字 (A-Z, a-z, 0-9) の場合英語 NATO フォネティックを優先 (a -> アルファ / ALPHA)
+        if (isEnglishExplicit && (ch in 'A'..'Z' || ch in 'a'..'z' || ch in '0'..'9')) {
+            val upper = ch.uppercaseChar()
+            return PHONETIC_MAP[upper]
+        }
+
+        // ローマ字かな母音マップ ('a','i','u','e','o')
+        val romajiVowelToKanaMap = mapOf(
+            'a' to "あ", 'i' to "い", 'u' to "う", 'e' to "え", 'o' to "お",
+            'A' to "あ", 'I' to "い", 'U' to "う", 'E' to "え", 'O' to "お"
+        )
+        val kanaEquivalent = romajiVowelToKanaMap[ch]
+
+        // 2. 日本語キーボード動作時: 和文通話表（伝統「あさひのア」/標準「あさひのア」）を最優先参照！
+        if (activeMap != null) {
+            if (activeMap.containsKey(strKey)) {
+                return activeMap[strKey]
+            }
+            if (kanaEquivalent != null && activeMap.containsKey(kanaEquivalent)) {
+                return activeMap[kanaEquivalent]
+            }
+        }
+
+        // 3. 該当がない場合のフォールバック: 英語 NATO マップ
+        val upper = ch.uppercaseChar()
+        return PHONETIC_MAP[upper]
+    }
+
     fun spellPhoneticText(text: String) {
         val sb = StringBuilder()
         for (c in text) {
-            val upperC = c.uppercaseChar()
-            val phonetic = PHONETIC_MAP[upperC]
+            val phonetic = getPhoneticName(c)
             if (phonetic != null) {
                 sb.append("$c（$phonetic） ")
             } else {

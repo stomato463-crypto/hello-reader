@@ -37,6 +37,7 @@ class AppProfileManager {
         registerProfile(AospPermissionControllerProfile("com.android.permissioncontroller"))
         registerProfile(AospPermissionControllerProfile("com.google.android.permissioncontroller"))
         registerProfile(AospSystemUiProfile())
+        registerProfile(GboardProfile())
     }
 
     fun registerProfile(profile: AppProfile) {
