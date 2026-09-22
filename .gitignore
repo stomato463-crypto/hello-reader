@@ -48,7 +48,7 @@ build/
 /study
 tools/build_talkback.ps1
 tools/TalkBack_Logcat.ps1
-run-gitea-log.ps1
+/tools/run-gitea-log.ps1
 /tools/run-gitea.ps1
 /tools/run-runner.ps1
 app/src/main/res/raw/typo.ogg
