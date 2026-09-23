@@ -66,4 +66,5 @@ app/src/main/res/raw/complete.ogg
 tools/install-gitea-runner-service.ps1
 tools/run-gitea-runner.ps1
 tools/GiteaRunner.xml
+tools/bin/
 
