@@ -63,3 +63,7 @@ app/src/main/res/raw/complete.ogg
 .agents/sentinel_*
 .agents/victory_auditor_*
 .agents/ORIGINAL_REQUEST.md
+tools/install-gitea-runner-service.ps1
+tools/run-gitea-runner.ps1
+tools/GiteaRunner.xml
+
