@@ -3,6 +3,12 @@ $ErrorActionPreference = "Stop"
 
 Write-Host "=== Hello Reader Wチェンジログ (Markdown & Hello-Reader規格) 生成開始にょろ ===" -ForegroundColor Cyan
 
+# 0. キャノニカルさんからのコードネームお手紙ロボットを呼び出しにょろ
+$petnameScript = Join-Path $PSScriptRoot "Get-PetName.ps1"
+if (Test-Path $petnameScript) {
+    $codeName = & $petnameScript
+}
+
 $binDir = Join-Path $PSScriptRoot "bin"
 if (-not (Test-Path $binDir)) {
     New-Item -ItemType Directory -Path $binDir -Force | Out-Null
@@ -62,12 +68,6 @@ if (-not (Test-Path $helloReaderDir)) {
     New-Item -ItemType Directory -Path $helloReaderDir -Force | Out-Null
 }
 
-# 古い debian フォルダがあれば綺麗に整理
-$debianDir = Join-Path $repoRoot "debian"
-if (Test-Path $debianDir) {
-    Remove-Item -Path $debianDir -Recurse -Force -ErrorAction SilentlyContinue
-}
-
 $helloReaderChangelogPath = Join-Path $helloReaderDir "changelog"
 & $cliffExe --config "cliff-debian.toml" --output $helloReaderChangelogPath
 
@@ -75,4 +75,4 @@ if (Test-Path $helloReaderChangelogPath) {
     Write-Host "  ✨ hello-reader/changelog 生成完了にょろ！" -ForegroundColor Green
 }
 
-Write-Host "🎉 Hello-Reader 専用フォルダ＆Wチェンジログの構築完了だにょろ！" -ForegroundColor Green
+Write-Host "🎉 Hello-Reader 専用 Wチェンジログ＆コードネームの構築完了だにょろ！" -ForegroundColor Green
