@@ -1,7 +1,7 @@
-# tools/setup-git-cliff.ps1 - git-cliff 導入＆自動ダウンロード呪文書
+# tools/setup-git-cliff.ps1 - Hello Reader 専用 Wチェンジログ (Markdown & Hello-Reader規格) 自動生成呪文書
 $ErrorActionPreference = "Stop"
 
-Write-Host "=== git-cliff 導入＆初期化開始にょろ ===" -ForegroundColor Cyan
+Write-Host "=== Hello Reader Wチェンジログ (Markdown & Hello-Reader規格) 生成開始にょろ ===" -ForegroundColor Cyan
 
 $binDir = Join-Path $PSScriptRoot "bin"
 if (-not (Test-Path $binDir)) {
@@ -10,7 +10,7 @@ if (-not (Test-Path $binDir)) {
 
 $cliffExe = Join-Path $binDir "git-cliff.exe"
 
-# 1. git-cliff.exe が未取得の場合は wget2 --trust-server-names でダウンロードにょろ
+# 1. git-cliff.exe が未取得の場合は wget2 --trust-server-names で取得にょろ
 if (-not (Test-Path $cliffExe)) {
     Write-Host "🤖 wget2 ロボット（--trust-server-names）発動！git-cliff を取得するにょろ..." -ForegroundColor Yellow
     
@@ -43,16 +43,36 @@ if (-not (Test-Path $cliffExe)) {
     exit 1
 }
 
-Write-Host "🎉 git-cliff.exe の準備完了にょろ: $cliffExe" -ForegroundColor Green
-
-# 2. 初回の CHANGELOG.md を生成するにょろ (--config フラグを正確に指定)
-Write-Host "CHANGELOG.md を自動生成するにょろ..." -ForegroundColor Cyan
 $repoRoot = Join-Path $PSScriptRoot ".."
-$changelogPath = Join-Path $repoRoot "CHANGELOG.md"
-
 Set-Location $repoRoot
-& $cliffExe --config "cliff.toml" --output $changelogPath
 
-if (Test-Path $changelogPath) {
-    Write-Host "✨ CHANGELOG.md の初回生成が成功したにょろ！" -ForegroundColor Green
+# 2. Markdown 版 CHANGELOG.md の生成にょろ
+Write-Host "1. Hello Reader Markdown版 CHANGELOG.md を生成中..." -ForegroundColor Cyan
+$markdownPath = Join-Path $repoRoot "CHANGELOG.md"
+& $cliffExe --config "cliff.toml" --output $markdownPath
+
+if (Test-Path $markdownPath) {
+    Write-Host "  ✨ CHANGELOG.md 生成完了にょろ！" -ForegroundColor Green
 }
+
+# 3. Hello-Reader 規格版 hello-reader/changelog の生成にょろ
+Write-Host "2. Hello-Reader 規格版 hello-reader/changelog を生成中..." -ForegroundColor Cyan
+$helloReaderDir = Join-Path $repoRoot "hello-reader"
+if (-not (Test-Path $helloReaderDir)) {
+    New-Item -ItemType Directory -Path $helloReaderDir -Force | Out-Null
+}
+
+# 古い debian フォルダがあれば綺麗に整理
+$debianDir = Join-Path $repoRoot "debian"
+if (Test-Path $debianDir) {
+    Remove-Item -Path $debianDir -Recurse -Force -ErrorAction SilentlyContinue
+}
+
+$helloReaderChangelogPath = Join-Path $helloReaderDir "changelog"
+& $cliffExe --config "cliff-debian.toml" --output $helloReaderChangelogPath
+
+if (Test-Path $helloReaderChangelogPath) {
+    Write-Host "  ✨ hello-reader/changelog 生成完了にょろ！" -ForegroundColor Green
+}
+
+Write-Host "🎉 Hello-Reader 専用フォルダ＆Wチェンジログの構築完了だにょろ！" -ForegroundColor Green

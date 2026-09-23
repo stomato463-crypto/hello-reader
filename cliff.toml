@@ -5,7 +5,12 @@
 header = """
 # 📖 変更履歴 (CHANGELOG)
 
-Hello Reader プロジェクトの全変更履歴だにょろ！
+This is the complete change log for the Hello Reader project.
+This is a long text, so please be careful if you are using a screen reader.
+
+日本語:
+Hello Reader プロジェクトの全変更履歴です。
+長文ですので、スクリーンリーダーをご利用の方は注意してください。
 """
 # 各バージョンのテンプレート
 body = """
