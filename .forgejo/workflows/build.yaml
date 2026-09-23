@@ -1,0 +1,146 @@
+name: Hello Reader CI & Automated Release
+
+on:
+  push:
+    branches:
+      - master
+      - main
+      - github-main
+      - 'dev-*'
+    tags:
+      - 'v0.*'
+
+jobs:
+  # 1. デイリービルド＆テスト（全ブランチの push 時）
+  build-and-test:
+    runs-on: host
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Ensure local.properties exists
+        run: |
+          if (-not (Test-Path "local.properties")) {
+              $sdkPath = $env:ANDROID_HOME
+              if (-not $sdkPath) { $sdkPath = "$env:LOCALAPPDATA\Android\Sdk" }
+              $escapedPath = $sdkPath -replace '\\', '\\'
+              "sdk.dir=$escapedPath" | Out-File -FilePath "local.properties" -Encoding utf8
+          }
+        shell: powershell
+
+      - name: Build Debug APK Verification
+        run: gradlew.bat clean assembleDebug --no-daemon
+        shell: cmd
+
+      - name: Rename and Copy APK according to AGENTS.md policy
+        run: |
+          $shortHash = (git rev-parse --short=8 HEAD).Trim()
+          $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
+          $apkName = "debug-" + $shortHash + "-" + $timestamp + ".apk"
+          $outputDir = "app/build/outputs/apk/debug"
+          $sourceApk = Join-Path $outputDir "app-debug.apk"
+          $targetApk = Join-Path $outputDir $apkName
+          
+          if (Test-Path $sourceApk) {
+              Copy-Item $sourceApk -Destination $targetApk -Force
+              Write-Host "Renamed APK to: $apkName" -ForegroundColor Green
+              
+              $desktopDir = Join-Path $env:USERPROFILE "Desktop\hello-reader"
+              if (-not (Test-Path $desktopDir)) {
+                  New-Item -ItemType Directory -Path $desktopDir -Force | Out-Null
+              }
+              Copy-Item $targetApk -Destination (Join-Path $desktopDir $apkName) -Force
+              Write-Host "Copied APK to Desktop: $desktopDir" -ForegroundColor Green
+              
+              "TARGET_APK_NAME=$apkName" | Out-File -FilePath $env:GITHUB_ENV -Append
+          }
+        shell: powershell
+
+      - name: Upload Verified APK Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-debug-apk
+          path: app/build/outputs/apk/debug/debug-*.apk
+
+  # 2. GitHub.com へのミラー同期（github-main ブランチの push 時のみ）
+  sync-to-github:
+    needs: build-and-test
+    if: github.ref == 'refs/heads/github-main'
+    runs-on: host
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure GitHub Remote
+        run: |
+          $env:GIT_SSH_COMMAND = "ssh -o StrictHostKeyChecking=no"
+          if (git remote | Select-String -Pattern "^github$") {
+              git remote set-url github git@github.com:stomato463-crypto/hello-reader.git
+          } else {
+              git remote add github git@github.com:stomato463-crypto/hello-reader.git
+          }
+        shell: powershell
+
+      - name: Push Code to GitHub.com main Branch (Mirror Push)
+        run: |
+          $env:GIT_SSH_COMMAND = "ssh -o StrictHostKeyChecking=no"
+          git push -f github github-main:main
+          Write-Host "Successfully mirrored github-main to GitHub.com main branch!" -ForegroundColor Green
+        shell: powershell
+
+  # 3. 公式本家（Forgejo / Codeberg）自動リリース＆全自動パブリッシュ（v0.* タグ push 時のみ）
+  release-and-publish:
+    needs: build-and-test
+    if: startsWith(github.ref, 'refs/tags/v0.')
+    runs-on: host
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Ensure setup-git-cliff and petname execution
+        run: |
+          Set-Location "C:\Users\owner\dev\hello-reader"
+          .\tools\setup-git-cliff.ps1
+        shell: powershell
+
+      - name: Build Release APK
+        run: gradlew.bat assembleRelease --no-daemon
+        shell: cmd
+
+      - name: Copy Release APK to Desktop
+        run: |
+          $shortHash = (git rev-parse --short=8 HEAD).Trim()
+          $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
+          $tagName = $env:GITHUB_REF -replace 'refs/tags/', ''
+          $releaseApkName = "release-" + $tagName + "-" + $shortHash + "-" + $timestamp + ".apk"
+          
+          $outputDir = "app/build/outputs/apk/release"
+          $sourceApk = Get-ChildItem $outputDir -Filter "*.apk" | Select-Object -First 1
+          
+          if ($sourceApk) {
+              $desktopDir = Join-Path $env:USERPROFILE "Desktop\hello-reader"
+              if (-not (Test-Path $desktopDir)) {
+                  New-Item -ItemType Directory -Path $desktopDir -Force | Out-Null
+              }
+              Copy-Item $sourceApk.FullName -Destination (Join-Path $desktopDir $releaseApkName) -Force
+              Write-Host "Copied Release APK to Desktop: $releaseApkName" -ForegroundColor Green
+          }
+        shell: powershell
+
+      - name: Auto Publish to Forgejo / Gitea Releases
+        uses: https://gitea.com/actions/gitea-release-action@v1
+        continue-on-error: true
+        with:
+          files: app/build/outputs/apk/release/*.apk
+          name: Hello Reader ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+        env:
+          GITEA_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
