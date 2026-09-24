@@ -85,11 +85,18 @@ jobs:
           }
         shell: powershell
 
-      - name: Push Code to GitHub.com main Branch (Mirror Push)
+      - name: Push Code to GitHub.com main Branch (Sanitized Mirror Push)
         run: |
           $env:GIT_SSH_COMMAND = "ssh -o StrictHostKeyChecking=no"
-          git push -f github github-main:main
-          Write-Host "Successfully mirrored github-main to GitHub.com main branch!" -ForegroundColor Green
+          git config user.name "Gitea Sanitizer Bot"
+          git config user.email "bot@hello-reader.local"
+          git checkout -b temp-sanitized-push
+          Remove-Item -Recurse -Force -ErrorAction SilentlyContinue .gitea, .forgejo
+          git rm -r --cached .gitea .forgejo 2>$null
+          git add -A
+          git commit -m "Chore: Exclude internal workflow files for public mirror"
+          git push -f github temp-sanitized-push:main
+          Write-Host "Successfully mirrored sanitized code (without workflows) to GitHub.com main branch!" -ForegroundColor Green
         shell: powershell
 
   # 3. 公式本家（Forgejo / Codeberg）自動リリース＆全自動パブリッシュ（v0.* タグ push 時のみ）
