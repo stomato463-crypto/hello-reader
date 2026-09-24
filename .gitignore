@@ -67,4 +67,7 @@ tools/install-gitea-runner-service.ps1
 tools/run-gitea-runner.ps1
 tools/GiteaRunner.xml
 tools/bin/
+keystore.prompt.conf
+
+
 
