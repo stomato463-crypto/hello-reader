@@ -1,4 +1,4 @@
-name: Hello Reader CI Build & Release
+name: Hello Reader CI & Automated Release
 
 on:
   push:
@@ -7,9 +7,11 @@ on:
       - main
       - github-main
       - 'dev-*'
+    tags:
+      - 'v0.*'
 
 jobs:
-  # 1. スパルタビルド＆チェック（全ブランチで実行）
+  # 1. デイリービルド＆テスト（全ブランチの push 時）
   build-and-test:
     runs-on: host
     steps:
@@ -18,7 +20,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Ensure local.properties exists (Anonymous SDK path)
+      - name: Ensure local.properties exists
         run: |
           if (-not (Test-Path "local.properties")) {
               $sdkPath = $env:ANDROID_HOME
@@ -28,7 +30,7 @@ jobs:
           }
         shell: powershell
 
-      - name: Build Debug APK Verification (Sparta Check)
+      - name: Build Debug APK Verification
         run: gradlew.bat clean assembleDebug --no-daemon
         shell: cmd
 
@@ -45,7 +47,6 @@ jobs:
               Copy-Item $sourceApk -Destination $targetApk -Force
               Write-Host "Renamed APK to: $apkName" -ForegroundColor Green
               
-              # Copy to Desktop/hello-reader as specified in AGENTS.md
               $desktopDir = Join-Path $env:USERPROFILE "Desktop\hello-reader"
               if (-not (Test-Path $desktopDir)) {
                   New-Item -ItemType Directory -Path $desktopDir -Force | Out-Null
@@ -53,7 +54,6 @@ jobs:
               Copy-Item $targetApk -Destination (Join-Path $desktopDir $apkName) -Force
               Write-Host "Copied APK to Desktop: $desktopDir" -ForegroundColor Green
               
-              # Save dynamic name for artifact step
               "TARGET_APK_NAME=$apkName" | Out-File -FilePath $env:GITHUB_ENV -Append
           }
         shell: powershell
@@ -64,7 +64,7 @@ jobs:
           name: app-debug-apk
           path: app/build/outputs/apk/debug/debug-*.apk
 
-  # 2. github-main ブランチへのプッシュ時のみ、GitHub.com の main ブランチへ自動転送（Push）！
+  # 2. GitHub.com へのミラー同期（github-main ブランチの push 時のみ）
   sync-to-github:
     needs: build-and-test
     if: github.ref == 'refs/heads/github-main'
@@ -74,12 +74,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Download Verified APK Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: app-debug-apk
-          path: app/build/outputs/apk/debug
 
       - name: Configure GitHub Remote
         run: |
@@ -91,47 +85,62 @@ jobs:
           }
         shell: powershell
 
-      - name: Push Code to GitHub.com main Branch
+      - name: Push Code to GitHub.com main Branch (Mirror Push)
         run: |
           $env:GIT_SSH_COMMAND = "ssh -o StrictHostKeyChecking=no"
           git push -f github github-main:main
+          Write-Host "Successfully mirrored github-main to GitHub.com main branch!" -ForegroundColor Green
         shell: powershell
 
-      - name: Tag and Push Tag to GitHub.com
+  # 3. 公式本家（Forgejo / Codeberg）自動リリース＆全自動パブリッシュ（v0.* タグ push 時のみ）
+  release-and-publish:
+    needs: build-and-test
+    if: startsWith(github.ref, 'refs/tags/v0.')
+    runs-on: host
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Ensure setup-git-cliff and petname execution
         run: |
-          $env:GIT_SSH_COMMAND = "ssh -o StrictHostKeyChecking=no"
-          $shortHash = (git rev-parse --short=8 HEAD).Trim()
-          $dateStr = Get-Date -Format "yyyyMMdd"
-          $tagName = "v0.0.1-alpha-" + $dateStr + "-" + $shortHash
-          Write-Host "Creating and Pushing Tag: $tagName" -ForegroundColor Green
-          git tag -f $tagName
-          git push -f github $tagName
+          Set-Location "C:\Users\owner\dev\hello-reader"
+          .\tools\setup-git-cliff.ps1
         shell: powershell
 
-      - name: Create GitHub Release via GH CLI
+      - name: Build Release APK
+        run: gradlew.bat assembleRelease --no-daemon
+        shell: cmd
+
+      - name: Copy Release APK to Desktop
         run: |
           $shortHash = (git rev-parse --short=8 HEAD).Trim()
-          $dateStr = Get-Date -Format "yyyyMMdd"
-          $tagName = "v0.0.1-alpha-" + $dateStr + "-" + $shortHash
-          if (Get-Command gh -ErrorAction SilentlyContinue) {
-              $apkFile = Get-ChildItem "app/build/outputs/apk/debug/debug-*.apk" | Select-Object -First 1
-              if ($apkFile) {
-                  Write-Host "Publishing Release to GitHub.com..." -ForegroundColor Green
-                  gh release create $tagName $apkFile.FullName --title "Hello Reader $tagName" --generate-notes --prerelease
+          $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
+          $tagName = $env:GITHUB_REF -replace 'refs/tags/', ''
+          $releaseApkName = "release-" + $tagName + "-" + $shortHash + "-" + $timestamp + ".apk"
+          
+          $outputDir = "app/build/outputs/apk/release"
+          $sourceApk = Get-ChildItem $outputDir -Filter "*.apk" | Select-Object -First 1
+          
+          if ($sourceApk) {
+              $desktopDir = Join-Path $env:USERPROFILE "Desktop\hello-reader"
+              if (-not (Test-Path $desktopDir)) {
+                  New-Item -ItemType Directory -Path $desktopDir -Force | Out-Null
               }
+              Copy-Item $sourceApk.FullName -Destination (Join-Path $desktopDir $releaseApkName) -Force
+              Write-Host "Copied Release APK to Desktop: $releaseApkName" -ForegroundColor Green
           }
         shell: powershell
 
-      - name: Auto Publish to Gitea Releases (No Tag Required)
+      - name: Auto Publish to Forgejo / Gitea Releases
         uses: https://gitea.com/actions/gitea-release-action@v1
         continue-on-error: true
         with:
-          files: app/build/outputs/apk/debug/debug-*.apk
-          name: Hello Reader Latest Alpha Build
-          tag_name: latest-alpha
+          files: app/build/outputs/apk/release/*.apk
+          name: Hello Reader ${{ github.ref_name }}
           draft: false
-          prerelease: true
+          prerelease: false
         env:
           GITEA_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-

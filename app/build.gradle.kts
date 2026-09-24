@@ -29,6 +29,33 @@ android {
                 keyPassword = "android"
             }
         }
+        create("release") {
+            val keystoreProps = java.util.Properties()
+            val keystorePropsFile = rootProject.file("keystore.properties")
+            val promptConfFile = rootProject.file("keystore.prompt.conf")
+            val localPropsFile = rootProject.file("local.properties")
+            
+            if (promptConfFile.exists()) {
+                keystoreProps.load(promptConfFile.inputStream())
+            } else if (keystorePropsFile.exists()) {
+                keystoreProps.load(keystorePropsFile.inputStream())
+            } else if (localPropsFile.exists()) {
+                keystoreProps.load(localPropsFile.inputStream())
+            }
+            
+            val storeFilePath = keystoreProps.getProperty("RELEASE_STORE_FILE")
+            if (storeFilePath != null && file(storeFilePath).exists()) {
+                storeFile = file(storeFilePath)
+                storePassword = keystoreProps.getProperty("RELEASE_STORE_PASSWORD")
+                keyAlias = keystoreProps.getProperty("RELEASE_KEY_ALIAS")
+                keyPassword = keystoreProps.getProperty("RELEASE_KEY_PASSWORD")
+            } else {
+                storeFile = file("debug.keystore")
+                storePassword = "android"
+                keyAlias = "androiddebugkey"
+                keyPassword = "android"
+            }
+        }
     }
 
     buildTypes {
@@ -36,7 +63,7 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
         release {
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
             optimization {
                 enable = false
             }

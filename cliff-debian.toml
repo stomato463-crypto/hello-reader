@@ -1,0 +1,40 @@
+# cliff-debian.toml - Hello Reader 専用 Debian 形式チェンジログ設定ファイル
+
+[changelog]
+header = ""
+body = """
+hello-reader ({% if version %}{{ version | trim_start_matches(pat="v") }}{% else %}1.0.0-unreleased{% endif %}) unstable; urgency=medium
+
+{% for group, commits in commits | group_by(attribute="group") %}
+  [{{ group }}]
+{% for commit in commits %}
+  * {% if commit.scope %}({{ commit.scope }}) {% endif %}{{ commit.message | upper_first }} ({{ commit.id | truncate(length=7, end="") }})
+{% endfor %}
+{% endfor %}
+ -- Hello Reader Maintainers <hello-reader@localhost>  {{ timestamp | date(format="%a, %d %b %Y %H:%M:%S +0900") }}
+
+"""
+footer = ""
+trim = true
+
+[git]
+conventional_commits = true
+filter_unconventional = false
+split_commits = false
+
+commit_parsers = [
+  { message = "^feat", group = "Features" },
+  { message = "^fix", group = "Bug Fixes" },
+  { message = "^doc", group = "Documentation" },
+  { message = "^perf", group = "Performance" },
+  { message = "^refactor", group = "Refactoring" },
+  { message = "^style", group = "Style" },
+  { message = "^test", group = "Tests" },
+  { message = "^chore", group = "Maintenance" },
+  { message = ".*", group = "Other Changes" },
+]
+
+protect_breaking_commits = false
+filter_commits = false
+tag_pattern = "v[0-9]*"
+sort_commits = "oldest"

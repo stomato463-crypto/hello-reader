@@ -1,0 +1,612 @@
+
+hello-reader (1.0.0-unreleased) unstable; urgency=medium
+
+
+[Bug Fixes]
+
+* Resolve logcat file truncation issue in Android_Logcat.ps1 (7a47734)
+
+* Fix: Ensure real-time log streaming in Android_Logcat.ps1
+- Clear filter patterns in FullMode to stream all device logs without blocking
+- Expand log filter level to Verbose for DefaultMode (f4b6218)
+
+* Fix: Update Gitea Actions build workflow for Windows host compatibility
+- Replace Linux chmod and ./gradlew commands with .\gradlew.bat for Windows runner
+- Specify powershell shell for step execution (697a0b3)
+
+* Restore tools/launch.ps1 and update build.yaml release workflow (018cb6c)
+
+* Resolve PowerShell ParserError in Android_Logcat.ps1 progress condition (92994a3)
+
+* (tools) Ignore talkback artifacts in gitignore and update logcat save path 🛠️ (4e5eafd)
+
+* Kill background adb process immediately on Ctrl+C to prevent logcat script freeze (9ef18b6)
+
+* Fix: block in-call timer repetition and add automatic privacy log sanitization" -m "- Prevent in-call timer (Chronometer) automatic repetition bug during active calls
+- Add sanitizeForLog to HelloReaderService to mask phone numbers in log output
+- Add Sanitize-LogLine to tools/Android_Logcat.ps1 and TalkBack_Logcat.ps1 for automatic log privacy masking
+- Update KNOWN_ISSUES.md roadmap for Gboard, LINE, and WhatsApp optimizations (e73cbe6)
+
+* Remove extraneous button label from general clickable hints (a4d7fb4)
+
+* Block background SystemUI content changes from interrupting speech (28cd82e)
+
+* Prioritize collectAllChildTexts over parent container description for Pixel Gemini Live widgets (e3ed7a2)
+
+* Bypass 2000ms duplicate text cooldown on explicit user focus events to ensure 100% immediate speech for Gemini Live (38372f4)
+
+* Align speakHomeScreenItems with TalkBack standard to prevent focus jumps on Pixel Launcher (4ce7282)
+
+* Restrict collectAllChildTexts to small widgets (childCount 1..8) to eliminate home screen text wall bug (383d09a)
+
+* Restore stomato463-crypto-san's warm guidance messages upon HelloReader service initialization (e690756)
+
+* Remove duplicate onGesture handlers resolving Conflicting overloads error (a1ba144)
+
+* Prioritize composite child text collection to read Gemini Live widget buttons fully (ebc3eeb)
+
+* Skip parent widget focus when child nodes are focusable to match TalkBack behavior (f9e3d09)
+
+* Unify TTS instance and ensure any user touch or key press instantly interrupts speech (1a74c90)
+
+* Block automatic full screen text reading on window content changes to ensure quiet user-driven interaction (7fa09a2)
+
+* Strictly limit Morse vibration feedback to EditBox (EditText) input fields only (bc8de57)
+
+* Remove speakHomeScreenItems on unlock and strictly bind Morse to active EditText focus (497bd59)
+
+* (accessibility) Fix relative index calculation in navigateByHeading and navigateByControl for smooth backward/forward navigation (32c5ee6)
+
+* (ci) Update build.yaml workflow for Gitea Actions on github-main (793821f)
+
+* (ci) Escape PowerShell string interpolation and downgrade artifact actions to v3 (ced34e0)
+
+* Add --no-daemon to gradlew build step to prevent runner timeout (e5b6581)
+
+* Change build step shell to cmd to avoid runner I/O timeout (80ef09d)
+
+* Make phonetic dictionary selection always visible matching TalkBack preference layout (cc27336)
+
+* Resolve phonetic phonetic dictionary per character type matching TalkBack spec (54d49cc)
+
+* Apply phonetic dictionary lookup on text changed events for IME input (fdea627)
+
+* Resolve keyboard container focus speech and prioritize Japanese phonetic dictionaries (797b7fe)
+
+* Strictly enforce 0.5s delay rule for phonetic sub-voice speech and clear stale timers on focus change (a73b795)
+
+* Parse composite key text like 'あ ALPHA' into main character and phonetic sub-voice to satisfy 0.5s delay timeline (7541cb2)
+
+* Map Romaji keys to Japanese Kana for mainText speech and ensure correct Japanese phonetic lookup (d32eaff)
+
+* Resolve Gboard composite 'a ALPHA' key text to Japanese phonetic 'あさひのア' (3a86af9)
+
+* Resolve IME language detection for Japanese vs English keyboard speech and ensure clean service restart on deploy (d839a9b)
+
+* Prioritize manual IME language mode detection over sticky ja_JP InputMethodSubtype in Gboard (c424195)
+
+* Process TYPE_ANNOUNCEMENT in HelloReaderService to handle Ayame IME mode changes (英数モード/ひらがなモード) (9b14328)
+
+* Support Gboard native key descriptions (a ALPHA) in isEnglishLanguageActive for seamless phonetic reading (5be8278)
+
+* Remove duplicate performBrailleHapticFeedback method declaration (c07a084)
+
+* Resolve speech and braille feedback during Gboard slide navigation (863023f)
+
+* Resolve missing speech and braille haptic feedback during Gboard touch exploration (8039d90)
+
+* Strictly restore 0.5s delayed braille timeline after speech completion (2e242b3)
+
+* (gboard) Resolve touch exploration speech and 0.5s braille feedback timeline (672d211)
+
+* (phonetic) Resolve Japanese digit Wireless Regulations readings and preserve universal 0.5s braille timeline (05c8ccc)
+
+
+[Documentation]
+
+* Update AGENTS.md with verbose command policy and fix Gitea workflow branch triggers (15a0a24)
+
+* Update license section in README.md to reflect Clear BSD and Apache 2.0 (485c0b2)
+
+* Generalize maintainer references from personal name to developer/maintainer in project policy (f4eb8b3)
+
+* Add Project Policy and Contribution links to README.md (3c5bd91)
+
+* Add Debian-style NO WARRANTY disclaimer to README (acdb545)
+
+* Update Emergency recovery spec for keyguard suppression logic (d450b5e)
+
+* Clarify keyguard and main process survival check in Emergency recovery spec (36b1d57)
+
+* Update README with privacy policy and Watchdog security guarantee (c7b6a50)
+
+* Add debug keystore build note to KNOWN_ISSUES (d86cf21)
+
+* Add hello-reader specification guidelines for Nadeshiko 3 (cd39dec)
+
+* Add nadesiko3 specification rule and flexible dialogue policy to AGENTS.md (c3a42e2)
+
+* Convert Emergency recovery spec to flat nako3 guard clause format (cef8dde)
+
+* Add developer response note to Support-System.nako3 (03c76a0)
+
+* Remove deprecated .natk Markdown specs in favor of src/*.nako3 specifications (6766186)
+
+* Add braille tactile feedback specification in src/Tactile_braille.nako3 (c3b549a)
+
+* Add Nadeshiko 3 specification for Hello Reader context menu (0b18ebd)
+
+* Add nako3 specification for Japanese phonetic braille feedback (0f2061f)
+
+* Update nako3 spec to support traditional mode as default phonetic dictionary (a1f5b6e)
+
+* Docs & fix: ensure ASCII consonants like 's' always resolve to NATO phonetic Sierra in both modes while vowels dynamically switch (f935b6e)
+
+* Docs & fix: document Gboard/IME behavior in KNOWN_ISSUES.md and implement universal phonetic resolution for English vs Japanese modes (3bc5a3b)
+
+* Add rule to always use a 4-agent team for teamwork-preview (0d2d666)
+
+* Add log quota saving policy to ignore normal logs and analyze only major errors (1500b9f)
+
+* (agents) Refine log analysis policy and add command pre-check rule (947f42e)
+
+
+[Features]
+
+* Add automated build, deploy, and launch scripts for HelloReader (32e22f8)
+
+* Add and configure Android_Logcat.ps1 tool for HelloReader debugging (4c9e6a4)
+
+* Add progress bar log saving feature to Android_Logcat.ps1 (d09156a)
+
+* Feat: Add automatic 1000-line log cap and slim filter to Android_Logcat.ps1
+- Automatically trim saved logs to recent 1000 lines to protect server and disk space
+- Refine default filter for pin-point HelloReader and accessibility logging (d38c259)
+
+* Add Audacity custom audio feedback (activate/deactivate) with SoundPool and update gitignore (d5d5275)
+
+* Add hybrid audio feedback, double tap reliability, and phone call handling with duration announcement (4f3a014)
+
+* Standard AOSP implementation with custom audio feedback and navigation fixes (7e3bded)
+
+* Add phonetic & morse haptic feedback, TalkBack-aligned home screen focus, and resolve compiler warnings (a3503c1)
+
+* Add TalkBack-aligned scroll tones, item position announcement, notification speech, 2-finger scroll gestures, and auto-scrolling (4e29f51)
+
+* Add -c, -l, -w options to run_all.ps1 and apply 150ms sound debounce (8e826b7)
+
+* Standardize speech to TalkBack Japanese, fix scroll sound loop, add caller name lookup, and implement pre-setup self-TTS guidance (57b0137)
+
+* Add child node search and dispatchGesture coordinate tap fallbacks for double-tap click (7be7d24)
+
+* Enhance floating action button and shortcut button node parsing (0cbf650)
+
+* Feat: enhance double-tap reliability, floating button parsing, and single-flick navigation" -m "- Add child node search and dispatchGesture coordinate tap fallbacks for double-tap click
+- Make phonetic code and morse vibration configurable with default OFF
+- Implement custom node deduplication (isRedundantChildNode) for smooth single-flick navigation
+- Enhance Floating Action Button and Shortcut button node parsing and child text fallback
+- Clean up deprecation warnings in HelloReaderService (6b4c199)
+
+* Feat & fix: merge sub-voice guidance and node role classification
+- Integrated Sub-voice guidance feature (main text & hint pitch modulation)
+- Fixed element role detection hierarchy (Switch, CheckBox, RadioButton, Button) (31de606)
+
+* Implement collectAllChildTexts to fully parse Pixel Gemini Live composite widget texts (d2c0c0f)
+
+* Integrate completed user pronunciation dictionary editor in MainActivity while maintaining 3-tab clean layout (b0cdbe1)
+
+* Add Bluetooth Braille permissions to AndroidManifest.xml completing full modular integration (da77bc5)
+
+* (accessibility) Add heading semantics for instant screen reader navigation and obfuscated mailer SOS intent (f673d8a)
+
+* (diagnostics) Embed in-memory ring buffer for live runtime gesture and speech logs in diagnostic reports (6494222)
+
+* (support) Implement 4th Support tab and obfuscated diagnostic mailer per Nadeshiko v3 spec (58a87bd)
+
+* (service) Add emergency TalkBack recovery logic with plain-Japanese guidance (df3a69d)
+
+* (braille) Add dedicated Braille device pairing dialog and service integration (9fbf964)
+
+* (service) Add emergency TalkBack recovery logic with plain-Japanese guidance (25ce8e4)
+
+* (braille) Add dedicated Braille device pairing dialog and service integration (4c1b880)
+
+* Add Japanese programming AI coding concepts file (de4a96b)
+
+* Add emergency watchdog service with Morse code R vibration recovery (0345888)
+
+* Suppress watchdog emergency recovery when keyguard locked and main process alive (23bd875)
+
+* Implement Morse code feedback logic based on updated nako3 specification (a44e66d)
+
+* Sync support screen text with Support-System.nako3 specification (cf46561)
+
+* Add IME keyboard guard clause and braille haptic setting toggle in MainActivity (34eb9c7)
+
+* Implement traditional and standard Japanese phonetic dictionary toggle (bf68ec9)
+
+* Align ProcessorPhoneticLetters with TalkBack spec using LocaleSpan and InputMethodSubtype (afa8ed4)
+
+* Align ProcessorPhoneticLetters language detection with TalkBack using LocaleSpan and InputMethodSubtype (2d8dacb)
+
+* Prioritize keyboard-provided phonetic text with fallback to HelloReader dictionary and fix 0.5s delay timeline (8b32d9a)
+
+* Modularize Gboard accessibility node parsing into dedicated GboardProfile (f4f0cb0)
+
+* (changelog) Initialize git-cliff with cliff.toml and CHANGELOG.md (296e071)
+
+
+[Maintenance]
+
+* Expand .gitignore rules for build artifacts, keys, and logs (3af41fc)
+
+* (gitignore) Ignore local gitea-runner service scripts and configuration (f3253fc)
+
+
+[Other Changes]
+
+* Initial commit (3721371)
+
+* Added a screen reader development plan. (be417db)
+
+* Add to agent.md (a9b8b96)
+
+* Add Gitea Actions build workflow for Gitea Runner (089aa4c)
+
+* Add the runner extension for gitea to gitignore. (4190b02)
+
+* Update workflow runs-on to host for Dockerless execution (3525d3a)
+
+* Update workflow runs-on to host for Dockerless execution (3da784f)
+
+* "feat: Add Morse code deep sound feedback for Ctrl+C and save completion in Android_Logcat.ps1
+- Play Morse 'A' (. -) beep on Ctrl+C keypress for instant acoustic feedback
+- Play Morse 'E' (.) beep on log save completion (18d4434)
+
+* Add Talkback to .gitignore (8536ce5)
+
+* Added material3 support. (dee4a48)
+
+* Add various utilities in tools directory (14524ff)
+
+* Fix Kotlin compiler warnings (58a08b2)
+
+* - Added information about Null pointer errors in input areas to the list of known issues.
+- Add haptic feedback (b885103)
+
+* Refine Logcat mode filters to focus on HelloReader tags (eccedff)
+
+* Align workflow APK naming and desktop output with AGENTS.md policy (401e8e5)
+
+* Set checkout fetch-depth to 0 and use env vars for runner path (9407f39)
+
+* Adjusting .agent.md (f1a8b88)
+
+* Implement Sub-Voice Hint Guidance for dual-tone TTS accessibility reading (7287087)
+
+* Fix TTS muting bug using UtteranceProgressListener for sequential sub-voice playback (fe00668)
+
+* Fix TTS muting by replacing dynamic setVoice with reliable pitch modulation (f3a7ef6)
+
+* Enhance node parsing with parseNodeDescriptionPair for dual-tone Sub-Voice hint reading (b00c208)
+
+* Restore speak method and fix compilation error (a5f740b)
+
+* Remove extra closing brace in HelloReaderService to fix class scope and compilation (d899e0d)
+
+* Remove duplicate speak method to fix overload resolution ambiguity (e935f86)
+
+* Merge branch 'dev-tts-sub-voice-official-pheasant-harlequin' into dev-straightforward-crab-aqua (3ae491d)
+
+* .agent/AGENTS.md -> .agents/AGENTS.md (bef13c7)
+
+* Enhance accessibility permissions, VibratorManager API compatibility, and home screen speech handling
+
+- Add background execution, WAKE_LOCK, and package query permissions in AndroidManifest.xml
+- Fix deprecated VIBRATOR_SERVICE warning by introducing VibratorManager API support for API 31+
+- Fix compilation error related to nullable Vibrator instance in playMorseVibration
+- Implement dynamic isHomeScreenPackage detection to ensure reliable home screen speech output (3ae72af)
+
+* .agent/AGENTS.md -> .agents/AGENTS.md (30ef3d1)
+
+* Merge branch 'dev-straightforward-crab-aqua' (1d7102d)
+
+* Fix duplicate viewId declaration and type conversion in parseNodeDescriptionPair (6edb789)
+
+* Clean up unused context parameters to eliminate build warnings (e32f772)
+
+* Enhance AospSettingsProfile to recursively extract titles and summaries from settings list items (5d883f2)
+
+* Integrate full Jetpack Compose app structure with Scaffold and NavigationBar (6756fc9)
+
+* Add try-catch protections and clear pending Handler callbacks to prevent freezes on PIN entry screen (cb055b0)
+
+* Support 2-finger swipe up to launch PIN entry screen with physical drag gesture (c6679cf)
+
+* Enhance PIN entry screen display with KeyguardManager API and swipe fallback hybrid mechanism (310e864)
+
+* Fix lambda return type mismatch in showPinEntryScreen (9bbb7f1)
+
+* Cover 1,2,3,4-finger swipe up gestures and add LogCat tracing for keyguard unlock (93feca4)
+
+* Implement official KeyguardManager requestDismissKeyguard via MainActivity for PIN entry screen display (d065849)
+
+* Add KeyguardManager import and fix onNewIntent parameter type signature in MainActivity (e27cb24)
+
+* Add PIN keypad View ID rescue extraction to ensure reliable digit reading on keyguard (f259cb3)
+
+* Fully cover parent and child View ID digit extraction for PIN keypad nodes (ca0d8cb)
+
+* Add event text fallback and try-catch safety net to prevent errors during keyguard node parsing (a73818e)
+
+* Ensure keyguard window inspection flags are fully preserved in serviceInfo and XML config (cea6f22)
+
+* Prioritize physical gesture tap when keyguard is active to bypass ACTION_CLICK security blocks (c3bd453)
+
+* Add findValidBoundsInScreen for precise physical tap targeting on keyguard PIN keypad (0ff453a)
+
+* Adopt AOSP TalkBack official NodeActionPerformer click pipeline for reliable keyguard input (aed9bc3)
+
+* Fire both ACTION_CLICK and dispatchGesture physical tap simultaneously on keyguard to support multi-OS channels (a8f3117)
+
+* Fix navigateFocus node collection bug during Keyguard state to enable focus movement on PIN keypad (865b01d)
+
+* Collect nodes from all window types during keyguard to eliminate Not Found errors on PIN keypad (e982c62)
+
+* Add sendDigitKeyEvent to ensure digits reach the keyguard PIN input field directly (7ad4342)
+
+* Fix isRedundantChildNode bug to allow PIN keypad digit buttons to be fully focused during swipe navigation (dbb07aa)
+
+* Allow keyguard and view-id nodes without explicit initial text to be fully collected for swipe navigation (11df189)
+
+* Implement visual traversal sorting by screen coordinates to align swipe navigation with TalkBack (7f1df41)
+
+* Add child node focus fallback and explicit LogCat tracing in navigateFocus (67d4e23)
+
+* Add numeric gesture ID compatibility (1 for right, 2 for left) and detailed onGesture LogCat tracing (d144652)
+
+* Prioritize lastFocusedNode during keyguard and enhance isSameNode matching for 100% focus retention (24c8976)
+
+* Rescue blank text with Key or Button label to eliminate generic Next Element fallback speech (e3494b3)
+
+* Bypass isFocusable restriction during keyguard to collect all PIN keypad area nodes without exception (2152082)
+
+* Trigger GLOBAL_ACTION_DISMISS_NOTIFICATION_SHADE and return true on swipe up to ensure transition to PIN entry screen (b545464)
+
+* Trigger PIN entry screen transition on TYPE_TOUCH_INTERACTION_START with GLOBAL_ACTION_BACK fallback (c6054d7)
+
+* Remove TYPE_TOUCH_INTERACTION_START handler and add 3s cooldown to prevent runaway infinite loops (4722749)
+
+* Align unlock swipe duration (450ms) and distance (90% to 10%) strictly with AOSP TalkBack (1fc5d4f)
+
+* Remove BAL restricted startActivity call and rely purely on official AccessibilityService actions (31c373f)
+
+* Enforce API 35/36/37+ and QPR/Canary beta multi-channel dynamic capability flags (361b941)
+
+* Merge branch 'dev-straightforward-crab-aqua' (e73e0c0)
+
+* Add tactile haptic feedback when recent apps overview gesture is ready (8956e50)
+
+* Synchronize tactile haptic feedback with OS Recents task snapshot completion (150ms delay) (e76656a)
+
+* Safely restore KeyguardManager requestDismissKeyguard integration for 100% lock screen unlock success (d83c6a6)
+
+* Fix 2-finger swipe up gesture to correctly trigger GLOBAL_ACTION_HOME and speak home screen items (6a58f5b)
+
+* Add onKeyEvent handler to immediately stop TTS speech and clear queues when volume or power keys are pressed (a866517)
+
+* Return true in onKeyEvent to firmly intercept volume and power key events for 100% speech cancellation (afddffb)
+
+* Add GLOBAL_BUTTON_EVENTS and INJECT_EVENTS permissions strictly matching AOSP TalkBack manifest (d0d88ef)
+
+* Introduce isMutedByKey lock to block asynchronous sub-voice re-triggering upon key press (4aa4bd4)
+
+* Fix unresolved reference isMutedByKey error by declaring the property in HelloReaderService (0b2244a)
+
+* Expand minSdk to 30 to support BrailleSense 6 Mini (API 31) and API 30-37 multi-channel compatibility (fa33a86)
+
+* Merge branch 'dev-straightforward-crab-aqua' into dev-app-support-silky-crayfish-tan (12cecda)
+
+* Merge branch 'dev-straightforward-crab-aqua' (d678550)
+
+* Exact HelloReaderService.kt from github-remote-main while maintaining modular architecture (2c4ac8c)
+
+* Merge branch 'dev-straightforward-crab-aqua' (c2dbc73)
+
+* Fix Morse vibration triggering outside edit boxes by restricting to editable nodes (8b302d0)
+
+* Fix unresolved reference node in speakWithSubVoice (47c79f9)
+
+* Fix focus jumping to top element (weather) by improving node matching and adding spatial distance fallback (e8229c0)
+
+* Implement native focusSearch traversal based on TalkBack TraversalStrategyUtils mechanism (ad6f26f)
+
+* Fix syntax error caused by duplicated unclosed comment block (2c24005)
+
+* Add 800ms text deduplication to eliminate rapid double speech on focus events (877f728)
+
+* Ensure sequential traversal of inner widget buttons while preventing duplicate speech (857b6a8)
+
+* Prioritize contentDescription over text per TalkBack AccessibilityNodeInfoUtils standard (fdfde46)
+
+* Merge branch 'dev-straightforward-crab-aqua' (6cca870)
+
+* Merge branch 'dev-straightforward-crab-aqua' (249060a)
+
+* Delete the .md file that was outside the folder. (ebaaa1f)
+
+* Added a to-do list in the style of the Japanese programming language "Nadeshiko v3". (4adcab2)
+
+* Merge branch 'dev-straightforward-crab-aqua' (a96f094)
+
+* Build a support system similar to Japanese programming language Nadeshiko v3 (beb8a9b)
+
+* Merge branch 'dev-straightforward-crab-aqua' (74347a3)
+
+* Add clean task to gradlew build step in Gitea workflow (9da51cb)
+
+* Merge branch 'dev-straightforward-crab-aqua' (1289274)
+
+* Merge branch 'dev-straightforward-crab-aqua' (8354b14)
+
+* Add auto cleanup workflow for releases older than 31 days (44d1cd8)
+
+* Merge branch 'dev-straightforward-crab-aqua' (78a6d6e)
+
+* Add auto tagging, release notes, and apk release deployment for GitHub (59b695b)
+
+* Merge branch 'dev-straightforward-crab-aqua' (5727a72)
+
+* Merge branch 'dev-straightforward-crab-aqua' (c4e5c87)
+
+* Clean up to .gitignore (e4381f1)
+
+* Update warranty disclaimer section in README.md (a697444)
+
+* Update warranty disclaimer section in README.md (226efd9)
+
+* I've revised the personal letter to a message for all the participants. (688172e)
+
+* Merge branch 'dev-straightforward-crab-aqua' (f7e4278)
+
+* Merge branch 'dev-straightforward-crab-aqua' (55a0e68)
+
+* Merge branch 'dev-straightforward-crab-aqua' (90b243f)
+
+* Merge branch 'dev-straightforward-crab-aqua' (27ce212)
+
+* Introducing Nadeshiko Skills (53173b9)
+
+* Merge branch 'dev-straightforward-crab-aqua' (29e6375)
+
+* Merge branch 'master' into github-main (55683b4)
+
+* Add Esperanto braille support and haptic feedback methods (edcdfc5)
+
+* Merge branch 'dev-straightforward-crab-aqua' into docs-complicated-tarsier-blush (ee25aaa)
+
+* Added instructions regarding the guidelines for creating the specification document to .agents/AGENTS.md. (60692f1)
+
+* Fix syntax errors and update control flow in HelloReader_Menu.nako3 for gonako (5de13c5)
+
+* Update nadesiko3 skill guidelines with gonako lint error prevention tips (0690d61)
+
+* Implement HelloReaderMenuManager Kotlin menu system based on HelloReader_Menu.nako3 specification (477c608)
+
+* Fix conflicting onGesture overload by integrating menuManager into handleGestureAction (15bbf18)
+
+* Fix overlay dialog theme and window flags to prevent background touch passthrough (46d356a)
+
+* Add log analysis summarization policy to AGENTS.md (1f9211f)
+
+* Set explicit accessibility focus to menu dialog decorView (149cbb1)
+
+* Migrate menu overlay to WindowManager addView and remove legacy menu call (5d64022)
+
+* Fix gesture ID mapping to support gestureId 16 for upper-right swipe gesture (fd3654d)
+
+* Add missing AccessibilityService import in HelloReaderMenuManager.kt (bf91344)
+
+* Add Kotlin import completeness rule to nadesiko3 skill guidelines (eb1d294)
+
+* Focus only first list item on menu open to prevent reading all items at once (7420316)
+
+* Set container importantForAccessibility to NO to prevent reading all items at once (0d7014a)
+
+* Move screen reader plan (1c5f438)
+
+* Add study materials (16472ca)
+
+* Unified .AGENTS.md for public use (b1bf5cb)
+
+* Add compressed file extensions to .gitignore (f460374)
+
+* Fix braille haptic feedback output and waveform generation (#1) (b81433e)
+
+* Implement braille feedback activation conditions based on nako3 spec (e3a4bce)
+
+* Automate all IME keyboard detection for braille feedback according to nako3 spec (72820be)
+
+* Fix issue #2: Implement multi-layered IME detection covering Ayame, Gboard, Sumire, Simeji and all keyboard apps (3b2af1c)
+
+* Added Braille feedback specifications. (c044215)
+
+* Fix braille vibration storm on keyboard open by adding length guard and debounce (f54368c)
+
+* Fix ultimate root cause of braille vibration storm by unifying all braille calls and adding fallback guard (3e55bbb)
+
+* Add missing android.util.Log import in HapticFeedbackManager (93da5e3)
+
+* Refine braille haptic feedback targeting key touch and character input strictly according to nako3 spec (dc0967d)
+
+* Implement unified multilingual timeline feedback sequence with 0.5s delays (7218759)
+
+* Restrict braille haptic vibration exclusively to keyboard active screen and character rotor mode (6ef227c)
+
+* Enable braille haptic vibration and subvoice timeline during explore-by-touch key exploration (3443a1b)
+
+* Fix braille haptic vibration strength and clear pending delayed timers on new utterance (c4d4676)
+
+* Fix conflicting local variable declaration in HelloReaderService (54f8abd)
+
+* Omit braille prefix symbols during single-character key haptic translation (f2a720b)
+
+* Integrate Body-Surface Braille (体表点字方式) as core braille haptic feedback (07b89a1)
+
+* Fix Unresolved reference TYPE_VIEW_HOVER_MOVE compiler error (91dd736)
+
+* Isolate braille haptic timer to dedicated brailleHandler to ensure 100 percent reliability after TTS (dc5d043)
+
+* Fix instant Body-Surface Braille haptic trigger for single characters without IME or TTS delays (bb34c2c)
+
+* Harmonize strict 0.5s timeline rule (Voice -> 0.5s -> SubVoice -> 0.5s -> Braille) with backup safety timers (e0078a6)
+
+* Enforce strict 0.5s braille timeline during Touch Exploration and eliminate 0ms hover click interference (8b3599b)
+
+* Add initial japanese_Phonetic_alphabet.json for issue #4 (e846702)
+
+* Complete custom Japanese phonetic alphabet JSON for Hello-Reader mode (#4) (2619169)
+
+* Add traditional Japanese phonetic alphabet JSON file for mode switching (#4) (eaf15d2)
+
+* Correctly rename an incorrect file (02f8c26)
+
+* Excluding IME keyboard source code (c32f753)
+
+* Updated to /gradle/libs.versions.toml (85bac8a)
+
+* (gboard) Resolve Latin key phonetic dispatch in English mode and enforce universal 0.5s braille rule (Fixes #5) (d08af5a)
+
+
+[Performance]
+
+* Perf: Optimize Android_Logcat.ps1 for buffered drive-safe saving and total lines display
+- Use 64KB memory buffered StreamWriter for SSD-friendly low-load file saving
+- Restore total lines count in saved log completion message
+- Retain 10% progress bar indicator during file save (7caac86)
+
+
+[Refactoring]
+
+* (ci) Split sync steps directly in workflow to keep repository clean (0d4381d)
+
+* (ci) Split sync steps directly in workflow to keep repository clean (8b7f59e)
+
+* Optimize Morse code conditions spec with guard clauses and update HelloReaderService implementation (bb61357)
+
+* Strictly adhere to Nadeshiko 3 timeline specification (Japanese_Phonetic_Braille_Feedback.nako3) (045e11f)
+
+
+[Style]
+
+* Refine self-TTS initial guidance message based on stomato463-crypto draft (1d5d7e6)
+
+* Fix markdownlint warnings in AGENTS.md (6b08480)
+
+* Remove unrequested hands-free slogan from MainActivity (ba3f9f9)
+
+* Format and refine .gitignore with security and backup rules (6157d9d)
+
+
+-- Hello Reader Maintainers <hello-reader@localhost>  Thu, 01 Jan 1970 00:00:00 +0900
+
