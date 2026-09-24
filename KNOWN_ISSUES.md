@@ -24,6 +24,17 @@ Hello Reader の現在把握されている動作特性・既知の課題、お�
      - `s` や `t` などのアルファベット子音キーは、モードを問わず常に NATO フォネティックコード（`s` -> 「シエラ」）として安定音読します。
      - モード切り替えキーのアナウンス（「日本語」「英語」等）を動的にキャッチして通話表（日本語「あさひのア」／英語「アルファ」）を自動切り替えします。
 
+6. **Windows CI/Runner (act_runner / gitea-runner) におけるスクリプト実行時エラー (`ApplicationFailedException` / `PSSecurityException`)**
+   - **現象**: Gitea / Forgejo の Windows Host Runner (act_runner) 上でワークフローを実行した際、ステップの一時スクリプト実行時に `ApplicationFailedException (NativeCommandFailed)` や `PSSecurityException: UnauthorizedAccess` が発生してジョブが失敗する場合がある。
+   - **根本原因**:
+     - Gitea Runner (act) の Windows Host Executor は、ステップの実行時に一時ファイル（例: `.../act/workflow/1`）を `.ps1` 拡張子なしで生成することがある。
+     - Windows PowerShell 5.1 (`powershell.exe`) では、拡張子のないファイルをドットソース実行（`. '...'`）しようとするとスクリプト実行エンジンが認識できずエラーとなる。
+     - また、SYSTEMアカウント等のバックグラウンドサービス権限下では、PowerShell の既定 ExecutionPolicy（`Restricted`）によりスクリプト読み込みがブロックされる。
+   - **設計ガイドライン ＆ 恒久対策**:
+     - ワークフロー定義（`.gitea/workflows/*.yaml`, `.forgejo/workflows/*.yaml`）の PowerShell ステップには、モダンかつクロスプラットフォームな **PowerShell 7 (`shell: pwsh`)** を明示的に指定する。
+     - Runner ホスト環境には最新の PowerShell 7 (`pwsh`) をインストールし、パスを通しておくことを標準運用規約とする。
+     - ビルドや補助スクリプト（`./tools/*.ps1`）はすべて UTF-8（BOMなし）かつ環境変数対応で記述し、`pwsh` 環境下での高いポータビリティを維持する。
+
 ---
 
 ## 🚀 今後の開発ロードマップ
