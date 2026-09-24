@@ -28,7 +28,7 @@ jobs:
               $escapedPath = $sdkPath -replace '\\', '\\'
               "sdk.dir=$escapedPath" | Out-File -FilePath "local.properties" -Encoding utf8
           }
-        shell: powershell
+        shell: pwsh
 
       - name: Build Debug APK Verification
         run: gradlew.bat clean assembleDebug --no-daemon
@@ -56,7 +56,7 @@ jobs:
               
               "TARGET_APK_NAME=$apkName" | Out-File -FilePath $env:GITHUB_ENV -Append
           }
-        shell: powershell
+        shell: pwsh
 
       - name: Upload Verified APK Artifact
         uses: actions/upload-artifact@v3
@@ -83,7 +83,7 @@ jobs:
           } else {
               git remote add github git@github.com:stomato463-crypto/hello-reader.git
           }
-        shell: powershell
+        shell: pwsh
 
       - name: Push Code to GitHub.com main Branch (Sanitized Mirror Push)
         run: |
@@ -97,7 +97,7 @@ jobs:
           git commit -m "Chore: Exclude internal workflow files for public mirror"
           git push -f github temp-sanitized-push:main
           Write-Host "Successfully mirrored sanitized code (without workflows) to GitHub.com main branch!" -ForegroundColor Green
-        shell: powershell
+        shell: pwsh
 
   # 3. 公式本家（Forgejo / Codeberg）自動リリース＆全自動パブリッシュ（v0.* タグ push 時のみ）
   release-and-publish:
@@ -114,7 +114,7 @@ jobs:
         run: |
           Set-Location "C:\Users\owner\dev\hello-reader"
           .\tools\setup-git-cliff.ps1
-        shell: powershell
+        shell: pwsh
 
       - name: Build Release APK
         run: gradlew.bat assembleRelease --no-daemon
@@ -138,7 +138,7 @@ jobs:
               Copy-Item $sourceApk.FullName -Destination (Join-Path $desktopDir $releaseApkName) -Force
               Write-Host "Copied Release APK to Desktop: $releaseApkName" -ForegroundColor Green
           }
-        shell: powershell
+        shell: pwsh
 
       - name: Auto Publish to Forgejo / Gitea Releases
         uses: https://gitea.com/actions/gitea-release-action@v1

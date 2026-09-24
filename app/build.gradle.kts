@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -30,7 +32,7 @@ android {
             }
         }
         create("release") {
-            val keystoreProps = java.util.Properties()
+            val keystoreProps = Properties()
             val keystorePropsFile = rootProject.file("keystore.properties")
             val promptConfFile = rootProject.file("keystore.prompt.conf")
             val localPropsFile = rootProject.file("local.properties")
