@@ -107,9 +107,34 @@ adb shell am start -n com.stomato.helloreader/.MainActivity
 ## 📄 ライセンス ＆ 免責事項 (License & Disclaimer)
 
 - **プロジェクト全体**: [The Clear BSD License](LICENSE) (Copyright (c) 2026 stomato463-crypto)
-- **引用音源・リソース**: [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) (Google AOSP TalkBack Resources / Google LLC)
 
-### 免責事項 (NO WARRANTY)
+### サードパーティ・ライセンス ＆ 謝辞 (Acknowledgements)
+
+- **日本語プログラミング言語「なでしこ3 (nadesiko3)」**:
+  - 著作権: (c) 2026 クジラ飛行机 (Kujirahand) および なでしこコミュニティ
+  - ライセンス: [MIT License](https://github.com/kujirahand/nadesiko3/blob/master/LICENSE)
+  - 謝辞: 本プロジェクトの「なでしこ × AIペアプログラミング仕様システム」は、なでしこ3の直感的な日本語プログラミング思想から多大なインスピレーションと影響を受けて誕生しました。素晴らしい言語と文化をオープンソースとして提供してくださっている開発者およびコミュニティの皆様に心より深く感謝申し上げます。
+- **Google AOSP TalkBack 音源・アーキテクチャ**:
+  - 著作権: Google LLC
+  - ライセンス: [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+  - 本プロジェクトで参照・引用しているTalkBack準拠の読み上げ設計および音響リソースは、Apache License 2.0 に基づいて利用されています。
+
+### 今後のオンデバイスAI連携方針 (On-Device AI Roadmap)
+
+- **Google DeepMind『EmbeddingGemma 2』等の端末内AI連携について**:
+  - 提供元: Google LLC / Google DeepMind
+  - ライセンス: [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+  - 方針: 本プロジェクトでは、完全オフラインかつプライバシー最優先（ローカル完結）のアクセシビリティ支援を追求しています。将来的に端末内マルチモーダル埋め込みモデル（EmbeddingGemma 2 等）や推論ランタイム（llama.cpp / LiteRT 等）を連携・導入する際は、各モデルのライセンス（Apache License 2.0 / MIT License）および規約に厳格に準拠して運用します。
+
+### 商標について (Trademark Notice)
+
+- Android、Google、Google Pixel、Google DeepMind、TalkBack、Android Accessibility Suite、Gemini、Gemma、EmbeddingGemma、Gboard、Google フォト、およびその他の関連するマークやロゴは、Google LLC の商標または登録商標です。
+- その他、本ドキュメントおよび本アプリ内で言及されているすべての製品名、サービス名、および会社名は、それぞれの所有者の商標または登録商標です。
+
+### 免責事項 (Disclaimer & NO WARRANTY)
+
+- **非提携の明記**: `Hello Reader` は個人開発者および有志の貢献者による独立したオープンソース・プロジェクト（サードパーティ製アクセシビリティサービス）であり、Google LLC または Google DeepMind との提携、公認、後援、推奨関係にあるものではありません。
+- **完全無保証**:
 
 > **Hello Reader comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law.**
 >
