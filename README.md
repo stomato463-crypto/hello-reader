@@ -1,5 +1,18 @@
 # Hello Reader 📱✨
 
+* The deliverables and source code currently published here are from before the feature freeze. Running them will result in encountering numerous bugs, so please refrain from doing so.
+Currently, this is a read-only mirror. The main branch will be updated when the official version is released. The original repository is on GitLab, but it is not being updated due to a feature freeze.
+  * This mirror does not currently accept pull requests or issues. We are preparing to accept them on GitLab. Please wait a little longer.
+
+* 現在、ここに公開されている成果物、及び、ソースコードは、フィーチャーフリーズ前のものです。
+実行すると、大量のバグに遭遇しますので、実行しないようにご注意ください。
+
+現在、こちらは、読み取り専用ミラーです。mainブランチは、正式版リリース時に更新予定です。
+本家はGitlabですが、フィーチャーフリーズ中のため更新していません。
+
+* 当ミラーでは、Pull Request、Issueなどは受け付けていません。
+それらはGitlabで受け付ける準備を進める予定です。
+もうしばらくお待ちください。
 > **Hello Reader comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law.**
 This accessibility service is under development and is not yet complete.
 Implementation changes and updates may occur at the developer's discretion to improve quality.
